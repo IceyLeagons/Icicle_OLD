@@ -2,13 +2,8 @@ package net.iceyleagons.icicle;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.junit.Test;
 
-import java.io.IOException;
 import java.net.URL;
-import java.nio.ByteBuffer;
-import java.util.Base64;
-import java.util.Objects;
 import java.util.UUID;
 
 /**

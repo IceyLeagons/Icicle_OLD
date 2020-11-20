@@ -4,29 +4,6 @@ package net.iceyleagons.icicle;
  * This class doesn't really have functions, only update checkers.
  * Only purpose is version checking, with all sorts of metadata information.
  *
- * # Installation
- * To install Icicle shade it into your plugin, or just simply download the source code.
- *
- * ## Maven
- * ```xml
- * <repositories>
- *     soon...
- * </repositories>
- *
- * <dependencies>
- *     <dependency>
- *         <groupId>net.iceyleagons</groupId>
- *         <artifactId>icicle</artifactId>
- *         <version>X.X.X</version>
- *     </dependency>
- * </dependencies>
- * ```
- *
- * ## Gradle
- * ```gradle
- * implementation 'net.iceyleagons:icicle:x.x.x'
- * ```
- *
  * @author TOTHTOMI
  * @version 1.0.0
  * @since 1.0.0
