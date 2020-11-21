@@ -1,38 +1,29 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.13.0'
+    }
+
+}
+
 plugins {
     id 'java'
-    id 'maven-publish'
 }
+
+apply plugin: "com.vanniktech.maven.publish"
 
 group 'net.iceyleagons'
 version '1.1.0'
 
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId = 'net.iceyleagons'
-            artifactId = 'icicle'
-            version = '1.1.0'
-
-            from components.java
-
-            pom {
-                name = 'Icicle'
-                description = 'Icicle helps you build plugins easily by providing useful tools in an easy-to-use library.'
-                url = 'https://github.com/IceyLeagons/Icicle'
-                licenses {
-                    license {
-                        name = 'MIT License'
-                        url = 'https://github.com/IceyLeagons/Icicle/blob/master/LICENSE'
-                    }
-                }
-            }
-        }
-    }
-    repositories {
-        maven {
-            // change to point to your repo, e.g. http://my.org/repo
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+mavenPublish {
+    targets {
+        uploadArchives {
+            releaseRepositoryUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            snapshotRepositoryUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+            repositoryUsername = null // This defaults to either the SONATYPE_NEXUS_USERNAME Gradle property or the system environment variable.
+            repositoryPassword = null // This defaults to either the SONATYPE_NEXUS_PASSWORD Gradle property or the system environment variable.
         }
     }
 }
@@ -51,6 +42,7 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.json/json
     compile group: 'org.json', name: 'json', version: '20201115'
+
 
 
     implementation 'com.squareup.okhttp3:okhttp:3.14.6'
