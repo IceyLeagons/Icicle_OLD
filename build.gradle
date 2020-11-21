@@ -1,9 +1,41 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
 group 'net.iceyleagons'
 version '1.1.0'
+
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'net.iceyleagons'
+            artifactId = 'icicle'
+            version = '1.1.0'
+
+            from components.java
+
+            pom {
+                name = 'Icicle'
+                description = 'Icicle helps you build plugins easily by providing useful tools in an easy-to-use library.'
+                url = 'https://github.com/IceyLeagons/Icicle'
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://github.com/IceyLeagons/Icicle/blob/master/LICENSE'
+                    }
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            // change to point to your repo, e.g. http://my.org/repo
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+    }
+}
 
 repositories {
     mavenCentral()
