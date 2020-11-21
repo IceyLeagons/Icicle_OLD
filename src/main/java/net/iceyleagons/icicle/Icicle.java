@@ -38,7 +38,7 @@ public class Icicle {
      * @return the version of the current icicle library. Our versions use the Semantic versioning.
      */
     public static String getVersion() {
-        return "1.1.1-SNAPSHOT";
+        return "1.1.4-SNAPSHOT";
     }
 
     /**

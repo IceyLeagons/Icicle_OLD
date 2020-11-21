@@ -34,7 +34,7 @@ import java.lang.reflect.Method;
  * Contains operations regarding ping.
  *
  * @author TOTHTOMI
- * @version 1.0.0
+ * @version 1.1.4
  * @since 1.0.0
  */
 public class PingUtils {
@@ -47,7 +47,7 @@ public class PingUtils {
      */
     public static int getPing(Player player) {
         Class<?> playerClazz = player.getClass();
-        Method getHandle = Reflections.getMethod(playerClazz,"getHandle",true,Player.class);
+        Method getHandle = Reflections.getMethod(playerClazz,"getHandle",true,null);
         if (getHandle == null) return -1;
 
         try {

@@ -27,6 +27,7 @@ package net.iceyleagons.icicle.protocol;
 import lombok.SneakyThrows;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.text.DecimalFormat;
 import java.util.Objects;
 
@@ -34,7 +35,7 @@ import java.util.Objects;
  * Contains operations regarding the servers TPS
  *
  * @author TOTHTOMI
- * @version 1.0.0
+ * @version 1.1.4
  * @since 1.0.0
  */
 public class TPSUtils {
@@ -48,9 +49,9 @@ public class TPSUtils {
     /**
      * Sets up the server instance
      */
-    private static void setupServerInstance() {
+    private static void setupServerInstance() throws InvocationTargetException, IllegalAccessException {
         Class<?> clazz = Reflections.getNormalNMSClass("MinecraftServer");
-        server = Objects.requireNonNull(Reflections.getMethod(clazz, "getServer", true, null));
+        server = Objects.requireNonNull(Reflections.getMethod(clazz, "getServer", true, null)).invoke(null);
 
     }
 
@@ -59,7 +60,7 @@ public class TPSUtils {
      *
      * @throws NoSuchFieldException if the field not exists
      */
-    private static void setupTpsField() throws NoSuchFieldException {
+    private static void setupTpsField() throws NoSuchFieldException, InvocationTargetException, IllegalAccessException {
         if (server == null) setupServerInstance();
         tpsField = server.getClass().getField("recentTps");
     }
