@@ -24,13 +24,9 @@
 
 package net.iceyleagons.icicle.protocol;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.SneakyThrows;
-import org.bukkit.Bukkit;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.util.Objects;
 
@@ -99,28 +95,6 @@ public class TPSUtils {
      */
     public static String getTPSString(TPSTime tpsTime) {
         return getTPSString(tpsTime, DEFAULT_DECIMAL_FORMAT);
-    }
-
-    @Getter
-    @AllArgsConstructor
-    enum TPSTime {
-        /**
-         * Used to check the TPS for the last minute
-         */
-        LAST_MINUTE(0),
-        /**
-         * Used to check the TPS for the last five minutes
-         */
-        FIVE_MINUTES(1),
-        /**
-         * Used to check the TPS for the last fifteen minutes
-         */
-        FIFTEEN_MINUTES(2);
-
-        /**
-         * Id of the tps time
-         */
-        private final int id;
     }
 
 }

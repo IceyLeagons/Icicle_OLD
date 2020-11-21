@@ -22,43 +22,34 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle;
+package net.iceyleagons.icicle.protocol;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
- * This class doesn't really have functions, only update checkers.
- * Only purpose is version checking, with all sorts of metadata information.
- *
  * @author TOTHTOMI
  * @version 1.0.0
- * @since 1.0.0
+ * @since 1.1.3
  */
-public class Icicle {
+@Getter
+@AllArgsConstructor
+public enum TPSTime {
+    /**
+     * Used to check the TPS for the last minute
+     */
+    LAST_MINUTE(0),
+    /**
+     * Used to check the TPS for the last five minutes
+     */
+    FIVE_MINUTES(1),
+    /**
+     * Used to check the TPS for the last fifteen minutes
+     */
+    FIFTEEN_MINUTES(2);
 
     /**
-     * @return the version of the current icicle library. Our versions use the Semantic versioning.
+     * Id of the tps time
      */
-    public static String getVersion() {
-        return "1.1.1-SNAPSHOT";
-    }
-
-    /**
-     * Not yet implemented!
-     *
-     * @return will always return false atm
-     */
-    public static boolean checkForUpdates() {
-        return false;
-    }
-
-    /**
-     * This is optional to show us some love, by printing this out.
-     * You'd ideally print this out to the console, or to the players.
-     *
-     * @return our copyright text
-     */
-    public static String getCopyrightText() {
-        return "This project was built upon IceyLeagons' Icicle Library v" + getVersion() +
-                " (Licensed under the terms of MIT License)";
-    }
-
+    private final int id;
 }
