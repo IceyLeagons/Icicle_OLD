@@ -26,6 +26,8 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.16'
 
     compileOnly 'org.spigotmc:spigot-api:1.16.2-R0.1-SNAPSHOT'
+    // https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-server
+
 
     implementation group: 'junit', name: 'junit', version: '4.12'
 }
