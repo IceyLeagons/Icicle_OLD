@@ -38,21 +38,21 @@ public class JTextChatMessage {
 
     private final JSONObject jsonObject;
 
-	public JTextChatMessage(@NonNull String text, JTextChatColor color, List<JTextChatFormat> formats) {
+    public JTextChatMessage(@NonNull String text, JTextChatColor color, List<JTextChatFormat> formats) {
         jsonObject = new JSONObject();
         jsonObject.put("text", text);
 
         if (color != null) jsonObject.put("color", color.getColor());
-        if (formats != null) formats.forEach(format -> jsonObject.put(format.getFormat(),true));
+        if (formats != null) formats.forEach(format -> jsonObject.put(format.getFormat(), true));
 
     }
 
     public JTextChatMessage(@NonNull String text) {
-        this(text,null,null);
+        this(text, null, null);
     }
 
     public JTextChatMessage(@NonNull String text, JTextChatColor color) {
-        this(text,color,null);
+        this(text, color, null);
     }
 
     public void addExtra(JTextChatExtra extraObject) {

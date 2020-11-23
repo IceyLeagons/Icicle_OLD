@@ -24,14 +24,19 @@
 
 package net.iceyleagons.icicle.file;
 
+import lombok.NonNull;
+import lombok.SneakyThrows;
+
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * Contains useful stuff for {@link File}s
  *
  * @author TOTHTOMI
- * @version 1.0.0
- * @since 1.0.0
+ * @version 2.1.0
+ * @since 1.1.4-SNAPSHOT
  */
 public class FileUtils {
 
@@ -41,8 +46,42 @@ public class FileUtils {
      * @param file the file
      * @return the name of the file
      */
-    public static String getFileNameWithoutExtension(File file) {
+    public static String getFileNameWithoutExtension(@NonNull File file) {
         return file.getName().replaceFirst("[.][^.]+$", "");
+    }
+
+
+    /**
+     * This will create a file "safely".
+     * What that means is it will throw a runtime exception and return null if an error happens, it also
+     * checks if the file exists or not, and only creates it when it does not.
+     * <b>It should only be used for files not directories!</b>
+     *
+     * @param file the {@link File} to create
+     * @return the passed {@link File}
+     */
+    public static File createFileSafely(@NonNull File file) {
+        if (file.exists()) return file;
+        try {
+            if (!file.createNewFile()) throw new RuntimeException("Could not create file " + file.getName());
+            return file;
+        } catch (IOException ioException) {
+            throw new RuntimeException("Could not create file " + file.getName(), ioException);
+        }
+    }
+
+    /**
+     * Writes the specified content to the file. Where every new element in the array is a new line.
+     *
+     * @param file    the {@link File} to write to
+     * @param content the lines
+     */
+    @SneakyThrows
+    public static void writeToFile(@NonNull File file, @NonNull String... content) {
+        try (FileWriter fileWriter = new FileWriter(file)) {
+            for (String line : content)
+                fileWriter.write(line + "\n");
+        }
     }
 
 }

@@ -24,16 +24,11 @@
 
 package net.iceyleagons.icicle.jtext;
 
-import net.iceyleagons.icicle.protocol.Reflections;
-import org.bukkit.Bukkit;
+import net.iceyleagons.icicle.misc.CommandUtils;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -43,7 +38,7 @@ import java.util.function.Consumer;
  *
  * @author TOTHTOMI
  * @version 1.0.0
- * @since 1.0.0
+ * @since 1.0.0-SNAPSHOT
  */
 public class JText implements CommandExecutor {
 
@@ -62,20 +57,8 @@ public class JText implements CommandExecutor {
             instance = new JText();
             clickConsumers = new HashMap<>();
         }
-        try {
-            final Field bukkitCommandMap = Reflections.getField(javaPlugin.getServer().getClass(),"commandMap",true);
-            if (bukkitCommandMap == null) throw new RuntimeException("Could not init JText! Error at line 34");
-
-            CommandMap commandMap = (CommandMap)bukkitCommandMap.get(Bukkit.getServer());
-
-            Constructor<PluginCommand> c = PluginCommand.class.getDeclaredConstructor(String.class, Plugin.class);
-            c.setAccessible(true);
-
-            PluginCommand pluginCommand = c.newInstance(COMMAND, javaPlugin);
-            pluginCommand.setExecutor(instance);
-            pluginCommand.setAliases(Collections.emptyList());
-            commandMap.register(COMMAND, pluginCommand);
-        } catch(Exception e) { e.printStackTrace(); }
+        CommandUtils.init(javaPlugin);
+        CommandUtils.injectCommand("click", new JText());
     }
 
     @Override

@@ -38,7 +38,7 @@ import org.bukkit.entity.Player;
  *
  * @author TOTHTOMI
  * @version 1.0.0
- * @since 1.0.0
+ * @since 1.0.0-SNAPSHOT
  */
 @AllArgsConstructor
 public class RegisteredBungeeMessage {
@@ -62,7 +62,7 @@ public class RegisteredBungeeMessage {
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF(bungeeMessage.getId());
         out.writeUTF(bungeeMessage.getMessage());
-        BungeeUtils.send(out,bungeeChannel.getChannelName(),player);
+        BungeeUtils.send(out, bungeeChannel.getChannelName(), player);
     }
 
 }

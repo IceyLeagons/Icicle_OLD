@@ -31,7 +31,7 @@ import org.json.JSONObject;
 /**
  * @author TOTHTOMI
  * @version 1.0.0
- * @since 1.0.0
+ * @since 1.0.0-SNAPSHOT
  */
 @Data
 @RequiredArgsConstructor

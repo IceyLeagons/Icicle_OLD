@@ -40,7 +40,7 @@ import java.util.Map;
  *
  * @author TOTHTOMI
  * @version 1.0.0
- * @since 1.0.0
+ * @since 1.0.0-SNAPSHOT
  */
 @Data
 public class BungeeChannel {
@@ -50,6 +50,7 @@ public class BungeeChannel {
 
     /**
      * Creates a new {@link BungeeChannel} and registers it with {@link BungeeUtils#registerChannel(BungeeChannel)}
+     *
      * @param channelName the id of the channel must be unique!s
      */
     public BungeeChannel(String channelName) {
@@ -60,19 +61,21 @@ public class BungeeChannel {
 
     /**
      * Registers a message handler, in order to properly handle incoming messages.
+     *
      * @param bungeeMessageHandler the {@link BungeeMessageHandler} to register
      */
     public void registerMessageHandler(BungeeMessageHandler bungeeMessageHandler) {
-        handlerMap.put(bungeeMessageHandler.getMessageId(),bungeeMessageHandler);
+        handlerMap.put(bungeeMessageHandler.getMessageId(), bungeeMessageHandler);
     }
 
     /**
      * Creates a new {@link RegisteredBungeeMessage}
+     *
      * @param bungeeMessage the {@link BungeeMessage} to create from
      * @return the created {@link RegisteredBungeeMessage}
      */
     public RegisteredBungeeMessage registerBungeeMessage(BungeeMessage bungeeMessage) {
-        return new RegisteredBungeeMessage(bungeeMessage,this);
+        return new RegisteredBungeeMessage(bungeeMessage, this);
     }
 
     /**
@@ -80,13 +83,13 @@ public class BungeeChannel {
      * It's run by: {@link org.bukkit.plugin.messaging.PluginMessageListener#onPluginMessageReceived(String, Player, byte[])}
      *
      * @param player the {@link Player}
-     * @param input the {@link ByteArrayDataInput}
+     * @param input  the {@link ByteArrayDataInput}
      */
     public void onBungeeChannelMessage(Player player, ByteArrayDataInput input) {
         String messageId = input.readUTF();
         String message = input.readUTF();
         if (handlerMap.containsKey(messageId)) {
-            handlerMap.get(messageId).handle(message,player);
+            handlerMap.get(messageId).handle(message, player);
         }
     }
 }

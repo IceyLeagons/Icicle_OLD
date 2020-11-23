@@ -31,7 +31,7 @@ import org.bukkit.entity.Player;
  *
  * @author TOTHTOMI
  * @version 1.0.0
- * @since 1.0.0
+ * @since 1.0.0-SNAPSHOT
  */
 public interface BungeeMessageHandler {
 
@@ -39,7 +39,7 @@ public interface BungeeMessageHandler {
      * This method is ran when the {@link net.iceyleagons.icicle.bungee.channel.BungeeChannel} gets a message, that is applicable for this handler
      *
      * @param message the incoming message <p>Ideally a raw JSON</p>
-     * @param player the {@link Player}
+     * @param player  the {@link Player}
      */
     void handle(String message, Player player);
 

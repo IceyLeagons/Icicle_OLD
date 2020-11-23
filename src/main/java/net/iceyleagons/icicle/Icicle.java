@@ -24,21 +24,45 @@
 
 package net.iceyleagons.icicle;
 
+import org.bukkit.plugin.java.JavaPlugin;
+
 /**
  * This class doesn't really have functions, only update checkers.
  * Only purpose is version checking, with all sorts of metadata information.
  *
  * @author TOTHTOMI
- * @version 1.0.0
- * @since 1.0.0
+ * @version 1.2.0
+ * @since 1.0.0-SNAPSHOT
  */
 public class Icicle {
+
+    //TODO Smart schedulers with TimeUnits
+
+    /**
+     * Whether or not the module is initialized
+     */
+    private static boolean initialized = false;
+
+    /**
+     * This needs to be called before everything else.
+     *
+     * @param plugin          the registrar plugin
+     * @param enabledFeatures the enabled features of the module
+     */
+    public static void init(JavaPlugin plugin, IcicleFeatures... enabledFeatures) {
+        if (!initialized) {
+            for (IcicleFeatures enabledFeature : enabledFeatures)
+                enabledFeature.getConsumer().accept(plugin);
+
+            initialized = true;
+        }
+    }
 
     /**
      * @return the version of the current icicle library. Our versions use the Semantic versioning.
      */
     public static String getVersion() {
-        return "1.1.4-SNAPSHOT";
+        return "1.2.0-SNAPSHOT";
     }
 
     /**

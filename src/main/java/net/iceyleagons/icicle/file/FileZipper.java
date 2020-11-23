@@ -42,7 +42,7 @@ public class FileZipper {
     /**
      * This will compress the file into the given output file. The input file will not be deleted!
      *
-     * @param file the input
+     * @param file   the input
      * @param output the output
      * @throws IOException if something happens during this process
      */
@@ -52,8 +52,8 @@ public class FileZipper {
                 try (GZIPOutputStream gzipOutputStream = new GZIPOutputStream(fileOutputStream)) {
                     byte[] buffer = new byte[1024];
                     int len;
-                    while((len=fileInputStream.read(buffer)) != -1) {
-                        gzipOutputStream.write(buffer,0,len);
+                    while ((len = fileInputStream.read(buffer)) != -1) {
+                        gzipOutputStream.write(buffer, 0, len);
                     }
                 }
             }
@@ -63,7 +63,7 @@ public class FileZipper {
     /**
      * This will decompress the file into the given output file. The input file will not be deleted!
      *
-     * @param file the input
+     * @param file   the input
      * @param output the output
      * @throws IOException if something happens during this process
      */
@@ -73,8 +73,8 @@ public class FileZipper {
                 try (FileOutputStream fileOutputStream = new FileOutputStream(output)) {
                     byte[] buffer = new byte[1024];
                     int len;
-                    while((len=fileInputStream.read(buffer)) != -1) {
-                        fileOutputStream.write(buffer,0,len);
+                    while ((len = fileInputStream.read(buffer)) != -1) {
+                        fileOutputStream.write(buffer, 0, len);
                     }
                 }
             }

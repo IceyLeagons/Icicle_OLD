@@ -1,0 +1,71 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2020 IceyLeagons (Tamás Tóth and Márton Kissik) and Contributors
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+package net.iceyleagons.icicle.ui;
+
+import net.iceyleagons.icicle.Test;
+import net.iceyleagons.icicle.misc.SchedulerUtils;
+import net.iceyleagons.icicle.ui.components.ComponentTemplate;
+import net.iceyleagons.icicle.ui.frame.Frame;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * @author TOTHTOMI
+ */
+public class GUIManager implements Listener {
+    static List<GUITemplate> guis = new ArrayList<>();
+
+    @EventHandler
+    public void onClick(InventoryClickEvent event) {
+        Optional<GUITemplate> template = guis.stream().filter(inv -> Objects.equals(event.getClickedInventory(), inv.getInventory())).findFirst();
+        if (!template.isPresent()) return;
+
+        GUITemplate temp = template.get();
+        //System.out.println("found");
+
+        int slot = event.getSlot();
+        Frame frame = temp.getFrames().get(temp.getCurrentFrame());
+        event.setCancelled(true);
+        ComponentTemplate componentTemplate = frame.onClick(slot).join();
+
+        if (componentTemplate != null)
+            componentTemplate.onClick().accept(temp, event);
+    }
+
+    public static void registerGUI(GUITemplate gui) {
+        GUI annotation = gui.getClass().getAnnotation(GUI.class);
+        if (annotation != null) {
+            SchedulerUtils.runTaskTimer(Test.instance, task -> {
+                gui.update();
+            }, annotation.updateInterval(), annotation.updateIntervalUnit());
+            guis.add(gui);
+        }
+    }
+
+}

@@ -25,22 +25,32 @@
 package net.iceyleagons.icicle.math;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
+
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Function;
+
+import static java.lang.Integer.MAX_VALUE;
 
 /**
  * Contains useful stuff regarding Math and numbers
  *
  * @author TOTHTOMI
- * @version 1.0.0
- * @since 1.0.0
+ * @version 2.0.0
+ * @since 1.1.4-SNAPSHOT
  */
-public class MathUtils {
+public strictfp class MathUtils {
 
     /**
      * Creates a vector from the given loactions.
      *
      * @param from the starting point
-     * @param to the goal
+     * @param to   the goal
      * @return a {@link Vector}
      */
     public static Vector getVector(Location from, Location to) {
@@ -60,8 +70,8 @@ public class MathUtils {
 
     /**
      * @param value the number to check
-     * @param min minimum of the range
-     * @param max maxmimum of the range
+     * @param min   minimum of the range
+     * @param max   maxmimum of the range
      * @return true if the number is between the minimum and the maximum number
      */
     public static boolean isBetween(int value, int min, int max) {
@@ -79,6 +89,112 @@ public class MathUtils {
         return value == 1 ? "" : "s";
     }
 
+    public static double offset2d(Entity a, Entity b) {
+        return offset2d(a.getLocation().toVector(), b.getLocation().toVector());
+    }
+
+    public static double offset2d(Location a, Location b) {
+        return offset2d(a.toVector(), b.toVector());
+    }
+
+    public static double offset2d(Vector a, Vector b) {
+        return a.setY(0).subtract(b.setY(0)).length();
+    }
+
+    public static double offset(Location a, Location b) {
+        return offset(a.toVector(), b.toVector());
+    }
+
+    public static double offset(Entity a, Entity b) {
+        return offset(a.getLocation().toVector(), b.getLocation().toVector());
+    }
+
+    public static double offset(Vector a, Vector b) {
+        return a.subtract(b).length();
+    }
+
+    /**
+     * A better way to generate random integers.
+     *
+     * @param lowerBound  the lowerBound
+     * @param higherBound the higherBound
+     * @return the generated random number
+     */
+    public static int random(Optional<Integer> lowerBound, Optional<Integer> higherBound) {
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+
+        if (lowerBound.isPresent() && higherBound.isPresent())
+            return random.nextInt(higherBound.get() - lowerBound.get()) + lowerBound.get();
+        else return lowerBound.map(integer -> random.nextInt(MAX_VALUE - integer) + integer).orElseGet(random::nextInt);
+    }
+
+    /**
+     * Normalizes the given value with the given bounds.
+     * Using formula of (value - min) / (max - min)
+     *
+     * @param value to normalize
+     * @param min   minimum
+     * @param max   maxmimum
+     * @return the normalized value
+     */
+    public static double normalize(double value, double min, double max) {
+        return (value - min) / (max - min);
+    }
+
+    public static double round(double value, int precision, RoundingMode mode) {
+        return new BigDecimal(value).round(new MathContext(precision, mode)).doubleValue();
+    }
+
+    public static int roundToInt(double value, int precision, RoundingMode mode) {
+        return new BigDecimal(value).round(new MathContext(precision, mode)).intValue();
+    }
+
+    /**
+     * Calculates the euclidean disatnce between these two vectors(vectors can be any size, 2d,3d,4d etc.)
+     *
+     * @param vectorA vectorA
+     * @param vectorB vectorB
+     * @return the euclidean distance between them
+     */
+    public static double euclideanDistance(double[] vectorA, double[] vectorB) {
+        double dist = 0;
+        for (int i = 0; i <= vectorA.length - 1; i++)
+            dist += java.lang.Math.pow(vectorA[i] - vectorB[i], 2);
+        return java.lang.Math.sqrt(dist);
+    }
+
+    public static void applyFunc(double[] doubleArray, Function<Double, Double> func) {
+        for (int i = 0; i <= doubleArray.length - 1; i++)
+            doubleArray[i] = func.apply(doubleArray[i]);
+    }
+
+    public static double[] add(double[] vectorA, double[] vectorB) {
+        double[] output = new double[vectorA.length];
+        for (int i = 0; i <= vectorA.length - 1; i++)
+            output[i] = vectorA[i] + vectorB[i];
+        return output;
+    }
+
+    public static double[] subtract(double[] vectorA, double[] vectorB) {
+        return add(vectorA, opposite(vectorB));
+    }
+
+    public static double[] opposite(double[] vector) {
+        return multiply(vector, -1);
+    }
+
+    /**
+     * Multiply each double of the array with the provided factor
+     *
+     * @param vector double array to multiply
+     * @param factor factor to multiply by
+     * @return the multiplication results
+     */
+    public static double[] multiply(double[] vector, double factor) {
+        double[] output = vector.clone();
+        applyFunc(output, e -> e * factor);
+        return output;
+    }
 
 
 }

@@ -40,7 +40,7 @@ import java.util.Optional;
  *
  * @author TOTHTOMI
  * @version 1.0.0
- * @since 1.0.0
+ * @since 1.0.0-SNAPSHOT
  */
 public class BungeeUtils {
 
@@ -58,21 +58,21 @@ public class BungeeUtils {
         if (bungeeChannelMap == null) bungeeChannelMap = new HashMap<>();
         if (plugin == null) plugin = javaPlugin;
 
+        Messenger messenger = plugin.getServer().getMessenger();
 
-        Messenger messenger = plugin.getServer().getMessenger();;
-        messenger.registerOutgoingPluginChannel(javaPlugin,"BungeeCord");
-        messenger.registerIncomingPluginChannel(javaPlugin,"BungeeCord",bungeeChannelListener);
+        messenger.registerOutgoingPluginChannel(javaPlugin, "BungeeCord");
+        messenger.registerIncomingPluginChannel(javaPlugin, "BungeeCord", bungeeChannelListener);
     }
 
     /**
      * Sends a {@link ByteArrayDataOutput} on a specific sub-channel to the BungeeCord main channel using the {@link Player}
      *
-     * @param output the output
+     * @param output  the output
      * @param channel the sub channel
-     * @param player the player
+     * @param player  the player
      */
     public static void send(ByteArrayDataOutput output, String channel, Player player) {
-        player.sendPluginMessage(plugin,channel,output.toByteArray());
+        player.sendPluginMessage(plugin, channel, output.toByteArray());
     }
 
 
@@ -93,7 +93,7 @@ public class BungeeUtils {
      * @param bungeeChannel the {@link BungeeChannel} to register.
      */
     public static void registerChannel(BungeeChannel bungeeChannel) {
-        bungeeChannelMap.put(bungeeChannel.getChannelName(),bungeeChannel);
+        bungeeChannelMap.put(bungeeChannel.getChannelName(), bungeeChannel);
     }
 
 }

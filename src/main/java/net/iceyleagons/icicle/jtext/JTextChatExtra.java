@@ -39,13 +39,13 @@ public class JTextChatExtra {
         extra = new JSONObject();
         extra.put("text", text);
         extra.put("color", color.getColor());
-        formats.forEach(f -> extra.put(f.getFormat(),true));
+        formats.forEach(f -> extra.put(f.getFormat(), true));
     }
 
     public void setClickEvent(Player player, Consumer<Player> playerConsumer) {
         String code = RandomStringUtils.randomAlphabetic(10);
-        setRunCommand(JText.COMMAND_FORMAT.replace("<code>",code));
-        JText.clickConsumers.put(code,playerConsumer);
+        setRunCommand(JText.COMMAND_FORMAT.replace("<code>", code));
+        JText.clickConsumers.put(code, playerConsumer);
     }
 
     public void setRunCommand(String command) {

@@ -61,10 +61,10 @@ public class DateUtils {
         int hunRem = value % 100;
         int tenRem = value % 10;
 
-        if ( hunRem - tenRem == 10 ) {
+        if (hunRem - tenRem == 10) {
             return "th";
         }
-        switch ( tenRem ) {
+        switch (tenRem) {
             case 1:
                 return "st";
             case 2:

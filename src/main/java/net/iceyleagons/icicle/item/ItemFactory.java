@@ -232,12 +232,13 @@ public class ItemFactory {
      */
     public ItemFactory makeItGlow() {
         this.itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        addEnchantment(Enchantment.ARROW_DAMAGE,1);
+        addEnchantment(Enchantment.ARROW_DAMAGE, 1);
         return this;
     }
 
     /**
      * Add a new lore line to the ItemStack.
+     *
      * @param line The line to add.
      * @return The existing ItemFactory instance.
      */

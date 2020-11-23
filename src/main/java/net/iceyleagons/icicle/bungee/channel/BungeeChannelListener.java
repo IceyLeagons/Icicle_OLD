@@ -37,7 +37,7 @@ import java.util.Optional;
  *
  * @author TOTHTOMI
  * @version 1.0.0
- * @since 1.0.0
+ * @since 1.0.0-SNAPSHOT
  */
 public class BungeeChannelListener implements PluginMessageListener {
 
