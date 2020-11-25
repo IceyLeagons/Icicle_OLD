@@ -22,25 +22,28 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.ui;
+package net.iceyleagons.icicle.ui.components.impl.pagination;
 
-import net.iceyleagons.icicle.ui.frame.Frame;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
+import net.iceyleagons.icicle.ui.GUIClickEvent;
+import net.iceyleagons.icicle.ui.components.Component;
+import net.iceyleagons.icicle.ui.components.impl.Button;
+import org.bukkit.inventory.ItemStack;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * @author TOTHTOMI
  */
-public interface GUITemplate {
+@Component(
+        id = "pagination_prev_button",
+        width = 1, //Takes up one slot
+        height = 1 // /\
+)
+public class PreviousButton extends Button {
+    public PreviousButton(ItemStack placeholder, Consumer<GUIClickEvent> onClick) {
+        super(placeholder, onClick);
+    }
 
-    void update();
-    void openForPlayers(Player... player);
-    void addFrames(Integer page, Frame... frames);
 
-    Inventory getInventory();
-    int getCurrentFrame();
-    List<Frame> getFrames();
 
 }

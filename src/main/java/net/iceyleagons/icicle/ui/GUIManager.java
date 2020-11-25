@@ -28,15 +28,15 @@ import net.iceyleagons.icicle.Test;
 import net.iceyleagons.icicle.misc.SchedulerUtils;
 import net.iceyleagons.icicle.ui.components.ComponentTemplate;
 import net.iceyleagons.icicle.ui.frame.Frame;
+import net.iceyleagons.icicle.ui.guis.BasePaginatedGUI;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 /**
- * @author TOTHTOMI
+ * @author TOTHTOMI, Gabe
  */
 public class GUIManager implements Listener {
     static List<GUITemplate> guis = new ArrayList<>();
@@ -47,15 +47,34 @@ public class GUIManager implements Listener {
         if (!template.isPresent()) return;
 
         GUITemplate temp = template.get();
-        //System.out.println("found");
+
+        Frame frame = temp instanceof BasePaginatedGUI
+                ? ((BasePaginatedGUI) temp).getPages().get(((BasePaginatedGUI) temp).getCurrentPage()).get(temp.getCurrentFrame())
+                : temp.getFrames().get(temp.getCurrentFrame());
 
         int slot = event.getSlot();
-        Frame frame = temp.getFrames().get(temp.getCurrentFrame());
+
         event.setCancelled(true);
         ComponentTemplate componentTemplate = frame.onClick(slot).join();
 
-        if (componentTemplate != null)
-            componentTemplate.onClick().accept(temp, event);
+        if (componentTemplate != null) {
+            componentTemplate.onClick(new GUIClickEvent() {
+                @Override
+                public InventoryClickEvent getInventoryClickEvent() {
+                    return event;
+                }
+
+                @Override
+                public GUITemplate getGUI() {
+                    return temp;
+                }
+
+                @Override
+                public ComponentTemplate getSelfComponent() {
+                    return componentTemplate;
+                }
+            });
+        }
     }
 
     public static void registerGUI(GUITemplate gui) {

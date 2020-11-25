@@ -56,6 +56,7 @@ public class Frame {
 
             Component component = componentComponentTemplateEntry.getKey();
             ComponentTemplate componentTemplate = componentComponentTemplateEntry.getValue();
+            if (!componentTemplate.renderAllowed()) continue;
 
 
             ItemStack[][] toRender = new ItemStack[component.width()][component.height()];
@@ -74,7 +75,6 @@ public class Frame {
 
     public CompletableFuture<Void> registerComponent(ComponentTemplate componentTemplate, int x, int y) throws IllegalArgumentException, IllegalStateException {
         return CompletableFuture.supplyAsync(() -> {
-            System.out.println("asd1");
             if (!componentTemplate.getClass().isAnnotationPresent(Component.class))
                 throw new IllegalArgumentException("Supplied ComponentTemplate does not annotate Component");
 

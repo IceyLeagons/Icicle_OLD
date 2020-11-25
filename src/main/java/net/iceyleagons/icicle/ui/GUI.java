@@ -46,6 +46,8 @@ public @interface GUI {
 
     InventoryType type() default InventoryType.CHEST;
 
+    boolean autoUpdate() default true;
+
     /**
      * Only needed if {@link #type()} is set to CHEST.
      */

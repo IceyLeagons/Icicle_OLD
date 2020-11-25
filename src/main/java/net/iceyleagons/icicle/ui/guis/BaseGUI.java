@@ -22,37 +22,31 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.ui;
+package net.iceyleagons.icicle.ui.guis;
 
 import lombok.Getter;
-import net.iceyleagons.icicle.ui.components.Component;
-import net.iceyleagons.icicle.ui.components.ComponentTemplate;
+import net.iceyleagons.icicle.ui.GUI;
+import net.iceyleagons.icicle.ui.GUIManager;
+import net.iceyleagons.icicle.ui.GUITemplate;
 import net.iceyleagons.icicle.ui.frame.Frame;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.TimeUnit;
+import java.util.*;
 
 /**
- * @author TOTHTOMI
+ * @author TOTHTOMI, Gabe
  */
-@GUI(title = "faszom")
-public class BaseGUI implements GUITemplate, Listener {
+public abstract class BaseGUI implements GUITemplate {
 
     @Getter
     int currentFrame;
     private final List<Frame> frames;
     @Getter
     private final Inventory inventory;
+    private final List<Player> opened;
 
     public BaseGUI() {
         GUI gui = getClass().getAnnotation(GUI.class);
@@ -62,6 +56,7 @@ public class BaseGUI implements GUITemplate, Listener {
             inventory = Bukkit.createInventory(null, gui.type(), gui.title());
 
         frames = new ArrayList<>();
+        opened = new ArrayList<>();
         GUIManager.registerGUI(this);
     }
 
@@ -69,7 +64,7 @@ public class BaseGUI implements GUITemplate, Listener {
         return frames;
     }
 
-    public void nextFrame() {
+    public boolean nextFrame() {
         Frame f = frames.get(currentFrame);
         inventory.clear();
         f.render(inventory);
@@ -77,32 +72,28 @@ public class BaseGUI implements GUITemplate, Listener {
             currentFrame++;
             if (currentFrame >= getFrames().size())
                 currentFrame = 0;
-        }
+        } else
+            return false;
+
+        return true;
     }
 
     @Override
     public void update() {
+        // We call next frame cause it does everything we need it to do.
         nextFrame();
     }
 
     @Override
-    public void renderForPlayer(Player player) {
-
+    public void openForPlayers(Player... players) {
+        for (Player player : players) {
+            opened.add(player);
+            player.openInventory(getInventory());
+        }
     }
 
     @Override
-    public void addFrame(Frame frame) {
-        frames.add(frame);
-    }
-
-    @EventHandler
-    public void onClick(InventoryClickEvent clickEvent) {
-        if (!Objects.equals(clickEvent.getClickedInventory(), inventory)) return;
-
-        int slot = clickEvent.getSlot();
-        Frame frame = frames.get(currentFrame);
-        frame.onClick(slot).thenAccept(componentTemplate -> {
-            if (componentTemplate != null) componentTemplate.onClick().accept(this, clickEvent);
-        });
+    public void addFrames(Integer ignore, Frame... frames) {
+        this.frames.addAll(Arrays.asList(frames));
     }
 }

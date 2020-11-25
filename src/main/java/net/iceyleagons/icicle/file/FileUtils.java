@@ -63,11 +63,12 @@ public class FileUtils {
     public static File createFileSafely(@NonNull File file) {
         if (file.exists()) return file;
         try {
-            if (!file.createNewFile()) throw new RuntimeException("Could not create file " + file.getName());
+            if (!file.createNewFile()) return null;
             return file;
         } catch (IOException ioException) {
-            throw new RuntimeException("Could not create file " + file.getName(), ioException);
+            ioException.printStackTrace();
         }
+        return null;
     }
 
     /**

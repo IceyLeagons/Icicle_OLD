@@ -24,23 +24,17 @@
 
 package net.iceyleagons.icicle.ui;
 
-import net.iceyleagons.icicle.ui.frame.Frame;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-
-import java.util.List;
+import net.iceyleagons.icicle.ui.components.ComponentTemplate;
+import org.bukkit.event.inventory.InventoryClickEvent;
 
 /**
  * @author TOTHTOMI
  */
-public interface GUITemplate {
+public interface GUIClickEvent {
 
-    void update();
-    void openForPlayers(Player... player);
-    void addFrames(Integer page, Frame... frames);
 
-    Inventory getInventory();
-    int getCurrentFrame();
-    List<Frame> getFrames();
+    InventoryClickEvent getInventoryClickEvent();
+    GUITemplate getGUI();
+    ComponentTemplate getSelfComponent();
 
 }

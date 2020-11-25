@@ -24,11 +24,13 @@
 
 package net.iceyleagons.icicle.ui.components;
 
+import net.iceyleagons.icicle.ui.GUIClickEvent;
 import net.iceyleagons.icicle.ui.GUITemplate;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * @author TOTHTOMI
@@ -39,11 +41,14 @@ public interface ComponentTemplate {
 
     void setXY(int x, int y);
 
+    boolean renderAllowed();
+    void setRenderAllowed(boolean value);
+
     int getX();
 
     int getY();
 
-    BiConsumer<GUITemplate, InventoryClickEvent> onClick();
+    void onClick(GUIClickEvent clickEvent);
 
 
 }

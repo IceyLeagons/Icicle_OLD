@@ -31,6 +31,7 @@ import org.bukkit.util.Vector;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
@@ -47,7 +48,7 @@ import static java.lang.Integer.MAX_VALUE;
 public strictfp class MathUtils {
 
     /**
-     * Creates a vector from the given loactions.
+     * Creates a vector from the given locations.
      *
      * @param from the starting point
      * @param to   the goal
@@ -66,6 +67,16 @@ public strictfp class MathUtils {
         double Z = Math.cos(pitch);
 
         return new Vector(X, Z, Y);
+    }
+
+    /**
+     * Returns the average of the entered doubles
+     *
+     * @param values the values
+     * @return the average otherwise 0
+     */
+    public static double getAverage(double... values) {
+        return Arrays.stream(values).average().orElse(0);
     }
 
     /**

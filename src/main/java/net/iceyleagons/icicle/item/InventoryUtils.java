@@ -54,10 +54,11 @@ public class InventoryUtils {
      * We use Sound.BLOCK_WOODEN_BUTTON_CLICK_ON
      *
      * @param event the {@link InventoryClickEvent}
+     * @param sound the {@link Sound} to play
      */
-    public static void clickSound(InventoryClickEvent event) {
+    public static void clickSound(InventoryClickEvent event, Sound sound) {
         Player player = (Player) event.getWhoClicked();
-        player.playSound(event.getWhoClicked().getLocation(), Sound.BLOCK_WOODEN_BUTTON_CLICK_ON, 1f, 1);
+        player.playSound(event.getWhoClicked().getLocation(),sound, 1f, 1);
     }
 
 }

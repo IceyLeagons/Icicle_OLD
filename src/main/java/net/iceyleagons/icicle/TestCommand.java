@@ -25,53 +25,49 @@
 package net.iceyleagons.icicle;
 
 import net.iceyleagons.icicle.item.ItemFactory;
-import net.iceyleagons.icicle.misc.SchedulerUtils;
-import net.iceyleagons.icicle.ui.BaseGUI;
-import net.iceyleagons.icicle.ui.GUIManager;
-import net.iceyleagons.icicle.ui.components.impl.Button;
+import net.iceyleagons.icicle.ui.components.impl.pagination.SimpleButton;
 import net.iceyleagons.icicle.ui.frame.Frame;
+import net.iceyleagons.icicle.ui.guis.SimpleGUI;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author TOTHTOMI
  */
 public class TestCommand implements CommandExecutor {
 
-    final BaseGUI baseGUI;
+    final SimpleGUI baseGUI;
 
     public TestCommand() throws ExecutionException, InterruptedException {
-
-
-
-        baseGUI = new BaseGUI();
+        baseGUI = new SimpleGUI();
 
         for (int i = 0; i < 9; i++) {
-            Frame frame = new Frame();
-            frame.registerComponent(new Button(ItemFactory.newFactory(Material.GOLD_BLOCK).build(),
-                    (gui, event) -> {
-                        //event.getWhoClicked().sendMessage("Clicked!");
-                    }), 1+i, 1).get();
-            baseGUI.addFrame(frame);
-        }
-        //baseGUI.addFrame(frame2);
-        //baseGUI.addFrame(frame3);
+            for (int j = 0; j < 4; j++) {
+                Frame frame = new Frame();
+                frame.registerComponent(baseGUI.getPreviousButton(ItemFactory.newFactory(Material.ARROW).setDisplayName("&9< Previous").build(), Sound.BLOCK_WOODEN_BUTTON_CLICK_ON), 1, 1).get();
+                frame.registerComponent(baseGUI.getNextButton(ItemFactory.newFactory(Material.ARROW).setDisplayName("&9Next >").build(), Sound.BLOCK_WOODEN_BUTTON_CLICK_ON), 2, 1).get();
 
-        GUIManager.registerGUI(baseGUI);
+
+                frame.registerComponent(new SimpleButton(ItemFactory.newFactory(Material.WOODEN_SHOVEL).build(), event -> {
+
+                }), 3 + i+j, 1).get();
+
+                baseGUI.addFrames(i, frame);
+            }
+        }
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
-            //baseGUI.update();
             ((Player) sender).openInventory(baseGUI.getInventory());
+            baseGUI.update();
         }
 
         return true;

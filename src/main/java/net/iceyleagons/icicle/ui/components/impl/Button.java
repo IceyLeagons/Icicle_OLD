@@ -24,6 +24,7 @@
 
 package net.iceyleagons.icicle.ui.components.impl;
 
+import net.iceyleagons.icicle.ui.GUIClickEvent;
 import net.iceyleagons.icicle.ui.GUITemplate;
 import net.iceyleagons.icicle.ui.components.Component;
 import net.iceyleagons.icicle.ui.components.ComponentTemplate;
@@ -32,24 +33,32 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * @author TOTHTOMI
  */
-@Component(
-        id = "button",
-        width = 1, //Takes up one slot
-        height = 1 // /\
-)
-public class Button implements ComponentTemplate {
+public abstract class Button implements ComponentTemplate {
 
     private final ItemStack placeholder;
-    private final BiConsumer<GUITemplate, InventoryClickEvent> onClick;
+    private final Consumer<GUIClickEvent> onClick;
     private int x,y;
+    private boolean render;
 
-    public Button(ItemStack placeholder, BiConsumer<GUITemplate, InventoryClickEvent> onClick) {
+    public Button(ItemStack placeholder, Consumer<GUIClickEvent> onClick) {
         this.placeholder = placeholder;
         this.onClick = onClick;
+        this.render = true;
+    }
+
+    @Override
+    public boolean renderAllowed() {
+        return render;
+    }
+
+    @Override
+    public void setRenderAllowed(boolean value) {
+        this.render = value;
     }
 
     @Override
@@ -74,8 +83,8 @@ public class Button implements ComponentTemplate {
     }
 
     @Override
-    public BiConsumer<GUITemplate, InventoryClickEvent> onClick() {
-        return this.onClick;
+    public void onClick(GUIClickEvent guiClickEvent) {
+        this.onClick.accept(guiClickEvent);
     }
 
 }

@@ -25,8 +25,10 @@
 package net.iceyleagons.icicle;
 
 import lombok.SneakyThrows;
+import net.iceyleagons.icicle.misc.ASCIIArt;
 import net.iceyleagons.icicle.misc.CommandUtils;
 import net.iceyleagons.icicle.ui.GUIManager;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -39,8 +41,14 @@ public class Test extends JavaPlugin {
     @SneakyThrows
     @Override
     public void onEnable() {
+
+
+        Icicle.init(this,IcicleFeatures.COMMANDS,IcicleFeatures.BUNGEE);
+        Bukkit.getServer().getConsoleSender().sendMessage(Icicle.getCopyrightText());
+
+
         instance = this;
-        //System.out.println(ASCIIArt.get("Seal",null,this));
+        System.out.println(ASCIIArt.get("Seal",null,this));
         getServer().getPluginManager().registerEvents(new GUIManager(),this);
         CommandUtils.init(this);
         CommandUtils.injectCommand("test",new TestCommand());

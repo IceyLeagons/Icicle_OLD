@@ -22,25 +22,18 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.ui;
+package net.iceyleagons.icicle.ui.guis;
 
-import net.iceyleagons.icicle.ui.frame.Frame;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-
-import java.util.List;
+import net.iceyleagons.icicle.ui.GUI;
 
 /**
  * @author TOTHTOMI
  */
-public interface GUITemplate {
+@GUI(title = "Please work")
+public class SimpleGUI extends BasePaginatedGUI{
 
-    void update();
-    void openForPlayers(Player... player);
-    void addFrames(Integer page, Frame... frames);
-
-    Inventory getInventory();
-    int getCurrentFrame();
-    List<Frame> getFrames();
+    public SimpleGUI() {
+        super();
+    }
 
 }
