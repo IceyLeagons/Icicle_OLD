@@ -40,7 +40,10 @@ import java.util.logging.Logger;
  */
 public class MariaDB extends SQLDatabase {
 
-    private final String host,databaseName,username,password;
+    private final String host;
+    private final String databaseName;
+    private final String username;
+    private final String password;
 
 
     /**
@@ -71,7 +74,7 @@ public class MariaDB extends SQLDatabase {
 
     @Override
     protected boolean openConnection() {
-        if (super.connection != null) if (!closeConnection()) throw new RuntimeException("Could not close connection!");
+        if (super.connection != null && !closeConnection()) throw new RuntimeException("Could not close connection!");
 
         try {
             super.connection = DriverManager.getConnection(

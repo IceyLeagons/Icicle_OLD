@@ -24,7 +24,9 @@
 
 package net.iceyleagons.icicle.storage.impl;
 
-import com.mongodb.*;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
@@ -35,15 +37,17 @@ import net.iceyleagons.icicle.storage.entities.ContainerData;
 import net.iceyleagons.icicle.storage.entities.DataType;
 import org.bson.Document;
 
-import javax.print.Doc;
-import java.net.UnknownHostException;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
+ * MongoDB implementation
+ *
  * @author TOTHTOMI
+ * @version 1.0.0
+ * @since  1.3.0-SNAPSHOT"
  */
 public class MongoDB extends Storage {
 

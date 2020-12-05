@@ -43,7 +43,7 @@ import java.util.*;
  * @since 1.2.0-SNAPSHOT
  */
 public class GUIManager implements Listener {
-    static List<GUITemplate> guis = new ArrayList<>();
+    private static final List<GUITemplate> guis = new ArrayList<>();
 
     /**
      * Handles click events inside registered GUIs

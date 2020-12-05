@@ -71,7 +71,7 @@ public class MySQL extends SQLDatabase {
 
     @Override
     protected boolean openConnection() {
-        if (super.connection != null) if (!closeConnection()) throw new RuntimeException("Could not close connection!");
+        if (super.connection != null && !closeConnection()) throw new RuntimeException("Could not close connection!");
 
         try {
             super.connection = DriverManager.getConnection(

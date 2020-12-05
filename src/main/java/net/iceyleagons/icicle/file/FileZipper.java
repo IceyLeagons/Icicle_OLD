@@ -25,7 +25,6 @@
 package net.iceyleagons.icicle.file;
 
 import java.io.*;
-import java.nio.ByteBuffer;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 

@@ -44,7 +44,7 @@ import java.util.*;
 public abstract class BaseGUI implements GUITemplate {
 
     @Getter
-    int currentFrame;
+    protected int currentFrame;
     private final List<Frame> frames;
     @Getter
     private final Inventory inventory;

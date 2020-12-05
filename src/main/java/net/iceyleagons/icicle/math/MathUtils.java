@@ -174,7 +174,7 @@ public strictfp class MathUtils {
         double dist = 0;
         for (int i = 0; i <= vectorA.length - 1; i++)
             dist += java.lang.Math.pow(vectorA[i] - vectorB[i], 2);
-        return java.lang.Math.sqrt(dist);
+        return Math.sqrt(dist);
     }
 
     public static void applyFunc(double[] doubleArray, Function<Double, Double> func) {
