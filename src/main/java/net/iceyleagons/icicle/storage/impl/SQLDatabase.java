@@ -29,6 +29,7 @@ import net.iceyleagons.icicle.storage.StorageType;
 import net.iceyleagons.icicle.storage.entities.Container;
 import net.iceyleagons.icicle.storage.entities.ContainerData;
 import net.iceyleagons.icicle.storage.entities.DataType;
+import org.bukkit.Location;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
