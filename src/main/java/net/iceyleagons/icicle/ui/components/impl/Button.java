@@ -25,18 +25,17 @@
 package net.iceyleagons.icicle.ui.components.impl;
 
 import net.iceyleagons.icicle.ui.GUIClickEvent;
-import net.iceyleagons.icicle.ui.GUITemplate;
-import net.iceyleagons.icicle.ui.components.Component;
 import net.iceyleagons.icicle.ui.components.ComponentTemplate;
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 /**
+ * Contains all basic functions for a button.
+ *
  * @author TOTHTOMI
+ * @version 1.0.0
+ * @since 1.2.0-SNAPSHOT
  */
 public abstract class Button implements ComponentTemplate {
 

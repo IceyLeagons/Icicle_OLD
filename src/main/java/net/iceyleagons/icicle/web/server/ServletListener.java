@@ -22,36 +22,31 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle;
+package net.iceyleagons.icicle.web.server;
 
-import lombok.SneakyThrows;
-import net.iceyleagons.icicle.misc.ASCIIArt;
-import net.iceyleagons.icicle.misc.CommandUtils;
-import net.iceyleagons.icicle.ui.GUIManager;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * @author TOTHTOMI
+ * @version 1.0.0
+ * @since  1.3.0-SNAPSHOT"
  */
-public class Test extends JavaPlugin {
+public interface ServletListener {
 
-    public static JavaPlugin instance;
+    /**
+     *
+     * @param endpoint the endpoint
+     * @param request the {@link HttpServletRequest}
+     * @param response the {@link HttpServletResponse}
+     * @throws IOException if something bad happens
+     */
+    void onRequest(String endpoint, HttpServletRequest request, HttpServletResponse response) throws IOException;
 
-    @SneakyThrows
-    @Override
-    public void onEnable() {
-
-
-        Icicle.init(this,IcicleFeatures.COMMANDS,IcicleFeatures.BUNGEE);
-        Bukkit.getServer().getConsoleSender().sendMessage(Icicle.getCopyrightText());
-
-
-        instance = this;
-        System.out.println(ASCIIArt.get("Seal",null,this));
-        getServer().getPluginManager().registerEvents(new GUIManager(),this);
-        CommandUtils.init(this);
-        CommandUtils.injectCommand("test",new TestCommand());
-    }
+    /**
+     * @return a list of supported endpoints, should not be empty, if you want root just use new String[]{""}
+     */
+    String[] getSupportedEndpoints();
 
 }

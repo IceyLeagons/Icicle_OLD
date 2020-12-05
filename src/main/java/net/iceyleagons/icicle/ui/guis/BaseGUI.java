@@ -38,6 +38,8 @@ import java.util.*;
 
 /**
  * @author TOTHTOMI, Gabe
+ * @version 1.0.0
+ * @since 1.2.0-SNAPSHOT
  */
 public abstract class BaseGUI implements GUITemplate {
 
@@ -48,6 +50,9 @@ public abstract class BaseGUI implements GUITemplate {
     private final Inventory inventory;
     private final List<Player> opened;
 
+    /**
+     * Create a new BaseGUI instance
+     */
     public BaseGUI() {
         GUI gui = getClass().getAnnotation(GUI.class);
         if (gui.type().equals(InventoryType.CHEST))
@@ -60,10 +65,20 @@ public abstract class BaseGUI implements GUITemplate {
         GUIManager.registerGUI(this);
     }
 
+    /**
+     * Returns a list of all the frames.
+     *
+     * @return list of frames
+     */
     public List<Frame> getFrames() {
         return frames;
     }
 
+    /**
+     * Skips to the next frame.
+     *
+     * @return whether there was a next frame or not
+     */
     public boolean nextFrame() {
         Frame f = frames.get(currentFrame);
         inventory.clear();
@@ -78,12 +93,20 @@ public abstract class BaseGUI implements GUITemplate {
         return true;
     }
 
+    /**
+     * Update the inventory
+     */
     @Override
     public void update() {
         // We call next frame cause it does everything we need it to do.
         nextFrame();
     }
 
+    /**
+     * Open for specified players
+     *
+     * @param players whom to open it to
+     */
     @Override
     public void openForPlayers(Player... players) {
         for (Player player : players) {
@@ -92,6 +115,12 @@ public abstract class BaseGUI implements GUITemplate {
         }
     }
 
+    /**
+     * Adds frames to the gui
+     *
+     * @param ignore not used in this class
+     * @param frames the frames to add
+     */
     @Override
     public void addFrames(Integer ignore, Frame... frames) {
         this.frames.addAll(Arrays.asList(frames));

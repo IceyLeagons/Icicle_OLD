@@ -22,56 +22,29 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.ui;
+package net.iceyleagons.icicle.storage;
 
-import net.iceyleagons.icicle.ui.frame.Frame;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
+ * Not used as much currently. Features will be coming in the future
+ *
  * @author TOTHTOMI
  * @version 1.0.0
- * @since 1.2.0-SNAPSHOT
+ * @since  1.3.0-SNAPSHOT"
  */
-public interface GUITemplate {
+@AllArgsConstructor
+public enum StorageType {
 
-    /**
-     * Updates the GUI
-     */
-    void update();
+    H2("[H2]"),
+    MONGO_DB("[MongoDB]"),
+    MY_SQL("[MySQL]"),
+    POSTGRE_SQL("PostgreSQL]"),
+    SQLite("[SQLite]"),
+    MARIADB("[MariaDB]");
 
-    /**
-     * Opens the GUI for the given {@link Player}s
-     *
-     * @param player the players
-     */
-    void openForPlayers(Player... player);
-
-    /**
-     * Adds frames to the GUI.
-     * Page can be null if you use {@link net.iceyleagons.icicle.ui.guis.BaseGUI}
-     * but cannot if you use {@link net.iceyleagons.icicle.ui.guis.BasePaginatedGUI}
-     *
-     * @param page the page (can be null, read above)
-     * @param frames the frames to add
-     */
-    void addFrames(Integer page, Frame... frames);
-
-    /**
-     * @return the {@link Inventory} of the GUI
-     */
-    Inventory getInventory();
-
-    /**
-     * @return the current frame
-     */
-    int getCurrentFrame();
-
-    /**
-     * @return the registered {@link Frame}s
-     */
-    List<Frame> getFrames();
+    @Getter
+    private final String prefix;
 
 }

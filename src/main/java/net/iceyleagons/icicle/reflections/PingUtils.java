@@ -28,7 +28,6 @@ import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 /**
  * Contains operations regarding ping.
@@ -46,12 +45,8 @@ public class PingUtils {
      * @return the ping (if -1 then an error happened)
      */
     public static int getPing(Player player) {
-        Class<?> playerClazz = player.getClass();
-        Method getHandle = Reflections.getMethod(playerClazz,"getHandle",true,null);
-        if (getHandle == null) return -1;
-
         try {
-            Object craftPlayer = getHandle.invoke(player);
+            Object craftPlayer = CraftEntity.getCraftEntity(player);
             Field field = Reflections.getField(craftPlayer.getClass(),"ping",true);
 
             int ping = field.getInt(craftPlayer);

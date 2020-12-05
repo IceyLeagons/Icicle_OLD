@@ -29,12 +29,25 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 /**
  * @author TOTHTOMI
+ * @version 1.0.0
+ * @since 1.2.0-SNAPSHOT
  */
 public interface GUIClickEvent {
 
 
+    /**
+     * @return InventoryClickEvent
+     */
     InventoryClickEvent getInventoryClickEvent();
+
+    /**
+     * @return the {@link GUITemplate}
+     */
     GUITemplate getGUI();
+
+    /**
+     * @return the parent ({@link ComponentTemplate}) of this interface
+     */
     ComponentTemplate getSelfComponent();
 
 }

@@ -36,18 +36,25 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * @author TOTHTOMI
+ * @version 1.0.0
+ * @since 1.2.0-SNAPSHOT
  */
 public class Frame {
 
     @Getter
-    private Map<Integer, Map.Entry<Component, ComponentTemplate>> components; //<Slot, Entry<Component,ComponentTemplate>>
-    private List<Integer> takenPlaces;
+    private final Map<Integer, Map.Entry<Component, ComponentTemplate>> components; //<Slot, Entry<Component,ComponentTemplate>>
+    private final List<Integer> takenPlaces;
 
     public Frame() {
         this.components = new HashMap<>();
         this.takenPlaces = new ArrayList<>();
     }
 
+    /**
+     * Renders the frame to an inventory
+     *
+     * @param inventory the {@link Inventory} to render to
+     */
     public void render(Inventory inventory) {
         ItemStack[] itemStacks = new ItemStack[inventory.getSize()];
         for (int i = 0; i < inventory.getSize(); i++) {
@@ -73,6 +80,16 @@ public class Frame {
         inventory.setContents(itemStacks);
     }
 
+    /**
+     * Registers a component
+     *
+     * @param componentTemplate the component
+     * @param x the X coordinate
+     * @param y the Y coordinate
+     * @return a {@link CompletableFuture} of {@link Void}
+     * @throws IllegalArgumentException if the component does not annotate {@link Component}
+     * @throws IllegalStateException if the frame does not have room for thec component (width, height)
+     */
     public CompletableFuture<Void> registerComponent(ComponentTemplate componentTemplate, int x, int y) throws IllegalArgumentException, IllegalStateException {
         return CompletableFuture.supplyAsync(() -> {
             if (!componentTemplate.getClass().isAnnotationPresent(Component.class))
@@ -95,6 +112,12 @@ public class Frame {
         });
     }
 
+    /**
+     * Used to fire an onclick event for a slot. This will calculate which component's onclick should be invoked
+     *
+     * @param slot the clicked slot
+     * @return a {@link CompletableFuture} of {@link Void}
+     */
     public CompletableFuture<ComponentTemplate> onClick(int slot) {
         return CompletableFuture.supplyAsync(() -> {
             for (Map.Entry<Component,ComponentTemplate> componentEntry : components.values()) {
@@ -119,6 +142,15 @@ public class Frame {
         });
     }
 
+    /**
+     * Used to check whether a component has space or not
+     *
+     * @param startingX the X coordinate of the component
+     * @param startingY the Y coordinate of the component
+     * @param width the width of the component
+     * @param height the height of the component
+     * @return a {@link CompletableFuture} of {@link Boolean} if true the component has space
+     */
     private CompletableFuture<Boolean> checkSpace(int startingX, int startingY, int width, int height) {
         return CompletableFuture.supplyAsync(() -> {
             List<Integer> toBeTaken = new ArrayList<>();

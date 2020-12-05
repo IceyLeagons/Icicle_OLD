@@ -22,56 +22,31 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.ui;
+package net.iceyleagons.icicle.web.server;
 
-import net.iceyleagons.icicle.ui.frame.Frame;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-
-import java.util.List;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
+ * Handles the {@link ServletListener} running, since we cannot register multiple mappings to the same {@link HttpServlet}
+ * this is used instead.
+ *
  * @author TOTHTOMI
  * @version 1.0.0
- * @since 1.2.0-SNAPSHOT
+ * @since  1.3.0-SNAPSHOT"
  */
-public interface GUITemplate {
+public class ListenerExecutor extends HttpServlet {
 
-    /**
-     * Updates the GUI
-     */
-    void update();
+    public ListenerExecutor() {}
 
-    /**
-     * Opens the GUI for the given {@link Player}s
-     *
-     * @param player the players
-     */
-    void openForPlayers(Player... player);
-
-    /**
-     * Adds frames to the GUI.
-     * Page can be null if you use {@link net.iceyleagons.icicle.ui.guis.BaseGUI}
-     * but cannot if you use {@link net.iceyleagons.icicle.ui.guis.BasePaginatedGUI}
-     *
-     * @param page the page (can be null, read above)
-     * @param frames the frames to add
-     */
-    void addFrames(Integer page, Frame... frames);
-
-    /**
-     * @return the {@link Inventory} of the GUI
-     */
-    Inventory getInventory();
-
-    /**
-     * @return the current frame
-     */
-    int getCurrentFrame();
-
-    /**
-     * @return the registered {@link Frame}s
-     */
-    List<Frame> getFrames();
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        String endpoint = request.getServletPath().replace("/","");
+        if (EasyWebServer.listenerMap.containsKey(endpoint))
+            EasyWebServer.listenerMap.get(endpoint).onRequest(endpoint,request,response);
+    }
 
 }

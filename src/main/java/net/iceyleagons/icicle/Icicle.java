@@ -43,6 +43,8 @@ public class Icicle {
      */
     private static boolean initialized = false;
 
+    public static JavaPlugin registrar;
+
     /**
      * This needs to be called before everything else.
      *
@@ -51,6 +53,8 @@ public class Icicle {
      */
     public static void init(JavaPlugin plugin, IcicleFeatures... enabledFeatures) {
         if (!initialized) {
+            registrar = plugin;
+
             for (IcicleFeatures enabledFeature : enabledFeatures)
                 enabledFeature.getConsumer().accept(plugin);
 
@@ -62,7 +66,7 @@ public class Icicle {
      * @return the version of the current icicle library. Our versions use the Semantic versioning.
      */
     public static String getVersion() {
-        return "1.2.0-SNAPSHOT";
+        return "1.3.0-SNAPSHOT";
     }
 
     /**

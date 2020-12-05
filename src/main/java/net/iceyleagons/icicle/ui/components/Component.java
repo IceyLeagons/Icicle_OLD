@@ -33,15 +33,26 @@ import java.lang.annotation.Target;
 
 /**
  * @author TOTHTOMI
+ * @version 1.0.0
+ * @since 1.2.0-SNAPSHOT
  */
 @Target(TYPE)
 @Retention(RUNTIME)
 public @interface Component {
 
+    /**
+     * @return the ID of the component (not yet used)
+     */
     String id();
 
+    /**
+     * @return the width of the component (how many slots it requires on the X axis)
+     */
     int width();
 
+    /**
+     * @return the width of the component (how many slots it requires on the Y axis)
+     */
     int height();
 
 

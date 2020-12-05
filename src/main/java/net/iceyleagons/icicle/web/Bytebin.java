@@ -49,6 +49,7 @@ import java.util.zip.GZIPOutputStream;
  * @author TOTHTOMI
  * @version 1.0.0
  * @since 1.0.0-SNAPSHOT
+ * @deprecated Not implemented properly, OkHTTP issues
  */
 public class Bytebin {
 

@@ -22,56 +22,52 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.ui;
+package net.iceyleagons.icicle.storage;
 
-import net.iceyleagons.icicle.ui.frame.Frame;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-
-import java.util.List;
+import net.iceyleagons.icicle.storage.entities.Container;
 
 /**
  * @author TOTHTOMI
  * @version 1.0.0
- * @since 1.2.0-SNAPSHOT
+ * @since  1.3.0-SNAPSHOT"
  */
-public interface GUITemplate {
+public class StorageHandler {
+
+    private static Storage storage;
+    private static boolean active = false;
 
     /**
-     * Updates the GUI
-     */
-    void update();
-
-    /**
-     * Opens the GUI for the given {@link Player}s
+     * Sets the active storage.
      *
-     * @param player the players
+     * @param storageToActivate the {@link Storage}
      */
-    void openForPlayers(Player... player);
+    public static void setActiveStorage(Storage storageToActivate) {
+        if (storage == null) {
+            storage = storageToActivate;
+            active = storage.init();
+            if (!active) storage.getLogger().warning("[Storage] Cannot active the selected Storage. Do the driver exists for it?");
+        }
+    }
 
     /**
-     * Adds frames to the GUI.
-     * Page can be null if you use {@link net.iceyleagons.icicle.ui.guis.BaseGUI}
-     * but cannot if you use {@link net.iceyleagons.icicle.ui.guis.BasePaginatedGUI}
-     *
-     * @param page the page (can be null, read above)
-     * @param frames the frames to add
+     * Migrates a {@link Storage} to an other
+     * @param from
+     * @param to
      */
-    void addFrames(Integer page, Frame... frames);
+    public static void migrate(Storage from, Storage to) {
+        from.getContainers().forEach(container -> {
+            container.reloadFromStorage();
+            Container clone = container.clone();
+            to.addContainer(clone);
+            clone.pushToQueue();
+        });
+        to.applyChanges();
+    }
 
     /**
-     * @return the {@link Inventory} of the GUI
+     * @return the currently active storage or null
      */
-    Inventory getInventory();
-
-    /**
-     * @return the current frame
-     */
-    int getCurrentFrame();
-
-    /**
-     * @return the registered {@link Frame}s
-     */
-    List<Frame> getFrames();
-
+    public static Storage getActiveStorage() {
+        return active ? storage : null;
+    }
 }

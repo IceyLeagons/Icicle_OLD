@@ -24,7 +24,7 @@
 
 package net.iceyleagons.icicle.ui;
 
-import net.iceyleagons.icicle.Test;
+import net.iceyleagons.icicle.Icicle;
 import net.iceyleagons.icicle.misc.SchedulerUtils;
 import net.iceyleagons.icicle.ui.components.ComponentTemplate;
 import net.iceyleagons.icicle.ui.frame.Frame;
@@ -36,11 +36,22 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import java.util.*;
 
 /**
+ * Manager and stuff. Yeah epic javadoc.
+ *
  * @author TOTHTOMI, Gabe
+ * @version 1.0.0
+ * @since 1.2.0-SNAPSHOT
  */
 public class GUIManager implements Listener {
     static List<GUITemplate> guis = new ArrayList<>();
 
+    /**
+     * Handles click events inside registered GUIs
+     *
+     * @param event --
+     * @deprecated don't use outside.
+     */
+    @Deprecated
     @EventHandler
     public void onClick(InventoryClickEvent event) {
         Optional<GUITemplate> template = guis.stream().filter(inv -> Objects.equals(event.getClickedInventory(), inv.getInventory())).findFirst();
@@ -77,12 +88,19 @@ public class GUIManager implements Listener {
         }
     }
 
+
+    /**
+     * Registers the given {@link GUITemplate}
+     *
+     * @param gui the {@link GUITemplate}
+     */
     public static void registerGUI(GUITemplate gui) {
         GUI annotation = gui.getClass().getAnnotation(GUI.class);
         if (annotation != null) {
-            SchedulerUtils.runTaskTimer(Test.instance, task -> {
-                gui.update();
-            }, annotation.updateInterval(), annotation.updateIntervalUnit());
+            if (Icicle.registrar != null)
+                SchedulerUtils.runTaskTimer(Icicle.registrar, task -> {
+                    gui.update();
+                }, annotation.updateInterval(), annotation.updateIntervalUnit());
             guis.add(gui);
         }
     }

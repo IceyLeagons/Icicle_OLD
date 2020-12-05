@@ -27,37 +27,32 @@ package net.iceyleagons.icicle.ui.guis;
 import lombok.Getter;
 import lombok.NonNull;
 import net.iceyleagons.icicle.item.InventoryUtils;
-import net.iceyleagons.icicle.ui.GUI;
-import net.iceyleagons.icicle.ui.GUIClickEvent;
-import net.iceyleagons.icicle.ui.GUIManager;
-import net.iceyleagons.icicle.ui.GUITemplate;
 import net.iceyleagons.icicle.ui.components.ComponentTemplate;
 import net.iceyleagons.icicle.ui.components.impl.Button;
 import net.iceyleagons.icicle.ui.components.impl.pagination.NextButton;
 import net.iceyleagons.icicle.ui.components.impl.pagination.PreviousButton;
 import net.iceyleagons.icicle.ui.frame.Frame;
-import org.bukkit.Bukkit;
 import org.bukkit.Sound;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
 /**
  * @author TOTHTOMI
+ * @version 1.0.0
+ * @since 1.2.0-SNAPSHOT
  */
 public abstract class BasePaginatedGUI extends BaseGUI {
 
+    @Getter
     private final Map<Integer, List<Frame>> pages;
 
     @Getter
     int currentPage;
 
+    /**
+     * Creates a new BasicPaginatedGUI instance
+     */
     public BasePaginatedGUI() {
         super();
 
@@ -65,10 +60,11 @@ public abstract class BasePaginatedGUI extends BaseGUI {
         currentPage = 0;
     }
 
-    public Map<Integer, List<Frame>> getPages() {
-        return this.pages;
-    }
-
+    /**
+     * Skips to the next frame. See: {@link BaseGUI#nextFrame()}
+     *
+     * @return whether there was a next frame or not
+     */
     @Override
     public boolean nextFrame() {
         if (getFrames().size() != 1 && getFrames().size() != 0) {
@@ -81,16 +77,24 @@ public abstract class BasePaginatedGUI extends BaseGUI {
         return true;
     }
 
+    /**
+     * Update the inventory
+     */
     @Override
     public void update() {
         nextFrame();
         getPages().get(currentPage).get(currentFrame).render(super.getInventory());
     }
 
-    public void nextPage(@NonNull ComponentTemplate template) {
+    /**
+     * Goes to the next page
+     *
+     * @param template OPTIONAL! clicked template
+     */
+    public void nextPage(ComponentTemplate template) {
         int pagesTotal = pages.size();
         if (currentPage + 1 >= pagesTotal) {
-            template.setRenderAllowed(false);
+            if (template != null) template.setRenderAllowed(false);
             update();
             return;
         }
@@ -99,9 +103,14 @@ public abstract class BasePaginatedGUI extends BaseGUI {
         update();
     }
 
-    public void lastPage(@NonNull ComponentTemplate template) {
+    /**
+     * Goes to the previous page
+     *
+     * @param template OPTIONAL! clicked template
+     */
+    public void lastPage(ComponentTemplate template) {
         if (currentPage - 1 < 0) {
-            template.setRenderAllowed(false);
+            if (template != null) template.setRenderAllowed(false);
             update();
             return;
         }
@@ -111,6 +120,13 @@ public abstract class BasePaginatedGUI extends BaseGUI {
         update();
     }
 
+    /**
+     * Creates a new back button
+     *
+     * @param itemStack the itemstack of the button
+     * @param sound     the sound it makes when clicked
+     * @return the back button
+     */
     public Button getPreviousButton(@NonNull ItemStack itemStack, Sound sound) {
         return new PreviousButton(itemStack, event -> {
             if (sound != null)
@@ -119,6 +135,13 @@ public abstract class BasePaginatedGUI extends BaseGUI {
         });
     }
 
+    /**
+     * Creates a new next button
+     *
+     * @param itemStack the itemstack of the button
+     * @param sound     the sound it makes when clicked
+     * @return the next button
+     */
     public Button getNextButton(@NonNull ItemStack itemStack, Sound sound) {
         return new NextButton(itemStack, event -> {
             if (sound != null)
@@ -127,8 +150,17 @@ public abstract class BasePaginatedGUI extends BaseGUI {
         });
     }
 
+    /**
+     * Adds frames to specified pages.
+     *
+     * @param page   which page to add the frames to
+     * @param frames the frames to add
+     * @throws IllegalArgumentException if the given page is incorrect
+     */
     @Override
-    public void addFrames(Integer page, @NonNull Frame... frames) {
+    public void addFrames(Integer page, @NonNull Frame... frames) throws IllegalArgumentException {
+        if (page >= 0) throw new IllegalArgumentException("Page must not be negative");
+
         List<Frame> currentFrames;
         if (getPages().containsKey(page))
             currentFrames = getPages().get(page);

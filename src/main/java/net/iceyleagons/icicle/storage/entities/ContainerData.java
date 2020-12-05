@@ -22,56 +22,53 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.ui;
+package net.iceyleagons.icicle.storage.entities;
 
-import net.iceyleagons.icicle.ui.frame.Frame;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-
-import java.util.List;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 /**
+ * In case of SQL it represents a row in case of mongo it represents a document etc.
+ *
  * @author TOTHTOMI
  * @version 1.0.0
- * @since 1.2.0-SNAPSHOT
+ * @since  1.3.0-SNAPSHOT"
  */
-public interface GUITemplate {
+@RequiredArgsConstructor
+@Getter
+public class ContainerData {
+
+    private final DataType[] dataTypes;
+    private final String[] keys;
+    private final Object[] values;
+    private final long id;
 
     /**
-     * Updates the GUI
-     */
-    void update();
-
-    /**
-     * Opens the GUI for the given {@link Player}s
+     * Returns the value of a given key.
+     * Key must be ine the keys String[]
      *
-     * @param player the players
+     * @param key the key
+     * @return the found value or null
      */
-    void openForPlayers(Player... player);
+    public Object getValue(String key) {
+        int index = getIndex(key);
+        if (index == -1) return null;
+
+        return dataTypes[index].getJavaRepresentation().cast(values[index]);
+    }
 
     /**
-     * Adds frames to the GUI.
-     * Page can be null if you use {@link net.iceyleagons.icicle.ui.guis.BaseGUI}
-     * but cannot if you use {@link net.iceyleagons.icicle.ui.guis.BasePaginatedGUI}
+     * Returns the index of a key
      *
-     * @param page the page (can be null, read above)
-     * @param frames the frames to add
+     * @param toGet they key to find the index of
+     * @return the index of that key
      */
-    void addFrames(Integer page, Frame... frames);
-
-    /**
-     * @return the {@link Inventory} of the GUI
-     */
-    Inventory getInventory();
-
-    /**
-     * @return the current frame
-     */
-    int getCurrentFrame();
-
-    /**
-     * @return the registered {@link Frame}s
-     */
-    List<Frame> getFrames();
+    private int getIndex(String toGet) {
+        for (int i = 0; i < keys.length; i++){
+            String key = keys[i];
+            if (key.equals(toGet)) return i;
+        }
+        return -1;
+    }
 
 }

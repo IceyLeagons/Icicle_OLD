@@ -22,56 +22,21 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.ui;
+package net.iceyleagons.icicle.reflections;
 
-import net.iceyleagons.icicle.ui.frame.Frame;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-
-import java.util.List;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * @author TOTHTOMI
- * @version 1.0.0
- * @since 1.2.0-SNAPSHOT
  */
-public interface GUITemplate {
+public class CraftEntity {
 
-    /**
-     * Updates the GUI
-     */
-    void update();
-
-    /**
-     * Opens the GUI for the given {@link Player}s
-     *
-     * @param player the players
-     */
-    void openForPlayers(Player... player);
-
-    /**
-     * Adds frames to the GUI.
-     * Page can be null if you use {@link net.iceyleagons.icicle.ui.guis.BaseGUI}
-     * but cannot if you use {@link net.iceyleagons.icicle.ui.guis.BasePaginatedGUI}
-     *
-     * @param page the page (can be null, read above)
-     * @param frames the frames to add
-     */
-    void addFrames(Integer page, Frame... frames);
-
-    /**
-     * @return the {@link Inventory} of the GUI
-     */
-    Inventory getInventory();
-
-    /**
-     * @return the current frame
-     */
-    int getCurrentFrame();
-
-    /**
-     * @return the registered {@link Frame}s
-     */
-    List<Frame> getFrames();
+    public static Object getCraftEntity(Object bukkitEntity) throws InvocationTargetException, IllegalAccessException {
+        Class<?> playerClazz = bukkitEntity.getClass();
+        Method getHandle = Reflections.getMethod(playerClazz,"getHandle",true,null);
+        assert getHandle != null;
+        return getHandle.invoke(bukkitEntity);
+    }
 
 }

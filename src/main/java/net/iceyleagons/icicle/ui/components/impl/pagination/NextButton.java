@@ -32,7 +32,11 @@ import org.bukkit.inventory.ItemStack;
 import java.util.function.Consumer;
 
 /**
+ * Self explanatory
+ *
  * @author TOTHTOMI
+ * @version 1.0.0
+ * @since 1.2.0-SNAPSHOT
  */
 @Component(
         id = "pagination_next_button",

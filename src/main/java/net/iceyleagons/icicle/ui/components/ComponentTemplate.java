@@ -26,28 +26,61 @@ package net.iceyleagons.icicle.ui.components;
 
 import net.iceyleagons.icicle.ui.GUIClickEvent;
 import net.iceyleagons.icicle.ui.GUITemplate;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 /**
  * @author TOTHTOMI
+ * @version 1.0.0
+ * @since 1.2.0-SNAPSHOT
  */
 public interface ComponentTemplate {
 
+    /**
+     * Used for rendering. ex. toRender[0][0] = item
+     * [0][0] is the slot where it's placed
+     *
+     * @param toRender
+     */
     void render(ItemStack[][] toRender);
 
+    /**
+     * Sets the X and Y coordinates for this template.
+     * Invoked internally.
+     *
+     * @param x x coordinate
+     * @param y y coordinate
+     */
     void setXY(int x, int y);
 
+    /**
+     * @return true if the component should be rendered false to "hide" it
+     */
     boolean renderAllowed();
+
+    /**
+     * Sets whether the component should be rendered or not
+     * Requires {@link GUITemplate#update()}
+     *
+     * @param value if true then it will get rendered, otherwise no
+     */
     void setRenderAllowed(boolean value);
 
+    /**
+     * @return the X coordinate of the component
+     */
     int getX();
 
+    /**
+     * @return the Y coordinate of the component
+     */
     int getY();
 
+    /**
+     * Run when a player clicks on the component.
+     * The {@link org.bukkit.event.inventory.InventoryClickEvent} is cancelled by default.
+     *
+     * @param clickEvent the clickEvent
+     */
     void onClick(GUIClickEvent clickEvent);
 
 

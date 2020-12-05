@@ -22,18 +22,41 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.ui.guis;
+package net.iceyleagons.icicle.storage.entities;
 
-import net.iceyleagons.icicle.ui.GUI;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
+ * Used for easy multi storage handling.
+ * This will be gradually extended to support multiple data types in the future.
+ *
  * @author TOTHTOMI
+ * @version 1.0.0
+ * @since  1.3.0-SNAPSHOT"
  */
-@GUI(title = "Please work")
-public class SimpleGUI extends BasePaginatedGUI{
+@Getter
+@AllArgsConstructor
+public enum DataType {
 
-    public SimpleGUI() {
-        super();
-    }
+    /**
+     * Represents a {@link String}
+     */
+    STRING(String.class,"LONGTEXT"),
+    /**
+     * Represents an {@link Integer}
+     */
+    INTEGER(Integer.class,"INTEGER"),
+    /**
+     * Represents a {@link Boolean}
+     */
+    BOOLEAN(Boolean.class,"TINYINT(1)"),
+    /**
+     * Represents a {@link Long}
+     */
+    LONG(Long.class, "BIGINT");
+
+    private final Class<?> javaRepresentation;
+    private final String mysqlParameter;
 
 }
