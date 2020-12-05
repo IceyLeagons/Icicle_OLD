@@ -31,12 +31,11 @@ import org.bukkit.plugin.java.JavaPlugin;
  * Only purpose is version checking, with all sorts of metadata information.
  *
  * @author TOTHTOMI
- * @version 1.2.0
+ * @version 1.3.1
  * @since 1.0.0-SNAPSHOT
  */
 public class Icicle {
 
-    //TODO Smart schedulers with TimeUnits
 
     /**
      * Whether or not the module is initialized
@@ -66,7 +65,7 @@ public class Icicle {
      * @return the version of the current icicle library. Our versions use the Semantic versioning.
      */
     public static String getVersion() {
-        return "1.3.0-SNAPSHOT";
+        return "1.3.1-SNAPSHOT";
     }
 
     /**

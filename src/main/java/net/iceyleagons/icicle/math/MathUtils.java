@@ -31,10 +31,13 @@ import org.bukkit.util.Vector;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static java.lang.Integer.MAX_VALUE;
 
@@ -42,7 +45,7 @@ import static java.lang.Integer.MAX_VALUE;
  * Contains useful stuff regarding Math and numbers
  *
  * @author TOTHTOMI
- * @version 2.0.0
+ * @version 2.4.0
  * @since 1.1.4-SNAPSHOT
  */
 public strictfp class MathUtils {
@@ -205,6 +208,59 @@ public strictfp class MathUtils {
         double[] output = vector.clone();
         applyFunc(output, e -> e * factor);
         return output;
+    }
+
+    /**
+     * Calculates the delta of a list of doubles.
+     *
+     * @param doubleList the list to calculate the delta of
+     * @return delta
+     */
+    public static List<Double> calculateDelta(List<Double> doubleList) {
+        // Cannot calculate delta of a list that is too small.
+        if (doubleList.size() <= 1)
+            throw new IllegalArgumentException();
+
+        List<Double> out = new ArrayList<>();
+
+        for (int i = 1; i <= doubleList.size() - 1; i++)
+            out.add(doubleList.get(i) - doubleList.get(i - 1));
+
+        return out;
+    }
+
+    /**
+     * Converts a float list to a double list.
+     *
+     * @param floatList the list to convert
+     * @return converted list
+     */
+    public static List<Double> toDoubleList(List<Float> floatList) {
+        return floatList.stream().map(e -> (double) e).collect(Collectors.toList());
+    }
+
+    /**
+     * Calculates the mean of the provided double list.
+     *
+     * @param angles the list to calculate the mean of
+     * @return mean
+     */
+    public static double mean(List<Double> angles) {
+        return angles.stream().mapToDouble(e -> e).sum() / angles.size();
+    }
+
+    /**
+     * Calculates the standard deviation of the provided double list.
+     *
+     * @param angles the list to calculate the deviation of
+     * @return standard deviation
+     */
+    public static double stddev(List<Double> angles) {
+        double mean = mean(angles);
+        double output = 0;
+        for (double angle : angles)
+            output += java.lang.Math.pow(angle - mean, 2);
+        return output / angles.size();
     }
 
 
