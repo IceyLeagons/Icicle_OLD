@@ -2,4 +2,5 @@
 
 
 Icicle helps you build plugins easily by providing useful tools in an easy-to-use library.
-For detailed guidelines please check the wiki page.
+All instructions an important notices are listed in our documentation!
+You can check it here.
