@@ -83,7 +83,7 @@ dependencies {
 
 
 
-    extraLibs 'com.squareup.okhttp3:okhttp:3.14.6'
+    extraLibs 'com.squareup.okhttp3:okhttp:4.9.0'
     testCompileOnly 'org.projectlombok:lombok:1.18.16'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.16'
 
