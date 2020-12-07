@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.ui.components.impl.pagination;
+package net.iceyleagons.icicle.ui.components.impl.buttons;
 
 import net.iceyleagons.icicle.ui.GUIClickEvent;
 import net.iceyleagons.icicle.ui.components.Component;
@@ -39,12 +39,22 @@ import java.util.function.Consumer;
  * @since 1.2.0-SNAPSHOT
  */
 @Component(
-        id = "pagination_next_button",
+        id = "simple_button",
         width = 1, //Takes up one slot
         height = 1 // /\
 )
-public class NextButton extends Button {
-    public NextButton(ItemStack placeholder, Consumer<GUIClickEvent> onClick) {
-        super(placeholder, onClick);
+public class SimpleButton extends Button {
+
+    private final Consumer<GUIClickEvent> onClick;
+
+    public SimpleButton(ItemStack placeholder, Consumer<GUIClickEvent> onClick) {
+        super(placeholder);
+        this.onClick = onClick;
     }
+
+    @Override
+    public Consumer<GUIClickEvent> onClicked() {
+        return onClick;
+    }
+
 }

@@ -129,11 +129,10 @@ public class Frame {
                 boolean match = false;
                 for (int x = startX; x < component.width() + startX; x++) {
                     for (int y = startY; y < component.height() + startY; y++) {
-                        //System.out.println("x: " + x + " | y: " + y);
+
                         int toCheck = InventoryUtils.calculateSlotFromXY(x,y);
                         match = (slot == toCheck);
-                        //System.out.println(toCheck);
-                        //System.out.println(match);
+
                         if (match) return componentTemplate;
                     }
                 }

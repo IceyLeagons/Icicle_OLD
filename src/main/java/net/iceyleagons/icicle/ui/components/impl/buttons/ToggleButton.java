@@ -22,71 +22,57 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.ui.components.impl;
+package net.iceyleagons.icicle.ui.components.impl.buttons;
 
-import lombok.Setter;
+import lombok.Getter;
 import net.iceyleagons.icicle.ui.GUIClickEvent;
-import net.iceyleagons.icicle.ui.components.ComponentTemplate;
+import net.iceyleagons.icicle.ui.components.Component;
+import net.iceyleagons.icicle.ui.components.impl.Button;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.function.Consumer;
 
 /**
- * Contains all basic functions for a button.
+ * Self explanatory
  *
  * @author TOTHTOMI
  * @version 1.0.0
- * @since 1.2.0-SNAPSHOT
+ * @since 1.3.2-SNAPSHOT
  */
-public abstract class Button implements ComponentTemplate {
+@Component(
+        id = "toggle_button",
+        width = 1, //Takes up one slot
+        height = 1 // /\
+)
+public class ToggleButton extends Button {
 
-    @Setter
-    private ItemStack placeholder;
-    private int x;
-    private int y;
-    private boolean render;
+    @Getter
+    private boolean state = false;
+    private final Consumer<GUIClickEvent> onClicked;
 
-    public Button(ItemStack placeholder) {
-        this.placeholder = placeholder;
-        this.render = true;
+    /**
+     * @param off placeholder when the state is false
+     * @param on placeholder when the state is true
+     * @param onToggled a consumer to be run when the button got clicked
+     */
+    public ToggleButton(ItemStack off, ItemStack on, Consumer<GUIClickEvent> onToggled) {
+        super(off);
+
+        onClicked = guiClickEvent -> {
+            state = !state;
+            if (state) {
+                this.setPlaceholder(on);
+            } else {
+                this.setPlaceholder(off);
+            }
+
+            guiClickEvent.getGUI().update();
+            onToggled.accept(guiClickEvent);
+        };
     }
 
     @Override
-    public boolean renderAllowed() {
-        return render;
+    public Consumer<GUIClickEvent> onClicked() {
+        return this.onClicked;
     }
-
-    @Override
-    public void setRenderAllowed(boolean value) {
-        this.render = value;
-    }
-
-    @Override
-    public void render(ItemStack[][] toRender) {
-        toRender[0][0] = placeholder;
-    }
-
-    @Override
-    public void setXY(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    @Override
-    public int getX() {
-        return x;
-    }
-
-    @Override
-    public int getY() {
-        return y;
-    }
-
-    public abstract Consumer<GUIClickEvent> onClicked();
-
-    @Override
-    public void onClick(GUIClickEvent guiClickEvent) {
-        onClicked().accept(guiClickEvent);
-    }
-
 }

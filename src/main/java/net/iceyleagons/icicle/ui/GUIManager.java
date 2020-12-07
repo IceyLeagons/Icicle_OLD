@@ -25,7 +25,7 @@
 package net.iceyleagons.icicle.ui;
 
 import net.iceyleagons.icicle.Icicle;
-import net.iceyleagons.icicle.misc.SchedulerUtils;
+import net.iceyleagons.icicle.time.SchedulerUtils;
 import net.iceyleagons.icicle.ui.components.ComponentTemplate;
 import net.iceyleagons.icicle.ui.frame.Frame;
 import net.iceyleagons.icicle.ui.guis.BasePaginatedGUI;

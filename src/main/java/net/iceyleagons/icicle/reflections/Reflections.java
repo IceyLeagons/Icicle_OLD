@@ -32,6 +32,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Anything that can help you with plugin specific reflections.
+ * (it can do normal reflections as well)
+ *
+ * @author Gábe
+ * @version 1.0.0
+ * @since 1.0.0-SNAPSHOT
+ */
 public class Reflections {
     private static final String craftBukkitString;
     private static final String netMinecraftServerString;
@@ -51,14 +59,32 @@ public class Reflections {
         }
     }
 
+    /**
+     * Returns a craftbukkit class with that name
+     *
+     * @param name the class name
+     * @return the craftBukkit class
+     */
     public static Class<?> getNormalCBClass(String name) {
         return getNormalClass(craftBukkitString + name);
     }
 
+    /**
+     * Returns an NMS class with that name
+     *
+     * @param name the class name
+     * @return the craftBukkit class
+     */
     public static Class<?> getNormalNMSClass(String name) {
         return getNormalClass(netMinecraftServerString + name);
     }
 
+    /**
+     * Returns a class with that name
+     *
+     * @param name the class name
+     * @return the craftBukkit class
+     */
     public static Class<?> getNormalClass(String name) {
         try {
             return Class.forName(name);
@@ -68,6 +94,15 @@ public class Reflections {
         }
     }
 
+    /**
+     * Returns a specified method from a class, and if required sets it to be accessible
+     *
+     * @param clazz the class
+     * @param methodName the name of the method
+     * @param forceAccessible whether to force it accessible or not
+     * @param parameterTypes the parameter types for that method
+     * @return the method
+     */
     public static Method getMethod(final Class<?> clazz, String methodName, boolean forceAccessible, final Class<?>... parameterTypes) {
         try {
             Method method = clazz.getDeclaredMethod(methodName, parameterTypes);
@@ -81,6 +116,13 @@ public class Reflections {
         return null;
     }
 
+    /**
+     * Returns all methods in a class, and sets them to be accessible if required
+     *
+     * @param clazz the class
+     * @param forceAccessible whether to force it accessible or not
+     * @return the array of methods
+     */
     public static Method[] getMethods(final Class<?> clazz, boolean forceAccessible) {
         Method[] methods = clazz.getDeclaredMethods();
         if (forceAccessible)
@@ -90,14 +132,28 @@ public class Reflections {
         return methods;
     }
 
-    public static Field[] getFields(final Class<?> cls) {
-        final Field[] fields = cls.getDeclaredFields();
+    /**
+     * Returns all fields in a class, and sets them to be accessible
+     *
+     * @param clazz the class
+     * @return the array of fields
+     */
+    public static Field[] getFields(final Class<?> clazz) {
+        final Field[] fields = clazz.getDeclaredFields();
         for (final Field f : fields)
             f.setAccessible(true);
 
         return fields;
     }
 
+    /**
+     * Returns a field with a specified name ands sets it to be accessible if required
+     *
+     * @param clazz the class
+     * @param name the name of the field
+     * @param forceAccessible whether to force it accessible or not
+     * @return the field
+     */
     public static Field getField(final Class<?> clazz, String name, boolean forceAccessible) {
         Field field = null;
         try {
@@ -109,6 +165,21 @@ public class Reflections {
         return field;
     }
 
+    /**
+     * Returns a field from the class with a specified data type on the specified index.
+     * Since this may be a bit hard to understand here's an example:
+     * Ex.:
+     *   int a = 0;
+     *   int b = 2;
+     *   int c = 3;
+     *
+     *   c = (int) getField(class,Integer.class,2).get(obj);
+     *
+     * @param clazz the class
+     * @param dataType the datatype
+     * @param index the index
+     * @return the field
+     */
     public static Field getField(final Class<?> clazz, final Class<?> dataType, final int index) {
         int i = 0;
         Field finalField = null;

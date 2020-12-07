@@ -24,12 +24,14 @@
 
 package net.iceyleagons.icicle.jtext;
 
+import net.iceyleagons.icicle.misc.commands.CommandInjectException;
 import net.iceyleagons.icicle.misc.commands.CommandUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -60,11 +62,16 @@ public class JText implements CommandExecutor {
             clickConsumers = new HashMap<>();
         }
         CommandUtils.init(javaPlugin);
-        CommandUtils.injectCommand("click", new JText());
+        try {
+            CommandUtils.injectCommand("click", new JText());
+        } catch (CommandInjectException e) {
+            e.printStackTrace();
+            javaPlugin.getLogger().warning("To fix this you will need to reload the server, but it may not improve anything.");
+        }
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
         if (command.getName().equalsIgnoreCase(COMMAND)) {
             if (args.length == 0) return true;
             if (!args[0].isEmpty()) {

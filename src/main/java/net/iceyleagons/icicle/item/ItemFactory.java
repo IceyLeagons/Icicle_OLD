@@ -80,6 +80,7 @@ public class ItemFactory {
 
         this.itemStack = itemStack;
         this.itemMeta = itemStack.getItemMeta();
+        assert this.itemMeta != null;
         this.lore = this.itemMeta.getLore();
 
     }

@@ -22,29 +22,26 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.ui.components.impl.pagination;
+package net.iceyleagons.icicle.misc.maps;
 
-import net.iceyleagons.icicle.ui.GUIClickEvent;
-import net.iceyleagons.icicle.ui.components.Component;
-import net.iceyleagons.icicle.ui.components.impl.Button;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.function.Consumer;
+import org.bukkit.entity.Player;
+import org.bukkit.map.MapCanvas;
+import org.bukkit.map.MapRenderer;
+import org.bukkit.map.MapView;
 
 /**
- * Self explanatory
- *
  * @author TOTHTOMI
  * @version 1.0.0
  * @since 1.2.0-SNAPSHOT
  */
-@Component(
-        id = "simple_button",
-        width = 1, //Takes up one slot
-        height = 1 // /\
-)
-public class SimpleButton extends Button {
-    public SimpleButton(ItemStack placeholder, Consumer<GUIClickEvent> onClick) {
-        super(placeholder, onClick);
-    }
+public interface MapUpdateListener {
+    /**
+     * Invoked by {@link MapRenderer#render(MapView, MapCanvas, Player)}
+     * Check javadoc there
+     *
+     * @param map
+     * @param canvas
+     * @param player
+     */
+    void render(MapView map, MapCanvas canvas, Player player);
 }

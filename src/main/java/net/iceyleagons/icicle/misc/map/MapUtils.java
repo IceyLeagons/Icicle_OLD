@@ -22,32 +22,34 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.ui.components.impl.pagination;
+package net.iceyleagons.icicle.misc.map;
 
-import net.iceyleagons.icicle.ui.GUIClickEvent;
-import net.iceyleagons.icicle.ui.components.Component;
-import net.iceyleagons.icicle.ui.components.impl.Button;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.function.Consumer;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
- * Self explanatory
+ * Contains operations regarding {@link Map}s
  *
  * @author TOTHTOMI
  * @version 1.0.0
- * @since 1.2.0-SNAPSHOT
+ * @since 1.0.0
  */
-@Component(
-        id = "pagination_prev_button",
-        width = 1, //Takes up one slot
-        height = 1 // /\
-)
-public class PreviousButton extends Button {
-    public PreviousButton(ItemStack placeholder, Consumer<GUIClickEvent> onClick) {
-        super(placeholder, onClick);
+public class MapUtils {
+
+    /**
+     * This wil sort the given map by it's values.
+     *
+     * @param map the map
+     * @param <K> the key
+     * @param <V> the value
+     * @return a new {@link LinkedHashMap} with the sorted order.
+     */
+    public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
+        List<Map.Entry<K, V>> list = new ArrayList<>(map.entrySet());
+        list.sort(Map.Entry.comparingByValue());
+        return new LinkedHashMap<>(list.parallelStream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
     }
-
-
-
 }

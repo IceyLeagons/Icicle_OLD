@@ -22,12 +22,13 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.misc;
+package net.iceyleagons.icicle.misc.maps;
 
 import org.bukkit.entity.Player;
 import org.bukkit.map.MapCanvas;
 import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Don't crash your server! Use this to handle map rendering properly and efficiently.
@@ -59,23 +60,11 @@ public class BetterMapRenderer extends MapRenderer {
     }
 
     @Override
-    public void render(MapView map, MapCanvas canvas, Player player) {
+    public void render(@NotNull MapView map, @NotNull MapCanvas canvas, @NotNull Player player) {
         if (updated) {
             mapUpdateListener.render(map, canvas, player);
             updated = false;
         }
-    }
-
-    public static interface MapUpdateListener {
-        /**
-         * Invoked by {@link MapRenderer#render(MapView, MapCanvas, Player)}
-         * Check javadoc there
-         *
-         * @param map
-         * @param canvas
-         * @param player
-         */
-        void render(MapView map, MapCanvas canvas, Player player);
     }
 
 }

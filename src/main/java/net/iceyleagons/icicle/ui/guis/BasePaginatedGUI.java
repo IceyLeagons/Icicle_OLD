@@ -29,8 +29,7 @@ import lombok.NonNull;
 import net.iceyleagons.icicle.item.InventoryUtils;
 import net.iceyleagons.icicle.ui.components.ComponentTemplate;
 import net.iceyleagons.icicle.ui.components.impl.Button;
-import net.iceyleagons.icicle.ui.components.impl.pagination.NextButton;
-import net.iceyleagons.icicle.ui.components.impl.pagination.PreviousButton;
+import net.iceyleagons.icicle.ui.components.impl.buttons.SimpleButton;
 import net.iceyleagons.icicle.ui.frame.Frame;
 import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
@@ -128,7 +127,7 @@ public abstract class BasePaginatedGUI extends BaseGUI {
      * @return the back button
      */
     public Button getPreviousButton(@NonNull ItemStack itemStack, Sound sound) {
-        return new PreviousButton(itemStack, event -> {
+        return new SimpleButton(itemStack, event -> {
             if (sound != null)
                 InventoryUtils.clickSound(event.getInventoryClickEvent(), sound);
             lastPage(event.getSelfComponent());
@@ -143,7 +142,7 @@ public abstract class BasePaginatedGUI extends BaseGUI {
      * @return the next button
      */
     public Button getNextButton(@NonNull ItemStack itemStack, Sound sound) {
-        return new NextButton(itemStack, event -> {
+        return new SimpleButton(itemStack, event -> {
             if (sound != null)
                 InventoryUtils.clickSound(event.getInventoryClickEvent(), sound);
             nextPage(event.getSelfComponent());
