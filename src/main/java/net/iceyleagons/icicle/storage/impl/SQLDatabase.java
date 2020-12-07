@@ -24,6 +24,7 @@
 
 package net.iceyleagons.icicle.storage.impl;
 
+import lombok.SneakyThrows;
 import net.iceyleagons.icicle.storage.Storage;
 import net.iceyleagons.icicle.storage.StorageException;
 import net.iceyleagons.icicle.storage.StorageType;
@@ -97,6 +98,7 @@ public abstract class SQLDatabase extends Storage {
      *
      * @return the {@link Connection}
      */
+    @SneakyThrows
     private Connection getConnection() {
         closeConnection();
         openConnection();
