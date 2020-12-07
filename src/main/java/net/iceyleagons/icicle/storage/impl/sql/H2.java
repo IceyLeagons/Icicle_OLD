@@ -24,6 +24,7 @@
 
 package net.iceyleagons.icicle.storage.impl.sql;
 
+import net.iceyleagons.icicle.storage.StorageException;
 import net.iceyleagons.icicle.storage.StorageType;
 import net.iceyleagons.icicle.storage.impl.SQLDatabase;
 
@@ -35,12 +36,15 @@ import java.util.logging.Logger;
  * MySQL implementation of {@link SQLDatabase}
  *
  * @author TOTHTOMI
- * @version 1.0.0
+ * @version 1.1.0
  * @since  1.3.0-SNAPSHOT"
  */
 public class H2 extends SQLDatabase {
 
-    private final String host,databaseName,username,password;
+    private final String host;
+    private final String databaseName;
+    private final String username;
+    private final String password;
 
 
     /**
@@ -59,19 +63,18 @@ public class H2 extends SQLDatabase {
     }
 
     @Override
-    protected boolean init() {
+    protected boolean init() throws StorageException {
         try {
             Class.forName("org.h2.Driver").newInstance();
         } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+            throw new StorageException("Could not find Driver for H2 (org.h2.Driver)!");
         }
         return true;
     }
 
     @Override
-    protected boolean openConnection() {
-        if (super.connection != null && !closeConnection()) throw new RuntimeException("Could not close connection!");
+    protected boolean openConnection() throws StorageException {
+        if (super.connection != null && !closeConnection()) throw new StorageException("Could not close connection!");
 
         try {
             super.connection = DriverManager.getConnection(

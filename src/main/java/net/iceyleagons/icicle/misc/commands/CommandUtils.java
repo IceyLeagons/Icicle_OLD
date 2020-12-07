@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.misc;
+package net.iceyleagons.icicle.misc.commands;
 
 import lombok.NonNull;
 import net.iceyleagons.icicle.reflections.Reflections;
@@ -43,7 +43,7 @@ import java.util.List;
  * Contains handy functions regarding commands.
  *
  * @author TOTHTOMI
- * @version 1.1.4-SNAPSHOT
+ * @version 1.2.0
  * @since 1.1.4-SNAPSHOT
  */
 public class CommandUtils {
@@ -64,8 +64,9 @@ public class CommandUtils {
      *
      * @param command         the command
      * @param commandExecutor the commandExecutor
+     * @throws CommandInjectException if errors happen during the injection
      */
-    public static void injectCommand(@NonNull String command, @NonNull CommandExecutor commandExecutor) {
+    public static void injectCommand(@NonNull String command, @NonNull CommandExecutor commandExecutor) throws CommandInjectException {
         injectCommand(command, commandExecutor, null, null, null, null, null, null);
     }
 
@@ -80,15 +81,16 @@ public class CommandUtils {
      * @param permission        permission for the command (optional)
      * @param permissionMessage insufficient permission error messaga (optional)
      * @param aliases           aliases for the command (optional)
+     * @throws CommandInjectException if errors happen during the injection
      */
     public static void injectCommand(@NonNull String command, @NonNull CommandExecutor commandExecutor,
                                      TabCompleter tabCompleter, String usage, String description,
                                      String permission, String permissionMessage,
-                                     List<String> aliases) {
-        if (plugin == null) throw new IllegalStateException("CommandUtils is not initialized!");
+                                     List<String> aliases) throws CommandInjectException {
+        if (plugin == null) throw new CommandInjectException(command,"CommandUtils is not initialized");
         try {
             final Field bukkitCommandMap = Reflections.getField(plugin.getServer().getClass(), "commandMap", true);
-            if (bukkitCommandMap == null) throw new RuntimeException("Could not inject command! Error at line 54");
+            if (bukkitCommandMap == null) throw new CommandInjectException(command,"CommandMap is unavailable");
 
             CommandMap commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
 
@@ -106,7 +108,7 @@ public class CommandUtils {
             pluginCommand.setAliases(Collections.emptyList());
             commandMap.register(command, pluginCommand);
         } catch (Exception e) {
-            throw new RuntimeException("Could not inject command! Error at line 54", e);
+            throw new CommandInjectException(command, e);
         }
     }
 

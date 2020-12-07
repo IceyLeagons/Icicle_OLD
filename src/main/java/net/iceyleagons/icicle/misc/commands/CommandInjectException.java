@@ -22,22 +22,29 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.reflections;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+package net.iceyleagons.icicle.misc.commands;
 
 /**
+ * @author TOTHTOMI
+ * @since 1.4.0-SNAPSHOT
  * @version 1.0.0
- * @since 1.1.4-SNAPSHOT
  */
-public class CraftEntity {
+public class CommandInjectException extends Exception{
 
-    public static Object getCraftEntity(Object bukkitEntity) throws InvocationTargetException, IllegalAccessException {
-        Class<?> playerClazz = bukkitEntity.getClass();
-        Method getHandle = Reflections.getMethod(playerClazz,"getHandle",true,null);
-        assert getHandle != null;
-        return getHandle.invoke(bukkitEntity);
+    /**
+     * @param command the command name
+     * @param cause the cause of the exception
+     */
+    public CommandInjectException(String command, String cause) {
+        super("The command named " + command + " can not be injected! Cause: " + cause);
+    }
+
+    /**
+     * @param command the command
+     * @param cause the cause of the exception
+     */
+    public CommandInjectException(String command, Throwable cause) {
+        super("The command named " + command + " can not be injected! Cause: ",cause);
     }
 
 }

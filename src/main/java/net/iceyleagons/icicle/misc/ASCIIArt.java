@@ -30,6 +30,7 @@ import net.iceyleagons.icicle.web.WebUtils;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
@@ -78,7 +79,7 @@ public class ASCIIArt {
         String fontName = font != null ? font : "";
         String fileName = text.replace(" ", "-") + fontName;
         File folder = new File(javaPlugin.getDataFolder() + File.separator + "icicle-ascii");
-        if (!folder.exists()) if (!folder.mkdirs()) throw new RuntimeException("Could not create folder icicle-ascii");
+        if (!folder.exists() && !folder.mkdirs()) throw new IOException("Could not create folder icicle-ascii");
 
 
         File file = new File(folder, fileName + ".txt");

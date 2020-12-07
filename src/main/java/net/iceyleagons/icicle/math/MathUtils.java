@@ -45,7 +45,7 @@ import static java.lang.Integer.MAX_VALUE;
  * Contains useful stuff regarding Math and numbers
  *
  * @author TOTHTOMI
- * @version 2.4.0
+ * @version 2.4.1
  * @since 1.1.4-SNAPSHOT
  */
 public strictfp class MathUtils {
@@ -173,7 +173,7 @@ public strictfp class MathUtils {
     public static double euclideanDistance(double[] vectorA, double[] vectorB) {
         double dist = 0;
         for (int i = 0; i <= vectorA.length - 1; i++)
-            dist += java.lang.Math.pow(vectorA[i] - vectorB[i], 2);
+            dist += Math.pow(vectorA[i] - vectorB[i], 2);
         return Math.sqrt(dist);
     }
 
@@ -259,7 +259,7 @@ public strictfp class MathUtils {
         double mean = mean(angles);
         double output = 0;
         for (double angle : angles)
-            output += java.lang.Math.pow(angle - mean, 2);
+            output += Math.pow(angle - mean, 2);
         return output / angles.size();
     }
 

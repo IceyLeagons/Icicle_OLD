@@ -34,7 +34,11 @@ import org.bukkit.util.Vector;
 public class Vector3D {
 
     @NonNull
-    private double x, y, z;
+    private double x;
+    @NonNull
+    private double y;
+    @NonNull
+    private double z;
 
     public Vector3D(Vector vector) {
         this(vector.getX(), vector.getY(), vector.getZ());

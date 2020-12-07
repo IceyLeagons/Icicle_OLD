@@ -24,6 +24,7 @@
 
 package net.iceyleagons.icicle.storage.impl.sql;
 
+import net.iceyleagons.icicle.storage.StorageException;
 import net.iceyleagons.icicle.storage.StorageType;
 import net.iceyleagons.icicle.storage.impl.SQLDatabase;
 
@@ -36,7 +37,7 @@ import java.util.logging.Logger;
  * MySQL implementation of {@link SQLDatabase}
  *
  * @author TOTHTOMI
- * @version 1.0.0
+ * @version 1.1.0
  * @since  1.3.0-SNAPSHOT"
  */
 public class SQLite extends SQLDatabase {
@@ -53,19 +54,18 @@ public class SQLite extends SQLDatabase {
     }
 
     @Override
-    protected boolean init() {
+    protected boolean init() throws StorageException {
         try {
             Class.forName("org.sqlite.JDBC").newInstance();
         } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+            throw new StorageException("Could not find Driver for SQLite (org.sqlite.JDBC)!");
         }
         return true;
     }
 
     @Override
-    protected boolean openConnection() {
-        if (super.connection != null && !closeConnection()) throw new RuntimeException("Could not close connection!");
+    protected boolean openConnection() throws StorageException {
+        if (super.connection != null && !closeConnection()) throw new StorageException("Could not close connection!");
         try {
             super.connection = DriverManager.getConnection(
                     String.format("jdbc:sqlite:%s",databaseFile.getAbsolutePath()));

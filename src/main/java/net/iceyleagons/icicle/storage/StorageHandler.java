@@ -29,7 +29,7 @@ import net.iceyleagons.icicle.storage.entities.Container;
 /**
  * @author TOTHTOMI
  * @version 1.0.0
- * @since  1.3.0-SNAPSHOT"
+ * @since  1.3.0-SNAPSHOT
  */
 public class StorageHandler {
 
@@ -41,7 +41,7 @@ public class StorageHandler {
      *
      * @param storageToActivate the {@link Storage}
      */
-    public static void setActiveStorage(Storage storageToActivate) {
+    public static void setActiveStorage(Storage storageToActivate) throws StorageException {
         if (storage == null) {
             storage = storageToActivate;
             active = storage.init();

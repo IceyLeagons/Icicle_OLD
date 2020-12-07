@@ -27,7 +27,7 @@ package net.iceyleagons.icicle;
 import lombok.Getter;
 import net.iceyleagons.icicle.bungee.BungeeUtils;
 import net.iceyleagons.icicle.jtext.JText;
-import net.iceyleagons.icicle.misc.CommandUtils;
+import net.iceyleagons.icicle.misc.commands.CommandUtils;
 import net.iceyleagons.icicle.ui.GUIManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;

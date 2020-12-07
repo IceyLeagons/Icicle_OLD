@@ -24,7 +24,7 @@
 
 package net.iceyleagons.icicle.jtext;
 
-import net.iceyleagons.icicle.misc.CommandUtils;
+import net.iceyleagons.icicle.misc.commands.CommandUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

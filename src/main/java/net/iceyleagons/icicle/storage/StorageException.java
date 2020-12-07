@@ -22,22 +22,22 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.reflections;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+package net.iceyleagons.icicle.storage;
 
 /**
+ * An exception regarding all issues of a Storage/Storage handler
+ *
+ * @author TOTHTOMI
+ * @since 1.4.0-SNAPSHOT
  * @version 1.0.0
- * @since 1.1.4-SNAPSHOT
  */
-public class CraftEntity {
+public class StorageException extends Exception{
 
-    public static Object getCraftEntity(Object bukkitEntity) throws InvocationTargetException, IllegalAccessException {
-        Class<?> playerClazz = bukkitEntity.getClass();
-        Method getHandle = Reflections.getMethod(playerClazz,"getHandle",true,null);
-        assert getHandle != null;
-        return getHandle.invoke(bukkitEntity);
+    /**
+     * @param msg the message to throw
+     */
+    public StorageException(String msg) {
+        super(msg);
     }
 
 }

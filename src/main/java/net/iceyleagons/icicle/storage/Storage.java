@@ -37,7 +37,7 @@ import java.util.logging.Logger;
 
 /**
  * @author TOTHTOMI
- * @version 1.0.0
+ * @version 1.1.0
  * @since  1.3.0-SNAPSHOT"
  */
 public abstract class Storage {
@@ -96,15 +96,17 @@ public abstract class Storage {
      * Initializes the database
      *
      * @return true if successful
+     * @throws StorageException if the expected Driver class is not found
      */
-    protected abstract boolean init();
+    protected abstract boolean init() throws StorageException;
 
     /**
      * Opens a connection to the database
      *
      * @return true if successful
+     * @throws StorageException if an issue happens during opening a connection to the database
      */
-    protected abstract boolean openConnection();
+    protected abstract boolean openConnection() throws StorageException;
 
     /**
      * Closes the connection to the database

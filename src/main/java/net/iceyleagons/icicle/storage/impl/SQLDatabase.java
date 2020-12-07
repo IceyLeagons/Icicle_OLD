@@ -25,6 +25,7 @@
 package net.iceyleagons.icicle.storage.impl;
 
 import net.iceyleagons.icicle.storage.Storage;
+import net.iceyleagons.icicle.storage.StorageException;
 import net.iceyleagons.icicle.storage.StorageType;
 import net.iceyleagons.icicle.storage.entities.Container;
 import net.iceyleagons.icicle.storage.entities.ContainerData;
@@ -65,13 +66,13 @@ public abstract class SQLDatabase extends Storage {
      * Documented in {@link Storage}
      */
     @Override
-    protected abstract boolean init();
+    protected abstract boolean init() throws StorageException;
 
     /**
      * Documented in {@link Storage}
      */
     @Override
-    protected abstract boolean openConnection();
+    protected abstract boolean openConnection() throws StorageException;
 
     /**
      * Documented in {@link Storage}

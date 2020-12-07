@@ -41,7 +41,8 @@ public abstract class Button implements ComponentTemplate {
 
     private final ItemStack placeholder;
     private final Consumer<GUIClickEvent> onClick;
-    private int x,y;
+    private int x;
+    private int y;
     private boolean render;
 
     public Button(ItemStack placeholder, Consumer<GUIClickEvent> onClick) {

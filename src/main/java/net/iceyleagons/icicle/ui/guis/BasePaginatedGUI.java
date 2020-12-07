@@ -48,7 +48,7 @@ public abstract class BasePaginatedGUI extends BaseGUI {
     private final Map<Integer, List<Frame>> pages;
 
     @Getter
-    int currentPage;
+    private int currentPage;
 
     /**
      * Creates a new BasicPaginatedGUI instance
