@@ -56,7 +56,7 @@ dependencies {
     compile group: 'org.json', name: 'json', version: '20201115'
 
     // https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-server
-    compile group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.4.0.M0'
+    compile group: 'org.eclipse.jetty', name: 'jetty-server', version: '11.0.0'
     // https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-servlet
     compile group: 'org.eclipse.jetty', name: 'jetty-servlet', version: '9.4.35.v20201120'
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
