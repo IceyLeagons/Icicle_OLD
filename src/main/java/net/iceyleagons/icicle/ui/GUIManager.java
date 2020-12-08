@@ -91,6 +91,8 @@ public class GUIManager implements Listener {
 
     /**
      * Registers the given {@link GUITemplate}
+     * It's mostly done automatically, if you create your own GUI that does not extend ours
+     * you will need to invoke this.
      *
      * @param gui the {@link GUITemplate}
      */

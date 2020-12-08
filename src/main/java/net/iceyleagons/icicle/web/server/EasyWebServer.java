@@ -24,6 +24,8 @@
 
 package net.iceyleagons.icicle.web.server;
 
+import jakarta.servlet.Servlet;
+import jakarta.servlet.http.HttpServlet;
 import lombok.SneakyThrows;
 import org.eclipse.jetty.http.HttpVersion;
 import org.eclipse.jetty.server.Connector;
@@ -33,8 +35,6 @@ import org.eclipse.jetty.server.SslConnectionFactory;
 import org.eclipse.jetty.servlet.ServletHandler;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 
-import javax.servlet.Servlet;
-import javax.servlet.http.HttpServlet;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,7 +45,7 @@ import java.util.Map;
  * @version 1.0.0
  * @since  1.3.0-SNAPSHOT"
  */
-public class EasyWebServer extends HttpServlet{
+public class EasyWebServer extends HttpServlet {
 
     private final Server server;
     private final ServletHandler servletHandler;
