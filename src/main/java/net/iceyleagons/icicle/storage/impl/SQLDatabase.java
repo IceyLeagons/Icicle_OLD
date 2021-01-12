@@ -45,7 +45,7 @@ import java.util.logging.Logger;
  *
  * @author TOTHTOMI
  * @version 1.0.0
- * @since  1.3.0-SNAPSHOT"
+ * @since 1.3.0-SNAPSHOT"
  */
 public abstract class SQLDatabase extends Storage {
 
@@ -53,13 +53,12 @@ public abstract class SQLDatabase extends Storage {
     protected Connection connection = null;
 
     /**
-     *
      * @param databaseName the databaseName
-     * @param type the {@link StorageType}
-     * @param logger the {@link Logger} to use
+     * @param type         the {@link StorageType}
+     * @param logger       the {@link Logger} to use
      */
     public SQLDatabase(String databaseName, StorageType type, Logger logger) {
-        super(type,logger);
+        super(type, logger);
         this.databaseName = databaseName;
     }
 
@@ -112,12 +111,12 @@ public abstract class SQLDatabase extends Storage {
     @Override
     public void deleteData(String key, Object value, String containerName) {
         String query;
-        if (databaseName != null) query = String.format("DELETE FROM %s.%s WHERE ? = ?",databaseName,containerName);
-        else query = String.format("DELETE FROM %s WHERE ? = ?",containerName);
+        if (databaseName != null) query = String.format("DELETE FROM %s.%s WHERE ? = ?", databaseName, containerName);
+        else query = String.format("DELETE FROM %s WHERE ? = ?", containerName);
         try {
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-            preparedStatement.setString(0,key);
-            preparedStatement.setObject(1,value);
+            preparedStatement.setString(0, key);
+            preparedStatement.setObject(1, value);
             preparedStatement.executeUpdate();
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
@@ -135,20 +134,20 @@ public abstract class SQLDatabase extends Storage {
 
         try {
             String query;
-            if (databaseName != null) query = String.format("SELECT * FROM %s.%s WHERE 1",databaseName,containerName);
-            else query = String.format("SELECT * FROM %s WHERE 1",containerName);
+            if (databaseName != null) query = String.format("SELECT * FROM %s.%s WHERE 1", databaseName, containerName);
+            else query = String.format("SELECT * FROM %s WHERE 1", containerName);
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 long id = resultSet.getLong("id");
                 DataType[] dataTypes = container.getDataKeyTypes();
 
                 Object[] values = new Object[dataTypes.length];
                 for (int i = 0; i < dataTypes.length; i++) {
-                    values[i] = resultSet.getObject(i+2);
+                    values[i] = resultSet.getObject(i + 2);
                 }
-                containerData.add(new ContainerData(dataTypes,container.getDataKeyNames(),values,id));
+                containerData.add(new ContainerData(dataTypes, container.getDataKeyNames(), values, id));
             }
 
             getConnection().close();
@@ -161,11 +160,11 @@ public abstract class SQLDatabase extends Storage {
         return containerData;
     }
 
-    private void applyInsertion(String query,List<ContainerData> insertList) {
+    private void applyInsertion(String query, List<ContainerData> insertList) {
         insertList.forEach(queueData -> { //looping through the insertMap
             try {
                 PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-                preparedStatement.setLong(1,queueData.getId());
+                preparedStatement.setLong(1, queueData.getId());
                 DataType[] dataTypes = queueData.getDataTypes(); //Datatypes for the rows' columns'
                 Object[] values = queueData.getValues(); //Values for the rows' columns'
                 for (int i = 0; i < dataTypes.length; i++) {
@@ -174,8 +173,8 @@ public abstract class SQLDatabase extends Storage {
                     Object toEnter = dataType.getJavaRepresentation().cast(value);
                     //System.out.println(toEnter);
 
-                    int toSet = i+2;
-                    insert(dataType,toEnter,preparedStatement,toSet);
+                    int toSet = i + 2;
+                    insert(dataType, toEnter, preparedStatement, toSet);
                 }
                 preparedStatement.executeUpdate();
                 getConnection().close();
@@ -188,31 +187,30 @@ public abstract class SQLDatabase extends Storage {
     /**
      * Inserts data to the given {@link PreparedStatement}
      *
-     * @param dataType the {@link DataType}
-     * @param toEnter the value to insert
+     * @param dataType          the {@link DataType}
+     * @param toEnter           the value to insert
      * @param preparedStatement the {@link PreparedStatement}
-     * @param toSet parameter indexs
+     * @param toSet             parameter indexs
      * @throws SQLException
      */
     private void insert(DataType dataType, Object toEnter, PreparedStatement preparedStatement, int toSet) throws SQLException {
-        switch (dataType){
+        switch (dataType) {
             case STRING:
-                preparedStatement.setString(toSet,(String)toEnter);
+                preparedStatement.setString(toSet, (String) toEnter);
                 break;
             case BOOLEAN:
-                preparedStatement.setBoolean(toSet,(Boolean)toEnter);
+                preparedStatement.setBoolean(toSet, (Boolean) toEnter);
                 break;
             case INTEGER:
-                preparedStatement.setInt(toSet,(Integer)toEnter);
+                preparedStatement.setInt(toSet, (Integer) toEnter);
                 break;
             case LONG:
-                preparedStatement.setLong(toSet,(Long)toEnter);
+                preparedStatement.setLong(toSet, (Long) toEnter);
                 break;
             default:
                 break;
         }
     }
-
 
 
     /**
@@ -224,8 +222,8 @@ public abstract class SQLDatabase extends Storage {
         lastUpdated = System.currentTimeMillis();
         String startSchema;
         if (databaseName != null) startSchema = "REPLACE INTO %s.%s(id, %s) VALUES (?,%s)";
-        else startSchema =  "REPLACE INTO %s(id, %s) VALUES (?,%s)";
-        containerMap.forEach((tableName,container) -> { //looping through our queue
+        else startSchema = "REPLACE INTO %s(id, %s) VALUES (?,%s)";
+        containerMap.forEach((tableName, container) -> { //looping through our queue
             if (!container.getQueue().isEmpty()) {
                 List<ContainerData> queue = container.getQueue();
                 createTableIfNotExists(tableName, queue); //creating table
@@ -253,7 +251,8 @@ public abstract class SQLDatabase extends Storage {
                 String values = valuesBuilder.substring(0, valuesBuilder.length() - 2);
 
                 String query;
-                if (databaseName != null) query = String.format(startSchema, databaseName, tableName, columns, values); //creating query
+                if (databaseName != null)
+                    query = String.format(startSchema, databaseName, tableName, columns, values); //creating query
                 else query = String.format(startSchema, tableName, columns, values); //creating query
                 info("Running query " + query);
 
@@ -289,10 +288,12 @@ public abstract class SQLDatabase extends Storage {
             }
         });
 
-        String values = stringBuilder.substring(0,stringBuilder.length()-2); //Removing the last comma and space
+        String values = stringBuilder.substring(0, stringBuilder.length() - 2); //Removing the last comma and space
         String query;
-        if (databaseName != null) query = String.format("CREATE TABLE IF NOT EXISTS %s.%s (id BIGINT PRIMARY KEY, %s)",databaseName,name,values); //Creating query
-        else query = String.format("CREATE TABLE IF NOT EXISTS %s (id BIGINT PRIMARY KEY, %s)",name,values); //Creating query
+        if (databaseName != null)
+            query = String.format("CREATE TABLE IF NOT EXISTS %s.%s (id BIGINT PRIMARY KEY, %s)", databaseName, name, values); //Creating query
+        else
+            query = String.format("CREATE TABLE IF NOT EXISTS %s (id BIGINT PRIMARY KEY, %s)", name, values); //Creating query
 
         info("Running query " + query);
         try {

@@ -58,7 +58,7 @@ public class InventoryUtils {
      */
     public static void clickSound(InventoryClickEvent event, Sound sound) {
         Player player = (Player) event.getWhoClicked();
-        player.playSound(event.getWhoClicked().getLocation(),sound, 1f, 1);
+        player.playSound(event.getWhoClicked().getLocation(), sound, 1f, 1);
     }
 
 }

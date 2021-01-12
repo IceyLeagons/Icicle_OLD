@@ -38,23 +38,23 @@ import java.util.List;
  *
  * @author TOTHTOMI
  * @version 1.0.0
- * @since  1.3.0-SNAPSHOT"
+ * @since 1.3.0-SNAPSHOT"
  */
 @RequiredArgsConstructor
 @Getter
-public class Container implements Cloneable{
+public class Container implements Cloneable {
 
     private final String containerName;
     private final DataType[] dataKeyTypes;
     private final String[] dataKeyNames;
-    private List<ContainerData> queue = new ArrayList<>();
-    private List<ContainerData> data = new ArrayList<>();
+    private final List<ContainerData> queue = new ArrayList<>();
+    private final List<ContainerData> data = new ArrayList<>();
     @Setter
     private Storage storage = null;
 
     /**
      * @param customid customId if null the ID will be generated
-     * @param values the values (must match with the size of keys and datatypes)
+     * @param values   the values (must match with the size of keys and datatypes)
      * @return the generated {@link ContainerData}
      */
     public ContainerData putData(Long customid, @NonNull Object... values) {
@@ -69,8 +69,8 @@ public class Container implements Cloneable{
         if (getDataKeyTypes().length != getDataKeyNames().length || getDataKeyTypes().length != values.length) {
             throw new IllegalArgumentException("DataType, key or values array does not match in size!");
         }
-        long id = (customid != null) ? customid : data.size()+1;
-        ContainerData containerData = new ContainerData(dataKeyTypes,dataKeyNames,values,id);
+        long id = (customid != null) ? customid : data.size() + 1;
+        ContainerData containerData = new ContainerData(dataKeyTypes, dataKeyNames, values, id);
         data.add(containerData);
 
         return containerData;
@@ -124,8 +124,8 @@ public class Container implements Cloneable{
 
     @Override
     public Container clone() {
-        Container container = new Container(this.getContainerName(),this.getDataKeyTypes(),this.getDataKeyNames());
-        this.getData().forEach(data -> container.putData(data.getId(),data.getValues()));
+        Container container = new Container(this.getContainerName(), this.getDataKeyTypes(), this.getDataKeyNames());
+        this.getData().forEach(data -> container.putData(data.getId(), data.getValues()));
         return container;
     }
 

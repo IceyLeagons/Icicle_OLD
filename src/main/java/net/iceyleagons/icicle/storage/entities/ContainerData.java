@@ -32,7 +32,7 @@ import lombok.RequiredArgsConstructor;
  *
  * @author TOTHTOMI
  * @version 1.0.0
- * @since  1.3.0-SNAPSHOT"
+ * @since 1.3.0-SNAPSHOT"
  */
 @RequiredArgsConstructor
 @Getter
@@ -64,7 +64,7 @@ public class ContainerData {
      * @return the index of that key
      */
     private int getIndex(String toGet) {
-        for (int i = 0; i < keys.length; i++){
+        for (int i = 0; i < keys.length; i++) {
             String key = keys[i];
             if (key.equals(toGet)) return i;
         }

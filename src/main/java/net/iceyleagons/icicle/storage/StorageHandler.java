@@ -29,7 +29,7 @@ import net.iceyleagons.icicle.storage.entities.Container;
 /**
  * @author TOTHTOMI
  * @version 1.0.0
- * @since  1.3.0-SNAPSHOT
+ * @since 1.3.0-SNAPSHOT
  */
 public class StorageHandler {
 
@@ -37,20 +37,8 @@ public class StorageHandler {
     private static boolean active = false;
 
     /**
-     * Sets the active storage.
-     *
-     * @param storageToActivate the {@link Storage}
-     */
-    public static void setActiveStorage(Storage storageToActivate) throws StorageException {
-        if (storage == null) {
-            storage = storageToActivate;
-            active = storage.init();
-            if (!active) storage.getLogger().warning("[Storage] Cannot active the selected Storage. Do the driver exists for it?");
-        }
-    }
-
-    /**
      * Migrates a {@link Storage} to an other
+     *
      * @param from
      * @param to
      */
@@ -69,5 +57,19 @@ public class StorageHandler {
      */
     public static Storage getActiveStorage() {
         return active ? storage : null;
+    }
+
+    /**
+     * Sets the active storage.
+     *
+     * @param storageToActivate the {@link Storage}
+     */
+    public static void setActiveStorage(Storage storageToActivate) throws StorageException {
+        if (storage == null) {
+            storage = storageToActivate;
+            active = storage.init();
+            if (!active)
+                storage.getLogger().warning("[Storage] Cannot active the selected Storage. Do the driver exists for it?");
+        }
     }
 }

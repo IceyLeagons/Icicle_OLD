@@ -45,7 +45,7 @@ import static java.lang.Integer.MAX_VALUE;
  * Contains useful stuff regarding Math and numbers
  *
  * @author TOTHTOMI
- * @version 2.4.1
+ * @version 2.5.0
  * @since 1.1.4-SNAPSHOT
  */
 public strictfp class MathUtils {
@@ -263,5 +263,39 @@ public strictfp class MathUtils {
         return output / angles.size();
     }
 
+    /**
+     * According to my benchmarks you will usually do this in the same amount of time
+     * than "regular" way of doing this.
+     * <p>
+     * However at scenarios, where it will be called 1000x times a second it will be useful.
+     * <p>
+     * Based completely off of: https://en.wikipedia.org/wiki/Fast_inverse_square_root
+     *
+     * @param x the number to find the inv. sqrt. for
+     * @return the inv. sqrt. !APPROXIMATION! of the number
+     */
+    public static float fastInvSqrt(float x) {
+        float xh = 0.5f * x;
 
+        int i = Float.floatToIntBits(x);
+        i = 0x5f3759df - (i >> 1);
+        x = Float.intBitsToFloat(i);
+
+        x *= (1.5f - xh * x * x);
+        x *= (1.5f - xh * x * x);
+        x *= (1.5f - xh * x * x);
+        return x;
+    }
+
+    /**
+     * Clamps the value between the min and max values
+     *
+     * @param value to clamp
+     * @param min the minimum value
+     * @param max the maximum value
+     * @return value if it's between min and max otherwise min or max
+     */
+    public static float clamp(float value, float min, float max) {
+        return value < min ? min : (Math.min(value, max));
+    }
 }

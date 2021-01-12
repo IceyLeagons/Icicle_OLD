@@ -26,14 +26,12 @@ package net.iceyleagons.icicle.ui;
 
 import org.bukkit.event.inventory.InventoryType;
 
-import static java.lang.annotation.ElementType.TYPE;
-
 import java.lang.annotation.Retention;
-
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
 import java.lang.annotation.Target;
 import java.util.concurrent.TimeUnit;
+
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * Annotate any GUI class with this annotation and register it with {@link GUIManager#registerGUI(GUITemplate)}

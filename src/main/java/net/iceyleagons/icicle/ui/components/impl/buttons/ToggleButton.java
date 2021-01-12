@@ -46,13 +46,13 @@ import java.util.function.Consumer;
 )
 public class ToggleButton extends Button {
 
+    private final Consumer<GUIClickEvent> onClicked;
     @Getter
     private boolean state = false;
-    private final Consumer<GUIClickEvent> onClicked;
 
     /**
-     * @param off placeholder when the state is false
-     * @param on placeholder when the state is true
+     * @param off       placeholder when the state is false
+     * @param on        placeholder when the state is true
      * @param onToggled a consumer to be run when the button got clicked
      */
     public ToggleButton(ItemStack off, ItemStack on, Consumer<GUIClickEvent> onToggled) {

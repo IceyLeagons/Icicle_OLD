@@ -38,26 +38,23 @@ import java.util.logging.Logger;
 /**
  * @author TOTHTOMI
  * @version 1.1.0
- * @since  1.3.0-SNAPSHOT"
+ * @since 1.3.0-SNAPSHOT"
  */
 public abstract class Storage {
 
     @Getter
     protected final StorageType type;
-    @Getter
-    protected long lastUpdated;
+    protected final Map<String, Container> containerMap;
     @Getter
     private final Logger logger;
-
+    @Getter
+    protected long lastUpdated;
     @Setter
     @Getter
     private boolean loggingEnabled = false;
 
-    protected final Map<String, Container> containerMap;
-
     /**
-     *
-     * @param type the {@link StorageType}
+     * @param type   the {@link StorageType}
      * @param logger the {@link Logger}
      */
     public Storage(StorageType type, Logger logger) {
@@ -68,28 +65,31 @@ public abstract class Storage {
 
     /**
      * Prints an error
+     *
      * @param msg the message
      */
     public void error(String msg) {
         //We don't check for loggingEnabled since this is vital to know
-        logger.severe(type.getPrefix()+" "+msg);
+        logger.severe(type.getPrefix() + " " + msg);
     }
 
     /**
      * Prints an info
+     *
      * @param msg the message
      */
     public void info(String msg) {
-        if (loggingEnabled) logger.info(type.getPrefix()+" "+msg);
+        if (loggingEnabled) logger.info(type.getPrefix() + " " + msg);
     }
 
     /**
      * Prints a warning
+     *
      * @param msg the message
      */
     public void warn(String msg) {
         //We don't check for loggingEnabled since this is important to know
-        logger.warning(type.getPrefix()+" "+msg);
+        logger.warning(type.getPrefix() + " " + msg);
     }
 
     /**
@@ -132,18 +132,18 @@ public abstract class Storage {
             throw new IllegalArgumentException("Container already registered!");
 
         container.setStorage(this);
-        containerMap.put(container.getContainerName(),container);
+        containerMap.put(container.getContainerName(), container);
     }
 
     /**
      * Deletes a data where they key is equals to a value in a specified container
      * {@link Container#reloadFromStorage()} should be called after!
      *
-     * @param key the key
-     * @param value the filter
+     * @param key           the key
+     * @param value         the filter
      * @param containerName the containername
      */
-    public abstract void deleteData(String key,Object value, String containerName);
+    public abstract void deleteData(String key, Object value, String containerName);
 
     /**
      * @param container the container to get the data from
@@ -157,7 +157,6 @@ public abstract class Storage {
      * Deletion is not handled here!
      */
     public abstract void applyChanges();
-
 
 
 }

@@ -33,6 +33,7 @@ import java.util.Map;
 
 /**
  * ItemFactory - Build your {@link ItemStack} the easy way. (1.13)
+ * Most of the code is from Melvin Snijders with some modifications/additions done by TOTHTOMI
  *
  * @author Melvin Snijders & TOTHTOMI(modified)
  * @version 1.0.0

@@ -58,7 +58,7 @@ public class Frame {
     public void render(Inventory inventory) {
         ItemStack[] itemStacks = new ItemStack[inventory.getSize()];
         for (int i = 0; i < inventory.getSize(); i++) {
-            Map.Entry<Component,ComponentTemplate> componentComponentTemplateEntry = components.get(i);
+            Map.Entry<Component, ComponentTemplate> componentComponentTemplateEntry = components.get(i);
             if (componentComponentTemplateEntry == null) continue;
 
             Component component = componentComponentTemplateEntry.getKey();
@@ -71,8 +71,8 @@ public class Frame {
 
             for (int j = 0; j < toRender.length; j++) {
                 for (int k = 0; k < toRender[j].length; k++) {
-                    int fromUtils = InventoryUtils.calculateSlotFromXY(j+1,k+1);
-                    int slotToAdd = i+fromUtils;
+                    int fromUtils = InventoryUtils.calculateSlotFromXY(j + 1, k + 1);
+                    int slotToAdd = i + fromUtils;
                     itemStacks[slotToAdd] = toRender[j][k];
                 }
             }
@@ -84,11 +84,11 @@ public class Frame {
      * Registers a component
      *
      * @param componentTemplate the component
-     * @param x the X coordinate
-     * @param y the Y coordinate
+     * @param x                 the X coordinate
+     * @param y                 the Y coordinate
      * @return a {@link CompletableFuture} of {@link Void}
      * @throws IllegalArgumentException if the component does not annotate {@link Component}
-     * @throws IllegalStateException if the frame does not have room for thec component (width, height)
+     * @throws IllegalStateException    if the frame does not have room for thec component (width, height)
      */
     public CompletableFuture<Void> registerComponent(ComponentTemplate componentTemplate, int x, int y) throws IllegalArgumentException, IllegalStateException {
         return CompletableFuture.supplyAsync(() -> {
@@ -96,7 +96,7 @@ public class Frame {
                 throw new IllegalArgumentException("Supplied ComponentTemplate does not annotate Component");
 
             Component component = componentTemplate.getClass().getAnnotation(Component.class);
-            componentTemplate.setXY(x,y);
+            componentTemplate.setXY(x, y);
             int slot = InventoryUtils.calculateSlotFromXY(x, y);
             int width = component.width();
             int height = component.height();
@@ -104,7 +104,7 @@ public class Frame {
 
             checkSpace(x, y, width, height).thenAccept(result -> {
                 if (!result) {
-                   throw new IllegalStateException("Frame does not have room for this component!");
+                    throw new IllegalStateException("Frame does not have room for this component!");
                 }
                 components.put(slot, new AbstractMap.SimpleEntry<>(component, componentTemplate));
             });
@@ -120,7 +120,7 @@ public class Frame {
      */
     public CompletableFuture<ComponentTemplate> onClick(int slot) {
         return CompletableFuture.supplyAsync(() -> {
-            for (Map.Entry<Component,ComponentTemplate> componentEntry : components.values()) {
+            for (Map.Entry<Component, ComponentTemplate> componentEntry : components.values()) {
                 ComponentTemplate componentTemplate = componentEntry.getValue();
                 Component component = componentEntry.getKey();
                 final int startX = componentTemplate.getX();
@@ -130,7 +130,7 @@ public class Frame {
                 for (int x = startX; x < component.width() + startX; x++) {
                     for (int y = startY; y < component.height() + startY; y++) {
 
-                        int toCheck = InventoryUtils.calculateSlotFromXY(x,y);
+                        int toCheck = InventoryUtils.calculateSlotFromXY(x, y);
                         match = (slot == toCheck);
 
                         if (match) return componentTemplate;
@@ -146,8 +146,8 @@ public class Frame {
      *
      * @param startingX the X coordinate of the component
      * @param startingY the Y coordinate of the component
-     * @param width the width of the component
-     * @param height the height of the component
+     * @param width     the width of the component
+     * @param height    the height of the component
      * @return a {@link CompletableFuture} of {@link Boolean} if true the component has space
      */
     private CompletableFuture<Boolean> checkSpace(int startingX, int startingY, int width, int height) {

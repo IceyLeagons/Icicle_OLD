@@ -37,7 +37,7 @@ import java.util.logging.Logger;
  *
  * @author TOTHTOMI
  * @version 1.1.0
- * @since  1.3.0-SNAPSHOT"
+ * @since 1.3.0-SNAPSHOT"
  */
 public class MySQL extends SQLDatabase {
 
@@ -47,15 +47,14 @@ public class MySQL extends SQLDatabase {
     private final String password;
 
     /**
-     *
-     * @param host db host
+     * @param host         db host
      * @param databaseName db name
-     * @param username username used for authentication
-     * @param password password used for authentication
-     * @param logger logger to use
+     * @param username     username used for authentication
+     * @param password     password used for authentication
+     * @param logger       logger to use
      */
     public MySQL(String host, String databaseName, String username, String password, Logger logger) {
-        super(databaseName,StorageType.MY_SQL,logger);
+        super(databaseName, StorageType.MY_SQL, logger);
         this.host = host;
         this.databaseName = databaseName;
         this.username = username;
@@ -78,7 +77,7 @@ public class MySQL extends SQLDatabase {
 
         try {
             super.connection = DriverManager.getConnection(
-                    String.format("jdbc:mysql://%s/%s?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",host,databaseName),username,password);
+                    String.format("jdbc:mysql://%s/%s?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", host, databaseName), username, password);
             return true;
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();

@@ -37,7 +37,7 @@ import java.util.logging.Logger;
  *
  * @author TOTHTOMI
  * @version 1.1.0
- * @since  1.3.0-SNAPSHOT"
+ * @since 1.3.0-SNAPSHOT"
  */
 public class H2 extends SQLDatabase {
 
@@ -48,14 +48,14 @@ public class H2 extends SQLDatabase {
 
 
     /**
-     * @param host db host
+     * @param host         db host
      * @param databaseName db name
-     * @param username username used for authentication
-     * @param password password used for authentication
-     * @param logger logger to use
+     * @param username     username used for authentication
+     * @param password     password used for authentication
+     * @param logger       logger to use
      */
     public H2(String host, String databaseName, String username, String password, Logger logger) {
-        super(databaseName, StorageType.H2,logger);
+        super(databaseName, StorageType.H2, logger);
         this.host = host;
         this.databaseName = databaseName;
         this.username = username;
@@ -78,7 +78,7 @@ public class H2 extends SQLDatabase {
 
         try {
             super.connection = DriverManager.getConnection(
-                    String.format("jdbc:h2://%s/%s",host,databaseName),username,password);
+                    String.format("jdbc:h2://%s/%s", host, databaseName), username, password);
             return true;
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();

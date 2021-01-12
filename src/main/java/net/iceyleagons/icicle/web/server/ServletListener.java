@@ -31,14 +31,13 @@ import java.io.IOException;
 /**
  * @author TOTHTOMI
  * @version 1.0.0
- * @since  1.3.0-SNAPSHOT"
+ * @since 1.3.0-SNAPSHOT"
  */
 public interface ServletListener {
 
     /**
-     *
      * @param endpoint the endpoint
-     * @param request the {@link HttpServletRequest}
+     * @param request  the {@link HttpServletRequest}
      * @param response the {@link HttpServletResponse}
      * @throws IOException if something bad happens
      */

@@ -31,7 +31,7 @@ import org.bukkit.util.Vector;
 
 @Data
 @RequiredArgsConstructor
-public class Vector3D {
+public strictfp class Vector3D {
 
     @NonNull
     private double x;

@@ -50,6 +50,10 @@ public class Reflections {
         netMinecraftServerString = "net.minecraft.server." + version + ".";
     }
 
+    /**
+     * @param name the name of the class
+     * @return used to check whether a class exists or not
+     */
     public static boolean classExists(String name) {
         try {
             Class.forName(name);
@@ -97,10 +101,10 @@ public class Reflections {
     /**
      * Returns a specified method from a class, and if required sets it to be accessible
      *
-     * @param clazz the class
-     * @param methodName the name of the method
+     * @param clazz           the class
+     * @param methodName      the name of the method
      * @param forceAccessible whether to force it accessible or not
-     * @param parameterTypes the parameter types for that method
+     * @param parameterTypes  the parameter types for that method
      * @return the method
      */
     public static Method getMethod(final Class<?> clazz, String methodName, boolean forceAccessible, final Class<?>... parameterTypes) {
@@ -119,7 +123,7 @@ public class Reflections {
     /**
      * Returns all methods in a class, and sets them to be accessible if required
      *
-     * @param clazz the class
+     * @param clazz           the class
      * @param forceAccessible whether to force it accessible or not
      * @return the array of methods
      */
@@ -149,8 +153,8 @@ public class Reflections {
     /**
      * Returns a field with a specified name ands sets it to be accessible if required
      *
-     * @param clazz the class
-     * @param name the name of the field
+     * @param clazz           the class
+     * @param name            the name of the field
      * @param forceAccessible whether to force it accessible or not
      * @return the field
      */
@@ -169,15 +173,15 @@ public class Reflections {
      * Returns a field from the class with a specified data type on the specified index.
      * Since this may be a bit hard to understand here's an example:
      * Ex.:
-     *   int a = 0;
-     *   int b = 2;
-     *   int c = 3;
+     * int a = 0;
+     * int b = 2;
+     * int c = 3;
+     * <p>
+     * c = (int) getField(class,Integer.class,2).get(obj);
      *
-     *   c = (int) getField(class,Integer.class,2).get(obj);
-     *
-     * @param clazz the class
+     * @param clazz    the class
      * @param dataType the datatype
-     * @param index the index
+     * @param index    the index
      * @return the field
      */
     public static Field getField(final Class<?> clazz, final Class<?> dataType, final int index) {

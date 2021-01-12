@@ -40,7 +40,10 @@ import net.iceyleagons.icicle.storage.entities.ContainerData;
 import net.iceyleagons.icicle.storage.entities.DataType;
 import org.bson.Document;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 /**
@@ -48,7 +51,7 @@ import java.util.logging.Logger;
  *
  * @author TOTHTOMI
  * @version 1.1.0
- * @since  1.3.0-SNAPSHOT"
+ * @since 1.3.0-SNAPSHOT"
  */
 public class MongoDB extends Storage {
 
@@ -99,6 +102,7 @@ public class MongoDB extends Storage {
 
     /**
      * Opens a connection and returns a db with the given databaseName
+     *
      * @return the {@link MongoDatabase}
      */
     private MongoDatabase getDB() {
@@ -113,7 +117,7 @@ public class MongoDB extends Storage {
     @Override
     public void deleteData(String key, Object value, String containerName) {
         Document document = new Document();
-        document.put(key,value);
+        document.put(key, value);
 
         getDB().getCollection(containerName).findOneAndDelete(document);
         closeConnection();
@@ -131,7 +135,7 @@ public class MongoDB extends Storage {
 
         List<ContainerData> containerData = new ArrayList<>();
 
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             Document dbObject = iterator.next();
             DataType[] keyTypes = container.getDataKeyTypes();
             String[] keys = container.getDataKeyNames();
@@ -140,7 +144,7 @@ public class MongoDB extends Storage {
             for (int i = 0; i < keys.length; i++) {
                 values[i] = dbObject.get(keys[i]);
             }
-            containerData.add(new ContainerData(keyTypes,keys,values,(long) dbObject.get("_id")));
+            containerData.add(new ContainerData(keyTypes, keys, values, (long) dbObject.get("_id")));
 
 
         }
@@ -168,7 +172,7 @@ public class MongoDB extends Storage {
      * Converts a {@link MongoIterable} to a {@link Set}
      *
      * @param iterable the iterable the convert
-     * @param <T> the generic type of the iterable
+     * @param <T>      the generic type of the iterable
      * @return the generated set
      */
     private <T> Set<T> getFromMongoIterable(MongoIterable<T> iterable) {
@@ -187,10 +191,10 @@ public class MongoDB extends Storage {
     public void applyChanges() {
         lastUpdated = System.currentTimeMillis();
         MongoDatabase database = getDB();
-        containerMap.forEach((tableName,container) -> { //looping through our queue
+        containerMap.forEach((tableName, container) -> { //looping through our queue
             if (!container.getQueue().isEmpty()) {
                 List<ContainerData> queue = container.getQueue();
-                if (!collectionExists(tableName,database))
+                if (!collectionExists(tableName, database))
                     database.createCollection(tableName, new CreateCollectionOptions());
 
                 MongoCollection<Document> collection = database.getCollection(tableName);
@@ -200,16 +204,16 @@ public class MongoDB extends Storage {
                 for (ContainerData data : queue) {
                     if (blackListed.contains(data.getId())) continue;
                     Document document = new Document();
-                    document.append("_id",data.getId());
+                    document.append("_id", data.getId());
 
                     String[] keys = data.getKeys();
                     Object[] values = data.getValues();
                     for (int i = 0; i < keys.length; i++) {
-                        document.append(keys[i],values[i]);
+                        document.append(keys[i], values[i]);
                     }
 
                     Document filter = new Document();
-                    document.append("_id",data.getId());
+                    document.append("_id", data.getId());
 
                     //collection.findAndModify(new BasicDBObject("_id",data.getId()),object);
                     getDB().getCollection(container.getContainerName()).findOneAndDelete(filter);

@@ -33,7 +33,7 @@ import lombok.Getter;
  *
  * @author TOTHTOMI
  * @version 1.0.0
- * @since  1.3.0-SNAPSHOT"
+ * @since 1.3.0-SNAPSHOT"
  */
 @Getter
 @AllArgsConstructor
@@ -42,15 +42,15 @@ public enum DataType {
     /**
      * Represents a {@link String}
      */
-    STRING(String.class,"LONGTEXT"),
+    STRING(String.class, "LONGTEXT"),
     /**
      * Represents an {@link Integer}
      */
-    INTEGER(Integer.class,"INTEGER"),
+    INTEGER(Integer.class, "INTEGER"),
     /**
      * Represents a {@link Boolean}
      */
-    BOOLEAN(Boolean.class,"TINYINT(1)"),
+    BOOLEAN(Boolean.class, "TINYINT(1)"),
     /**
      * Represents a {@link Long}
      */

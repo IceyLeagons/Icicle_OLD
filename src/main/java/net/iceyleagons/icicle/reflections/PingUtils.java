@@ -47,7 +47,7 @@ public class PingUtils {
     public static int getPing(Player player) {
         try {
             Object craftPlayer = CraftEntity.getCraftEntity(player);
-            Field field = Reflections.getField(craftPlayer.getClass(),"ping",true);
+            Field field = Reflections.getField(craftPlayer.getClass(), "ping", true);
 
             int ping = field.getInt(craftPlayer);
             return Math.max(ping, 0); //We don't want negative here, because that will indicate an error in our case.

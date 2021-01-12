@@ -27,9 +27,7 @@ package net.iceyleagons.icicle.file;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * Contains useful stuff for {@link File}s
@@ -81,8 +79,27 @@ public class FileUtils {
     public static void writeToFile(@NonNull File file, @NonNull String... content) {
         try (FileWriter fileWriter = new FileWriter(file)) {
             for (String line : content)
-                fileWriter.write(line + "\n");
+                fileWriter.write(line + System.lineSeparator());
         }
+    }
+
+    /**
+     * Reads the file and joins every row together with {@link System#lineSeparator()}
+     *
+     * @param file the {@link File} to read
+     * @return the content
+     */
+    public static String readFile(@NonNull File file) {
+        StringBuilder contentBuilder = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String sCurrentLine;
+            while ((sCurrentLine = br.readLine()) != null) {
+                contentBuilder.append(sCurrentLine).append(System.lineSeparator());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return contentBuilder.toString();
     }
 
 }

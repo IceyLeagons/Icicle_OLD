@@ -38,7 +38,7 @@ import java.util.logging.Logger;
  *
  * @author TOTHTOMI
  * @version 1.1.0
- * @since  1.3.0-SNAPSHOT"
+ * @since 1.3.0-SNAPSHOT"
  */
 public class SQLite extends SQLDatabase {
 
@@ -46,7 +46,7 @@ public class SQLite extends SQLDatabase {
 
     /**
      * @param databaseFile the databaseFile
-     * @param logger the logger
+     * @param logger       the logger
      */
     public SQLite(File databaseFile, Logger logger) {
         super(null, StorageType.SQLite, logger);
@@ -68,7 +68,7 @@ public class SQLite extends SQLDatabase {
         if (super.connection != null && !closeConnection()) throw new StorageException("Could not close connection!");
         try {
             super.connection = DriverManager.getConnection(
-                    String.format("jdbc:sqlite:%s",databaseFile.getAbsolutePath()));
+                    String.format("jdbc:sqlite:%s", databaseFile.getAbsolutePath()));
             return true;
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();

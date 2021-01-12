@@ -37,7 +37,7 @@ import java.util.logging.Logger;
  *
  * @author TOTHTOMI
  * @version 1.1.0
- * @since  1.3.0-SNAPSHOT"
+ * @since 1.3.0-SNAPSHOT"
  */
 public class MariaDB extends SQLDatabase {
 
@@ -48,14 +48,14 @@ public class MariaDB extends SQLDatabase {
 
 
     /**
-     * @param host db host
+     * @param host         db host
      * @param databaseName db name
-     * @param username username used for authentication
-     * @param password password used for authentication
-     * @param logger logger to use
+     * @param username     username used for authentication
+     * @param password     password used for authentication
+     * @param logger       logger to use
      */
     public MariaDB(String host, String databaseName, String username, String password, Logger logger) {
-        super(databaseName,StorageType.MARIADB,logger);
+        super(databaseName, StorageType.MARIADB, logger);
         this.host = host;
         this.databaseName = databaseName;
         this.username = username;
@@ -74,11 +74,11 @@ public class MariaDB extends SQLDatabase {
 
     @Override
     protected boolean openConnection() throws StorageException {
-        if (super.connection != null && !closeConnection())throw new StorageException("Could not close connection!");
+        if (super.connection != null && !closeConnection()) throw new StorageException("Could not close connection!");
 
         try {
             super.connection = DriverManager.getConnection(
-                    String.format("jdbc:mariadb://%s/%s",host,databaseName),username,password);
+                    String.format("jdbc:mariadb://%s/%s", host, databaseName), username, password);
             return true;
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();

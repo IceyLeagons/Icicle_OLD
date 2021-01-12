@@ -26,14 +26,14 @@ package net.iceyleagons.icicle.misc.commands;
 
 /**
  * @author TOTHTOMI
- * @since 1.4.0-SNAPSHOT
  * @version 1.0.0
+ * @since 1.4.0-SNAPSHOT
  */
-public class CommandInjectException extends Exception{
+public class CommandInjectException extends Exception {
 
     /**
      * @param command the command name
-     * @param cause the cause of the exception
+     * @param cause   the cause of the exception
      */
     public CommandInjectException(String command, String cause) {
         super("The command named " + command + " can not be injected! Cause: " + cause);
@@ -41,10 +41,10 @@ public class CommandInjectException extends Exception{
 
     /**
      * @param command the command
-     * @param cause the cause of the exception
+     * @param cause   the cause of the exception
      */
     public CommandInjectException(String command, Throwable cause) {
-        super("The command named " + command + " can not be injected! Cause: ",cause);
+        super("The command named " + command + " can not be injected! Cause: ", cause);
     }
 
 }

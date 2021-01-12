@@ -32,7 +32,7 @@ import lombok.Getter;
  *
  * @author TOTHTOMI
  * @version 1.0.0
- * @since  1.3.0-SNAPSHOT"
+ * @since 1.3.0-SNAPSHOT"
  */
 @AllArgsConstructor
 public enum StorageType {

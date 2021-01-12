@@ -43,17 +43,18 @@ import java.util.Map;
  *
  * @author TOTHTOMI
  * @version 1.0.0
- * @since  1.3.0-SNAPSHOT"
+ * @since 1.3.0-SNAPSHOT"
  */
-public class EasyWebServer extends HttpServlet{
+public class EasyWebServer extends HttpServlet {
 
-    private final Server server;
-    private final ServletHandler servletHandler;
-    protected static final Map<String,ServletListener> listenerMap;
+    protected static final Map<String, ServletListener> listenerMap;
 
     static {
         listenerMap = new HashMap<>();
     }
+
+    private final Server server;
+    private final ServletHandler servletHandler;
 
     /**
      * Creates an unsecure server, please refer to {@link #EasyWebServer(int, SslContextFactory.Server)} for https protocol
@@ -75,7 +76,7 @@ public class EasyWebServer extends HttpServlet{
     /**
      * Creates an SSL enabled server
      *
-     * @param port the port
+     * @param port              the port
      * @param sslContextFactory the {@link SslContextFactory.Server}
      */
     public EasyWebServer(int port, SslContextFactory.Server sslContextFactory) {
@@ -84,7 +85,7 @@ public class EasyWebServer extends HttpServlet{
 
         ServerConnector serverConnector = new ServerConnector(server);
         serverConnector.setPort(port);
-        server.setConnectors(new Connector[]{getSSLConnector(port,sslContextFactory)});
+        server.setConnectors(new Connector[]{getSSLConnector(port, sslContextFactory)});
         server.setHandler(servletHandler);
         server.setStopAtShutdown(true);
     }
@@ -97,7 +98,7 @@ public class EasyWebServer extends HttpServlet{
 
     private ServerConnector getSSLConnector(int port, SslContextFactory.Server sslContextFactory) {
         SslConnectionFactory connector = new SslConnectionFactory(sslContextFactory, HttpVersion.HTTP_1_1.asString());
-        ServerConnector serverConnector = new ServerConnector(server,connector);
+        ServerConnector serverConnector = new ServerConnector(server, connector);
         serverConnector.setPort(port);
         return serverConnector;
     }
@@ -110,8 +111,8 @@ public class EasyWebServer extends HttpServlet{
     public void registerListener(ServletListener servletListener) {
         for (String supportedEndpoint : servletListener.getSupportedEndpoints()) {
             ListenerExecutor listenerExecutor = new ListenerExecutor(); //We need to do this, because multiple servlets cannot be assigned to one class
-            listenerMap.put(supportedEndpoint,servletListener);
-            addServlet(listenerExecutor.getClass(),"/"+supportedEndpoint);
+            listenerMap.put(supportedEndpoint, servletListener);
+            addServlet(listenerExecutor.getClass(), "/" + supportedEndpoint);
         }
     }
 
@@ -123,7 +124,7 @@ public class EasyWebServer extends HttpServlet{
      * @param mapping the mapping
      */
     public void addServlet(Class<? extends Servlet> servlet, String mapping) {
-        servletHandler.addServletWithMapping(servlet,mapping);
+        servletHandler.addServletWithMapping(servlet, mapping);
     }
 
     /**

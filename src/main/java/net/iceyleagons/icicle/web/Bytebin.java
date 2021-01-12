@@ -47,9 +47,8 @@ import java.util.zip.GZIPOutputStream;
  * </p>
  *
  * @author TOTHTOMI
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0-SNAPSHOT
- * @deprecated Not implemented properly, OkHTTP issues
  */
 public class Bytebin {
 
@@ -79,6 +78,7 @@ public class Bytebin {
     public String readContent(String key) {
         Request request = new Request.Builder()
                 .header("User-Agent", this.userAgent)
+                .header("Accept-Encoding", "gzip")
                 .url(this.bytebinHost + key)
                 .build();
 
@@ -91,7 +91,7 @@ public class Bytebin {
                             StringBuilder stringBuilder = new StringBuilder();
                             String line;
                             while ((line = bufferedReader.readLine()) != null) {
-                                stringBuilder.append(line);
+                                stringBuilder.append(line).append("\n");
                             }
                             return stringBuilder.toString();
                         }

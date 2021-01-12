@@ -80,7 +80,7 @@ public class TPSUtils {
     /**
      * This will return the TPS as a string formatted with the given {@link DecimalFormat}
      *
-     * @param tpsTime the {@link TPSTime}
+     * @param tpsTime       the {@link TPSTime}
      * @param decimalFormat the {@link DecimalFormat}
      * @return the formatted string
      */

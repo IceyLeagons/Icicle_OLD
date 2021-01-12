@@ -28,10 +28,10 @@ package net.iceyleagons.icicle.storage;
  * An exception regarding all issues of a Storage/Storage handler
  *
  * @author TOTHTOMI
- * @since 1.4.0-SNAPSHOT
  * @version 1.0.0
+ * @since 1.4.0-SNAPSHOT
  */
-public class StorageException extends Exception{
+public class StorageException extends Exception {
 
     /**
      * @param msg the message to throw

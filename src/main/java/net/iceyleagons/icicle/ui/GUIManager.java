@@ -33,7 +33,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Manager and stuff. Yeah epic javadoc.
@@ -44,6 +47,22 @@ import java.util.*;
  */
 public class GUIManager implements Listener {
     private static final List<GUITemplate> guis = new ArrayList<>();
+
+    /**
+     * Registers the given {@link GUITemplate}
+     *
+     * @param gui the {@link GUITemplate}
+     */
+    public static void registerGUI(GUITemplate gui) {
+        GUI annotation = gui.getClass().getAnnotation(GUI.class);
+        if (annotation != null) {
+            if (Icicle.registrar != null)
+                SchedulerUtils.runTaskTimer(Icicle.registrar, task -> {
+                    gui.update();
+                }, annotation.updateInterval(), annotation.updateIntervalUnit());
+            guis.add(gui);
+        }
+    }
 
     /**
      * Handles click events inside registered GUIs
@@ -85,23 +104,6 @@ public class GUIManager implements Listener {
                     return componentTemplate;
                 }
             });
-        }
-    }
-
-
-    /**
-     * Registers the given {@link GUITemplate}
-     *
-     * @param gui the {@link GUITemplate}
-     */
-    public static void registerGUI(GUITemplate gui) {
-        GUI annotation = gui.getClass().getAnnotation(GUI.class);
-        if (annotation != null) {
-            if (Icicle.registrar != null)
-                SchedulerUtils.runTaskTimer(Icicle.registrar, task -> {
-                    gui.update();
-                }, annotation.updateInterval(), annotation.updateIntervalUnit());
-            guis.add(gui);
         }
     }
 

@@ -87,10 +87,10 @@ public class CommandUtils {
                                      TabCompleter tabCompleter, String usage, String description,
                                      String permission, String permissionMessage,
                                      List<String> aliases) throws CommandInjectException {
-        if (plugin == null) throw new CommandInjectException(command,"CommandUtils is not initialized");
+        if (plugin == null) throw new CommandInjectException(command, "CommandUtils is not initialized");
         try {
             final Field bukkitCommandMap = Reflections.getField(plugin.getServer().getClass(), "commandMap", true);
-            if (bukkitCommandMap == null) throw new CommandInjectException(command,"CommandMap is unavailable");
+            if (bukkitCommandMap == null) throw new CommandInjectException(command, "CommandMap is unavailable");
 
             CommandMap commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
 

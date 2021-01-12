@@ -35,16 +35,16 @@ import java.io.IOException;
  *
  * @author TOTHTOMI
  * @version 1.0.0
- * @since  1.3.0-SNAPSHOT"
+ * @since 1.3.0-SNAPSHOT"
  */
 public class ListenerExecutor extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
-        String endpoint = request.getServletPath().replace("/","");
+        String endpoint = request.getServletPath().replace("/", "");
         if (EasyWebServer.listenerMap.containsKey(endpoint))
-            EasyWebServer.listenerMap.get(endpoint).onRequest(endpoint,request,response);
+            EasyWebServer.listenerMap.get(endpoint).onRequest(endpoint, request, response);
     }
 
 }

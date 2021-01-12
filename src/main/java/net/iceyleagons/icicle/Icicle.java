@@ -37,12 +37,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Icicle {
 
 
+    public static JavaPlugin registrar;
     /**
      * Whether or not the module is initialized
      */
     private static boolean initialized = false;
-
-    public static JavaPlugin registrar;
 
     /**
      * This needs to be called before everything else.
@@ -65,7 +64,7 @@ public class Icicle {
      * @return the version of the current icicle library. Our versions use the Semantic versioning.
      */
     public static String getVersion() {
-        return "1.3.2-SNAPSHOT";
+        return "1.3.3-SNAPSHOT";
     }
 
     /**

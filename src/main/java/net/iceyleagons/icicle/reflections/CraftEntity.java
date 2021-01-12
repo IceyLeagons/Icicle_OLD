@@ -35,7 +35,7 @@ public class CraftEntity {
 
     public static Object getCraftEntity(Object bukkitEntity) throws InvocationTargetException, IllegalAccessException {
         Class<?> playerClazz = bukkitEntity.getClass();
-        Method getHandle = Reflections.getMethod(playerClazz,"getHandle",true,null);
+        Method getHandle = Reflections.getMethod(playerClazz, "getHandle", true, null);
         assert getHandle != null;
         return getHandle.invoke(bukkitEntity);
     }

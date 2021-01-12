@@ -54,7 +54,7 @@ public interface GUITemplate {
      * Page can be null if you use {@link net.iceyleagons.icicle.ui.guis.BaseGUI}
      * but cannot if you use {@link net.iceyleagons.icicle.ui.guis.BasePaginatedGUI}
      *
-     * @param page the page (can be null, read above)
+     * @param page   the page (can be null, read above)
      * @param frames the frames to add
      */
     void addFrames(Integer page, Frame... frames);

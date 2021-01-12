@@ -34,7 +34,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author TOTHTOMI, Gabe
@@ -43,12 +45,12 @@ import java.util.*;
  */
 public abstract class BaseGUI implements GUITemplate {
 
-    @Getter
-    protected int currentFrame;
     private final List<Frame> frames;
     @Getter
     private final Inventory inventory;
     private final List<Player> opened;
+    @Getter
+    protected int currentFrame;
 
     /**
      * Create a new BaseGUI instance
