@@ -25,6 +25,7 @@
 package net.iceyleagons.icicle.reflections;
 
 import lombok.SneakyThrows;
+import net.iceyleagons.icicle.wrapped.TPSTime;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;

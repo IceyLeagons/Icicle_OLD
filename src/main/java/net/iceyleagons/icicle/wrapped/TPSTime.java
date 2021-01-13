@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 IceyLeagons (Tamás Tóth and Márton Kissik) and Contributors
+ * Copyright (c) 2021 IceyLeagons (Tamás Tóth and Márton Kissik) and Contributors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.reflections;
+package net.iceyleagons.icicle.wrapped;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

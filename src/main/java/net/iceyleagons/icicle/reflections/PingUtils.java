@@ -24,6 +24,8 @@
 
 package net.iceyleagons.icicle.reflections;
 
+import net.iceyleagons.icicle.wrapped.WrappedDedicatedServer;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;

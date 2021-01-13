@@ -24,9 +24,11 @@
 
 package net.iceyleagons.icicle.reflections;
 
+import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
@@ -117,6 +119,43 @@ public class Reflections {
             exception.printStackTrace();
         }
 
+        return null;
+    }
+
+    /**
+     * Invokes the method without you having to deal with exceptions.
+     *
+     * @param method the method
+     * @param wantedType is the type you want the result to be in
+     * @param o {@link Method#invoke(Object, Object...)}
+     * @param args {@link Method#invoke(Object, Object...)}
+     * @return will try to cast the invoke result if successful if not null
+     */
+    public static <T> T invoke(Method method, Class<T> wantedType, Object o, Object... args) {
+        try {
+            Object result = method.invoke(o,args);
+            return wantedType.cast(result);
+        } catch (IllegalAccessException | InvocationTargetException | ClassCastException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Invokes the method without you having to deal with exceptions.
+     *
+     * @param field the field
+     * @param wantedType is the type you want the result to be in
+     * @param o {@link Method#invoke(Object, Object...)}
+     * @return will try to cast the invoke result if successful if not null
+     */
+    public static <T> T get(Field field, Class<T> wantedType, Object o) {
+        try {
+            Object result = field.get(o);
+            return wantedType.cast(result);
+        } catch (IllegalAccessException | ClassCastException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
