@@ -28,6 +28,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import net.iceyleagons.icicle.reflections.Reflections;
+import net.iceyleagons.icicle.wrapped.player.WrappedCraftPlayer;
 import org.bukkit.Server;
 
 import java.io.File;

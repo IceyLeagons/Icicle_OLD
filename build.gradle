@@ -61,6 +61,10 @@ dependencies {
     compile group: 'org.eclipse.jetty', name: 'jetty-servlet', version: '9.4.35.v20201120'
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
 
+    // https://mvnrepository.com/artifact/io.netty/netty-transport
+    compile group: 'io.netty', name: 'netty-transport', version: '4.1.56.Final'
+
+
 
     /**
      * Database drivers

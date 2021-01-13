@@ -125,15 +125,15 @@ public class Reflections {
     /**
      * Invokes the method without you having to deal with exceptions.
      *
-     * @param method the method
+     * @param method     the method
      * @param wantedType is the type you want the result to be in
-     * @param o {@link Method#invoke(Object, Object...)}
-     * @param args {@link Method#invoke(Object, Object...)}
+     * @param o          {@link Method#invoke(Object, Object...)}
+     * @param args       {@link Method#invoke(Object, Object...)}
      * @return will try to cast the invoke result if successful if not null
      */
     public static <T> T invoke(Method method, Class<T> wantedType, Object o, Object... args) {
         try {
-            Object result = method.invoke(o,args);
+            Object result = method.invoke(o, args);
             return wantedType.cast(result);
         } catch (IllegalAccessException | InvocationTargetException | ClassCastException e) {
             e.printStackTrace();
@@ -144,9 +144,9 @@ public class Reflections {
     /**
      * Invokes the method without you having to deal with exceptions.
      *
-     * @param field the field
+     * @param field      the field
      * @param wantedType is the type you want the result to be in
-     * @param o {@link Method#invoke(Object, Object...)}
+     * @param o          {@link Method#invoke(Object, Object...)}
      * @return will try to cast the invoke result if successful if not null
      */
     public static <T> T get(Field field, Class<T> wantedType, Object o) {
