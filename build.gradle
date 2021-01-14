@@ -62,7 +62,7 @@ dependencies {
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
 
     // https://mvnrepository.com/artifact/io.netty/netty-transport
-    compile group: 'io.netty', name: 'netty-transport', version: '4.1.56.Final'
+    compile group: 'io.netty', name: 'netty-transport', version: '4.1.58.Final'
 
 
 
