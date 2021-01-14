@@ -25,6 +25,7 @@
 package net.iceyleagons.icicle.wrapped;
 
 import lombok.Getter;
+import lombok.SneakyThrows;
 import net.iceyleagons.icicle.reflections.Reflections;
 
 import java.lang.reflect.Method;
@@ -35,6 +36,9 @@ import java.lang.reflect.Method;
 public class WrappedBiomeBase {
 
     private static final Class<?> mc_biomebase_a;
+    private static final Class<?> mc_biomefog;
+    private static final Class<?> mc_biomesettingsmobs;
+    private static final Class<?> mc_biomesettingsgeneration;
 
     private static final Class<? extends Enum<?>> mc_biomebase_geography;
     private static final Method mc_geography_valueof;
@@ -56,7 +60,10 @@ public class WrappedBiomeBase {
     private static final Method biomebase_build;
 
     static {
+        mc_biomefog = Reflections.getNormalNMSClass("BiomeFog");
         mc_biomebase_a = Reflections.getNormalNMSClass("BiomeBase$a");
+        mc_biomesettingsmobs = Reflections.getNormalNMSClass("BiomeSettingsMobs");
+        mc_biomesettingsgeneration = Reflections.getNormalNMSClass("BiomeSettingsGeneration");
 
         mc_biomebase_geography = (Class<? extends Enum<?>>) Reflections.getNormalNMSClass("BiomeBase$Geography");
         mc_geography_valueof = Reflections.getMethod(mc_biomebase_geography, "valueOf", true, String.class);
@@ -65,13 +72,103 @@ public class WrappedBiomeBase {
         mc_biomebase_temperaturemodifier = (Class<? extends Enum<?>>) Reflections.getNormalNMSClass("BiomeBase$TemperatureModifier");
         mc_temp_valueof = Reflections.getMethod(mc_biomebase_temperaturemodifier, "valueOf", true, String.class);
 
-        biome_setDepth = Reflections.getMethod(mc_biomebase_a, "", true, Float.class);
+        biome_setDepth = Reflections.getMethod(mc_biomebase_a, "a", true, Float.class);
+        biome_setScale = Reflections.getMethod(mc_biomebase_a, "b", true, Float.class);
+        biome_setTemperature = Reflections.getMethod(mc_biomebase_a, "c", true, Float.class);
+        biome_setDownfall = Reflections.getMethod(mc_biomebase_a, "d", true, Float.class);
+        biome_setSpecialEffects = Reflections.getMethod(mc_biomebase_a, "a", true, mc_biomefog);
+        biome_setMobs = Reflections.getMethod(mc_biomebase_a, "a", true, mc_biomesettingsmobs);
+        biome_setGeneration = Reflections.getMethod(mc_biomebase_a, "a", true, mc_biomesettingsgeneration);
+        biome_setTemperatureModifier = Reflections.getMethod(mc_biomebase_a, "a", true, mc_biomebase_temperaturemodifier);
+        biome_setPrecipitation = Reflections.getMethod(mc_biomebase_a, "a", true, mc_biomebase_precipitation);
+        biome_setGeography = Reflections.getMethod(mc_biomebase_a, "a", true, mc_biomebase_geography);
+        biomebase_build = Reflections.getMethod(mc_biomebase_a, "a", true);
     }
 
-    public WrappedBiomeBase(Object copyOf) {
+    private Object root;
 
+    public WrappedBiomeBase(Object root) {
+        this.root = root;
     }
 
+    public static class Builder {
+
+        private Object root;
+
+        @SneakyThrows
+        private Builder() {
+            this.root = mc_biomebase_a.getDeclaredConstructor().newInstance();
+        }
+
+        public static Builder create() {
+            return new Builder();
+        }
+
+        public void setGeography(Geography geography) {
+            Reflections.invoke(biome_setGeography, Void.class, root, geography.getObject());
+        }
+
+        public void setPrecipitation(Precipitation precipitation) {
+            Reflections.invoke(biome_setPrecipitation, Void.class, root, precipitation.getObject());
+        }
+
+        public void setTemperatureModifier(TemperatureModifier temperatureModifier) {
+            Reflections.invoke(biome_setTemperatureModifier, Void.class, root, temperatureModifier.getObject());
+        }
+
+        public void setDownfall(float downfall) {
+            Reflections.invoke(biome_setDownfall, Void.class, root, downfall);
+        }
+
+        public void setTemperature(float temperature) {
+            Reflections.invoke(biome_setTemperature, Void.class, root, temperature);
+        }
+
+        public void setSpecialEffects(WrappedBiomeFog effects) {
+            Reflections.invoke(biome_setSpecialEffects, Void.class, root, effects.getRoot());
+        }
+
+        /**
+         * Same as {@link #setSpecialEffects(WrappedBiomeFog)}
+         *
+         * @param fog self-explanatory.
+         */
+        public void setFog(WrappedBiomeFog fog) {
+            setSpecialEffects(fog);
+        }
+
+        /**
+         * Same as {@link #setSpecialEffects(WrappedBiomeFog)}
+         *
+         * @param properties self-explanatory.
+         */
+        public void setBiomeProperties(WrappedBiomeFog properties) {
+            setSpecialEffects(properties);
+        }
+
+        public void setDepth(float depth) {
+            Reflections.invoke(biome_setDepth, Void.class, root, depth);
+        }
+
+        public void setScale(float scale) {
+            Reflections.invoke(biome_setScale, Void.class, root, scale);
+        }
+
+        // TODO: FINISH THIS ASAP
+        public void setMobs(Object mobData) {
+            Reflections.invoke(biome_setMobs, Void.class, root, mobData);
+        }
+
+        // TODO: FINISH THIS ASAP
+        public void setGeneration(Object generationData) {
+            Reflections.invoke(biome_setGeneration, Void.class, root, generationData);
+        }
+
+        public WrappedBiomeBase build() {
+            return new WrappedBiomeBase(Reflections.invoke(biomebase_build, Object.class, root));
+        }
+
+    }
 
     public static enum Geography {
         NONE(Reflections.invoke(mc_geography_valueof, Object.class, null, "NONE")),
@@ -93,7 +190,7 @@ public class WrappedBiomeBase {
         NETHER(Reflections.invoke(mc_geography_valueof, Object.class, null, "NETHER"));
 
         @Getter
-        private Object object;
+        private final Object object;
 
         Geography(Object object) {
             this.object = object;
@@ -107,7 +204,7 @@ public class WrappedBiomeBase {
         SNOW(Reflections.invoke(mc_precipitation_valueof, Object.class, null, "SNOW"));
 
         @Getter
-        private Object object;
+        private final Object object;
 
         Precipitation(Object object) {
             this.object = object;
@@ -119,7 +216,7 @@ public class WrappedBiomeBase {
         FROZEN(Reflections.invoke(mc_temp_valueof, Object.class, null, "FROZEN"));
 
         @Getter
-        private Object object;
+        private final Object object;
 
         TemperatureModifier(Object object) {
             this.object = object;

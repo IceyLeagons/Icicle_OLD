@@ -24,6 +24,7 @@
 
 package net.iceyleagons.icicle.wrapped;
 
+import lombok.Getter;
 import lombok.SneakyThrows;
 import net.iceyleagons.icicle.reflections.Reflections;
 
@@ -76,6 +77,7 @@ public class WrappedBiomeFog {
         biome_fog_create = Reflections.getMethod(mc_biomefog_a, "a", true);
     }
 
+    @Getter
     private Object root;
 
     public WrappedBiomeFog(Object root) {
