@@ -43,6 +43,7 @@ public class WrappedEntityPlayer {
     private static final Field mc_playerConnection;
     private static final Field mc_networkManager;
     private static final Method mc_isFrozen;
+    private static final Field mc_ping;
 
     static {
         entityPlayerClass = Reflections.getNormalNMSClass("EntityPlayer");
@@ -50,6 +51,7 @@ public class WrappedEntityPlayer {
         mc_playerConnection = getMCField("playerConnection");
         mc_networkManager = getMCField("networkManager");
         mc_isFrozen = getMCMethod("isFrozen");
+        mc_ping = getMCField("ping");
     }
 
     private static Method getMCMethod(String name, Class<?>... parameterTypes) {
@@ -72,6 +74,10 @@ public class WrappedEntityPlayer {
 
     public WrappedNetworkManager getNetworkManager() {
         return new WrappedNetworkManager(Reflections.get(mc_networkManager, Object.class, entityPlayer));
+    }
+
+    public Integer getPing() {
+        return Reflections.get(mc_ping, Integer.class, entityPlayer);
     }
 
     public Boolean isFrozen() {

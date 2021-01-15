@@ -50,6 +50,7 @@ public class WrappedCraftPlayer {
     private static final Method cb_sendActionbar;
     private static final Method cb_getHandle;
 
+
     static {
         craftPlayerClass = Reflections.getNormalCBClass("entity.CraftPlayer");
 
