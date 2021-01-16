@@ -28,6 +28,9 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import net.iceyleagons.icicle.reflections.Reflections;
+import net.iceyleagons.icicle.wrapped.WrappedBiomeBase;
+import net.iceyleagons.icicle.wrapped.WrappedIRegistry;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
@@ -46,19 +49,34 @@ public class WrappedCraftBlock {
     private static final Class<?> craftBlockClass;
 
     private static final Method breakNaturally;
+    private static final Method biomeBaseToBiome;
+    private static final Method biomeToBiomeBase;
 
     static {
         craftBlockClass = Reflections.getNormalCBClass("block.CraftBlock");
+
+        Class<?> registry = Reflections.getNormalNMSClass("IRegistry");
+        Class<?> biomeBase = Reflections.getNormalNMSClass("BiomeBase");
+
         breakNaturally = Reflections.getMethod(craftBlockClass, "breakNaturally", true, ItemStack.class, boolean.class);
+        biomeBaseToBiome = Reflections.getMethod(craftBlockClass, "biomeBaseToBiome", true, registry, biomeBase);
+        biomeToBiomeBase = Reflections.getMethod(craftBlockClass, "biomeToBiomeBase", true, registry, Biome.class);
     }
 
+    @Getter
+    private final Block block;
 
     public static WrappedCraftBlock from(Block block) {
         return new WrappedCraftBlock(block);
     }
 
-    @Getter
-    private final Block block;
+    public static Biome biomeBaseToBiome(WrappedBiomeBase biomeBase) {
+        return Reflections.invoke(biomeBaseToBiome, Biome.class, craftBlockClass, WrappedIRegistry.BIOME, biomeBase.getRoot());
+    }
+
+    public static WrappedBiomeBase biomeToBiomeBase(Biome biome) {
+        return new WrappedBiomeBase(Reflections.invoke(biomeToBiomeBase, Object.class, craftBlockClass, WrappedIRegistry.BIOME, biome));
+    }
 
     @SneakyThrows
     public void dropNaturally(ItemStack itemStack, boolean triggerSound) {
@@ -66,7 +84,6 @@ public class WrappedCraftBlock {
     }
 
     //TODO CraftBlock, CraftPlayer, CraftEntity, CraftWorld
-
 
 
 }

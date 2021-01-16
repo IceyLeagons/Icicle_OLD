@@ -37,7 +37,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 public interface Translatable {
 
     /**
-     * @param messageKey the messageKey in the config
+     * @param messageKey   the messageKey in the config
      * @param defaultValue the default value to return if the config does not exist or does not contain the specified key
      * @return the message either from the config file or the default value
      */

@@ -24,7 +24,6 @@
 
 package net.iceyleagons.icicle.item;
 
-import net.iceyleagons.icicle.reflections.Reflections;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.io.BukkitObjectInputStream;
@@ -33,12 +32,7 @@ import org.bukkit.util.io.BukkitObjectOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 /**
  * This class contains useful methods for handling items.
@@ -48,62 +42,6 @@ import java.util.Objects;
  * @since 1.0.0-SNAPSHOT
  */
 public class ItemUtils {
-
-    private static Map<Object, Integer> burnTimes;
-    private static Method nmsCopy;
-    private static Class<?> craftItem;
-
-    private static void setupBurnMap() throws InvocationTargetException, IllegalAccessException {
-        Class<?> furnaceClass = Reflections.getNormalNMSClass("TileEntityFurnace");
-
-        @SuppressWarnings("unchecked")
-        Map<Object, Integer> map = (Map<Object, Integer>)
-                Objects.requireNonNull(Reflections.getMethod(furnaceClass, "f", true)).invoke(null);
-
-        burnTimes = map;
-    }
-
-    private static void setupCraftItemMethod() {
-        craftItem = Reflections.getNormalCBClass("inventory.CraftItemStack");
-        nmsCopy = Reflections.getMethod(craftItem, "asNMSCopy", true, ItemStack.class);
-
-    }
-
-    /**
-     * @param itemStack the ItemStack
-     * @return the burn time of the item provided (ticks)
-     */
-    public static int getBurnTime(ItemStack itemStack) {
-        try {
-            if (burnTimes == null) setupBurnMap();
-
-            Object item = getCraftItem(itemStack);
-            if (item == null) return 0;
-
-            if (burnTimes.containsKey(item)) return burnTimes.get(item);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
-
-    /**
-     * @param itemStack hte {@link ItemStack}
-     * @return the craft item representation of the provided item stack (.asNMSCopy.getItem())
-     */
-    public static Object getCraftItem(ItemStack itemStack) {
-        try {
-            if (nmsCopy == null) setupCraftItemMethod();
-
-            Object craftItemStack = nmsCopy.invoke(craftItem, itemStack);
-
-            return Objects.requireNonNull(Reflections.getMethod(craftItemStack.getClass(), "getItem", true))
-                    .invoke(craftItemStack);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     /**
      * This will convert the {@link ItemStack} array into a byte array using {@link BukkitObjectOutputStream}

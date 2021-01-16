@@ -26,14 +26,10 @@ package net.iceyleagons.icicle.wrapped;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import net.iceyleagons.icicle.reflections.Reflections;
-import net.iceyleagons.icicle.wrapped.player.WrappedCraftPlayer;
 import org.bukkit.Server;
 
-import java.io.File;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.util.Optional;
@@ -89,6 +85,7 @@ public class WrappedDedicatedServer {
     private static final Method mc_canExecute;
     private static final Method mc_executeNext;
     private static final Method mc_safeShutdown;
+    private static final Method mc_getServerConnection;
 
     private static final Field mc_tpsField;
     private static final Field mc_minecraftSessionService;
@@ -133,6 +130,7 @@ public class WrappedDedicatedServer {
         mc_getWorldServer = getMCMethod("getWorldServer", Object.class);
         mc_postToMainThread = getMCMethod("postToMainThread", Runnable.class);
         mc_canExecute = getMCMethod("canExecute", Object.class);
+        mc_getServerConnection = getMCMethod("getServerConnection");
         mc_executeNext = getMCMethod("executeNext");
         mc_safeShutdown = getMCMethod("safeShutdown", boolean.class, boolean.class);
 
@@ -145,6 +143,9 @@ public class WrappedDedicatedServer {
         mc_dataPackResources = getMCField("dataPackResources");
 
     }
+
+    @Getter
+    private final Object dedicatedServer;
 
     private static Method getMCMethod(String name, Class<?>... parameterTypes) {
         return Reflections.getMethod(mcServerClass, name, true, parameterTypes);
@@ -161,9 +162,6 @@ public class WrappedDedicatedServer {
     public static WrappedDedicatedServer from(Server server) {
         return new WrappedDedicatedServer(getMCServer(server));
     }
-
-    @Getter
-    private final Object dedicatedServer;
 
     /**
      * @param tpsTime the {@link TPSTime} to get
@@ -209,6 +207,10 @@ public class WrappedDedicatedServer {
 
     public Object getLootTableRegistry() {
         return Reflections.invoke(mc_getLootTableRegistry, Object.class, dedicatedServer);
+    }
+
+    public Object getServerConnection() {
+        return Reflections.invoke(mc_getServerConnection, Object.class, dedicatedServer);
     }
 
     public Object getCustomRegistry() {
@@ -296,7 +298,6 @@ public class WrappedDedicatedServer {
     }
 
 
-
     /**
      * @return the functionData in an Object form (may be wrapped in the future)
      */
@@ -305,7 +306,6 @@ public class WrappedDedicatedServer {
     }
 
     //TODO CraftBlock, CraftPlayer, CraftEntity, CraftWorld
-
 
 
 }

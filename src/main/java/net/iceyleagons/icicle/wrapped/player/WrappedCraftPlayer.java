@@ -27,7 +27,6 @@ package net.iceyleagons.icicle.wrapped.player;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.iceyleagons.icicle.reflections.Reflections;
-import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
@@ -57,9 +56,11 @@ public class WrappedCraftPlayer {
         cb_getConversationTracker = getCBField("conversationTracker");
         cb_getProtocolVersion = getCBMethod("getProtocolVersion");
         cb_getVirtualHost = getCBMethod("getVirtualHost");
-        cb_sendActionbar = getCBMethod("sendActionbar", String.class);
+        cb_sendActionbar = getCBMethod("sendActionbar", char.class, String.class);
         cb_getHandle = getCBMethod("getHandle");
     }
+
+    private final Player bukkitPlayer;
 
     private static Method getCBMethod(String name, Class<?>... parameterTypes) {
         return Reflections.getMethod(craftPlayerClass, name, true, parameterTypes);
@@ -73,8 +74,6 @@ public class WrappedCraftPlayer {
         return new WrappedCraftPlayer(player);
     }
 
-    private final Player bukkitPlayer;
-
     public Object getConversationTracker() {
         return Reflections.get(cb_getConversationTracker, Object.class, bukkitPlayer);
     }
@@ -87,7 +86,7 @@ public class WrappedCraftPlayer {
         return Reflections.invoke(cb_getVirtualHost, InetSocketAddress.class, bukkitPlayer);
     }
 
-    public void sendActionbar(String message) {
+    public void sendActionbar(char alternateChar, String message) {
         Reflections.invoke(cb_sendActionbar, Void.class, bukkitPlayer, message);
     }
 

@@ -26,6 +26,8 @@ package net.iceyleagons.icicle;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.awt.*;
+
 /**
  * This class doesn't really have functions, only update checkers.
  * Only purpose is version checking, with all sorts of metadata information.
@@ -35,7 +37,6 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @since 1.0.0-SNAPSHOT
  */
 public class Icicle {
-
 
     public static JavaPlugin registrar;
     /**

@@ -46,6 +46,7 @@ public class WrappedPlayerConnection {
     private static final Method mc_setLastPing;
     private static final Method mc_setPendingPing;
     private static final Method mc_isPendingPing;
+    private static final Method mc_sendPacket;
 
     static {
         pConnectionClass = Reflections.getNormalNMSClass("PlayerConnection");
@@ -55,29 +56,33 @@ public class WrappedPlayerConnection {
         mc_setLastPing = getMCMethod("setLastPing", long.class);
         mc_setPendingPing = getMCMethod("setPendingPing", boolean.class);
         mc_isPendingPing = getMCMethod("isPendingPing");
+        mc_sendPacket = getMCMethod("sendPacket", Reflections.getNormalNMSClass("Packet"));
     }
+
+    private final Object playerConnection;
 
     private static Method getMCMethod(String name, Class<?>... parameterTypes) {
         return Reflections.getMethod(pConnectionClass, name, true, parameterTypes);
     }
 
-    private final Object playerConnection;
-
     public WrappedNetworkManager getNetworkManager() {
         return new WrappedNetworkManager(Reflections.get(mc_networkManager, Object.class, playerConnection));
     }
 
-    private void setLastPing(long lastPing) {
-        Reflections.invoke(mc_setLastPing, Void.class, playerConnection, lastPing);
+    public void sendPacket(Object packet) {
+        Reflections.invoke(mc_sendPacket, Void.class, playerConnection, packet);
     }
 
     private Long getLastPing() {
         return Reflections.invoke(mc_getLastPing, Long.class, playerConnection);
     }
 
+    private void setLastPing(long lastPing) {
+        Reflections.invoke(mc_setLastPing, Void.class, playerConnection, lastPing);
+    }
+
     private void setPendingPing(boolean isPending) {
         Reflections.invoke(mc_setPendingPing, Void.class, playerConnection, isPending);
-
     }
 
     private Boolean isPendingPing() {

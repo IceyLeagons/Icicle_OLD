@@ -291,8 +291,8 @@ public strictfp class MathUtils {
      * Clamps the value between the min and max values
      *
      * @param value to clamp
-     * @param min the minimum value
-     * @param max the maximum value
+     * @param min   the minimum value
+     * @param max   the maximum value
      * @return value if it's between min and max otherwise min or max
      */
     public static float clamp(float value, float min, float max) {

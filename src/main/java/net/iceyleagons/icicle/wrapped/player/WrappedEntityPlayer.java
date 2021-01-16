@@ -39,20 +39,26 @@ import java.lang.reflect.Method;
 public class WrappedEntityPlayer {
 
     private static final Class<?> entityPlayerClass;
+    private static final Class<?> mc_Entity;
 
     private static final Field mc_playerConnection;
     private static final Field mc_networkManager;
+    private static final Field mc_world;
     private static final Method mc_isFrozen;
     private static final Field mc_ping;
 
     static {
         entityPlayerClass = Reflections.getNormalNMSClass("EntityPlayer");
+        mc_Entity = Reflections.getNormalNMSClass("Entity");
 
         mc_playerConnection = getMCField("playerConnection");
         mc_networkManager = getMCField("networkManager");
+        mc_world = Reflections.getField(mc_Entity, "world", true);
         mc_isFrozen = getMCMethod("isFrozen");
         mc_ping = getMCField("ping");
     }
+
+    private final Object entityPlayer;
 
     private static Method getMCMethod(String name, Class<?>... parameterTypes) {
         return Reflections.getMethod(entityPlayerClass, name, true, parameterTypes);
@@ -66,14 +72,16 @@ public class WrappedEntityPlayer {
         return new WrappedEntityPlayer(handle);
     }
 
-    private final Object entityPlayer;
-
     public WrappedPlayerConnection getPlayerConnection() {
         return new WrappedPlayerConnection(Reflections.get(mc_playerConnection, Object.class, entityPlayer));
     }
 
     public WrappedNetworkManager getNetworkManager() {
         return new WrappedNetworkManager(Reflections.get(mc_networkManager, Object.class, entityPlayer));
+    }
+
+    public Object getNMSWorld() {
+        return Reflections.get(mc_world, Object.class, entityPlayer);
     }
 
     public Integer getPing() {

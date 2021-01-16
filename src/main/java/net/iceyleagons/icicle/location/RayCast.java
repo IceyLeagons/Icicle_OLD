@@ -45,8 +45,8 @@ public class RayCast {
     /**
      * Will shoot a ray and return the first target it hits.
      *
-     * @param entity the entity to shoot from
-     * @param yOffset the yOffset (if you don't satisfied with the entity's y level)
+     * @param entity   the entity to shoot from
+     * @param yOffset  the yOffset (if you don't satisfied with the entity's y level)
      * @param distance the maximum distance it should travel, keep in mind, that too high value may cause the server to crash
      * @return the first {@link LivingEntity} it hits or null
      */
@@ -62,7 +62,7 @@ public class RayCast {
 
         int count = 0;
         while (bItr.hasNext()) {
-            if (count++ > distance+10) break; //failsafe
+            if (count++ > distance + 10) break; //failsafe
 
             Block block = bItr.next();
             int bx = block.getX();

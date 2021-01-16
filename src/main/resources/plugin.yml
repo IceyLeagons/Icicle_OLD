@@ -1,0 +1,6 @@
+name: IcicleTest
+version: 1.0.0
+author: [ TOTHTOMI, G4be_ ]
+description: lol
+main: net.iceyleagons.icicle.Test
+api-version: 1.13

@@ -28,6 +28,7 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import net.iceyleagons.icicle.reflections.Reflections;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
@@ -35,10 +36,10 @@ import java.lang.reflect.Method;
  */
 public class WrappedBiomeBase {
 
-    private static final Class<?> mc_biomebase_a;
-    private static final Class<?> mc_biomefog;
-    private static final Class<?> mc_biomesettingsmobs;
-    private static final Class<?> mc_biomesettingsgeneration;
+    public static final Class<?> mc_BiomeBase;
+    private static final Class<?> mc_biomebase_a, mc_biomefog, mc_biomesettingsmobs, mc_biomesettingsgeneration;
+
+    private static final Field generation_b, mobs_b;
 
     private static final Class<? extends Enum<?>> mc_biomebase_geography;
     private static final Method mc_geography_valueof;
@@ -47,23 +48,20 @@ public class WrappedBiomeBase {
     private static final Class<? extends Enum<?>> mc_biomebase_temperaturemodifier;
     private static final Method mc_temp_valueof;
 
-    private static final Method biome_setDepth;
-    private static final Method biome_setScale;
-    private static final Method biome_setTemperature;
-    private static final Method biome_setDownfall;
-    private static final Method biome_setSpecialEffects;
-    private static final Method biome_setMobs;
-    private static final Method biome_setGeneration;
-    private static final Method biome_setTemperatureModifier;
-    private static final Method biome_setPrecipitation;
-    private static final Method biome_setGeography;
-    private static final Method biomebase_build;
+    private static final Method biome_setDepth, biome_setScale, biome_setTemperature, biome_setDownfall, biome_setSpecialEffects,
+            biome_setMobs, biome_setGeneration, biome_setTemperatureModifier, biome_setPrecipitation, biome_setGeography,
+            biomebase_build;
 
     static {
+        mc_BiomeBase = Reflections.getNormalNMSClass("BiomeBase");
+
         mc_biomefog = Reflections.getNormalNMSClass("BiomeFog");
         mc_biomebase_a = Reflections.getNormalNMSClass("BiomeBase$a");
         mc_biomesettingsmobs = Reflections.getNormalNMSClass("BiomeSettingsMobs");
         mc_biomesettingsgeneration = Reflections.getNormalNMSClass("BiomeSettingsGeneration");
+
+        generation_b = Reflections.getField(mc_biomesettingsgeneration, "b", true);
+        mobs_b = Reflections.getField(mc_biomesettingsmobs, "b", true);
 
         mc_biomebase_geography = (Class<? extends Enum<?>>) Reflections.getNormalNMSClass("BiomeBase$Geography");
         mc_geography_valueof = Reflections.getMethod(mc_biomebase_geography, "valueOf", true, String.class);
@@ -72,10 +70,10 @@ public class WrappedBiomeBase {
         mc_biomebase_temperaturemodifier = (Class<? extends Enum<?>>) Reflections.getNormalNMSClass("BiomeBase$TemperatureModifier");
         mc_temp_valueof = Reflections.getMethod(mc_biomebase_temperaturemodifier, "valueOf", true, String.class);
 
-        biome_setDepth = Reflections.getMethod(mc_biomebase_a, "a", true, Float.class);
-        biome_setScale = Reflections.getMethod(mc_biomebase_a, "b", true, Float.class);
-        biome_setTemperature = Reflections.getMethod(mc_biomebase_a, "c", true, Float.class);
-        biome_setDownfall = Reflections.getMethod(mc_biomebase_a, "d", true, Float.class);
+        biome_setDepth = Reflections.getMethod(mc_biomebase_a, "a", true, float.class);
+        biome_setScale = Reflections.getMethod(mc_biomebase_a, "b", true, float.class);
+        biome_setTemperature = Reflections.getMethod(mc_biomebase_a, "c", true, float.class);
+        biome_setDownfall = Reflections.getMethod(mc_biomebase_a, "d", true, float.class);
         biome_setSpecialEffects = Reflections.getMethod(mc_biomebase_a, "a", true, mc_biomefog);
         biome_setMobs = Reflections.getMethod(mc_biomebase_a, "a", true, mc_biomesettingsmobs);
         biome_setGeneration = Reflections.getMethod(mc_biomebase_a, "a", true, mc_biomesettingsgeneration);
@@ -85,89 +83,11 @@ public class WrappedBiomeBase {
         biomebase_build = Reflections.getMethod(mc_biomebase_a, "a", true);
     }
 
+    @Getter
     private Object root;
 
     public WrappedBiomeBase(Object root) {
         this.root = root;
-    }
-
-    public static class Builder {
-
-        private Object root;
-
-        @SneakyThrows
-        private Builder() {
-            this.root = mc_biomebase_a.getDeclaredConstructor().newInstance();
-        }
-
-        public static Builder create() {
-            return new Builder();
-        }
-
-        public void setGeography(Geography geography) {
-            Reflections.invoke(biome_setGeography, Void.class, root, geography.getObject());
-        }
-
-        public void setPrecipitation(Precipitation precipitation) {
-            Reflections.invoke(biome_setPrecipitation, Void.class, root, precipitation.getObject());
-        }
-
-        public void setTemperatureModifier(TemperatureModifier temperatureModifier) {
-            Reflections.invoke(biome_setTemperatureModifier, Void.class, root, temperatureModifier.getObject());
-        }
-
-        public void setDownfall(float downfall) {
-            Reflections.invoke(biome_setDownfall, Void.class, root, downfall);
-        }
-
-        public void setTemperature(float temperature) {
-            Reflections.invoke(biome_setTemperature, Void.class, root, temperature);
-        }
-
-        public void setSpecialEffects(WrappedBiomeFog effects) {
-            Reflections.invoke(biome_setSpecialEffects, Void.class, root, effects.getRoot());
-        }
-
-        /**
-         * Same as {@link #setSpecialEffects(WrappedBiomeFog)}
-         *
-         * @param fog self-explanatory.
-         */
-        public void setFog(WrappedBiomeFog fog) {
-            setSpecialEffects(fog);
-        }
-
-        /**
-         * Same as {@link #setSpecialEffects(WrappedBiomeFog)}
-         *
-         * @param properties self-explanatory.
-         */
-        public void setBiomeProperties(WrappedBiomeFog properties) {
-            setSpecialEffects(properties);
-        }
-
-        public void setDepth(float depth) {
-            Reflections.invoke(biome_setDepth, Void.class, root, depth);
-        }
-
-        public void setScale(float scale) {
-            Reflections.invoke(biome_setScale, Void.class, root, scale);
-        }
-
-        // TODO: FINISH THIS ASAP
-        public void setMobs(Object mobData) {
-            Reflections.invoke(biome_setMobs, Void.class, root, mobData);
-        }
-
-        // TODO: FINISH THIS ASAP
-        public void setGeneration(Object generationData) {
-            Reflections.invoke(biome_setGeneration, Void.class, root, generationData);
-        }
-
-        public WrappedBiomeBase build() {
-            return new WrappedBiomeBase(Reflections.invoke(biomebase_build, Object.class, root));
-        }
-
     }
 
     public static enum Geography {
@@ -221,6 +141,107 @@ public class WrappedBiomeBase {
         TemperatureModifier(Object object) {
             this.object = object;
         }
+    }
+
+    public static class Builder {
+
+        private Object root;
+
+        @SneakyThrows
+        private Builder() {
+            this.root = mc_biomebase_a.getDeclaredConstructor().newInstance();
+        }
+
+        public static Builder create() {
+            return new Builder();
+        }
+
+        public Builder setGeography(Geography geography) {
+            Reflections.invoke(biome_setGeography, Void.class, root, geography.getObject());
+            return this;
+        }
+
+        public Builder setPrecipitation(Precipitation precipitation) {
+            Reflections.invoke(biome_setPrecipitation, Void.class, root, precipitation.getObject());
+            return this;
+        }
+
+        public Builder setTemperatureModifier(TemperatureModifier temperatureModifier) {
+            Reflections.invoke(biome_setTemperatureModifier, Void.class, root, temperatureModifier.getObject());
+            return this;
+        }
+
+        public Builder setDownfall(float downfall) {
+            Reflections.invoke(biome_setDownfall, Void.class, root, downfall);
+            return this;
+        }
+
+        public Builder setTemperature(float temperature) {
+            Reflections.invoke(biome_setTemperature, Void.class, root, temperature);
+            return this;
+        }
+
+        public Builder setSpecialEffects(WrappedBiomeFog effects) {
+            Reflections.invoke(biome_setSpecialEffects, Void.class, root, effects.getRoot());
+            return this;
+        }
+
+        /**
+         * Same as {@link #setSpecialEffects(WrappedBiomeFog)}
+         *
+         * @param fog self-explanatory.
+         */
+        public Builder setFog(WrappedBiomeFog fog) {
+            setSpecialEffects(fog);
+            return this;
+        }
+
+        /**
+         * Same as {@link #setSpecialEffects(WrappedBiomeFog)}
+         *
+         * @param properties self-explanatory.
+         */
+        public Builder setBiomeProperties(WrappedBiomeFog properties) {
+            setSpecialEffects(properties);
+            return this;
+        }
+
+        public Builder setDepth(float depth) {
+            Reflections.invoke(biome_setDepth, Void.class, root, depth);
+            return this;
+        }
+
+        public Builder setScale(float scale) {
+            Reflections.invoke(biome_setScale, Void.class, root, scale);
+            return this;
+        }
+
+        public Builder setMobs() {
+            setMobs(Reflections.get(mobs_b, Object.class, null));
+            return this;
+        }
+
+        public Builder setGeneration() {
+            setGeneration(Reflections.get(generation_b, Object.class, null));
+            return this;
+        }
+
+        // TODO: FINISH THIS ASAP
+        public Builder setMobs(Object mobData) {
+            Reflections.invoke(biome_setMobs, Void.class, root, mobData);
+            return this;
+        }
+
+        // TODO: FINISH THIS ASAP
+        public Builder setGeneration(Object generationData) {
+            Reflections.invoke(biome_setGeneration, Void.class, root, generationData);
+            return this;
+        }
+
+        public WrappedBiomeBase build() {
+            return new WrappedBiomeBase(Reflections.invoke(biomebase_build, Object.class, root));
+        }
+
     }
 
 }

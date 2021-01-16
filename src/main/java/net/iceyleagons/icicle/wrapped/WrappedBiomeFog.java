@@ -28,6 +28,7 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import net.iceyleagons.icicle.reflections.Reflections;
 
+import java.awt.*;
 import java.lang.reflect.Method;
 
 /**
@@ -64,10 +65,10 @@ public class WrappedBiomeFog {
         mc_cavesound = Reflections.getNormalNMSClass("CaveSound");
         mc_music = Reflections.getNormalNMSClass("Music");
 
-        biome_setFogColor = Reflections.getMethod(mc_biomefog_a, "a", true, Float.class);
-        biome_setWaterColor = Reflections.getMethod(mc_biomefog_a, "b", true, Float.class);
-        biome_setWaterFogColor = Reflections.getMethod(mc_biomefog_a, "c", true, Float.class);
-        biome_setSkyColor = Reflections.getMethod(mc_biomefog_a, "d", true, Float.class);
+        biome_setFogColor = Reflections.getMethod(mc_biomefog_a, "a", true, int.class);
+        biome_setWaterColor = Reflections.getMethod(mc_biomefog_a, "b", true, int.class);
+        biome_setWaterFogColor = Reflections.getMethod(mc_biomefog_a, "c", true, int.class);
+        biome_setSkyColor = Reflections.getMethod(mc_biomefog_a, "d", true, int.class);
         biome_setGrassColor = Reflections.getMethod(mc_biomefog_a, "a", true, mc_biomefog_grasscolor);
         biome_setParticles = Reflections.getMethod(mc_biomefog_a, "a", true, mc_biomeparticles);
         biome_setAmbientSounds = Reflections.getMethod(mc_biomefog_a, "a", true, mc_soundeffect);
@@ -75,6 +76,14 @@ public class WrappedBiomeFog {
         biome_setAdditionalSounds = Reflections.getMethod(mc_biomefog_a, "a", true, mc_cavesound);
         biome_setMusic = Reflections.getMethod(mc_biomefog_a, "a", true, mc_music);
         biome_fog_create = Reflections.getMethod(mc_biomefog_a, "a", true);
+    }
+
+    private static int getColor(Color color) {
+        int rgb = color.getRed();
+        rgb = (rgb << 8) + color.getGreen();
+        rgb = (rgb << 8) + color.getBlue();
+
+        return rgb;
     }
 
     @Getter
@@ -87,6 +96,9 @@ public class WrappedBiomeFog {
     public static class Builder {
 
         Object root;
+        WrappedBiomeBase.Geography geography;
+        WrappedBiomeBase.Precipitation precipitation;
+        WrappedBiomeBase.TemperatureModifier temperatureModifier;
 
         @SneakyThrows
         private Builder() {
@@ -97,49 +109,55 @@ public class WrappedBiomeFog {
             return new WrappedBiomeFog.Builder();
         }
 
-        public void setFogColor(float color) {
-            this.root = Reflections.invoke(biome_setFogColor, Object.class, root, color);
+        public WrappedBiomeFog.Builder setFogColor(Color color) {
+            this.root = Reflections.invoke(biome_setFogColor, Object.class, root, getColor(color));
+            return this;
         }
 
-        public void setWaterColor(float color) {
-            this.root = Reflections.invoke(biome_setWaterColor, Object.class, root, color);
+        public WrappedBiomeFog.Builder setWaterColor(Color color) {
+            this.root = Reflections.invoke(biome_setWaterColor, Object.class, root, getColor(color));
+            return this;
         }
 
-        public void setWaterFogColor(float color) {
-            this.root = Reflections.invoke(biome_setWaterFogColor, Object.class, root, color);
+        public WrappedBiomeFog.Builder setWaterFogColor(Color color) {
+            this.root = Reflections.invoke(biome_setWaterFogColor, Object.class, root, getColor(color));
+            return this;
         }
 
-        public void setSkyColor(float color) {
-            this.root = Reflections.invoke(biome_setSkyColor, Object.class, root, color);
+        public WrappedBiomeFog.Builder setSkyColor(Color color) {
+            this.root = Reflections.invoke(biome_setSkyColor, Object.class, root, getColor(color));
+            return this;
         }
 
-        public void setGrassColor(Object color) {
+        public WrappedBiomeFog.Builder setGrassColor(Object color) {
             this.root = Reflections.invoke(biome_setGrassColor, Object.class, root, color);
+            return this;
         }
 
-        public void setParticles(Object particle) {
+        public WrappedBiomeFog.Builder setParticles(Object particle) {
             this.root = Reflections.invoke(biome_setParticles, Object.class, root, particle);
+            return this;
         }
 
-        public void setAmbientSounds(Object sounds) {
+        public WrappedBiomeFog.Builder setAmbientSounds(Object sounds) {
             this.root = Reflections.invoke(biome_setAmbientSounds, Object.class, root, sounds);
+            return this;
         }
 
-        public void setMoodSounds(Object sounds) {
+        public WrappedBiomeFog.Builder setMoodSounds(Object sounds) {
             this.root = Reflections.invoke(biome_setMoodSounds, Object.class, root, sounds);
+            return this;
         }
 
-        public void setAdditionalSounds(Object sounds) {
+        public WrappedBiomeFog.Builder setAdditionalSounds(Object sounds) {
             this.root = Reflections.invoke(biome_setAdditionalSounds, Object.class, root, sounds);
+            return this;
         }
 
-        public void setMusic(Object music) {
+        public WrappedBiomeFog.Builder setMusic(Object music) {
             this.root = Reflections.invoke(biome_setMusic, Object.class, root, music);
+            return this;
         }
-
-        WrappedBiomeBase.Geography geography;
-        WrappedBiomeBase.Precipitation precipitation;
-        WrappedBiomeBase.TemperatureModifier temperatureModifier;
 
         public WrappedBiomeFog build() {
             return new WrappedBiomeFog(Reflections.invoke(biome_fog_create, Object.class, root));

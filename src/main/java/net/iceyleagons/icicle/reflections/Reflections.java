@@ -24,7 +24,6 @@
 
 package net.iceyleagons.icicle.reflections;
 
-import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 
 import java.lang.reflect.Field;
@@ -134,6 +133,9 @@ public class Reflections {
     public static <T> T invoke(Method method, Class<T> wantedType, Object o, Object... args) {
         try {
             Object result = method.invoke(o, args);
+            if (wantedType == Void.class)
+                return null;
+
             return wantedType.cast(result);
         } catch (IllegalAccessException | InvocationTargetException | ClassCastException e) {
             e.printStackTrace();
@@ -157,6 +159,14 @@ public class Reflections {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void set(Field field, Object object, Object value) {
+        try {
+            field.set(object, value);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

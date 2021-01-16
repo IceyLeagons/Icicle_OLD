@@ -36,9 +36,8 @@ import java.io.File;
  * @since 1.3.3-SNAPSHOT
  */
 public class LocalizationManager {
-
-    private static File localeFolder;
     public static YamlConfiguration languageFile;
+    private static File localeFolder;
 
     /**
      * Sets the locale folder.
@@ -62,7 +61,7 @@ public class LocalizationManager {
      * @param langKey the language file name (do not include .yml)
      */
     public static void loadLanguageFile(String langKey) {
-        File file = new File(localeFolder, langKey+".yml");
+        File file = new File(localeFolder, langKey + ".yml");
         if (!file.exists()) languageFile = null;
         else {
             languageFile = YamlConfiguration.loadConfiguration(file);
