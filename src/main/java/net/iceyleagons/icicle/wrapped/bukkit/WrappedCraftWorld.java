@@ -25,11 +25,15 @@
 package net.iceyleagons.icicle.wrapped.bukkit;
 
 import lombok.Getter;
-import net.iceyleagons.icicle.reflections.Reflections;
+import net.iceyleagons.icicle.Test;
+import net.iceyleagons.icicle.reflect.Reflections;
 import net.iceyleagons.icicle.wrapped.*;
+import net.iceyleagons.icicle.wrapped.player.WrappedCraftPlayer;
+import net.iceyleagons.icicle.wrapped.player.WrappedEntityPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 
 import java.awt.*;
 import java.lang.reflect.Field;
@@ -37,8 +41,9 @@ import java.lang.reflect.Method;
 
 public class WrappedCraftWorld {
 
-    private static final Class<?> mc_CraftWorld, mc_World, mc_WorldServer, mc_IRegistryCustom;
-    private static final Method world_isLoaded, world_getChunkAtWorldCoords, ws_getRegistry, registry_b;
+    public static final Class<?> mc_World;
+    private static final Class<?> mc_CraftWorld, mc_WorldServer, mc_IRegistryCustom;
+    private static final Method world_isLoaded, world_getChunkAtWorldCoords, world_getHandle, nmsWorld_getWorld, ws_getRegistry, registry_b;
     private static final Field bukkit_nmsWorld;
 
     static {
@@ -49,6 +54,8 @@ public class WrappedCraftWorld {
 
         world_isLoaded = Reflections.getMethod(mc_World, "isLoaded", true, WrappedBlockPosition.mc_BlockPosition);
         world_getChunkAtWorldCoords = Reflections.getMethod(mc_World, "getChunkAtWorldCoords", true, WrappedBlockPosition.mc_BlockPosition);
+        world_getHandle = Reflections.getMethod(mc_CraftWorld, "getHandle", true);
+        nmsWorld_getWorld = Reflections.getMethod(mc_World, "getWorld", true);
         ws_getRegistry = Reflections.getMethod(mc_WorldServer, "r", true);
         registry_b = Reflections.getMethod(mc_IRegistryCustom, "b", true, WrappedIRegistry.mc_ResourceKey);
 
@@ -61,6 +68,11 @@ public class WrappedCraftWorld {
     public WrappedCraftWorld(Object root) {
         if (root instanceof World) {
             craftWorld = mc_CraftWorld.cast(root);
+            return;
+        }
+
+        if (root.getClass().isInstance(mc_World)) {
+            craftWorld = Reflections.invoke(nmsWorld_getWorld, Object.class, root);
             return;
         }
 
@@ -87,37 +99,27 @@ public class WrappedCraftWorld {
         return new WrappedChunk(Reflections.invoke(world_getChunkAtWorldCoords, Object.class, Reflections.get(bukkit_nmsWorld, Object.class, craftWorld), blockPosition.getRoot()));
     }
 
-    public WrappedBiomeBase setBiome(int x, int y, int z, String namespace, String key) {
-        /*WrappedBiomeBase biomeBase = WrappedBiomeBase.Builder.create()
-                .setBiomeProperties(WrappedBiomeFog.Builder.create()
-                        .setWaterColor(Color.GREEN)
-                        .setWaterFogColor(Color.PINK)
-                        .setSkyColor(Color.CYAN)
-                        .setFogColor(Color.BLACK)
-                        .build())
-                .setDepth(0.05f)
-                .setDownfall(0.1f)
-                .setGeography(WrappedBiomeBase.Geography.JUNGLE)
-                .setPrecipitation(WrappedBiomeBase.Precipitation.SNOW)
-                .setTemperature(1.25f)
-                .setTemperatureModifier(WrappedBiomeBase.TemperatureModifier.FROZEN)
-                .setScale(0.25f)
-                .setMobs()
-                .setGeneration()
-                .build();*/
-
-        WrappedBiomeBase biomeBase = new WrappedBiomeBase(WrappedIRegistry
+    public WrappedChunk setBiome(int x, int y, int z, String namespace, String key) {
+        /*WrappedBiomeBase biomeBase = new WrappedBiomeBase(WrappedIRegistry
                 .get(Reflections.invoke(registry_b, Object.class, getCustomRegistry(), WrappedIRegistry.BIOME),
-                        WrappedCraftNamespacedKey.toMinecraft(new NamespacedKey(namespace, key))));
+                        WrappedCraftNamespacedKey.toMinecraft(new NamespacedKey(namespace, key))));*/
         WrappedBlockPosition blockPosition = new WrappedBlockPosition(x, y, z);
-        WrappedChunk chunk;
+        WrappedChunk chunk = null;
 
         if (isLoaded(blockPosition) && (chunk = getChunkAtWorldCoords(blockPosition)).getChunk() != null) {
-            chunk.getBiomeIndex().setBiome(x >> 2, y >> 2, z >> 2, biomeBase);
+            chunk.getBiomeIndex().setBiome(x >> 2, y >> 2, z >> 2, Test.biomeBase);
             chunk.markDirty();
         }
 
-        return biomeBase;
+        return chunk;
+    }
+
+    public WrappedWorld getHandle() {
+        return new WrappedWorld(Reflections.invoke(world_getHandle, Object.class, craftWorld));
+    }
+
+    public void sendUpdate(Player player, WrappedChunk chunk) {
+        WrappedCraftPlayer.from(player).getHandle().getPlayerConnection().sendPacket(new WrappedPacketPlayOutMapChunk(chunk).getPacket());
     }
 
 }

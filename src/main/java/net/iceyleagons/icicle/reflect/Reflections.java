@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.reflections;
+package net.iceyleagons.icicle.reflect;
 
 import org.bukkit.Bukkit;
 
@@ -133,10 +133,8 @@ public class Reflections {
     public static <T> T invoke(Method method, Class<T> wantedType, Object o, Object... args) {
         try {
             Object result = method.invoke(o, args);
-            if (wantedType == Void.class)
-                return null;
 
-            return wantedType.cast(result);
+            return wantedType.isInstance(result) ? wantedType.cast(result) : null;
         } catch (IllegalAccessException | InvocationTargetException | ClassCastException e) {
             e.printStackTrace();
         }
@@ -154,7 +152,7 @@ public class Reflections {
     public static <T> T get(Field field, Class<T> wantedType, Object o) {
         try {
             Object result = field.get(o);
-            return wantedType.cast(result);
+            return wantedType.isInstance(result) ? wantedType.cast(result) : null;
         } catch (IllegalAccessException | ClassCastException e) {
             e.printStackTrace();
         }

@@ -48,36 +48,25 @@
 
 package net.iceyleagons.icicle.wrapped;
 
-import lombok.Getter;
-import lombok.SneakyThrows;
 import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftNamespacedKey;
+import org.bukkit.NamespacedKey;
 
-import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 
-public class WrappedBlockPosition {
+public class WrappedRegistryGeneration {
 
-    public static final Class<?> mc_BlockPosition;
-    private static Constructor<?> block_constructor;
+    private static final Class<?> mc_RegistryGeneration;
+    private static final Method gen_register;
 
     static {
-        mc_BlockPosition = Reflections.getNormalNMSClass("BlockPosition");
-        try {
-            block_constructor = mc_BlockPosition.getDeclaredConstructor(int.class, int.class, int.class);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
+        mc_RegistryGeneration = Reflections.getNormalNMSClass("RegistryGeneration");
+
+        gen_register = Reflections.getMethod(mc_RegistryGeneration, "a", true, WrappedIRegistry.mc_IRegistry, WrappedIRegistry.mc_MinecraftKey, WrappedBiomeBase.mc_BiomeBase);
     }
 
-    @Getter
-    private final Object root;
-
-    public WrappedBlockPosition(Object root) {
-        this.root = root;
-    }
-
-    @SneakyThrows
-    public WrappedBlockPosition(int x, int y, int z) {
-        root = block_constructor.newInstance(x, y, z);
+    public static <T> T register(Object registry, NamespacedKey key, T obj) {
+        return (T) Reflections.invoke(gen_register, Object.class, null, registry, WrappedCraftNamespacedKey.toMinecraft(key), obj);
     }
 
 }

@@ -54,30 +54,31 @@ import net.iceyleagons.icicle.reflect.Reflections;
 
 import java.lang.reflect.Constructor;
 
-public class WrappedBlockPosition {
+public class WrappedPacketPlayOutMapChunk {
 
-    public static final Class<?> mc_BlockPosition;
-    private static Constructor<?> block_constructor;
+    private static final Class<?> mc_PacketPlayOutMapChunk;
+    private static Constructor<?> chunk_instance;
 
     static {
-        mc_BlockPosition = Reflections.getNormalNMSClass("BlockPosition");
+        mc_PacketPlayOutMapChunk = Reflections.getNormalNMSClass("PacketPlayOutMapChunk");
+
         try {
-            block_constructor = mc_BlockPosition.getDeclaredConstructor(int.class, int.class, int.class);
+            chunk_instance = mc_PacketPlayOutMapChunk.getDeclaredConstructor(WrappedChunk.mc_Chunk, int.class);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
     }
 
     @Getter
-    private final Object root;
-
-    public WrappedBlockPosition(Object root) {
-        this.root = root;
-    }
+    private final Object packet;
 
     @SneakyThrows
-    public WrappedBlockPosition(int x, int y, int z) {
-        root = block_constructor.newInstance(x, y, z);
+    public WrappedPacketPlayOutMapChunk(WrappedChunk chunk, int priority) {
+        this.packet = chunk_instance.newInstance(chunk.getChunk(), priority);
+    }
+
+    public WrappedPacketPlayOutMapChunk(WrappedChunk chunk) {
+        this(chunk, 20);
     }
 
 }

@@ -24,31 +24,41 @@
 
 package net.iceyleagons.icicle.wrapped;
 
+import lombok.Getter;
 import lombok.SneakyThrows;
 import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftNamespacedKey;
+import org.bukkit.NamespacedKey;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
-public class WrappedIRegistry {
+public class WrappedResourceKey {
 
-    public static final Class<?> mc_ResourceKey, mc_IRegistry, mc_MinecraftKey, mc_RegistryGeneration;
-    private static final Method registry_get;
+    public static final Class<?> mc_ResourceKey;
+    private static final Method resource_constructor, resource_biome;
 
     static {
-        mc_RegistryGeneration = Reflections.getNormalNMSClass("RegistryGeneration");
         mc_ResourceKey = Reflections.getNormalNMSClass("ResourceKey");
-        mc_IRegistry = Reflections.getNormalNMSClass("IRegistry");
-        mc_MinecraftKey = Reflections.getNormalNMSClass("MinecraftKey");
-        registry_get = Reflections.getMethod(mc_IRegistry, "get", true, mc_MinecraftKey);
+        resource_constructor = Reflections.getMethod(mc_ResourceKey, "a", true, WrappedIRegistry.mc_MinecraftKey);
+        resource_biome = Reflections.getMethod(mc_ResourceKey, "a", true, mc_ResourceKey, WrappedIRegistry.mc_MinecraftKey);
     }
 
-    public static Object WORLDGEN_BIOME = Reflections.get(Reflections.getField(mc_RegistryGeneration, "WORLDGEN_BIOME", true), Object.class, null);
-    public static Object BIOME = Reflections.get(Reflections.getField(mc_IRegistry, "ay", true), Object.class, null);
-    public static Object DIMENSION = Reflections.get(Reflections.getField(mc_IRegistry, "K", true), Object.class, null);
+    @Getter
+    private final Object resourceKey;
+
+    public WrappedResourceKey(String namespace, String name) {
+        this(new NamespacedKey(namespace, name));
+    }
 
     @SneakyThrows
-    public static Object get(Object root, Object minecraftKey) {
-        return registry_get.invoke(root, minecraftKey);
+    public WrappedResourceKey(NamespacedKey namespacedKey) {
+        this.resourceKey = Reflections.invoke(resource_constructor, Object.class, null, WrappedCraftNamespacedKey.toMinecraft(namespacedKey));
+    }
+
+    @SneakyThrows
+    public WrappedResourceKey(Object root, NamespacedKey namespacedKey) {
+        this.resourceKey = Reflections.invoke(resource_biome, Object.class, null, root, WrappedCraftNamespacedKey.toMinecraft(namespacedKey));
     }
 
 }

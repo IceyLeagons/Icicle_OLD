@@ -26,13 +26,16 @@ package net.iceyleagons.icicle.wrapped;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
-import net.iceyleagons.icicle.reflections.Reflections;
+import net.iceyleagons.icicle.reflect.Reflections;
+import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
+import org.bukkit.World;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
- * @author TOTHTOMI
+ * @author Gabe
  */
 public class WrappedBiomeBase {
 
@@ -41,12 +44,8 @@ public class WrappedBiomeBase {
 
     private static final Field generation_b, mobs_b;
 
-    private static final Class<? extends Enum<?>> mc_biomebase_geography;
-    private static final Method mc_geography_valueof;
-    private static final Class<? extends Enum<?>> mc_biomebase_precipitation;
-    private static final Method mc_precipitation_valueof;
-    private static final Class<? extends Enum<?>> mc_biomebase_temperaturemodifier;
-    private static final Method mc_temp_valueof;
+    private static final Class<? extends Enum<?>> mc_biomebase_geography, mc_biomebase_precipitation, mc_biomebase_temperaturemodifier;
+    private static final Method mc_geography_valueof, mc_precipitation_valueof, mc_temp_valueof;
 
     private static final Method biome_setDepth, biome_setScale, biome_setTemperature, biome_setDownfall, biome_setSpecialEffects,
             biome_setMobs, biome_setGeneration, biome_setTemperatureModifier, biome_setPrecipitation, biome_setGeography,
@@ -90,6 +89,19 @@ public class WrappedBiomeBase {
         this.root = root;
     }
 
+    private static int num = 200;
+
+    public WrappedBiomeBase register(NamespacedKey namespace) {
+        // return new WrappedBiomeBase(WrappedRegistryGeneration.register(WrappedIRegistry.BIOME, namespace, root));
+        // return WrappedBiomeRegistry.register(num++, new WrappedResourceKey(WrappedIRegistry.BIOME, namespace), this);
+
+        WrappedIRegistryCustom customRegistry = new WrappedIRegistryCustom(WrappedDedicatedServer.from(Bukkit.getServer()).getCustomRegistry());
+        WrappedIRegistryWritable writable = customRegistry.getWritable(WrappedIRegistry.BIOME);
+        writable.register(new WrappedResourceKey(WrappedIRegistry.BIOME, namespace), root);
+
+        return this;
+    }
+
     public static enum Geography {
         NONE(Reflections.invoke(mc_geography_valueof, Object.class, null, "NONE")),
         TAIGA(Reflections.invoke(mc_geography_valueof, Object.class, null, "TAIGA")),
@@ -115,7 +127,6 @@ public class WrappedBiomeBase {
         Geography(Object object) {
             this.object = object;
         }
-
     }
 
     public static enum Precipitation {
@@ -150,6 +161,8 @@ public class WrappedBiomeBase {
         @SneakyThrows
         private Builder() {
             this.root = mc_biomebase_a.getDeclaredConstructor().newInstance();
+            setMobs();
+            setGeneration();
         }
 
         public static Builder create() {
@@ -216,11 +229,21 @@ public class WrappedBiomeBase {
             return this;
         }
 
+        /**
+         * Sets mobs to the default mobs.
+         *
+         * @return this
+         */
         public Builder setMobs() {
             setMobs(Reflections.get(mobs_b, Object.class, null));
             return this;
         }
 
+        /**
+         * Sets the generation to the default generation.
+         *
+         * @return this
+         */
         public Builder setGeneration() {
             setGeneration(Reflections.get(generation_b, Object.class, null));
             return this;
@@ -241,7 +264,5 @@ public class WrappedBiomeBase {
         public WrappedBiomeBase build() {
             return new WrappedBiomeBase(Reflections.invoke(biomebase_build, Object.class, root));
         }
-
     }
-
 }

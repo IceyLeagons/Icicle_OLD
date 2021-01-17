@@ -28,7 +28,7 @@ import lombok.NonNull;
 import lombok.SneakyThrows;
 
 import java.io.*;
-import java.net.MalformedURLException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
@@ -56,18 +56,21 @@ public class FileUtils {
      * Downloads a file from a URL.
      *
      * @param url the url
-     * @param to the file to download to (MUST EXIST!)
+     * @param to  the file to download to (MUST EXIST!)
      * @return true only if it was successful, false otherwise
      */
     public static boolean downloadFile(String url, File to) {
         try {
             URL url1 = new URL(url);
-            try (ReadableByteChannel readableByteChannel = Channels.newChannel(url1.openStream())) {
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url1.openConnection();
+            httpURLConnection.setRequestProperty("User-Agent", "IcicleUpdater");
+            try (ReadableByteChannel readableByteChannel = Channels.newChannel(httpURLConnection.getInputStream())) {
                 try (FileOutputStream fileOutputStream = new FileOutputStream(to)) {
-                    fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
+                    fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, httpURLConnection.getContentLengthLong());
                     return true;
                 }
             }
+
         } catch (IOException e) {
             e.printStackTrace();
             return false;

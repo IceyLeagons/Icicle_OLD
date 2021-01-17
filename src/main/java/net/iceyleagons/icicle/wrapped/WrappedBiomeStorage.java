@@ -25,7 +25,8 @@
 package net.iceyleagons.icicle.wrapped;
 
 import lombok.Getter;
-import net.iceyleagons.icicle.reflections.Reflections;
+import net.iceyleagons.icicle.reflect.Reflections;
+import org.bukkit.Bukkit;
 
 import java.lang.reflect.Method;
 

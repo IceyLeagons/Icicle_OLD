@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 IceyLeagons (Tamás Tóth and Márton Kissik) and Contributors
+ * Copyright (c) 2021 IceyLeagons (Tamás Tóth and Márton Kissik) and Contributors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,40 +22,18 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.reflections;
+package net.iceyleagons.icicle.wrapped;
 
-import org.bukkit.entity.Player;
+import lombok.Getter;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
+public class WrappedWorld {
 
-/**
- * Contains operations regarding ping.
- *
- * @author TOTHTOMI
- * @version 1.1.4
- * @since 1.0.0
- */
-public class PingUtils {
+    @Getter
+    private final Object world;
 
-    /**
-     * This method is used to get the {@link Player}'s ping
-     *
-     * @param player the player
-     * @return the ping (if -1 then an error happened)
-     */
-    public static int getPing(Player player) {
-        try {
-            Object craftPlayer = CraftEntity.getCraftEntity(player);
-            Field field = Reflections.getField(craftPlayer.getClass(), "ping", true);
-
-            int ping = field.getInt(craftPlayer);
-            return Math.max(ping, 0); //We don't want negative here, because that will indicate an error in our case.
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-            return -1;
-        }
-
+    public WrappedWorld(Object root) {
+        this.world = root;
     }
+
 
 }

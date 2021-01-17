@@ -26,7 +26,7 @@ package net.iceyleagons.icicle.wrapped;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
-import net.iceyleagons.icicle.reflections.Reflections;
+import net.iceyleagons.icicle.reflect.Reflections;
 
 import java.awt.*;
 import java.lang.reflect.Method;

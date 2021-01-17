@@ -26,7 +26,7 @@ package net.iceyleagons.icicle.wrapped;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import net.iceyleagons.icicle.reflections.Reflections;
+import net.iceyleagons.icicle.reflect.Reflections;
 import org.bukkit.Server;
 
 import java.lang.reflect.Field;

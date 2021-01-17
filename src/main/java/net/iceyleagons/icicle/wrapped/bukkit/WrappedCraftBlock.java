@@ -27,7 +27,7 @@ package net.iceyleagons.icicle.wrapped.bukkit;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import net.iceyleagons.icicle.reflections.Reflections;
+import net.iceyleagons.icicle.reflect.Reflections;
 import net.iceyleagons.icicle.wrapped.WrappedBiomeBase;
 import net.iceyleagons.icicle.wrapped.WrappedIRegistry;
 import org.bukkit.block.Biome;

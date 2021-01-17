@@ -25,7 +25,7 @@
 package net.iceyleagons.icicle.misc.commands;
 
 import lombok.NonNull;
-import net.iceyleagons.icicle.reflections.Reflections;
+import net.iceyleagons.icicle.reflect.Reflections;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandMap;

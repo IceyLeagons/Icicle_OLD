@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 IceyLeagons (Tamás Tóth and Márton Kissik) and Contributors
+ * Copyright (c) 2021 IceyLeagons (Tamás Tóth and Márton Kissik) and Contributors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,22 +22,33 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.reflections;
+package net.iceyleagons.icicle.wrapped;
 
-import java.lang.reflect.InvocationTargetException;
+import lombok.Getter;
+import net.iceyleagons.icicle.reflect.Reflections;
+
 import java.lang.reflect.Method;
 
-/**
- * @version 1.0.0
- * @since 1.1.4-SNAPSHOT
- */
-public class CraftEntity {
+public class WrappedLightEngine {
 
-    public static Object getCraftEntity(Object bukkitEntity) throws InvocationTargetException, IllegalAccessException {
-        Class<?> playerClazz = bukkitEntity.getClass();
-        Method getHandle = Reflections.getMethod(playerClazz, "getHandle", true, null);
-        assert getHandle != null;
-        return getHandle.invoke(bukkitEntity);
+    private static final Class<?> mc_LightEngine;
+    private static final Method light_update;
+
+    static {
+        mc_LightEngine = Reflections.getNormalNMSClass("LightEngine");
+
+        light_update = Reflections.getMethod(mc_LightEngine, "a", true, WrappedBlockPosition.mc_BlockPosition);
+    }
+
+    @Getter
+    private final Object engine;
+
+    public WrappedLightEngine(Object engine) {
+        this.engine = engine;
+    }
+
+    public void update(WrappedBlockPosition blockPosition) {
+        Reflections.invoke(light_update, Void.class, engine, blockPosition.getRoot());
     }
 
 }

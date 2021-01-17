@@ -48,36 +48,22 @@
 
 package net.iceyleagons.icicle.wrapped;
 
-import lombok.Getter;
-import lombok.SneakyThrows;
 import net.iceyleagons.icicle.reflect.Reflections;
 
-import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 
-public class WrappedBlockPosition {
+public class WrappedBiomeRegistry {
 
-    public static final Class<?> mc_BlockPosition;
-    private static Constructor<?> block_constructor;
+    private static final Class<?> mc_BiomeRegistry;
+    private static final Method registry_register;
 
     static {
-        mc_BlockPosition = Reflections.getNormalNMSClass("BlockPosition");
-        try {
-            block_constructor = mc_BlockPosition.getDeclaredConstructor(int.class, int.class, int.class);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
+        mc_BiomeRegistry = Reflections.getNormalNMSClass("BiomeRegistry");
+        registry_register = Reflections.getMethod(mc_BiomeRegistry, "a", true, int.class, WrappedIRegistry.mc_ResourceKey, WrappedBiomeBase.mc_BiomeBase);
     }
 
-    @Getter
-    private final Object root;
-
-    public WrappedBlockPosition(Object root) {
-        this.root = root;
-    }
-
-    @SneakyThrows
-    public WrappedBlockPosition(int x, int y, int z) {
-        root = block_constructor.newInstance(x, y, z);
+    public static WrappedBiomeBase register(int id, WrappedResourceKey resourceKey, WrappedBiomeBase biomeBase) {
+        return new WrappedBiomeBase(Reflections.invoke(registry_register, Object.class, null, id, resourceKey.getResourceKey(), biomeBase.getRoot()));
     }
 
 }
