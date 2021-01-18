@@ -57,9 +57,10 @@ public class GUIManager implements Listener {
         GUI annotation = gui.getClass().getAnnotation(GUI.class);
         if (annotation != null) {
             if (Icicle.registrar != null)
-                SchedulerUtils.runTaskTimer(Icicle.registrar, task -> {
-                    gui.update();
-                }, annotation.updateInterval(), annotation.updateIntervalUnit());
+                if (annotation.autoUpdate())
+                    SchedulerUtils.runTaskTimer(Icicle.registrar, task -> {
+                        gui.update();
+                    }, annotation.updateInterval(), annotation.updateIntervalUnit());
             guis.add(gui);
         }
     }
@@ -74,7 +75,10 @@ public class GUIManager implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent event) {
         Optional<GUITemplate> template = guis.stream().filter(inv -> Objects.equals(event.getClickedInventory(), inv.getInventory())).findFirst();
-        if (!template.isPresent()) return;
+        if (!template.isPresent()) {
+            return;
+        }
+
 
         GUITemplate temp = template.get();
 

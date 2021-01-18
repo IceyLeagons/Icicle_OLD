@@ -52,6 +52,9 @@ public interface ComponentTemplate {
      */
     void setXY(int x, int y);
 
+    int getRotation();
+    void setRotation(int rotation);
+
     /**
      * @return true if the component should be rendered false to "hide" it
      */

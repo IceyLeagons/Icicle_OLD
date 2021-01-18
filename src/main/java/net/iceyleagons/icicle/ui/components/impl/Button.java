@@ -44,6 +44,7 @@ public abstract class Button implements ComponentTemplate {
     private ItemStack placeholder;
     private int x;
     private int y;
+    private int rotation;
     private boolean render;
 
     public Button(ItemStack placeholder) {
@@ -70,6 +71,17 @@ public abstract class Button implements ComponentTemplate {
     public void setXY(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+
+    @Override
+    public int getRotation() {
+        return this.rotation;
+    }
+
+    @Override
+    public void setRotation(int rotation) {
+        this.rotation = rotation;
     }
 
     @Override

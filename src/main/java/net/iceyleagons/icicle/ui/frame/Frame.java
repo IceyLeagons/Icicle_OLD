@@ -28,6 +28,7 @@ import lombok.Getter;
 import net.iceyleagons.icicle.item.InventoryUtils;
 import net.iceyleagons.icicle.ui.components.Component;
 import net.iceyleagons.icicle.ui.components.ComponentTemplate;
+import net.iceyleagons.icicle.ui.components.VariableSizeComponent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -66,12 +67,20 @@ public class Frame {
             if (!componentTemplate.renderAllowed()) continue;
 
 
-            ItemStack[][] toRender = new ItemStack[component.width()][component.height()];
+            ItemStack[][] toRender;
+            if (componentTemplate instanceof VariableSizeComponent)
+                toRender = new ItemStack[((VariableSizeComponent)componentTemplate).getWidth()]
+                        [((VariableSizeComponent)componentTemplate).getHeight()];
+            else
+                toRender = new ItemStack[component.width()][component.height()];
+
             componentTemplate.render(toRender);
 
             for (int j = 0; j < toRender.length; j++) {
                 for (int k = 0; k < toRender[j].length; k++) {
-                    int fromUtils = InventoryUtils.calculateSlotFromXY(j + 1, k + 1);
+                    int x = j+1;
+                    int y= k+1;
+                    int fromUtils = InventoryUtils.calculateSlotFromXY(x, y);
                     int slotToAdd = i + fromUtils;
                     itemStacks[slotToAdd] = toRender[j][k];
                 }
@@ -79,6 +88,7 @@ public class Frame {
         }
         inventory.setContents(itemStacks);
     }
+
 
     /**
      * Registers a component

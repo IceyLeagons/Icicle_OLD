@@ -28,16 +28,16 @@ import lombok.SneakyThrows;
 import net.iceyleagons.icicle.advancement.Advancement;
 import net.iceyleagons.icicle.advancement.AdvancementBuilder;
 import net.iceyleagons.icicle.misc.commands.CommandUtils;
+import net.iceyleagons.icicle.ui.components.impl.ValueBar;
+import net.iceyleagons.icicle.ui.frame.Frame;
+import net.iceyleagons.icicle.ui.guis.BasicGUI;
 import net.iceyleagons.icicle.wrapped.WrappedBiomeBase;
 import net.iceyleagons.icicle.wrapped.WrappedBiomeFog;
+import net.iceyleagons.icicle.wrapped.WrappedChunk;
 import net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftWorld;
-import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.json.JSONObject;
 
 import java.awt.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -73,11 +73,23 @@ public class Test extends JavaPlugin {
         super.onLoad();
     }
 
+    private BasicGUI getGUI() {
+        BasicGUI basicGUI = new BasicGUI();
+
+        Frame frame = new Frame();
+        ValueBar valueBar = new ValueBar(5, 5);
+        valueBar.setValue(3);
+        frame.registerComponent(valueBar, 2, 2);
+        basicGUI.addFrames(0, frame);
+        return basicGUI;
+    }
+
     @SneakyThrows
     @Override
     public void onEnable() {
-        Icicle.init(this, IcicleFeatures.COMMANDS);
+        Icicle.init(this, IcicleFeatures.COMMANDS, IcicleFeatures.INVENTORIES);
 
+        BasicGUI basicGUI = getGUI();
 
         AdvancementBuilder advancementBuilder = new AdvancementBuilder("test", "root", Advancement.Backgrounds.ADVENTURE,
                 "minecraft:diamond", "&r&bFrosty", "&r&fUse Icicle in a project", Advancement.Frames.GOAL, true, true, false);
@@ -92,6 +104,11 @@ public class Test extends JavaPlugin {
 
         advancementBuilder.register(true);
 
+        CommandUtils.injectCommand("gui", (commandSender, command, s, strings) -> {
+            Player player = (Player) commandSender;
+            basicGUI.openForPlayers(player);
+            return true;
+        });
 
         CommandUtils.injectCommand("icicle", (commandSender, command, s, strings) -> {
             Player player = (Player) commandSender;
@@ -119,11 +136,12 @@ public class Test extends JavaPlugin {
                     .register(new NamespacedKey(namespace, key));
 
             WrappedCraftWorld craftWorld = new WrappedCraftWorld(player.getWorld());
-            craftWorld.sendUpdate(player,
-                    craftWorld.setBiome(player.getLocation().getBlockX(),
-                            player.getLocation().getBlockY(),
-                            player.getLocation().getBlockZ(),
-                            namespace, key));
+            WrappedChunk wrappedChunk = craftWorld.setBiome(player.getLocation().getBlockX(),
+                    player.getLocation().getBlockY(),
+                    player.getLocation().getBlockZ(),
+                    biomeBase);
+            //craftWorld.sendUpdate(player, wrappedChunk);
+            //craftWorld.sendUpdate(player, wrappedChunk);
 
             return true;
         });

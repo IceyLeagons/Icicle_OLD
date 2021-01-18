@@ -45,12 +45,14 @@ public @interface Component {
     String id();
 
     /**
-     * @return the width of the component (how many slots it requires on the X axis)
+     * @return the width of the component (how many slots it requires on the X axis),
+     * if it's {@link VariableSizeComponent} this will be ignored
      */
     int width();
 
     /**
-     * @return the width of the component (how many slots it requires on the Y axis)
+     * @return the width of the component (how many slots it requires on the Y axis),
+     * if it's {@link VariableSizeComponent} this will be ignored
      */
     int height();
 

@@ -75,12 +75,13 @@ public class AdvancementBuilder {
         return root.addChild(name, icon, title, description, frame, announceToChat, showToast, hidden);
     }
 
+    /**
+     *
+     * @param update will wipe all progress made so far!
+     */
     public void register(boolean update) {
-        dfs().forEach(adv -> {
-            System.out.println(adv.getId().toString());
-            adv.register(update);
-        });
-        Bukkit.getServer().reloadData();
+        dfs().forEach(adv -> adv.register(update));
+       // Bukkit.getServer().reloadData();
     }
 
     private List<Advancement> dfs() {

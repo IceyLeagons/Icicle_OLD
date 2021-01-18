@@ -99,7 +99,7 @@ public class WrappedCraftWorld {
         return new WrappedChunk(Reflections.invoke(world_getChunkAtWorldCoords, Object.class, Reflections.get(bukkit_nmsWorld, Object.class, craftWorld), blockPosition.getRoot()));
     }
 
-    public WrappedChunk setBiome(int x, int y, int z, String namespace, String key) {
+    public WrappedChunk setBiome(int x, int y, int z, WrappedBiomeBase wrappedBiomeBase) {
         /*WrappedBiomeBase biomeBase = new WrappedBiomeBase(WrappedIRegistry
                 .get(Reflections.invoke(registry_b, Object.class, getCustomRegistry(), WrappedIRegistry.BIOME),
                         WrappedCraftNamespacedKey.toMinecraft(new NamespacedKey(namespace, key))));*/
@@ -107,7 +107,7 @@ public class WrappedCraftWorld {
         WrappedChunk chunk = null;
 
         if (isLoaded(blockPosition) && (chunk = getChunkAtWorldCoords(blockPosition)).getChunk() != null) {
-            chunk.getBiomeIndex().setBiome(x >> 2, y >> 2, z >> 2, Test.biomeBase);
+            chunk.getBiomeIndex().setBiome(x >> 2, y >> 2, z >> 2, wrappedBiomeBase);
             chunk.markDirty();
         }
 

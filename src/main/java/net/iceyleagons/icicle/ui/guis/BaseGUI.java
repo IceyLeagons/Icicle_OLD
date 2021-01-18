@@ -111,6 +111,8 @@ public abstract class BaseGUI implements GUITemplate {
      */
     @Override
     public void openForPlayers(Player... players) {
+        GUI gui = getClass().getAnnotation(GUI.class);
+        if (!gui.autoUpdate()) update();
         for (Player player : players) {
             opened.add(player);
             player.openInventory(getInventory());
