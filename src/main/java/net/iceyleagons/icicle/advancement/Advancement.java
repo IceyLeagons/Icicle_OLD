@@ -54,9 +54,13 @@ import lombok.RequiredArgsConstructor;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.chat.ComponentSerializer;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author TOTHTOMI
@@ -64,6 +68,7 @@ import org.json.JSONObject;
 @AllArgsConstructor
 public class Advancement {
 
+    @Getter
     private final NamespacedKey id;
     private final String parent;
     private final String icon;
@@ -74,6 +79,8 @@ public class Advancement {
     private final boolean announceToChat;
     private final boolean showToast;
     private final boolean hidden;
+    @Getter
+    private final List<Advancement> children = new ArrayList<>();
 
     public JSONObject getJSON() {
         JSONObject jsonObject = new JSONObject();
@@ -107,6 +114,16 @@ public class Advancement {
         return Bukkit.getAdvancement(id);
     }
 
+    public Advancement addChild(String name, String icon, String title, String description, Advancement.Frames frame,
+                                              boolean announceToChat, boolean showToast, boolean hidden) {
+        Advancement advancement = new Advancement(new NamespacedKey(id.getNamespace(), name), id.toString(), icon, background,
+                new TextComponent(ChatColor.translateAlternateColorCodes('&', "&r"+title)),
+                new TextComponent(ChatColor.translateAlternateColorCodes('&', "&r"+description)),
+                frame, announceToChat, showToast, hidden);
+        children.add(advancement);
+        return advancement;
+    }
+
     public void grant(Player player) {
         org.bukkit.advancement.Advancement a = getBukkitAdvancement();
         player.getAdvancementProgress(a).awardCriteria("imp");
@@ -119,9 +136,11 @@ public class Advancement {
         //Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "advancement revoke " + player.getName() + id.toString());
     }
 
-    public void register() {
+    public void register(boolean update) {
         if (Bukkit.getAdvancement(id) == null)
             Bukkit.getUnsafe().loadAdvancement(id, getJSON().toString());
+        else if (update)
+            Bukkit.getUnsafe().removeAdvancement(id);
     }
 
     private static JSONObject jsonFromTextComponent(TextComponent textComponent) {

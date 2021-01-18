@@ -26,6 +26,7 @@ package net.iceyleagons.icicle;
 
 import lombok.SneakyThrows;
 import net.iceyleagons.icicle.advancement.Advancement;
+import net.iceyleagons.icicle.advancement.AdvancementBuilder;
 import net.iceyleagons.icicle.misc.commands.CommandUtils;
 import net.iceyleagons.icicle.wrapped.WrappedBiomeBase;
 import net.iceyleagons.icicle.wrapped.WrappedBiomeFog;
@@ -77,21 +78,19 @@ public class Test extends JavaPlugin {
     public void onEnable() {
         Icicle.init(this, IcicleFeatures.COMMANDS);
 
-        NamespacedKey namespacedKey = new NamespacedKey("icicle", "test");
-        NamespacedKey namespacedKey2 = new NamespacedKey("icicle", "myloll");
 
+        AdvancementBuilder advancementBuilder = new AdvancementBuilder("test", "root", Advancement.Backgrounds.ADVENTURE,
+                "minecraft:diamond", "&r&bFrosty", "&r&fUse Icicle in a project", Advancement.Frames.GOAL, true, true, false);
 
-        /*Advancement advancement = new Advancement(namespacedKey, null,
-                "minecraft:diamond", Advancement.Backgrounds.STONE, new TextComponent("Icicle"), new TextComponent("Use Icicle"),
-                Advancement.Frames.GOAL,
-                true, true, false);
-        advancement.register();
+        advancementBuilder.addChild("abuilder", "minecraft:book", "What an advancement!", "Use its Advancement builder",
+                Advancement.Frames.TASK, true, true, false)
+                .addChild("twobuilder", "minecraft:paper", "Wow it works!", "WOW it really does work!",
+                        Advancement.Frames.CHALLENGE, true, true, false);
 
-        Advancement advancement3 = new Advancement(namespacedKey2, namespacedKey.toString(),
-                "minecraft:emerald", Advancement.Backgrounds.STONE, new TextComponent("Icicle V2"), new TextComponent("Use Icicle asdasdasd"),
-                Advancement.Frames.GOAL,
-                true, true, false);
-        advancement3.register();*/
+        advancementBuilder.addChild("biome", "minecraft:grass", "What is this biome?", "Make your own custom biome with it.",
+                Advancement.Frames.TASK, true, true, false);
+
+        advancementBuilder.register(true);
 
 
         CommandUtils.injectCommand("icicle", (commandSender, command, s, strings) -> {
