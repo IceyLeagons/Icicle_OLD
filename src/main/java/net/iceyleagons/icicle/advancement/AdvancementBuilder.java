@@ -28,6 +28,7 @@ import kotlin.Unit;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 
 import java.util.ArrayList;
@@ -70,8 +71,8 @@ public class AdvancementBuilder {
 
     }
 
-    public Advancement addChild(String name, String icon, String title, String description, Advancement.Frames frame,
-                           boolean announceToChat, boolean showToast, boolean hidden) {
+    public Advancement addChild(String name, Material icon, String title, String description, Advancement.Frames frame,
+                                boolean announceToChat, boolean showToast, boolean hidden) {
         return root.addChild(name, icon, title, description, frame, announceToChat, showToast, hidden);
     }
 

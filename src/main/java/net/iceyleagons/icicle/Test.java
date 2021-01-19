@@ -91,18 +91,6 @@ public class Test extends JavaPlugin {
 
         BasicGUI basicGUI = getGUI();
 
-        AdvancementBuilder advancementBuilder = new AdvancementBuilder("test", "root", Advancement.Backgrounds.ADVENTURE,
-                "minecraft:diamond", "&r&bFrosty", "&r&fUse Icicle in a project", Advancement.Frames.GOAL, true, true, false);
-
-        advancementBuilder.addChild("abuilder", "minecraft:book", "What an advancement!", "Use its Advancement builder",
-                Advancement.Frames.TASK, true, true, false)
-                .addChild("twobuilder", "minecraft:paper", "Wow it works!", "WOW it really does work!",
-                        Advancement.Frames.CHALLENGE, true, true, false);
-
-        advancementBuilder.addChild("biome", "minecraft:grass", "What is this biome?", "Make your own custom biome with it.",
-                Advancement.Frames.TASK, true, true, false);
-
-        advancementBuilder.register(true);
 
         CommandUtils.injectCommand("gui", (commandSender, command, s, strings) -> {
             Player player = (Player) commandSender;

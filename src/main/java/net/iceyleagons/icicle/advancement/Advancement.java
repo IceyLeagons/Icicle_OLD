@@ -55,6 +55,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.chat.ComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.json.JSONObject;
@@ -114,9 +115,9 @@ public class Advancement {
         return Bukkit.getAdvancement(id);
     }
 
-    public Advancement addChild(String name, String icon, String title, String description, Advancement.Frames frame,
-                                              boolean announceToChat, boolean showToast, boolean hidden) {
-        Advancement advancement = new Advancement(new NamespacedKey(id.getNamespace(), name), id.toString(), icon, background,
+    public Advancement addChild(String name, Material icon, String title, String description, Advancement.Frames frame,
+                                boolean announceToChat, boolean showToast, boolean hidden) {
+        Advancement advancement = new Advancement(new NamespacedKey(id.getNamespace(), name), id.toString(), icon.getKey().toString(), background,
                 new TextComponent(ChatColor.translateAlternateColorCodes('&', "&r"+title)),
                 new TextComponent(ChatColor.translateAlternateColorCodes('&', "&r"+description)),
                 frame, announceToChat, showToast, hidden);
