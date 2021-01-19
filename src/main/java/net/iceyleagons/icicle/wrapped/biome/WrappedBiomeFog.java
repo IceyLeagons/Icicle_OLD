@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.wrapped;
+package net.iceyleagons.icicle.wrapped.biome;
 
 import lombok.Getter;
 import lombok.SneakyThrows;

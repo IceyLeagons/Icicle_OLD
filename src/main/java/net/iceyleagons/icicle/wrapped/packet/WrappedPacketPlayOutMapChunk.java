@@ -22,18 +22,42 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.wrapped;
+package net.iceyleagons.icicle.wrapped.packet;
 
 import lombok.Getter;
+import lombok.SneakyThrows;
+import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.wrapped.world.chunk.WrappedChunk;
 
-public class WrappedWorld {
+import java.lang.reflect.Constructor;
 
-    @Getter
-    private final Object world;
+public class WrappedPacketPlayOutMapChunk {
 
-    public WrappedWorld(Object root) {
-        this.world = root;
+    private static final Class<?> mc_PacketPlayOutMapChunk;
+    private static Constructor<?> chunk_instance;
+
+    static {
+        mc_PacketPlayOutMapChunk = Reflections.getNormalNMSClass("PacketPlayOutMapChunk");
+
+        try {
+            chunk_instance = mc_PacketPlayOutMapChunk.getDeclaredConstructor(WrappedChunk.mc_Chunk, int.class);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
     }
 
+    @Getter
+    private final Object packet;
+
+    @SneakyThrows
+    public WrappedPacketPlayOutMapChunk(WrappedChunk chunk, int priority) {
+
+
+        this.packet = chunk_instance.newInstance(chunk.getChunk(), priority);
+    }
+
+    public WrappedPacketPlayOutMapChunk(WrappedChunk chunk) {
+        this(chunk, 20);
+    }
 
 }

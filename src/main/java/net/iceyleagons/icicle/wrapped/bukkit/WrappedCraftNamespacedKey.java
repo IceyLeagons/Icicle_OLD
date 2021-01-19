@@ -25,7 +25,7 @@
 package net.iceyleagons.icicle.wrapped.bukkit;
 
 import net.iceyleagons.icicle.reflect.Reflections;
-import net.iceyleagons.icicle.wrapped.WrappedIRegistry;
+import net.iceyleagons.icicle.wrapped.registry.WrappedIRegistry;
 import org.bukkit.NamespacedKey;
 
 import java.lang.reflect.Method;

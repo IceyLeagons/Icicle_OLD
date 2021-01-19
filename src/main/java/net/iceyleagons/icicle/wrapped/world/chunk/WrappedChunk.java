@@ -22,10 +22,14 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.wrapped;
+package net.iceyleagons.icicle.wrapped.world.chunk;
 
 import lombok.Getter;
 import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.wrapped.WrappedTileEntity;
+import net.iceyleagons.icicle.wrapped.biome.WrappedBiomeStorage;
+import net.iceyleagons.icicle.wrapped.WrappedBlockPosition;
+import net.iceyleagons.icicle.wrapped.world.WrappedLightEngine;
 import org.bukkit.Chunk;
 
 import java.lang.reflect.Method;

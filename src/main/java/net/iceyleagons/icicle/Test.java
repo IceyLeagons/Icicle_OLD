@@ -31,9 +31,9 @@ import net.iceyleagons.icicle.misc.commands.CommandUtils;
 import net.iceyleagons.icicle.ui.components.impl.ValueBar;
 import net.iceyleagons.icicle.ui.frame.Frame;
 import net.iceyleagons.icicle.ui.guis.BasicGUI;
-import net.iceyleagons.icicle.wrapped.WrappedBiomeBase;
-import net.iceyleagons.icicle.wrapped.WrappedBiomeFog;
-import net.iceyleagons.icicle.wrapped.WrappedChunk;
+import net.iceyleagons.icicle.wrapped.biome.WrappedBiomeBase;
+import net.iceyleagons.icicle.wrapped.biome.WrappedBiomeFog;
+import net.iceyleagons.icicle.wrapped.world.chunk.WrappedChunk;
 import net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftWorld;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
@@ -87,7 +87,7 @@ public class Test extends JavaPlugin {
     @SneakyThrows
     @Override
     public void onEnable() {
-        Icicle.init(this, IcicleFeatures.COMMANDS, IcicleFeatures.INVENTORIES);
+        Icicle.init(this, IcicleFeatures.COMMANDS, IcicleFeatures.INVENTORIES, IcicleFeatures.PRELOAD_REFLECTION);
 
         BasicGUI basicGUI = getGUI();
 

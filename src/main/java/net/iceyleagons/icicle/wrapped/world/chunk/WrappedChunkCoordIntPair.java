@@ -22,11 +22,12 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.wrapped;
+package net.iceyleagons.icicle.wrapped.world.chunk;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.wrapped.WrappedBlockPosition;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;

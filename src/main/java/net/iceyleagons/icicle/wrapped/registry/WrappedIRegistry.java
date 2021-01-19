@@ -22,33 +22,33 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.wrapped;
+package net.iceyleagons.icicle.wrapped.registry;
 
-import lombok.Getter;
+import lombok.SneakyThrows;
 import net.iceyleagons.icicle.reflect.Reflections;
 
 import java.lang.reflect.Method;
 
-public class WrappedLightEngine {
+public class WrappedIRegistry {
 
-    private static final Class<?> mc_LightEngine;
-    private static final Method light_update;
+    public static final Class<?> mc_ResourceKey, mc_IRegistry, mc_MinecraftKey, mc_RegistryGeneration;
+    private static final Method registry_get;
 
     static {
-        mc_LightEngine = Reflections.getNormalNMSClass("LightEngine");
-
-        light_update = Reflections.getMethod(mc_LightEngine, "a", true, WrappedBlockPosition.mc_BlockPosition);
+        mc_RegistryGeneration = Reflections.getNormalNMSClass("RegistryGeneration");
+        mc_ResourceKey = Reflections.getNormalNMSClass("ResourceKey");
+        mc_IRegistry = Reflections.getNormalNMSClass("IRegistry");
+        mc_MinecraftKey = Reflections.getNormalNMSClass("MinecraftKey");
+        registry_get = Reflections.getMethod(mc_IRegistry, "get", true, mc_MinecraftKey);
     }
 
-    @Getter
-    private final Object engine;
+    public static Object WORLDGEN_BIOME = Reflections.get(Reflections.getField(mc_RegistryGeneration, "WORLDGEN_BIOME", true), Object.class, null);
+    public static Object BIOME = Reflections.get(Reflections.getField(mc_IRegistry, "ay", true), Object.class, null);
+    public static Object DIMENSION = Reflections.get(Reflections.getField(mc_IRegistry, "K", true), Object.class, null);
 
-    public WrappedLightEngine(Object engine) {
-        this.engine = engine;
-    }
-
-    public void update(WrappedBlockPosition blockPosition) {
-        Reflections.invoke(light_update, Void.class, engine, blockPosition.getRoot());
+    @SneakyThrows
+    public static Object get(Object root, Object minecraftKey) {
+        return registry_get.invoke(root, minecraftKey);
     }
 
 }

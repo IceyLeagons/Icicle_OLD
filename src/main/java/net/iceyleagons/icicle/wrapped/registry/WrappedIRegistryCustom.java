@@ -22,33 +22,49 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.wrapped;
+package net.iceyleagons.icicle.wrapped.registry;
 
-import lombok.SneakyThrows;
+import lombok.Getter;
 import net.iceyleagons.icicle.reflect.Reflections;
 
 import java.lang.reflect.Method;
 
-public class WrappedIRegistry {
+public class WrappedIRegistryCustom {
 
-    public static final Class<?> mc_ResourceKey, mc_IRegistry, mc_MinecraftKey, mc_RegistryGeneration;
-    private static final Method registry_get;
+    private static final Class<?> mc_IRegistryCustom, mc_IRegistryCustom_Dimension;
+    private static final Method registry_getWritable;
 
     static {
-        mc_RegistryGeneration = Reflections.getNormalNMSClass("RegistryGeneration");
-        mc_ResourceKey = Reflections.getNormalNMSClass("ResourceKey");
-        mc_IRegistry = Reflections.getNormalNMSClass("IRegistry");
-        mc_MinecraftKey = Reflections.getNormalNMSClass("MinecraftKey");
-        registry_get = Reflections.getMethod(mc_IRegistry, "get", true, mc_MinecraftKey);
+        mc_IRegistryCustom = Reflections.getNormalNMSClass("IRegistryCustom");
+        mc_IRegistryCustom_Dimension = Reflections.getNormalNMSClass("IRegistryCustom$Dimension");
+
+        registry_getWritable = Reflections.getMethod(mc_IRegistryCustom, "b", true, WrappedResourceKey.mc_ResourceKey);
     }
 
-    public static Object WORLDGEN_BIOME = Reflections.get(Reflections.getField(mc_RegistryGeneration, "WORLDGEN_BIOME", true), Object.class, null);
-    public static Object BIOME = Reflections.get(Reflections.getField(mc_IRegistry, "ay", true), Object.class, null);
-    public static Object DIMENSION = Reflections.get(Reflections.getField(mc_IRegistry, "K", true), Object.class, null);
+    @Getter
+    private final Object root;
 
-    @SneakyThrows
-    public static Object get(Object root, Object minecraftKey) {
-        return registry_get.invoke(root, minecraftKey);
+    public WrappedIRegistryCustom(Object root) {
+        this.root = root;
+    }
+
+    public WrappedIRegistryWritable getWritable(Object key) {
+        return new WrappedIRegistryWritable(Reflections.invoke(registry_getWritable, Object.class, root, key));
+    }
+
+    public Dimension asDimension() {
+        if (mc_IRegistryCustom_Dimension.isInstance(root))
+            return new Dimension(root);
+
+        throw new UnsupportedOperationException("Not a Dimension!");
+    }
+
+    public static class Dimension extends WrappedIRegistryCustom {
+
+        public Dimension(Object dimension) {
+            super(dimension);
+        }
+
     }
 
 }

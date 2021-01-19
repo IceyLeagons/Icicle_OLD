@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.wrapped;
+package net.iceyleagons.icicle.wrapped.registry;
 
 import lombok.Getter;
 import net.iceyleagons.icicle.reflect.Reflections;
@@ -56,10 +56,6 @@ public class WrappedIRegistryWritable<T> {
 
     public void register(WrappedResourceKey resourceKey, Object register) {
         Object lifecycle = Reflections.invoke(life_getStable, mojang_lifecycle, null);
-
-        System.out.println(lifecycle.getClass());
-        System.out.println(resourceKey.getResourceKey().getClass());
-        System.out.println(register.getClass());
 
         Reflections.invoke(writable_write, Void.class, writable,
                 resourceKey.getResourceKey(),

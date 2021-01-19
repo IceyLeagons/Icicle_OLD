@@ -22,14 +22,18 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.wrapped;
+package net.iceyleagons.icicle.wrapped.biome;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.wrapped.WrappedDedicatedServer;
+import net.iceyleagons.icicle.wrapped.registry.WrappedIRegistry;
+import net.iceyleagons.icicle.wrapped.registry.WrappedIRegistryCustom;
+import net.iceyleagons.icicle.wrapped.registry.WrappedIRegistryWritable;
+import net.iceyleagons.icicle.wrapped.registry.WrappedResourceKey;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
-import org.bukkit.World;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

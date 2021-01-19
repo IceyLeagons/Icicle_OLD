@@ -22,50 +22,42 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.wrapped;
+package net.iceyleagons.icicle.wrapped.registry;
 
 import lombok.Getter;
+import lombok.SneakyThrows;
 import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftNamespacedKey;
+import org.bukkit.NamespacedKey;
 
-import java.awt.*;
 import java.lang.reflect.Method;
 
-public class WrappedIRegistryCustom {
+public class WrappedResourceKey {
 
-    private static final Class<?> mc_IRegistryCustom, mc_IRegistryCustom_Dimension;
-    private static final Method registry_getWritable;
+    public static final Class<?> mc_ResourceKey;
+    private static final Method resource_constructor, resource_biome;
 
     static {
-        mc_IRegistryCustom = Reflections.getNormalNMSClass("IRegistryCustom");
-        mc_IRegistryCustom_Dimension = Reflections.getNormalNMSClass("IRegistryCustom$Dimension");
-
-        registry_getWritable = Reflections.getMethod(mc_IRegistryCustom, "b", true, WrappedResourceKey.mc_ResourceKey);
+        mc_ResourceKey = Reflections.getNormalNMSClass("ResourceKey");
+        resource_constructor = Reflections.getMethod(mc_ResourceKey, "a", true, WrappedIRegistry.mc_MinecraftKey);
+        resource_biome = Reflections.getMethod(mc_ResourceKey, "a", true, mc_ResourceKey, WrappedIRegistry.mc_MinecraftKey);
     }
 
     @Getter
-    private final Object root;
+    private final Object resourceKey;
 
-    public WrappedIRegistryCustom(Object root) {
-        this.root = root;
+    public WrappedResourceKey(String namespace, String name) {
+        this(new NamespacedKey(namespace, name));
     }
 
-    public WrappedIRegistryWritable getWritable(Object key) {
-        return new WrappedIRegistryWritable(Reflections.invoke(registry_getWritable, Object.class, root, key));
+    @SneakyThrows
+    public WrappedResourceKey(NamespacedKey namespacedKey) {
+        this.resourceKey = Reflections.invoke(resource_constructor, Object.class, null, WrappedCraftNamespacedKey.toMinecraft(namespacedKey));
     }
 
-    public Dimension asDimension() {
-        if (mc_IRegistryCustom_Dimension.isInstance(root))
-            return new Dimension(root);
-
-        throw new UnsupportedOperationException("Not a Dimension!");
-    }
-
-    public static class Dimension extends WrappedIRegistryCustom {
-
-        public Dimension(Object dimension) {
-            super(dimension);
-        }
-
+    @SneakyThrows
+    public WrappedResourceKey(Object root, NamespacedKey namespacedKey) {
+        this.resourceKey = Reflections.invoke(resource_biome, Object.class, null, root, WrappedCraftNamespacedKey.toMinecraft(namespacedKey));
     }
 
 }

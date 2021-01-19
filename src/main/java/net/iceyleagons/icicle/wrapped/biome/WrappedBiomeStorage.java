@@ -22,11 +22,10 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.wrapped;
+package net.iceyleagons.icicle.wrapped.biome;
 
 import lombok.Getter;
 import net.iceyleagons.icicle.reflect.Reflections;
-import org.bukkit.Bukkit;
 
 import java.lang.reflect.Method;
 

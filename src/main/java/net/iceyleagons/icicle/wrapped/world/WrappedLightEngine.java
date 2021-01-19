@@ -22,43 +22,34 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.wrapped;
+package net.iceyleagons.icicle.wrapped.world;
 
 import lombok.Getter;
-import lombok.SneakyThrows;
 import net.iceyleagons.icicle.reflect.Reflections;
-import net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftNamespacedKey;
-import org.bukkit.NamespacedKey;
+import net.iceyleagons.icicle.wrapped.WrappedBlockPosition;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
-public class WrappedResourceKey {
+public class WrappedLightEngine {
 
-    public static final Class<?> mc_ResourceKey;
-    private static final Method resource_constructor, resource_biome;
+    private static final Class<?> mc_LightEngine;
+    private static final Method light_update;
 
     static {
-        mc_ResourceKey = Reflections.getNormalNMSClass("ResourceKey");
-        resource_constructor = Reflections.getMethod(mc_ResourceKey, "a", true, WrappedIRegistry.mc_MinecraftKey);
-        resource_biome = Reflections.getMethod(mc_ResourceKey, "a", true, mc_ResourceKey, WrappedIRegistry.mc_MinecraftKey);
+        mc_LightEngine = Reflections.getNormalNMSClass("LightEngine");
+
+        light_update = Reflections.getMethod(mc_LightEngine, "a", true, WrappedBlockPosition.mc_BlockPosition);
     }
 
     @Getter
-    private final Object resourceKey;
+    private final Object engine;
 
-    public WrappedResourceKey(String namespace, String name) {
-        this(new NamespacedKey(namespace, name));
+    public WrappedLightEngine(Object engine) {
+        this.engine = engine;
     }
 
-    @SneakyThrows
-    public WrappedResourceKey(NamespacedKey namespacedKey) {
-        this.resourceKey = Reflections.invoke(resource_constructor, Object.class, null, WrappedCraftNamespacedKey.toMinecraft(namespacedKey));
-    }
-
-    @SneakyThrows
-    public WrappedResourceKey(Object root, NamespacedKey namespacedKey) {
-        this.resourceKey = Reflections.invoke(resource_biome, Object.class, null, root, WrappedCraftNamespacedKey.toMinecraft(namespacedKey));
+    public void update(WrappedBlockPosition blockPosition) {
+        Reflections.invoke(light_update, Void.class, engine, blockPosition.getRoot());
     }
 
 }

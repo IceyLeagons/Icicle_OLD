@@ -56,7 +56,51 @@ public enum IcicleFeatures {
      * Enables the JText feature
      * <p>Requires {@link #COMMANDS}</p>
      */
-    CHAT(JText::init);
+    CHAT(JText::init),
+    DEBUG(pl -> Icicle.debug = true),
+    PRELOAD_REFLECTION(pl -> {
+        try {
+            long timeNow = System.currentTimeMillis();
+            Class.forName("net.iceyleagons.icicle.wrapped.WrappedBlockPosition");
+            Class.forName("net.iceyleagons.icicle.wrapped.WrappedDedicatedServer");
+            Class.forName("net.iceyleagons.icicle.wrapped.WrappedTileEntity");
+
+            Class.forName("net.iceyleagons.icicle.wrapped.registry.WrappedResourceKey");
+            Class.forName("net.iceyleagons.icicle.wrapped.registry.WrappedIRegistryWritable");
+            Class.forName("net.iceyleagons.icicle.wrapped.registry.WrappedIRegistry");
+            Class.forName("net.iceyleagons.icicle.wrapped.registry.WrappedIRegistryCustom");
+            Class.forName("net.iceyleagons.icicle.wrapped.registry.WrappedRegistryGeneration");
+
+            Class.forName("net.iceyleagons.icicle.wrapped.world.WrappedLightEngine");
+            Class.forName("net.iceyleagons.icicle.wrapped.world.WrappedWorld");
+            Class.forName("net.iceyleagons.icicle.wrapped.world.chunk.WrappedChunk");
+            Class.forName("net.iceyleagons.icicle.wrapped.world.chunk.WrappedChunkCoordIntPair");
+
+            Class.forName("net.iceyleagons.icicle.wrapped.player.WrappedCraftPlayer");
+            Class.forName("net.iceyleagons.icicle.wrapped.player.WrappedEntityPlayer");
+            Class.forName("net.iceyleagons.icicle.wrapped.player.WrappedNetworkManager");
+            Class.forName("net.iceyleagons.icicle.wrapped.player.WrappedPlayerConnection");
+
+            Class.forName("net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutMapChunk");
+
+            Class.forName("net.iceyleagons.icicle.wrapped.item.WrappedItem");
+            Class.forName("net.iceyleagons.icicle.wrapped.item.WrappedItemStack");
+
+            Class.forName("net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftNamespacedKey");
+            Class.forName("net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftBlock");
+            Class.forName("net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftWorld");
+
+            Class.forName("net.iceyleagons.icicle.wrapped.biome.WrappedBiomeBase");
+            Class.forName("net.iceyleagons.icicle.wrapped.biome.WrappedBiomeFog");
+            Class.forName("net.iceyleagons.icicle.wrapped.biome.WrappedBiomeRegistry");
+            Class.forName("net.iceyleagons.icicle.wrapped.biome.WrappedBiomeStorage");
+            if (Icicle.debug)
+                System.out.println(String.format("Elapsed time: %s ms.", System.currentTimeMillis() - timeNow));
+        } catch (ClassNotFoundException e) {
+            // Somehow loading these classes failed..? How?
+            e.printStackTrace();
+        }
+    });
 
     @Getter
     private final Consumer<JavaPlugin> consumer;

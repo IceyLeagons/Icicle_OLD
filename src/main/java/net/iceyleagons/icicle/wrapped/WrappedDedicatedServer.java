@@ -24,9 +24,11 @@
 
 package net.iceyleagons.icicle.wrapped;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.wrapped.registry.WrappedResourceKey;
 import org.bukkit.Server;
 
 import java.lang.reflect.Field;
@@ -46,58 +48,21 @@ public class WrappedDedicatedServer {
 
     private static final DecimalFormat DEFAULT_DECIMAL_FORMAT = new DecimalFormat("##.##");
 
-    private static final Class<?> craftServerClass;
-    private static final Class<?> dedicatedServerClass;
-    private static final Class<?> mcServerClass;
+    private static final Class<?> craftServerClass, mcServerClass;
 
-    private static final Method cb_getServer;
+    private static final Method cb_getServer, mc_getFunctionData, mc_isNotMainThread, mc_getThread, mc_getUserCache, mc_getServerPing,
+            mc_getIdleTimeout, mc_setIdleTimeout, mc_getResourcePackRepository, mc_getTagRegistry, mc_getLootTableRegistry,
+            mc_getCustomRegistry, mc_isSyncChunkWrites, mc_getDefinedStructureManager, mc_getResourcePack, mc_getResourcePackHash,
+            mc_setResourcePack, mc_getPort, mc_setPort, mc_getModded, mc_getServerModName, mc_getVersion, mc_getWorldServer,
+            mc_postToMainThread, mc_canExecute, mc_executeNext, mc_safeShutdown, mc_getServerConnection;
 
-    private static final Method mc_getFunctionData;
-
-    private static final Method mc_isNotMainThread;
-    private static final Method mc_getThread;
-
-    private static final Method mc_getUserCache;
-
-    private static final Method mc_getServerPing;
-
-    private static final Method mc_getIdleTimeout;
-    private static final Method mc_setIdleTimeout;
-
-    private static final Method mc_getResourcePackRepository;
-    private static final Method mc_getTagRegistry;
-    private static final Method mc_getLootTableRegistry;
-    private static final Method mc_getCustomRegistry;
-
-    private static final Method mc_isSyncChunkWrites;
-    private static final Method mc_getDefinedStructureManager;
-
-    private static final Method mc_getResourcePack;
-    private static final Method mc_getResourcePackHash;
-    private static final Method mc_setResourcePack;
-    private static final Method mc_getPort;
-    private static final Method mc_setPort;
-    private static final Method mc_getModded;
-    private static final Method mc_getServerModName;
-    private static final Method mc_getVersion;
-    private static final Method mc_getWorldServer;
-    private static final Method mc_postToMainThread;
-    private static final Method mc_canExecute;
-    private static final Method mc_executeNext;
-    private static final Method mc_safeShutdown;
-    private static final Method mc_getServerConnection;
-
-    private static final Field mc_tpsField;
-    private static final Field mc_minecraftSessionService;
-    private static final Field mc_gameProfileRepository;
-    private static final Field mc_datapackconfiguration;
-    private static final Field mc_dataPackResources;
+    private static final Field mc_tpsField, mc_minecraftSessionService, mc_gameProfileRepository, mc_datapackconfiguration,
+            mc_dataPackResources;
 
 
     static {
         //Classes
         craftServerClass = Reflections.getNormalCBClass("CraftServer");
-        dedicatedServerClass = Reflections.getNormalNMSClass("DedicatedServer");
         mcServerClass = Reflections.getNormalNMSClass("MinecraftServer");
 
         //CraftBukkit methods
@@ -127,9 +92,9 @@ public class WrappedDedicatedServer {
         mc_getModded = getMCMethod("getModded");
         mc_getServerModName = getMCMethod("getServerModName");
         mc_getVersion = getMCMethod("getVersion");
-        mc_getWorldServer = getMCMethod("getWorldServer", Object.class);
+        mc_getWorldServer = getMCMethod("getWorldServer", WrappedResourceKey.mc_ResourceKey);
         mc_postToMainThread = getMCMethod("postToMainThread", Runnable.class);
-        mc_canExecute = getMCMethod("canExecute", Object.class);
+        mc_canExecute = getMCMethod("canExecute", Reflections.getNormalNMSClass("TickTask"));
         mc_getServerConnection = getMCMethod("getServerConnection");
         mc_executeNext = getMCMethod("executeNext");
         mc_safeShutdown = getMCMethod("safeShutdown", boolean.class, boolean.class);
@@ -307,6 +272,32 @@ public class WrappedDedicatedServer {
 
     //TODO CraftBlock, CraftPlayer, CraftEntity, CraftWorld
 
+    /**
+     * @author TOTHTOMI
+     * @version 1.0.0
+     * @since 1.1.3
+     */
+    @Getter
+    @AllArgsConstructor
+    public enum TPSTime {
+        /**
+         * Used to check the TPS for the last minute
+         */
+        LAST_MINUTE(0),
+        /**
+         * Used to check the TPS for the last five minutes
+         */
+        FIVE_MINUTES(1),
+        /**
+         * Used to check the TPS for the last fifteen minutes
+         */
+        FIFTEEN_MINUTES(2);
+
+        /**
+         * Id of the tps time
+         */
+        private final int id;
+    }
 
 }
 

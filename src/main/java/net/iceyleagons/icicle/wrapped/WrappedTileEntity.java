@@ -27,6 +27,7 @@ package net.iceyleagons.icicle.wrapped;
 import lombok.Getter;
 import net.iceyleagons.icicle.reflect.Reflections;
 import net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftWorld;
+import net.iceyleagons.icicle.wrapped.world.chunk.WrappedChunk;
 import org.bukkit.inventory.InventoryHolder;
 
 import java.lang.reflect.Method;
@@ -54,6 +55,9 @@ public class WrappedTileEntity {
     private final Object entity;
 
     public WrappedTileEntity(Object entity) {
+        if(!mc_TileEntity.isInstance(entity))
+            throw new IllegalArgumentException("Provided object not instance of TileEntity.");
+
         this.entity = entity;
     }
 

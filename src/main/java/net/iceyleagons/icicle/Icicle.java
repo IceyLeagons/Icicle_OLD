@@ -43,6 +43,7 @@ public class Icicle {
      * Whether or not the module is initialized
      */
     private static boolean initialized = false;
+    public static boolean debug = false;
 
     /**
      * This needs to be called before everything else.

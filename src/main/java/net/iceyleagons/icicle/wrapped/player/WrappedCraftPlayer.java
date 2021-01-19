@@ -46,7 +46,7 @@ public class WrappedCraftPlayer {
 
     private static final Method cb_getProtocolVersion;
     private static final Method cb_getVirtualHost;
-    private static final Method cb_sendActionbar;
+    //private static final Method cb_sendActionbar;
     private static final Method cb_getHandle;
 
 
@@ -56,7 +56,7 @@ public class WrappedCraftPlayer {
         cb_getConversationTracker = getCBField("conversationTracker");
         cb_getProtocolVersion = getCBMethod("getProtocolVersion");
         cb_getVirtualHost = getCBMethod("getVirtualHost");
-        cb_sendActionbar = getCBMethod("sendActionbar", char.class, String.class);
+        //cb_sendActionbar = getCBMethod("sendActionbar", String.class);
         cb_getHandle = getCBMethod("getHandle");
     }
 
@@ -86,9 +86,9 @@ public class WrappedCraftPlayer {
         return Reflections.invoke(cb_getVirtualHost, InetSocketAddress.class, bukkitPlayer);
     }
 
-    public void sendActionbar(char alternateChar, String message) {
+    /*public void sendActionbar(String message) {
         Reflections.invoke(cb_sendActionbar, Void.class, bukkitPlayer, message);
-    }
+    }*/
 
     public WrappedEntityPlayer getHandle() {
         return WrappedEntityPlayer.from(Reflections.invoke(cb_getHandle, Object.class, bukkitPlayer));

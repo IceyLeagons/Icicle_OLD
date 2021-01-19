@@ -22,34 +22,18 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.wrapped;
+package net.iceyleagons.icicle.wrapped.world;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-/**
- * @author TOTHTOMI
- * @version 1.0.0
- * @since 1.1.3
- */
-@Getter
-@AllArgsConstructor
-public enum TPSTime {
-    /**
-     * Used to check the TPS for the last minute
-     */
-    LAST_MINUTE(0),
-    /**
-     * Used to check the TPS for the last five minutes
-     */
-    FIVE_MINUTES(1),
-    /**
-     * Used to check the TPS for the last fifteen minutes
-     */
-    FIFTEEN_MINUTES(2);
+public class WrappedWorld {
 
-    /**
-     * Id of the tps time
-     */
-    private final int id;
+    @Getter
+    private final Object world;
+
+    public WrappedWorld(Object root) {
+        this.world = root;
+    }
+
+
 }
