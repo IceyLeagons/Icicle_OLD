@@ -54,6 +54,7 @@ public class WrappedBiomeBase {
     private static final Method biome_setDepth, biome_setScale, biome_setTemperature, biome_setDownfall, biome_setSpecialEffects,
             biome_setMobs, biome_setGeneration, biome_setTemperatureModifier, biome_setPrecipitation, biome_setGeography,
             biomebase_build;
+    private static int num = 200;
 
     static {
         mc_BiomeBase = Reflections.getNormalNMSClass("BiomeBase");
@@ -92,8 +93,6 @@ public class WrappedBiomeBase {
     public WrappedBiomeBase(Object root) {
         this.root = root;
     }
-
-    private static int num = 200;
 
     public WrappedBiomeBase register(NamespacedKey namespace) {
         // return new WrappedBiomeBase(WrappedRegistryGeneration.register(WrappedIRegistry.BIOME, namespace, root));

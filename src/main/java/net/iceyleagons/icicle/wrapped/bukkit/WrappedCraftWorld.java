@@ -26,25 +26,26 @@ package net.iceyleagons.icicle.wrapped.bukkit;
 
 import lombok.Getter;
 import net.iceyleagons.icicle.reflect.Reflections;
-import net.iceyleagons.icicle.wrapped.biome.WrappedBiomeBase;
 import net.iceyleagons.icicle.wrapped.WrappedBlockPosition;
-import net.iceyleagons.icicle.wrapped.world.chunk.WrappedChunk;
+import net.iceyleagons.icicle.wrapped.biome.WrappedBiomeBase;
 import net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutMapChunk;
 import net.iceyleagons.icicle.wrapped.player.WrappedCraftPlayer;
 import net.iceyleagons.icicle.wrapped.registry.WrappedIRegistry;
 import net.iceyleagons.icicle.wrapped.world.WrappedWorld;
+import net.iceyleagons.icicle.wrapped.world.chunk.WrappedChunk;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 public class WrappedCraftWorld {
 
-    public static final Class<?> mc_World;
-    private static final Class<?> mc_CraftWorld, mc_WorldServer, mc_IRegistryCustom;
-    private static final Method world_isLoaded, world_getChunkAtWorldCoords, world_getHandle, nmsWorld_getWorld, ws_getRegistry, registry_b;
+    public static final Class<?> mc_World, mc_WorldServer;
+    private static final Class<?> mc_CraftWorld, mc_IRegistryCustom;
+    private static final Method world_isLoaded, world_getChunkAtWorldCoords, world_getHandle, nmsWorld_getWorld, ws_getRegistry, registry_b, add_Entity;
     private static final Field bukkit_nmsWorld;
 
     static {
@@ -59,6 +60,8 @@ public class WrappedCraftWorld {
         nmsWorld_getWorld = Reflections.getMethod(mc_World, "getWorld", true);
         ws_getRegistry = Reflections.getMethod(mc_WorldServer, "r", true);
         registry_b = Reflections.getMethod(mc_IRegistryCustom, "b", true, WrappedIRegistry.mc_ResourceKey);
+        add_Entity = Reflections.getMethod(mc_CraftWorld, "addEntity", true,
+                Reflections.getNormalNMSClass("Entity"), CreatureSpawnEvent.SpawnReason.class);
 
         bukkit_nmsWorld = Reflections.getField(mc_CraftWorld, "world", true);
     }
@@ -117,6 +120,10 @@ public class WrappedCraftWorld {
 
     public WrappedWorld getHandle() {
         return new WrappedWorld(Reflections.invoke(world_getHandle, Object.class, craftWorld));
+    }
+
+    public Object addEntity(Object entity, CreatureSpawnEvent.SpawnReason spawnReason) {
+        return Reflections.invoke(add_Entity, Object.class, craftWorld, entity, spawnReason);
     }
 
     public void sendUpdate(Player player, WrappedChunk chunk) {

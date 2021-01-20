@@ -83,6 +83,13 @@ public class Advancement {
     @Getter
     private final List<Advancement> children = new ArrayList<>();
 
+    private static JSONObject jsonFromTextComponent(TextComponent textComponent) {
+        ///Gson gson = new Gson();
+        //
+        if (textComponent == null) throw new IllegalArgumentException("TextComponent cannot be null!");
+        return new JSONObject(ComponentSerializer.toString(textComponent));
+    }
+
     public JSONObject getJSON() {
         JSONObject jsonObject = new JSONObject();
         JSONObject display = new JSONObject();
@@ -101,7 +108,7 @@ public class Advancement {
         JSONObject criteria = new JSONObject(); //just an empty json object
         JSONObject imp = new JSONObject();
         imp.put("trigger", "minecraft:impossible");
-        criteria.put("imp",imp);
+        criteria.put("imp", imp);
 
         jsonObject.put("criteria", criteria);
         jsonObject.put("display", display);
@@ -118,8 +125,8 @@ public class Advancement {
     public Advancement addChild(String name, Material icon, String title, String description, Advancement.Frames frame,
                                 boolean announceToChat, boolean showToast, boolean hidden) {
         Advancement advancement = new Advancement(new NamespacedKey(id.getNamespace(), name), id.toString(), icon.getKey().toString(), background,
-                new TextComponent(ChatColor.translateAlternateColorCodes('&', "&r"+title)),
-                new TextComponent(ChatColor.translateAlternateColorCodes('&', "&r"+description)),
+                new TextComponent(ChatColor.translateAlternateColorCodes('&', "&r" + title)),
+                new TextComponent(ChatColor.translateAlternateColorCodes('&', "&r" + description)),
                 frame, announceToChat, showToast, hidden);
         children.add(advancement);
         return advancement;
@@ -144,13 +151,16 @@ public class Advancement {
             Bukkit.getUnsafe().removeAdvancement(id);
     }
 
-    private static JSONObject jsonFromTextComponent(TextComponent textComponent) {
-        ///Gson gson = new Gson();
-        //
-        if (textComponent == null) throw new IllegalArgumentException("TextComponent cannot be null!");
-        return new JSONObject(ComponentSerializer.toString(textComponent));
-    }
 
+    @RequiredArgsConstructor
+    @Getter
+    public enum Frames {
+        TASK("task"),
+        GOAL("goal"),
+        CHALLENGE("challenge");
+
+        private final String id;
+    }
 
     @RequiredArgsConstructor
     public static class Backgrounds {
@@ -162,24 +172,15 @@ public class Advancement {
         public static final Backgrounds STONE = new Backgrounds("stone.png");
 
         private final String fileName;
-        public String getPath() {
-            return "minecraft:textures/gui/advancements/backgrounds/"+fileName;
-        }
 
         public static Backgrounds pathOf(String customFilename) {
             return new Backgrounds(customFilename);
         }
 
-    }
+        public String getPath() {
+            return "minecraft:textures/gui/advancements/backgrounds/" + fileName;
+        }
 
-    @RequiredArgsConstructor
-    @Getter
-    public enum Frames {
-        TASK("task"),
-        GOAL("goal"),
-        CHALLENGE("challenge");
-
-        private final String id;
     }
 
 

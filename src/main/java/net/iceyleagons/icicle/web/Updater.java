@@ -96,7 +96,7 @@ public class Updater {
         String url = DOWNLOAD.toLowerCase().replace("%resourceId%", resourceId);
         try {
             File pluginFile = new File(javaPlugin.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
-            return FileUtils.downloadFile(url,pluginFile);
+            return FileUtils.downloadFile(url, pluginFile);
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -132,15 +132,15 @@ public class Updater {
 
     @Getter
     @AllArgsConstructor
-    public static class UpdaterResponse {
-        private final ResponseType type;
-        private final String message;
+    public enum ResponseType {
+        UP_TO_DATE(0), NOT_UP_TO_DATE(1), NON_EXISTING_VERSION(2), ERROR(3);
+        private final int id;
     }
 
     @Getter
     @AllArgsConstructor
-    public enum ResponseType {
-        UP_TO_DATE(0), NOT_UP_TO_DATE(1), NON_EXISTING_VERSION(2), ERROR(3);
-        private final int id;
+    public static class UpdaterResponse {
+        private final ResponseType type;
+        private final String message;
     }
 }

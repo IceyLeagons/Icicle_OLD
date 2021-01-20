@@ -33,6 +33,9 @@ public class WrappedIRegistry {
 
     public static final Class<?> mc_ResourceKey, mc_IRegistry, mc_MinecraftKey, mc_RegistryGeneration;
     private static final Method registry_get;
+    public static Object WORLDGEN_BIOME = Reflections.get(Reflections.getField(mc_RegistryGeneration, "WORLDGEN_BIOME", true), Object.class, null);
+    public static Object BIOME = Reflections.get(Reflections.getField(mc_IRegistry, "ay", true), Object.class, null);
+    public static Object DIMENSION = Reflections.get(Reflections.getField(mc_IRegistry, "K", true), Object.class, null);
 
     static {
         mc_RegistryGeneration = Reflections.getNormalNMSClass("RegistryGeneration");
@@ -41,10 +44,6 @@ public class WrappedIRegistry {
         mc_MinecraftKey = Reflections.getNormalNMSClass("MinecraftKey");
         registry_get = Reflections.getMethod(mc_IRegistry, "get", true, mc_MinecraftKey);
     }
-
-    public static Object WORLDGEN_BIOME = Reflections.get(Reflections.getField(mc_RegistryGeneration, "WORLDGEN_BIOME", true), Object.class, null);
-    public static Object BIOME = Reflections.get(Reflections.getField(mc_IRegistry, "ay", true), Object.class, null);
-    public static Object DIMENSION = Reflections.get(Reflections.getField(mc_IRegistry, "K", true), Object.class, null);
 
     @SneakyThrows
     public static Object get(Object root, Object minecraftKey) {

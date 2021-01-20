@@ -25,16 +25,17 @@
 package net.iceyleagons.icicle;
 
 import lombok.SneakyThrows;
-import net.iceyleagons.icicle.advancement.Advancement;
-import net.iceyleagons.icicle.advancement.AdvancementBuilder;
 import net.iceyleagons.icicle.misc.commands.CommandUtils;
+import net.iceyleagons.icicle.npc.NPC;
 import net.iceyleagons.icicle.ui.components.impl.ValueBar;
 import net.iceyleagons.icicle.ui.frame.Frame;
 import net.iceyleagons.icicle.ui.guis.BasicGUI;
 import net.iceyleagons.icicle.wrapped.biome.WrappedBiomeBase;
 import net.iceyleagons.icicle.wrapped.biome.WrappedBiomeFog;
-import net.iceyleagons.icicle.wrapped.world.chunk.WrappedChunk;
 import net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftWorld;
+import net.iceyleagons.icicle.wrapped.player.WrappedEntityPlayer;
+import net.iceyleagons.icicle.wrapped.world.chunk.WrappedChunk;
+import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -91,6 +92,15 @@ public class Test extends JavaPlugin {
 
         BasicGUI basicGUI = getGUI();
 
+        CommandUtils.injectCommand("npc", (commandSender, command, s, strings) -> {
+            Player player = (Player) commandSender;
+            //NPC npc = new NPC(new WrappedGameProfile(Mojang.getUUID("DRSENKIHAZI"), "DRSENKIHAZI"), player.getLocation());
+            //npc.spawn();
+            NPC npc = new NPC(ChatColor.RED + "" + ChatColor.BOLD + "Bob", "PredatorTTV_");
+            WrappedEntityPlayer entityPlayer = npc.setup(player.getLocation());
+            NPC.spawnNPCPacket(entityPlayer, player);
+            return true;
+        });
 
         CommandUtils.injectCommand("gui", (commandSender, command, s, strings) -> {
             Player player = (Player) commandSender;

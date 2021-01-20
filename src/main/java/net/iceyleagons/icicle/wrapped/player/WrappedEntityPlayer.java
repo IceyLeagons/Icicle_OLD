@@ -26,8 +26,15 @@ package net.iceyleagons.icicle.wrapped.player;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.wrapped.WrappedDedicatedServer;
+import net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftWorld;
+import net.iceyleagons.icicle.wrapped.data.WrappedDataWatcher;
+import net.iceyleagons.icicle.wrapped.mojang.WrappedGameProfile;
+import net.iceyleagons.icicle.wrapped.world.WrappedWorld;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -38,7 +45,7 @@ import java.lang.reflect.Method;
 @Getter
 public class WrappedEntityPlayer {
 
-    private static final Class<?> entityPlayerClass;
+    public static final Class<?> entityPlayerClass;
     private static final Class<?> mc_Entity;
 
     private static final Field mc_playerConnection;
@@ -46,19 +53,48 @@ public class WrappedEntityPlayer {
     private static final Field mc_world;
     private static final Method mc_isFrozen;
     private static final Field mc_ping;
+    private static final Field mc_gameProfile;
+    private static final Field mc_id;
+    private static final Field mc_yaw;
+    private static final Field mc_pitch;
+    private static final Method mc_setLocation;
+    private static final Method mc_getBukkitEntity;
+    private static final Method mc_teleportAndSync;
+    private static final Method mc_getDataWatcher;
+
+    private static final Constructor<?> constructor;
 
     static {
         entityPlayerClass = Reflections.getNormalNMSClass("EntityPlayer");
         mc_Entity = Reflections.getNormalNMSClass("Entity");
+        Class<?> entityHuman = Reflections.getNormalNMSClass("EntityHuman");
 
         mc_playerConnection = getMCField("playerConnection");
+        mc_getBukkitEntity = Reflections.getMethod(mc_Entity, "getBukkitEntity", true);
         mc_networkManager = getMCField("networkManager");
+        mc_getDataWatcher = Reflections.getMethod(mc_Entity, "getDataWatcher", true);
         mc_world = Reflections.getField(mc_Entity, "world", true);
         mc_isFrozen = getMCMethod("isFrozen");
         mc_ping = getMCField("ping");
+        mc_id = Reflections.getField(mc_Entity, "id", true);
+        mc_yaw = Reflections.getField(mc_Entity, "yaw", true);
+        mc_pitch = Reflections.getField(mc_Entity, "pitch", true);
+        mc_gameProfile = Reflections.getField(entityHuman, "bJ", true);
+        mc_teleportAndSync = Reflections.getMethod(mc_Entity, "teleportAndSync", true, double.class, double.class, double.class);
+        mc_setLocation = Reflections.getMethod(mc_Entity, "setLocation", true, double.class, double.class, double.class, float.class, float.class);
+
+        constructor = Reflections.getConstructor(entityPlayerClass, true, WrappedDedicatedServer.mcServerClass,
+                WrappedCraftWorld.mc_WorldServer, WrappedGameProfile.mojang_gameProfile, WrappedPlayerInteractManager.mc_playerInteractManager);
+
+        //public EntityPlayer(MinecraftServer minecraftserver, WorldServer worldserver, GameProfile gameprofile, PlayerInteractManager playerinteractmanager)
     }
 
     private final Object entityPlayer;
+
+    @SneakyThrows
+    public WrappedEntityPlayer(WrappedDedicatedServer dedicatedServer, WrappedWorld world, WrappedGameProfile gameProfile, WrappedPlayerInteractManager interactManager) {
+        this.entityPlayer = constructor.newInstance(dedicatedServer.getDedicatedServer(), world.getWorld(), gameProfile.getNmsObject(), interactManager.getNmsObject());
+    }
 
     private static Method getMCMethod(String name, Class<?>... parameterTypes) {
         return Reflections.getMethod(entityPlayerClass, name, true, parameterTypes);
@@ -72,8 +108,46 @@ public class WrappedEntityPlayer {
         return new WrappedEntityPlayer(handle);
     }
 
+    public void teleportAndSync(double x, double y, double z) {
+        System.out.println(x);
+        System.out.println(y);
+        System.out.println(z);
+        System.out.println(mc_teleportAndSync);
+        System.out.println(entityPlayer);
+        Reflections.invoke(mc_teleportAndSync, Void.class, entityPlayer, x, y, z);
+    }
+
+    public Float getYaw() {
+        return Reflections.get(mc_yaw, Float.class, entityPlayer);
+    }
+
+    public Float getPitch() {
+        return Reflections.get(mc_pitch, Float.class, entityPlayer);
+    }
+
+    public WrappedDataWatcher getDataWatcher() {
+        Object o = Reflections.invoke(mc_getDataWatcher, Object.class, entityPlayer);
+        return new WrappedDataWatcher(o);
+    }
+
+    public void setLocation(double x, double y, double z, float yaw, float pitch) {
+        Reflections.invoke(mc_setLocation, Void.class, entityPlayer, x, y, z, yaw, pitch);
+    }
+
+    public Object getBukkitEntity() {
+        return Reflections.invoke(mc_getBukkitEntity, Object.class, entityPlayer);
+    }
+
     public WrappedPlayerConnection getPlayerConnection() {
         return new WrappedPlayerConnection(Reflections.get(mc_playerConnection, Object.class, entityPlayer));
+    }
+
+    public WrappedGameProfile getGameProfile() {
+        return new WrappedGameProfile(Reflections.get(mc_gameProfile, Object.class, entityPlayer));
+    }
+
+    public Integer getId() {
+        return Reflections.get(mc_id, Integer.class, entityPlayer);
     }
 
     public WrappedNetworkManager getNetworkManager() {

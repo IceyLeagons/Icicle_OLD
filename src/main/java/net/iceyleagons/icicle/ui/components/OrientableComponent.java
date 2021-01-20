@@ -30,6 +30,7 @@ package net.iceyleagons.icicle.ui.components;
 public interface OrientableComponent {
 
     Orientation getOrientation();
+
     void setOrientation(Orientation orientation);
 
     public static enum Orientation {

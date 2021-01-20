@@ -25,7 +25,6 @@
 package net.iceyleagons.icicle.wrapped.registry;
 
 import net.iceyleagons.icicle.reflect.Reflections;
-import net.iceyleagons.icicle.wrapped.biome.WrappedBiomeBase;
 import net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftNamespacedKey;
 import org.bukkit.NamespacedKey;
 

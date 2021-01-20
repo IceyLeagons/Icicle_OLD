@@ -37,8 +37,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class BlockStorage {
-    private final World world;
     protected final HashMap<Location, Map<String, Object>> metadatas;
+    private final World world;
 
     public BlockStorage(World world) {
         this.world = world;
@@ -53,6 +53,33 @@ public class BlockStorage {
             map.put(Location.deserialize(entr.getKey()), entr.getValue());
 
         this.metadatas = map;
+    }
+
+    public static BlockStorage load(World world) {
+        File original = new File(world.getWorldFolder(), "block.map");
+        File temp = new File(world.getWorldFolder(), "block.tmp.map");
+
+        try {
+            File file;
+            if (FileZipper.isZipped(original)) {
+                FileZipper.decompress(original, temp);
+                file = temp;
+            } else {
+                file = original;
+            }
+
+            try (ObjectInputStream objectOutputStream = new ObjectInputStream(new FileInputStream(file))) {
+                Object object = objectOutputStream.readObject();
+
+                if (!temp.delete())
+                    throw new IllegalStateException("Could not delete temporary block storage map file!");
+                return new BlockStorage(world, (Map<Map<String, Object>, Map<String, Object>>) object);
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public void handleEvent(BlockBreakEvent event) {
@@ -103,32 +130,6 @@ public class BlockStorage {
                 list.add(entr.getKey());
 
         return list;
-    }
-
-    public static BlockStorage load(World world) {
-        File original = new File(world.getWorldFolder(), "block.map");
-        File temp = new File(world.getWorldFolder(), "block.tmp.map");
-
-        try {
-            File file;
-            if (FileZipper.isZipped(original)) {
-                FileZipper.decompress(original, temp);
-                file = temp;
-            } else {
-                file = original;
-            }
-
-            try (ObjectInputStream objectOutputStream = new ObjectInputStream(new FileInputStream(file))) {
-                Object object = objectOutputStream.readObject();
-
-                if (!temp.delete()) throw new IllegalStateException("Could not delete temporary block storage map file!");
-                return new BlockStorage(world, (Map<Map<String, Object>, Map<String, Object>>)object);
-            }
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return null;
     }
 
     public void save() {

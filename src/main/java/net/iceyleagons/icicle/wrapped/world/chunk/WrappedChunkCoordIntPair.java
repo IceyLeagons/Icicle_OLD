@@ -35,8 +35,8 @@ import java.lang.reflect.Method;
 public class WrappedChunkCoordIntPair {
 
     private static final Class<?> mc_ChunkCoordIntPair;
-    private static Constructor<?> pair_xz, pair_position, pair_long;
     private static final Method pair_getBlockX, pair_getBlockZ, pair_asPosition, pair_asPositionDown, pair_getRegionX, pair_getRegionZ;
+    private static Constructor<?> pair_xz, pair_position, pair_long;
 
     static {
         mc_ChunkCoordIntPair = Reflections.getNormalNMSClass("ChunkCoordIntPair");

@@ -30,6 +30,7 @@ package net.iceyleagons.icicle.ui.components;
 public interface VariableSizeComponent {
 
     int getWidth();
+
     int getHeight();
 
 }

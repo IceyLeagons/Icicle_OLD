@@ -27,7 +27,6 @@ package net.iceyleagons.icicle.item;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.junit.Test;
 
 /**
  * Contains operations regarding {@link org.bukkit.inventory.Inventory}s
@@ -58,7 +57,7 @@ public class InventoryUtils {
      * @return an int array described above
      */
     public static int[] calculateXYFromSlot(int slot) {
-        return new int[] { slot % 9 + 1, slot / 9 + 1 };
+        return new int[]{slot % 9 + 1, slot / 9 + 1};
     }
 
     /**

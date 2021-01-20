@@ -26,6 +26,7 @@ package net.iceyleagons.icicle.reflect;
 
 import org.bukkit.Bukkit;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -97,6 +98,18 @@ public class Reflections {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static Constructor<?> getConstructor(final Class<?> clazz, boolean forceAccessible, final Class<?>... parameterTypes) {
+        try {
+            Constructor<?> constructor = clazz.getDeclaredConstructor(parameterTypes);
+            constructor.setAccessible(forceAccessible);
+            return constructor;
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     /**

@@ -25,7 +25,6 @@
 package net.iceyleagons.icicle.ui.components.impl;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import net.iceyleagons.icicle.item.ItemFactory;
 import net.iceyleagons.icicle.ui.GUIClickEvent;
@@ -47,6 +46,10 @@ import org.bukkit.inventory.ItemStack;
 public class ValueBar implements ComponentTemplate, OrientableComponent, VariableSizeComponent {
 
     @Getter
+    private final double maxValue;
+    @Getter
+    private final int bars;
+    @Getter
     @Setter
     private double value;
     @Getter
@@ -61,16 +64,10 @@ public class ValueBar implements ComponentTemplate, OrientableComponent, Variabl
     @Getter
     @Setter
     private Orientation orientation = Orientation.HORIZONTAL;
-
     @Getter
     private int x;
     @Getter
     private int y;
-
-    @Getter
-    private final double maxValue;
-    @Getter
-    private final int bars;
     @Setter
     private boolean renderAllowed = true;
 

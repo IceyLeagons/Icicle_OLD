@@ -24,9 +24,7 @@
 
 package net.iceyleagons.icicle.advancement;
 
-import kotlin.Unit;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -77,12 +75,11 @@ public class AdvancementBuilder {
     }
 
     /**
-     *
      * @param update will wipe all progress made so far!
      */
     public void register(boolean update) {
         dfs().forEach(adv -> adv.register(update));
-       // Bukkit.getServer().reloadData();
+        // Bukkit.getServer().reloadData();
     }
 
     private List<Advancement> dfs() {

@@ -53,6 +53,7 @@ public interface ComponentTemplate {
     void setXY(int x, int y);
 
     int getRotation();
+
     void setRotation(int rotation);
 
     /**

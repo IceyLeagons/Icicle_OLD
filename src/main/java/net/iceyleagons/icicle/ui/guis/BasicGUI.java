@@ -36,4 +36,5 @@ import org.bukkit.event.inventory.InventoryType;
         height = 6,
         autoUpdate = false
 )
-public class BasicGUI extends BaseGUI { }
+public class BasicGUI extends BaseGUI {
+}

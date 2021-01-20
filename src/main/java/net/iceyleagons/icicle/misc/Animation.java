@@ -24,12 +24,9 @@
 
 package net.iceyleagons.icicle.misc;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import net.iceyleagons.icicle.ui.frame.Frame;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -49,6 +46,8 @@ public class Animation {
 
     private BukkitTask bukkitTask;
     private Iterator<Frame> frameIterator;
+    private int counter;
+    private Frame currentFrame;
 
     public Animation(JavaPlugin javaPlugin) {
         this.javaPlugin = javaPlugin;
@@ -63,8 +62,6 @@ public class Animation {
                 Bukkit.getScheduler().runTaskTimer(javaPlugin, this::tick, 0L, 1L);
     }
 
-    private int counter;
-    private Frame currentFrame;
     private void tick() {
         if (!frameIterator.hasNext()) {
             bukkitTask.cancel();

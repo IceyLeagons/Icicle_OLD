@@ -26,9 +26,9 @@ package net.iceyleagons.icicle.wrapped.world.chunk;
 
 import lombok.Getter;
 import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.wrapped.WrappedBlockPosition;
 import net.iceyleagons.icicle.wrapped.WrappedTileEntity;
 import net.iceyleagons.icicle.wrapped.biome.WrappedBiomeStorage;
-import net.iceyleagons.icicle.wrapped.WrappedBlockPosition;
 import net.iceyleagons.icicle.wrapped.world.WrappedLightEngine;
 import org.bukkit.Chunk;
 
@@ -63,12 +63,12 @@ public class WrappedChunk {
     @Getter
     private final Object chunk;
 
-    public static WrappedChunk fromBukkit(Chunk chunk) {
-        return new WrappedChunk(Reflections.invoke(bukkit_getHandle, Object.class, bukkit_CraftChunk.cast(chunk)));
-    }
-
     public WrappedChunk(Object chunk) {
         this.chunk = chunk;
+    }
+
+    public static WrappedChunk fromBukkit(Chunk chunk) {
+        return new WrappedChunk(Reflections.invoke(bukkit_getHandle, Object.class, bukkit_CraftChunk.cast(chunk)));
     }
 
     public void markDirty() {
@@ -106,12 +106,12 @@ public class WrappedChunk {
         return newMap;
     }
 
-    public void setNeedsSaving(boolean flag) {
-        Reflections.invoke(chunk_setNeedsSaving, Void.class, chunk, flag);
-    }
-
     public boolean isNeedsSaving() {
         return Reflections.invoke(chunk_isNeedsSaving, boolean.class, chunk);
+    }
+
+    public void setNeedsSaving(boolean flag) {
+        Reflections.invoke(chunk_setNeedsSaving, Void.class, chunk, flag);
     }
 
     public WrappedChunkCoordIntPair getPos() {

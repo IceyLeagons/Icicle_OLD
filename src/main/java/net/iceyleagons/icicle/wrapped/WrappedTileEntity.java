@@ -55,7 +55,7 @@ public class WrappedTileEntity {
     private final Object entity;
 
     public WrappedTileEntity(Object entity) {
-        if(!mc_TileEntity.isInstance(entity))
+        if (!mc_TileEntity.isInstance(entity))
             throw new IllegalArgumentException("Provided object not instance of TileEntity.");
 
         this.entity = entity;
@@ -81,12 +81,12 @@ public class WrappedTileEntity {
         return new WrappedBlockPosition(Reflections.invoke(tile_getPosition, Object.class, entity));
     }
 
-    public void invalidateBlockCache() {
-        Reflections.invoke(tile_invalidateBlockCache, Void.class, entity);
-    }
-
     public void setPosition(WrappedBlockPosition blockPosition) {
         Reflections.invoke(tile_setPosition, Void.class, entity, blockPosition.getRoot());
+    }
+
+    public void invalidateBlockCache() {
+        Reflections.invoke(tile_invalidateBlockCache, Void.class, entity);
     }
 
     public InventoryHolder getOwner() {

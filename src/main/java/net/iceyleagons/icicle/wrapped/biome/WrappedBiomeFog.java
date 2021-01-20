@@ -78,19 +78,19 @@ public class WrappedBiomeFog {
         biome_fog_create = Reflections.getMethod(mc_biomefog_a, "a", true);
     }
 
+    @Getter
+    private Object root;
+
+    public WrappedBiomeFog(Object root) {
+        this.root = root;
+    }
+
     private static int getColor(Color color) {
         int rgb = color.getRed();
         rgb = (rgb << 8) + color.getGreen();
         rgb = (rgb << 8) + color.getBlue();
 
         return rgb;
-    }
-
-    @Getter
-    private Object root;
-
-    public WrappedBiomeFog(Object root) {
-        this.root = root;
     }
 
     public static class Builder {

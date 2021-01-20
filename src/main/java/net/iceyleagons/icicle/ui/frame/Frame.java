@@ -69,8 +69,8 @@ public class Frame {
 
             ItemStack[][] toRender;
             if (componentTemplate instanceof VariableSizeComponent)
-                toRender = new ItemStack[((VariableSizeComponent)componentTemplate).getWidth()]
-                        [((VariableSizeComponent)componentTemplate).getHeight()];
+                toRender = new ItemStack[((VariableSizeComponent) componentTemplate).getWidth()]
+                        [((VariableSizeComponent) componentTemplate).getHeight()];
             else
                 toRender = new ItemStack[component.width()][component.height()];
 
@@ -78,8 +78,8 @@ public class Frame {
 
             for (int j = 0; j < toRender.length; j++) {
                 for (int k = 0; k < toRender[j].length; k++) {
-                    int x = j+1;
-                    int y= k+1;
+                    int x = j + 1;
+                    int y = k + 1;
                     int fromUtils = InventoryUtils.calculateSlotFromXY(x, y);
                     int slotToAdd = i + fromUtils;
                     itemStacks[slotToAdd] = toRender[j][k];
