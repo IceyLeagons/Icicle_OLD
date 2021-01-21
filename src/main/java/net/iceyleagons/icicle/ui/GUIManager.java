@@ -56,11 +56,10 @@ public class GUIManager implements Listener {
     public static void registerGUI(GUITemplate gui) {
         GUI annotation = gui.getClass().getAnnotation(GUI.class);
         if (annotation != null) {
-            if (Icicle.registrar != null)
-                if (annotation.autoUpdate())
-                    SchedulerUtils.runTaskTimer(Icicle.registrar, task -> {
-                        gui.update();
-                    }, annotation.updateInterval(), annotation.updateIntervalUnit());
+            if (Icicle.registrar != null && annotation.autoUpdate()) {
+                SchedulerUtils.runTaskTimer(Icicle.registrar, task -> gui.update(),
+                        annotation.updateInterval(), annotation.updateIntervalUnit());
+            }
             guis.add(gui);
         }
     }

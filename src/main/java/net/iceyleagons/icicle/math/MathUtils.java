@@ -44,7 +44,7 @@ import static java.lang.Integer.MAX_VALUE;
 /**
  * Contains useful stuff regarding Math and numbers
  *
- * @author TOTHTOMI
+ * @author Gabe&TOTHTOMI
  * @version 2.5.0
  * @since 1.1.4-SNAPSHOT
  */
@@ -156,11 +156,11 @@ public strictfp class MathUtils {
     }
 
     public static double round(double value, int precision, RoundingMode mode) {
-        return new BigDecimal(value).round(new MathContext(precision, mode)).doubleValue();
+        return new BigDecimal(String.valueOf(value)).round(new MathContext(precision, mode)).doubleValue(); //bigdecimal created with string due to standards
     }
 
     public static int roundToInt(double value, int precision, RoundingMode mode) {
-        return new BigDecimal(value).round(new MathContext(precision, mode)).intValue();
+        return new BigDecimal(String.valueOf(value)).round(new MathContext(precision, mode)).intValue(); //bigdecimal created with string due to standards
     }
 
     /**

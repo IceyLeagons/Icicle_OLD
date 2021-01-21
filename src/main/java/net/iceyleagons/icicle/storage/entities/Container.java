@@ -111,7 +111,7 @@ public class Container implements Cloneable {
      */
     public void reloadFromStorage() {
         if (storage == null)
-            throw new RuntimeException("Container has not been added to a storage");
+            throw new IllegalStateException("Container has not been added to a storage");
         data.clear();
 
         List<ContainerData> containerData = storage.getData(this);

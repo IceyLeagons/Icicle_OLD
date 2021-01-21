@@ -87,6 +87,9 @@ public class ValueBar implements ComponentTemplate, OrientableComponent, Variabl
                 width = bars;
                 height = 1;
                 break;
+            default:
+                //how did this happen?
+                break;
         }
     }
 

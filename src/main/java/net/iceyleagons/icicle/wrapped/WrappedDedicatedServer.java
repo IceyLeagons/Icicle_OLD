@@ -46,8 +46,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class WrappedDedicatedServer {
 
-    public static final Class<?> craftServerClass, mcServerClass;
-    private static final DecimalFormat DEFAULT_DECIMAL_FORMAT = new DecimalFormat("##.##");
+    public static final Class<?> craftServerClass;
+    public static final Class<?> mcServerClass;
     private static final Method cb_getServer;
     private static final Method mc_getFunctionData;
     private static final Method mc_isNotMainThread;

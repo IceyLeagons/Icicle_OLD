@@ -53,7 +53,8 @@ public class WrappedBiomeBase {
     private static final Class<?> mc_biomesettingsmobs;
     private static final Class<?> mc_biomesettingsgeneration;
 
-    private static final Field generation_b, mobs_b;
+    private static final Field generation_b;
+    private static final Field mobs_b;
 
     private static final Class<? extends Enum<?>> mc_biomebase_geography;
     private static final Class<? extends Enum<?>> mc_biomebase_precipitation;

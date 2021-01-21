@@ -32,7 +32,6 @@ import net.iceyleagons.icicle.wrapped.biome.WrappedBiomeStorage;
 import net.iceyleagons.icicle.wrapped.world.WrappedLightEngine;
 import org.bukkit.Chunk;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;

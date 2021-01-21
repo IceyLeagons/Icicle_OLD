@@ -30,7 +30,6 @@ import net.iceyleagons.icicle.reflect.Reflections;
 import net.iceyleagons.icicle.wrapped.player.WrappedEntityPlayer;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
 
 /**
  * Wrapped representation PacketPlayOutNamedEntitySpawn

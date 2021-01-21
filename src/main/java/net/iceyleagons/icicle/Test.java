@@ -32,9 +32,7 @@ import net.iceyleagons.icicle.ui.frame.Frame;
 import net.iceyleagons.icicle.ui.guis.BasicGUI;
 import net.iceyleagons.icicle.wrapped.biome.WrappedBiomeBase;
 import net.iceyleagons.icicle.wrapped.biome.WrappedBiomeFog;
-import net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftWorld;
 import net.iceyleagons.icicle.wrapped.player.WrappedEntityPlayer;
-import net.iceyleagons.icicle.wrapped.world.chunk.WrappedChunk;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
@@ -94,8 +92,7 @@ public class Test extends JavaPlugin {
 
         CommandUtils.injectCommand("npc", (commandSender, command, s, strings) -> {
             Player player = (Player) commandSender;
-            //NPC npc = new NPC(new WrappedGameProfile(Mojang.getUUID("DRSENKIHAZI"), "DRSENKIHAZI"), player.getLocation());
-            //npc.spawn();
+
             NPC npc = new NPC(ChatColor.RED + "" + ChatColor.BOLD + "Bob", "PredatorTTV_");
             WrappedEntityPlayer entityPlayer = npc.setup(player.getLocation());
             NPC.spawnNPCPacket(entityPlayer, player);
@@ -109,7 +106,7 @@ public class Test extends JavaPlugin {
         });
 
         CommandUtils.injectCommand("icicle", (commandSender, command, s, strings) -> {
-            Player player = (Player) commandSender;
+            //Player player = (Player) commandSender;
 
             String namespace = "fe";
             String key = "aaa" + ThreadLocalRandom.current().nextInt(10);
@@ -132,17 +129,6 @@ public class Test extends JavaPlugin {
                     .setGeneration()
                     .build()
                     .register(new NamespacedKey(namespace, key));
-
-            /*
-            WrappedCraftWorld craftWorld = new WrappedCraftWorld(player.getWorld());
-
-            WrappedChunk wrappedChunk = craftWorld.setBiome(player.getLocation().getBlockX(),
-                    player.getLocation().getBlockY(),
-                    player.getLocation().getBlockZ(),
-                    biomeBase);
-            //craftWorld.sendUpdate(player, wrappedChunk);
-            //craftWorld.sendUpdate(player, wrappedChunk);
-             */
 
             return true;
         });

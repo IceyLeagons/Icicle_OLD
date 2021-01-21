@@ -66,7 +66,6 @@ import java.util.List;
 /**
  * @author TOTHTOMI
  */
-@AllArgsConstructor
 public class Advancement {
 
     @Getter
@@ -80,6 +79,20 @@ public class Advancement {
     private final boolean announceToChat;
     private final boolean showToast;
     private final boolean hidden;
+
+    public Advancement(NamespacedKey id, String parent, String icon, Backgrounds background, AdvancementMetadata advancementMetadata) {
+        this.id = id;
+        this.parent = parent;
+        this.icon = icon;
+        this.background = background;
+        this.title = new TextComponent(ChatColor.translateAlternateColorCodes('&', advancementMetadata.getTitle()));
+        this.description = new TextComponent(ChatColor.translateAlternateColorCodes('&', advancementMetadata.getDescription()));
+        this.frame = advancementMetadata.getFrame();
+        this.announceToChat = advancementMetadata.isAnnounceToChat();
+        this.showToast = advancementMetadata.isShowToast();
+        this.hidden = advancementMetadata.isHidden();
+    }
+
     @Getter
     private final List<Advancement> children = new ArrayList<>();
 
@@ -122,12 +135,9 @@ public class Advancement {
         return Bukkit.getAdvancement(id);
     }
 
-    public Advancement addChild(String name, Material icon, String title, String description, Advancement.Frames frame,
-                                boolean announceToChat, boolean showToast, boolean hidden) {
+    public Advancement addChild(String name, Material icon, AdvancementMetadata metadata) {
         Advancement advancement = new Advancement(new NamespacedKey(id.getNamespace(), name), id.toString(), icon.getKey().toString(), background,
-                new TextComponent(ChatColor.translateAlternateColorCodes('&', "&r" + title)),
-                new TextComponent(ChatColor.translateAlternateColorCodes('&', "&r" + description)),
-                frame, announceToChat, showToast, hidden);
+                metadata);
         children.add(advancement);
         return advancement;
     }

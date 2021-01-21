@@ -22,38 +22,22 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.wrapped.data;
+package net.iceyleagons.icicle.advancement;
 
-import net.iceyleagons.icicle.reflect.Reflections;
-
-import java.lang.reflect.Field;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.bukkit.Material;
 
 /**
- * Wrapped representation DataWatcherRegistry
- *
  * @author TOTHTOMI
- * @version 1.0.0
- * @since 1.3.3-SNAPSHOT
  */
-public class WrappedDataWatcherRegistry {
-
-
-    private static final Class<?> mc_dataWatcherRegistry;
-    private static final Field a;
-    private static final Field c;
-
-    static {
-        mc_dataWatcherRegistry = Reflections.getNormalNMSClass("DataWatcherRegistry");
-        a = Reflections.getField(mc_dataWatcherRegistry, "a", true);
-        c = Reflections.getField(mc_dataWatcherRegistry, "c", true);
-    }
-
-    public static Object a() {
-        return Reflections.get(a, Object.class, null);
-    }
-
-    public static Object c() {
-        return Reflections.get(c, Object.class, null);
-    }
-
+@RequiredArgsConstructor
+@Getter
+public class AdvancementMetadata {
+    private final String title;
+    private final String description;
+    private final Advancement.Frames frame;
+    private final boolean announceToChat;
+    private final boolean showToast;
+    private final boolean hidden;
 }

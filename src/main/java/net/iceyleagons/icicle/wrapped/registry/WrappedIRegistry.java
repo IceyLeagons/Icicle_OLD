@@ -42,10 +42,10 @@ public class WrappedIRegistry {
     public static final Class<?> mc_IRegistry;
     public static final Class<?> mc_MinecraftKey;
     public static final Class<?> mc_RegistryGeneration;
-    private static final Method registry_get;
     public static final Object WORLDGEN_BIOME;
     public static final Object BIOME;
     public static final Object DIMENSION;
+    private static final Method registry_get;
 
     static {
         mc_RegistryGeneration = Reflections.getNormalNMSClass("RegistryGeneration");

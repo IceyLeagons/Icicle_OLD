@@ -48,7 +48,7 @@ public class WrappedPacketPlayOutEntityHeadRotation {
 
     static {
         mc_packetPlayOutEntityHeadRotation = Reflections.getNormalNMSClass("PacketPlayOutEntityHeadRotation");
-        Class<?> mc_entity = Reflections.getNormalNMSClass("Entity");
+        //Class<?> mc_entity = Reflections.getNormalNMSClass("Entity");
         constructor = Reflections.getConstructor(mc_packetPlayOutEntityHeadRotation, true);
         a = Reflections.getField(mc_packetPlayOutEntityHeadRotation, "a", true);
         b = Reflections.getField(mc_packetPlayOutEntityHeadRotation, "b", true);

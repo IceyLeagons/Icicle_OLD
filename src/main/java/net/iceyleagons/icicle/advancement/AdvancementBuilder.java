@@ -39,39 +39,17 @@ import java.util.Stack;
 public class AdvancementBuilder {
 
 
-    /*
-            NamespacedKey namespacedKey = new NamespacedKey("icicle", "test");
-        NamespacedKey namespacedKey2 = new NamespacedKey("icicle", "myloll");
-
-
-        /*Advancement advancement = new Advancement(namespacedKey, null,
-                "minecraft:diamond", Advancement.Backgrounds.STONE, new TextComponent("Icicle"), new TextComponent("Use Icicle"),
-                Advancement.Frames.GOAL,
-                true, true, false);
-        advancement.register();
-
-        Advancement advancement3 = new Advancement(namespacedKey2, namespacedKey.toString(),
-                "minecraft:emerald", Advancement.Backgrounds.STONE, new TextComponent("Icicle V2"), new TextComponent("Use Icicle asdasdasd"),
-                Advancement.Frames.GOAL,
-                true, true, false);
-        advancement3.register();*/
-
     private final Advancement root;
 
     public AdvancementBuilder(String groupName, String name, Advancement.Backgrounds background,
-                              String icon, String title, String description, Advancement.Frames frame,
-                              boolean announceToChat, boolean showToast, boolean hidden) {
+                              String icon, AdvancementMetadata advancementMetadata) {
         NamespacedKey namespacedKey = new NamespacedKey(groupName, name);
-        root = new Advancement(namespacedKey, null, icon, background,
-                new TextComponent(ChatColor.translateAlternateColorCodes('&', title)),
-                new TextComponent(ChatColor.translateAlternateColorCodes('&', description)),
-                frame, announceToChat, showToast, hidden);
+        root = new Advancement(namespacedKey, null, icon, background, advancementMetadata);
 
     }
 
-    public Advancement addChild(String name, Material icon, String title, String description, Advancement.Frames frame,
-                                boolean announceToChat, boolean showToast, boolean hidden) {
-        return root.addChild(name, icon, title, description, frame, announceToChat, showToast, hidden);
+    public Advancement addChild(String name, Material icon, AdvancementMetadata metadata) {
+        return root.addChild(name, icon, metadata);
     }
 
     /**
