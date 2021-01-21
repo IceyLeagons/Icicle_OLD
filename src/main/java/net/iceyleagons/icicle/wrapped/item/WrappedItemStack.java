@@ -32,9 +32,11 @@ import org.bukkit.inventory.ItemStack;
 import java.lang.reflect.Method;
 
 /**
- * Representation of NMS ItemStack
+ * Wrapped representation ItemStack (NMS)
  *
  * @author TOTHTOMI
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
  */
 @RequiredArgsConstructor
 @Getter

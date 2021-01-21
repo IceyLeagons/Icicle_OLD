@@ -32,7 +32,11 @@ import org.jetbrains.annotations.Nullable;
 import java.lang.reflect.Constructor;
 
 /**
+ * Wrapped representation Property
+ *
  * @author TOTHTOMI
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
  */
 public class WrappedProperty {
 

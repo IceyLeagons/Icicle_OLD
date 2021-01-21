@@ -33,7 +33,11 @@ import java.lang.reflect.Method;
 import java.util.UUID;
 
 /**
+ * Wrapped representation GameProfile
+ *
  * @author TOTHTOMI
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
  */
 public class WrappedGameProfile {
 

@@ -32,7 +32,11 @@ import java.awt.*;
 import java.lang.reflect.Method;
 
 /**
- * @author TOTHTOMI
+ * Wrapped representation BiomeFog
+ *
+ * @author Gabe
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
  */
 public class WrappedBiomeFog {
 
@@ -95,10 +99,10 @@ public class WrappedBiomeFog {
 
     public static class Builder {
 
-        Object root;
-        WrappedBiomeBase.Geography geography;
-        WrappedBiomeBase.Precipitation precipitation;
-        WrappedBiomeBase.TemperatureModifier temperatureModifier;
+        private Object root;
+        //private WrappedBiomeBase.Geography geography;
+        //private WrappedBiomeBase.Precipitation precipitation;
+        //private WrappedBiomeBase.TemperatureModifier temperatureModifier;
 
         @SneakyThrows
         private Builder() {

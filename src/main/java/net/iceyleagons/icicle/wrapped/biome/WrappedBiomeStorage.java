@@ -29,6 +29,13 @@ import net.iceyleagons.icicle.reflect.Reflections;
 
 import java.lang.reflect.Method;
 
+/**
+ * Wrapped representation BiomeStorage
+ *
+ * @author Gabe
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
+ */
 public class WrappedBiomeStorage {
 
     private static final Class<?> mc_BiomeStorage;

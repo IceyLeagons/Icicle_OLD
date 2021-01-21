@@ -34,7 +34,11 @@ import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
 
 /**
+ * Wrapped representation CraftPlayer
+ *
  * @author TOTHTOMI
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
  */
 @AllArgsConstructor
 @Getter

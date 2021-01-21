@@ -39,7 +39,11 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
+ * Wrapped representation EntityPlayer
+ *
  * @author TOTHTOMI
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
  */
 @RequiredArgsConstructor
 @Getter
@@ -109,11 +113,6 @@ public class WrappedEntityPlayer {
     }
 
     public void teleportAndSync(double x, double y, double z) {
-        System.out.println(x);
-        System.out.println(y);
-        System.out.println(z);
-        System.out.println(mc_teleportAndSync);
-        System.out.println(entityPlayer);
         Reflections.invoke(mc_teleportAndSync, Void.class, entityPlayer, x, y, z);
     }
 

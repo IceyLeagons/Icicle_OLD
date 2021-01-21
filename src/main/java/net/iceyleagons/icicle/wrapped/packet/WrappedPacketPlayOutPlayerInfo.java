@@ -34,11 +34,14 @@ import net.iceyleagons.icicle.wrapped.player.WrappedEntityPlayer;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
+ * Wrapped representation PacketPlayOutPlayerInfo
+ *
  * @author TOTHTOMI
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
  */
 public class WrappedPacketPlayOutPlayerInfo {
 
@@ -50,9 +53,6 @@ public class WrappedPacketPlayOutPlayerInfo {
 
     private static final Constructor<?> mc_playerInfoDataConstructor;
     private static final Constructor<?> mc_packetPlayOutPlayerInfoConstructor;
-
-    private static final Field b;
-    private static final Field a;
 
     static {
         //TODO (soon tm)
@@ -67,14 +67,11 @@ public class WrappedPacketPlayOutPlayerInfo {
         mc_packetPlayOutPlayerInfoConstructor = Reflections.getConstructor(mc_packetPlayOutPlayerInfo, true,
                 mc_enumPlayerInfoAction, Array.newInstance(WrappedEntityPlayer.entityPlayerClass, 0).getClass());
 
-        a = Reflections.getField(mc_packetPlayOutPlayerInfo, "a", true);
-        b = Reflections.getField(mc_packetPlayOutPlayerInfo, "b", true);
-
         mc_enumPlayerInfoAction_valueOf = Reflections.getMethod(mc_enumPlayerInfoAction, "valueOf", true, String.class);
     }
 
     @Getter
-    private Object packet;
+    private final Object packet;
 
     @SneakyThrows
     public WrappedPacketPlayOutPlayerInfo(EnumPlayerInfoAction enumPlayerInfoAction, WrappedEntityPlayer entityPlayer) {

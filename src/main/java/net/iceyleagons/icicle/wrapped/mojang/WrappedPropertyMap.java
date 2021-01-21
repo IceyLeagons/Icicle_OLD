@@ -30,17 +30,21 @@ import net.iceyleagons.icicle.reflect.Reflections;
 import java.lang.reflect.Method;
 
 /**
+ * Wrapped representation PropertyMap
+ *
  * @author TOTHTOMI
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
  */
 public class WrappedPropertyMap {
 
-    private static final Class<?> mc_propertyMap;
+    //private static final Class<?> mc_propertyMap;
     private static final Class<?> forwardingMultimap;
 
     private static final Method put;
 
     static {
-        mc_propertyMap = Reflections.getNormalClass("com.mojang.authlib.properties.PropertyMap");
+        //mc_propertyMap = Reflections.getNormalClass("com.mojang.authlib.properties.PropertyMap");
         forwardingMultimap = Reflections.getNormalClass("com.google.common.collect.ForwardingMultimap");
         assert forwardingMultimap != null;
         put = Reflections.getMethod(forwardingMultimap, "put", true, Object.class, Object.class);

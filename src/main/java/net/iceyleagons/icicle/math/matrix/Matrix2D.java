@@ -106,7 +106,6 @@ public class Matrix2D {
 
         int ah = a.getHeight();
         int aw = a.getWidth();
-        int bh = b.getHeight();
         int bw = b.getWidth();
 
         for (int i = 0; i < ah; i++) {

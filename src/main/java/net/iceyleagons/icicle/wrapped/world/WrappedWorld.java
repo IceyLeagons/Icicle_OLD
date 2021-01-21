@@ -26,6 +26,13 @@ package net.iceyleagons.icicle.wrapped.world;
 
 import lombok.Getter;
 
+/**
+ * Wrapped representation World
+ *
+ * @author Gabe
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
+ */
 public class WrappedWorld {
 
     @Getter
@@ -34,6 +41,5 @@ public class WrappedWorld {
     public WrappedWorld(Object root) {
         this.world = root;
     }
-
 
 }

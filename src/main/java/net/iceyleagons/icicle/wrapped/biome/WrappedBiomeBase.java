@@ -39,22 +39,41 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
+ * Wrapped representation BiomeBase
+ *
  * @author Gabe
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
  */
 public class WrappedBiomeBase {
 
     public static final Class<?> mc_BiomeBase;
-    private static final Class<?> mc_biomebase_a, mc_biomefog, mc_biomesettingsmobs, mc_biomesettingsgeneration;
+    private static final Class<?> mc_biomebase_a;
+    private static final Class<?> mc_biomefog;
+    private static final Class<?> mc_biomesettingsmobs;
+    private static final Class<?> mc_biomesettingsgeneration;
 
     private static final Field generation_b, mobs_b;
 
-    private static final Class<? extends Enum<?>> mc_biomebase_geography, mc_biomebase_precipitation, mc_biomebase_temperaturemodifier;
-    private static final Method mc_geography_valueof, mc_precipitation_valueof, mc_temp_valueof;
+    private static final Class<? extends Enum<?>> mc_biomebase_geography;
+    private static final Class<? extends Enum<?>> mc_biomebase_precipitation;
+    private static final Class<? extends Enum<?>> mc_biomebase_temperaturemodifier;
 
-    private static final Method biome_setDepth, biome_setScale, biome_setTemperature, biome_setDownfall, biome_setSpecialEffects,
-            biome_setMobs, biome_setGeneration, biome_setTemperatureModifier, biome_setPrecipitation, biome_setGeography,
-            biomebase_build;
-    private static int num = 200;
+    private static final Method mc_geography_valueof;
+    private static final Method mc_precipitation_valueof;
+    private static final Method mc_temp_valueof;
+
+    private static final Method biome_setDepth;
+    private static final Method biome_setScale;
+    private static final Method biome_setTemperature;
+    private static final Method biome_setDownfall;
+    private static final Method biome_setSpecialEffects;
+    private static final Method biome_setMobs;
+    private static final Method biome_setGeneration;
+    private static final Method biome_setTemperatureModifier;
+    private static final Method biome_setPrecipitation;
+    private static final Method biome_setGeography;
+    private static final Method biomebase_build;
 
     static {
         mc_BiomeBase = Reflections.getNormalNMSClass("BiomeBase");
@@ -159,7 +178,7 @@ public class WrappedBiomeBase {
 
     public static class Builder {
 
-        private Object root;
+        private final Object root;
 
         @SneakyThrows
         private Builder() {

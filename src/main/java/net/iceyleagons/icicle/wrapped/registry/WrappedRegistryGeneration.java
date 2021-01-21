@@ -30,6 +30,13 @@ import org.bukkit.NamespacedKey;
 
 import java.lang.reflect.Method;
 
+/**
+ * Wrapped representation RegistryGeneration
+ *
+ * @author Gabe
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
+ */
 public class WrappedRegistryGeneration {
 
     private static final Class<?> mc_RegistryGeneration;

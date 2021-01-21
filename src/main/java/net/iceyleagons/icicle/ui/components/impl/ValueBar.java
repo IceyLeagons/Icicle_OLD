@@ -106,6 +106,9 @@ public class ValueBar implements ComponentTemplate, OrientableComponent, Variabl
                     toRender[0][i] = stacks[i];
                 }
                 break;
+            default:
+                //how did this happen?
+                break;
         }
     }
 

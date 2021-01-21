@@ -32,10 +32,18 @@ import org.bukkit.NamespacedKey;
 
 import java.lang.reflect.Method;
 
+/**
+ * Wrapped representation ResourceKey
+ *
+ * @author Gabe
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
+ */
 public class WrappedResourceKey {
 
     public static final Class<?> mc_ResourceKey;
-    private static final Method resource_constructor, resource_biome;
+    private static final Method resource_constructor;
+    private static final Method resource_biome;
 
     static {
         mc_ResourceKey = Reflections.getNormalNMSClass("ResourceKey");

@@ -35,8 +35,14 @@ import java.lang.reflect.Method;
 public class WrappedTileEntity {
 
     public static final Class<?> mc_TileEntity;
-    private static final Method tile_getChunk, tile_getWorld, tile_hasWorld, tile_update, tile_getPosition, tile_invalidateBlockCache,
-            tile_setPosition, tile_getOwner;
+    private static final Method tile_getChunk;
+    private static final Method tile_getWorld;
+    private static final Method tile_hasWorld;
+    private static final Method tile_update;
+    private static final Method tile_getPosition;
+    private static final Method tile_invalidateBlockCache;
+    private static final Method tile_setPosition;
+    private static final Method tile_getOwner;
 
     static {
         mc_TileEntity = Reflections.getNormalNMSClass("TileEntity");
@@ -69,8 +75,8 @@ public class WrappedTileEntity {
         return new WrappedCraftWorld(Reflections.invoke(tile_getWorld, Object.class, entity));
     }
 
-    public boolean hasWorld() {
-        return Reflections.invoke(tile_hasWorld, boolean.class, entity);
+    public Boolean hasWorld() {
+        return Reflections.invoke(tile_hasWorld, Boolean.class, entity);
     }
 
     public void update() {

@@ -31,17 +31,18 @@ import net.iceyleagons.icicle.reflect.Reflections;
 import java.lang.reflect.Constructor;
 
 /**
+ * Wrapped representation PacketPlayOutEntity
+ *
  * @author TOTHTOMI
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
  */
 public class WrappedPacketPlayOutEntity {
 
-    private static final Class<?> mc_packetPlayOutEntity;
     private static final Class<?> mc_packetPlayOutEntity_packetPlayOutEntityLook;
-
-    private static final Constructor mc_packetPlayOutEntity_packetPlayOutEntityLook_Constructor;
+    private static final Constructor<?> mc_packetPlayOutEntity_packetPlayOutEntityLook_Constructor;
 
     static {
-        mc_packetPlayOutEntity = Reflections.getNormalNMSClass("PacketPlayOutEntity");
         mc_packetPlayOutEntity_packetPlayOutEntityLook = Reflections.getNormalNMSClass("PacketPlayOutEntity$PacketPlayOutEntityLook");
         mc_packetPlayOutEntity_packetPlayOutEntityLook_Constructor =
                 Reflections.getConstructor(mc_packetPlayOutEntity_packetPlayOutEntityLook, true, int.class, byte.class, byte.class, boolean.class);

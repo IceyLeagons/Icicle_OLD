@@ -32,11 +32,25 @@ import net.iceyleagons.icicle.wrapped.WrappedBlockPosition;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
+/**
+ * Wrapped representation ChunkCoordIntPair
+ *
+ * @author Gabe
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
+ */
 public class WrappedChunkCoordIntPair {
 
     private static final Class<?> mc_ChunkCoordIntPair;
-    private static final Method pair_getBlockX, pair_getBlockZ, pair_asPosition, pair_asPositionDown, pair_getRegionX, pair_getRegionZ;
-    private static Constructor<?> pair_xz, pair_position, pair_long;
+    private static final Method pair_getBlockX;
+    private static final Method pair_getBlockZ;
+    private static final Method pair_asPosition;
+    private static final Method pair_asPositionDown;
+    private static final Method pair_getRegionX;
+    private static final Method pair_getRegionZ;
+    private static Constructor<?> pair_xz;
+    private static Constructor<?> pair_position;
+    private static Constructor<?> pair_long;
 
     static {
         mc_ChunkCoordIntPair = Reflections.getNormalNMSClass("ChunkCoordIntPair");
@@ -78,12 +92,12 @@ public class WrappedChunkCoordIntPair {
         this.pair = pair;
     }
 
-    public int getBlockX() {
-        return Reflections.invoke(pair_getBlockX, int.class, pair);
+    public Integer getBlockX() {
+        return Reflections.invoke(pair_getBlockX, Integer.class, pair);
     }
 
-    public int getBlockZ() {
-        return Reflections.invoke(pair_getBlockZ, int.class, pair);
+    public Integer getBlockZ() {
+        return Reflections.invoke(pair_getBlockZ, Integer.class, pair);
     }
 
     public WrappedBlockPosition asPosition() {
@@ -94,12 +108,12 @@ public class WrappedChunkCoordIntPair {
         return new WrappedBlockPosition(Reflections.invoke(pair_asPositionDown, Object.class, pair));
     }
 
-    public int getRegionX() {
-        return Reflections.invoke(pair_getRegionX, int.class, pair);
+    public Integer getRegionX() {
+        return Reflections.invoke(pair_getRegionX, Integer.class, pair);
     }
 
-    public int getRegionZ() {
-        return Reflections.invoke(pair_getRegionZ, int.class, pair);
+    public Integer getRegionZ() {
+        return Reflections.invoke(pair_getRegionZ, Integer.class, pair);
     }
 
 }

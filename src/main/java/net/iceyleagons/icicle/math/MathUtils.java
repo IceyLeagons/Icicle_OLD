@@ -271,20 +271,21 @@ public strictfp class MathUtils {
      * <p>
      * Based completely off of: https://en.wikipedia.org/wiki/Fast_inverse_square_root
      *
-     * @param x the number to find the inv. sqrt. for
+     * @param number the number to find the inv. sqrt. for
      * @return the inv. sqrt. !APPROXIMATION! of the number
      */
-    public static float fastInvSqrt(float x) {
-        float xh = 0.5f * x;
+    public static float fastInvSqrt(float number) {
+        float localNumber = number;
+        float xh = 0.5f * localNumber;
 
-        int i = Float.floatToIntBits(x);
+        int i = Float.floatToIntBits(localNumber);
         i = 0x5f3759df - (i >> 1);
-        x = Float.intBitsToFloat(i);
+        localNumber = Float.intBitsToFloat(i);
 
-        x *= (1.5f - xh * x * x);
-        x *= (1.5f - xh * x * x);
-        x *= (1.5f - xh * x * x);
-        return x;
+        localNumber *= (1.5f - xh * localNumber * localNumber);
+        localNumber *= (1.5f - xh * localNumber * localNumber);
+        localNumber *= (1.5f - xh * localNumber * localNumber);
+        return localNumber;
     }
 
     /**

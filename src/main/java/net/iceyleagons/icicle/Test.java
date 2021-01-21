@@ -133,13 +133,16 @@ public class Test extends JavaPlugin {
                     .build()
                     .register(new NamespacedKey(namespace, key));
 
+            /*
             WrappedCraftWorld craftWorld = new WrappedCraftWorld(player.getWorld());
+
             WrappedChunk wrappedChunk = craftWorld.setBiome(player.getLocation().getBlockX(),
                     player.getLocation().getBlockY(),
                     player.getLocation().getBlockZ(),
                     biomeBase);
             //craftWorld.sendUpdate(player, wrappedChunk);
             //craftWorld.sendUpdate(player, wrappedChunk);
+             */
 
             return true;
         });

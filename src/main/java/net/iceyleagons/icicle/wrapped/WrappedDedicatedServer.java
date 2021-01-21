@@ -48,14 +48,40 @@ public class WrappedDedicatedServer {
 
     public static final Class<?> craftServerClass, mcServerClass;
     private static final DecimalFormat DEFAULT_DECIMAL_FORMAT = new DecimalFormat("##.##");
-    private static final Method cb_getServer, mc_getFunctionData, mc_isNotMainThread, mc_getThread, mc_getUserCache, mc_getServerPing,
-            mc_getIdleTimeout, mc_setIdleTimeout, mc_getResourcePackRepository, mc_getTagRegistry, mc_getLootTableRegistry,
-            mc_getCustomRegistry, mc_isSyncChunkWrites, mc_getDefinedStructureManager, mc_getResourcePack, mc_getResourcePackHash,
-            mc_setResourcePack, mc_getPort, mc_setPort, mc_getModded, mc_getServerModName, mc_getVersion, mc_getWorldServer,
-            mc_postToMainThread, mc_canExecute, mc_executeNext, mc_safeShutdown, mc_getServerConnection;
+    private static final Method cb_getServer;
+    private static final Method mc_getFunctionData;
+    private static final Method mc_isNotMainThread;
+    private static final Method mc_getThread;
+    private static final Method mc_getUserCache;
+    private static final Method mc_getServerPing;
+    private static final Method mc_getIdleTimeout;
+    private static final Method mc_setIdleTimeout;
+    private static final Method mc_getResourcePackRepository;
+    private static final Method mc_getTagRegistry;
+    private static final Method mc_getLootTableRegistry;
+    private static final Method mc_getCustomRegistry;
+    private static final Method mc_isSyncChunkWrites;
+    private static final Method mc_getDefinedStructureManager;
+    private static final Method mc_getResourcePack;
+    private static final Method mc_getResourcePackHash;
+    private static final Method mc_setResourcePack;
+    private static final Method mc_getPort;
+    private static final Method mc_setPort;
+    private static final Method mc_getModded;
+    private static final Method mc_getServerModName;
+    private static final Method mc_getVersion;
+    private static final Method mc_getWorldServer;
+    private static final Method mc_postToMainThread;
+    private static final Method mc_canExecute;
+    private static final Method mc_executeNext;
+    private static final Method mc_safeShutdown;
+    private static final Method mc_getServerConnection;
 
-    private static final Field mc_tpsField, mc_minecraftSessionService, mc_gameProfileRepository, mc_datapackconfiguration,
-            mc_dataPackResources;
+    private static final Field mc_tpsField;
+    private static final Field mc_minecraftSessionService;
+    private static final Field mc_gameProfileRepository;
+    private static final Field mc_datapackconfiguration;
+    private static final Field mc_dataPackResources;
 
 
     static {

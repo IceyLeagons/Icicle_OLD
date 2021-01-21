@@ -31,6 +31,13 @@ import net.iceyleagons.icicle.wrapped.world.chunk.WrappedChunk;
 
 import java.lang.reflect.Constructor;
 
+/**
+ * Wrapped representation PacketPlayOutMapChunk
+ *
+ * @author Gabe
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
+ */
 public class WrappedPacketPlayOutMapChunk {
 
     private static final Class<?> mc_PacketPlayOutMapChunk;

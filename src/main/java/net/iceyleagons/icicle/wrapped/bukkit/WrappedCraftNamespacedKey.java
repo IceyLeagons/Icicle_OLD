@@ -30,11 +30,21 @@ import org.bukkit.NamespacedKey;
 
 import java.lang.reflect.Method;
 
+/**
+ * Wrapped representation NamespacedKey
+ *
+ * @author Gabe
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
+ */
 public class WrappedCraftNamespacedKey {
 
     private static final Class<?> bukkit_CraftNamespacedKey;
 
-    private static final Method nm_toMinecraft, nm_fromMinecraft, nm_fromString, nm_fromStringOrNull;
+    private static final Method nm_toMinecraft;
+    private static final Method nm_fromMinecraft;
+    private static final Method nm_fromString;
+    private static final Method nm_fromStringOrNull;
 
     static {
         bukkit_CraftNamespacedKey = Reflections.getNormalCBClass("util.CraftNamespacedKey");
@@ -60,5 +70,4 @@ public class WrappedCraftNamespacedKey {
     public static Object toMinecraft(NamespacedKey key) {
         return Reflections.invoke(nm_toMinecraft, Object.class, null, key);
     }
-
 }

@@ -33,7 +33,11 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 
 /**
+ * Wrapped representation PacketPlayOutEntityHeadRotation
+ *
  * @author TOTHTOMI
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
  */
 public class WrappedPacketPlayOutEntityHeadRotation {
 

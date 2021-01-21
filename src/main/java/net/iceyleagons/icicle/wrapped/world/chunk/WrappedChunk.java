@@ -32,15 +32,34 @@ import net.iceyleagons.icicle.wrapped.biome.WrappedBiomeStorage;
 import net.iceyleagons.icicle.wrapped.world.WrappedLightEngine;
 import org.bukkit.Chunk;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Wrapped representation Chunk
+ *
+ * @author Gabe
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
+ */
 public class WrappedChunk {
 
-    public static final Class<?> mc_Chunk, bukkit_CraftChunk;
-    private static final Method chunk_markDirty, chunk_getBiomeIndex, chunk_getLightEngine, chunk_getTileEntity, chunk_getTileEntityImmediately,
-            chunk_setTileEntity, chunk_setLoaded, chunk_getTileEntities, chunk_setNeedsSaving, chunk_isNeedsSaving, chunk_getPos, bukkit_getHandle;
+    public static final Class<?> mc_Chunk;
+    private static final Class<?> bukkit_CraftChunk;
+    private static final Method chunk_markDirty;
+    private static final Method chunk_getBiomeIndex;
+    private static final Method chunk_getLightEngine;
+    private static final Method chunk_getTileEntity;
+    private static final Method chunk_getTileEntityImmediately;
+    private static final Method chunk_setTileEntity;
+    private static final Method chunk_setLoaded;
+    private static final Method chunk_getTileEntities;
+    private static final Method chunk_setNeedsSaving;
+    private static final Method chunk_isNeedsSaving;
+    private static final Method chunk_getPos;
+    private static final Method bukkit_getHandle;
 
     static {
         mc_Chunk = Reflections.getNormalNMSClass("Chunk");

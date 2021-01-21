@@ -29,9 +29,17 @@ import net.iceyleagons.icicle.reflect.Reflections;
 
 import java.lang.reflect.Method;
 
+/**
+ * Wrapped representation IRegistryCustom
+ *
+ * @author Gabe
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
+ */
 public class WrappedIRegistryCustom {
 
-    private static final Class<?> mc_IRegistryCustom, mc_IRegistryCustom_Dimension;
+    private static final Class<?> mc_IRegistryCustom;
+    private static final Class<?> mc_IRegistryCustom_Dimension;
     private static final Method registry_getWritable;
 
     static {

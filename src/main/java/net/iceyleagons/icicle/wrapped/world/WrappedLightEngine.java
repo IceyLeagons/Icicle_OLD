@@ -30,6 +30,13 @@ import net.iceyleagons.icicle.wrapped.WrappedBlockPosition;
 
 import java.lang.reflect.Method;
 
+/**
+ * Wrapped representation LightEngine
+ *
+ * @author Gabe
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
+ */
 public class WrappedLightEngine {
 
     private static final Class<?> mc_LightEngine;

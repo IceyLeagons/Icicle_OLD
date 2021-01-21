@@ -32,7 +32,11 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
+ * Wrapped representation PlayerConnection
+ *
  * @author TOTHTOMI
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
  */
 @RequiredArgsConstructor
 @Getter
@@ -73,19 +77,19 @@ public class WrappedPlayerConnection {
         Reflections.invoke(mc_sendPacket, Void.class, playerConnection, packet);
     }
 
-    private Long getLastPing() {
+    public Long getLastPing() {
         return Reflections.invoke(mc_getLastPing, Long.class, playerConnection);
     }
 
-    private void setLastPing(long lastPing) {
+    public void setLastPing(long lastPing) {
         Reflections.invoke(mc_setLastPing, Void.class, playerConnection, lastPing);
     }
 
-    private void setPendingPing(boolean isPending) {
+    public void setPendingPing(boolean isPending) {
         Reflections.invoke(mc_setPendingPing, Void.class, playerConnection, isPending);
     }
 
-    private Boolean isPendingPing() {
+    public Boolean isPendingPing() {
         return Reflections.invoke(mc_isPendingPing, Boolean.class, playerConnection);
     }
 

@@ -47,7 +47,12 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
+ * Used for creating NPCs.
+ * This is handled with packets, after relogging you need to send the packets again!
+ *
  * @author TOTHTOMI
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
  */
 public class NPC {
 
@@ -61,7 +66,7 @@ public class NPC {
 
     public static void spawnNPCPacket(WrappedEntityPlayer npc) {
         for (Player player : Bukkit.getOnlinePlayers()) {
-            spawnNPCPacket(npc);
+            spawnNPCPacket(npc, player);
         }
     }
 

@@ -29,16 +29,26 @@ import net.iceyleagons.icicle.reflect.Reflections;
 
 import java.lang.reflect.Method;
 
+/**
+ * Wrapped representation IRegistryWritable
+ *
+ * @author Gabe
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
+ */
 public class WrappedIRegistryWritable<T> {
 
-    private static final Class<?> mc_IRegistryWritable, mojang_lifecycle;
-    private static final Method writable_write, life_getStable;
+    private static final Class<?> mc_IRegistryWritable;
+    private static final Class<?> mojang_lifecycle;
+    private static final Method writable_write;
+    private static final Method life_getStable;
 
     static {
         mc_IRegistryWritable = Reflections.getNormalNMSClass("IRegistryWritable");
         mojang_lifecycle = Reflections.getNormalClass("com.mojang.serialization.Lifecycle");
 
         writable_write = Reflections.getMethod(mc_IRegistryWritable, "a", true, WrappedResourceKey.mc_ResourceKey, Object.class, mojang_lifecycle);
+        assert mojang_lifecycle != null;
         life_getStable = Reflections.getMethod(mojang_lifecycle, "stable", true);
     }
 

@@ -30,6 +30,13 @@ import net.iceyleagons.icicle.wrapped.registry.WrappedResourceKey;
 
 import java.lang.reflect.Method;
 
+/**
+ * Wrapped representation BiomeRegistry
+ *
+ * @author Gabe
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
+ */
 public class WrappedBiomeRegistry {
 
     private static final Class<?> mc_BiomeRegistry;

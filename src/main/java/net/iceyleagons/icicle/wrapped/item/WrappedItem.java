@@ -34,9 +34,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Representation of NMS Item
+ * Wrapped representation Item (NMS)
  *
  * @author TOTHTOMI
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
  */
 @RequiredArgsConstructor
 @Getter
