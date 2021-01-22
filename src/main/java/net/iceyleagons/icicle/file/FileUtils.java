@@ -27,7 +27,12 @@ package net.iceyleagons.icicle.file;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.channels.Channels;

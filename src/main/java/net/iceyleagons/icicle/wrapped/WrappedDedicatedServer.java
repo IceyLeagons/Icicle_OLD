@@ -33,7 +33,6 @@ import org.bukkit.Server;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.text.DecimalFormat;
 import java.util.Optional;
 
 /**

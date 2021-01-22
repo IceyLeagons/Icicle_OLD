@@ -48,7 +48,6 @@
 
 package net.iceyleagons.icicle.advancement;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -79,6 +78,8 @@ public class Advancement {
     private final boolean announceToChat;
     private final boolean showToast;
     private final boolean hidden;
+    @Getter
+    private final List<Advancement> children = new ArrayList<>();
 
     public Advancement(NamespacedKey id, String parent, String icon, Backgrounds background, AdvancementMetadata advancementMetadata) {
         this.id = id;
@@ -92,9 +93,6 @@ public class Advancement {
         this.showToast = advancementMetadata.isShowToast();
         this.hidden = advancementMetadata.isHidden();
     }
-
-    @Getter
-    private final List<Advancement> children = new ArrayList<>();
 
     private static JSONObject jsonFromTextComponent(TextComponent textComponent) {
         ///Gson gson = new Gson();

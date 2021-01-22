@@ -26,7 +26,6 @@ package net.iceyleagons.icicle.advancement;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.bukkit.Material;
 
 /**
  * @author TOTHTOMI

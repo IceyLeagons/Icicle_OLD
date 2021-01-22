@@ -95,7 +95,7 @@ public enum IcicleFeatures {
             Class.forName("net.iceyleagons.icicle.wrapped.biome.WrappedBiomeRegistry");
             Class.forName("net.iceyleagons.icicle.wrapped.biome.WrappedBiomeStorage");
             if (Icicle.debug)
-                System.out.println(String.format("Elapsed time: %s ms.", System.currentTimeMillis() - timeNow));
+                System.out.printf("Elapsed time: %s ms.%n", System.currentTimeMillis() - timeNow);
         } catch (ClassNotFoundException e) {
             // Somehow loading these classes failed..? How?
             e.printStackTrace();

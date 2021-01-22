@@ -34,7 +34,11 @@ import net.iceyleagons.icicle.ui.frame.Frame;
 import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author TOTHTOMI
@@ -158,7 +162,7 @@ public abstract class BasePaginatedGUI extends BaseGUI {
      */
     @Override
     public void addFrames(Integer page, @NonNull Frame... frames) throws IllegalArgumentException {
-        if (page >= 0) throw new IllegalArgumentException("Page must not be negative");
+        if (page < 0) throw new IllegalArgumentException("Page must not be negative");
 
         List<Frame> currentFrames;
         if (getPages().containsKey(page))
