@@ -15,7 +15,7 @@ plugins {
 apply plugin: "com.vanniktech.maven.publish"
 
 group 'net.iceyleagons'
-version '1.3.3-SNAPSHOT'
+version '1.3.4-SNAPSHOT'
 
 mavenPublish {
     targets {

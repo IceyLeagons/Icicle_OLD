@@ -82,13 +82,28 @@ public enum IcicleFeatures {
             Class.forName("net.iceyleagons.icicle.wrapped.player.WrappedPlayerConnection");
 
             Class.forName("net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutMapChunk");
+            Class.forName("net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutEntity");
+            Class.forName("net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutEntityDestroy");
+            Class.forName("net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutEntityHeadRotation");
+            Class.forName("net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutEntityMetadata");
+            Class.forName("net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutNamedEntitySpawn");
+            Class.forName("net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutPlayerInfo");
 
             Class.forName("net.iceyleagons.icicle.wrapped.item.WrappedItem");
             Class.forName("net.iceyleagons.icicle.wrapped.item.WrappedItemStack");
 
+            Class.forName("net.iceyleagons.icicle.wrapped.mojang.WrappedGameProfile");
+            Class.forName("net.iceyleagons.icicle.wrapped.mojang.WrappedProperty");
+            Class.forName("net.iceyleagons.icicle.wrapped.mojang.WrappedPropertyMap");
+
+            Class.forName("net.iceyleagons.icicle.wrapped.data.WrappedDataWatcher");
+            Class.forName("net.iceyleagons.icicle.wrapped.data.WrappedDataWatcherObject");
+            Class.forName("net.iceyleagons.icicle.wrapped.data.WrappedDataWatcherRegistry");
+
             Class.forName("net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftNamespacedKey");
             Class.forName("net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftBlock");
             Class.forName("net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftWorld");
+            Class.forName("net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftChatMessage");
 
             Class.forName("net.iceyleagons.icicle.wrapped.biome.WrappedBiomeBase");
             Class.forName("net.iceyleagons.icicle.wrapped.biome.WrappedBiomeFog");
