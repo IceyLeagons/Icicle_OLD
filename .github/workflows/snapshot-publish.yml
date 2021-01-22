@@ -1,8 +1,9 @@
 name: Sonatype Snapshots Publish
 
 on:
-  release:
-    types: [ created ]
+  push:
+    tags:
+      - '*'
 
 jobs:
   publish:
