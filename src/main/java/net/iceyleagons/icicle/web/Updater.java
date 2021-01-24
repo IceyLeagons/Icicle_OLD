@@ -93,7 +93,7 @@ public class Updater {
      * @return true only if it was successful, false if any error happens
      */
     public boolean downloadUpdate() {
-        String url = DOWNLOAD.toLowerCase().replace("%resourceId%", resourceId);
+        String url = DOWNLOAD.toLowerCase().replaceAll("%resourceId%", resourceId);
         try {
             File pluginFile = new File(javaPlugin.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
             return FileUtils.downloadFile(url, pluginFile);
@@ -104,7 +104,7 @@ public class Updater {
     }
 
     private JSONObject getAPIResponse() throws MalformedURLException {
-        String url = API.toLowerCase().replace("%resourceId%", resourceId);
+        String url = API.toLowerCase().replaceAll("%resourceId%", resourceId);
         URL url1 = new URL(url);
         String fromWeb = WebUtils.readURL(url1);
         return fromWeb == null ? null : new JSONObject(fromWeb);

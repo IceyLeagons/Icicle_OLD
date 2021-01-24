@@ -29,6 +29,8 @@ import org.bukkit.World;
 
 /**
  * @author TOTHTOMI
+ * @version 1.0.0
+ * @since 1.0.0-SNAPSHOT
  */
 public class WorldUtils {
 
@@ -41,6 +43,4 @@ public class WorldUtils {
         Bukkit.unloadWorld(world, true);
         world.getWorldFolder().deleteOnExit();
     }
-
-
 }

@@ -54,7 +54,7 @@ public class Geolocation {
     @SneakyThrows
     @Nullable
     public static GeoData locate(String toLocate) {
-        String url = URL_FORMAT.replace("%ip%", toLocate).toLowerCase();
+        String url = URL_FORMAT.replaceAll("%ip%", toLocate).toLowerCase();
 
         String response = WebUtils.readURL(new URL(url));
         if (response == null) return null;

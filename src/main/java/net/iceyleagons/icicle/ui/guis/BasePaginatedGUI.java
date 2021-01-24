@@ -132,7 +132,7 @@ public abstract class BasePaginatedGUI extends BaseGUI {
      */
     public Button getPreviousButton(@NonNull ItemStack itemStack, Sound sound) {
         return new SimpleButton(itemStack, event -> {
-            if (sound != null)
+            if (sound != null && event.getSelfComponent().renderAllowed())
                 InventoryUtils.clickSound(event.getInventoryClickEvent(), sound);
             lastPage(event.getSelfComponent());
         });
@@ -147,7 +147,7 @@ public abstract class BasePaginatedGUI extends BaseGUI {
      */
     public Button getNextButton(@NonNull ItemStack itemStack, Sound sound) {
         return new SimpleButton(itemStack, event -> {
-            if (sound != null)
+            if (sound != null && event.getSelfComponent().renderAllowed())
                 InventoryUtils.clickSound(event.getInventoryClickEvent(), sound);
             nextPage(event.getSelfComponent());
         });

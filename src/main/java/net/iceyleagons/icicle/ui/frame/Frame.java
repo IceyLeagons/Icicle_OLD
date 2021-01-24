@@ -127,6 +127,37 @@ public class Frame {
     }
 
     /**
+     * Registers a component
+     *
+     * @param componentTemplate the component
+     * @param slot                the slot
+     * @return a {@link CompletableFuture} of {@link Void}
+     * @throws IllegalArgumentException if the component does not annotate {@link Component}
+     * @throws IllegalStateException    if the frame does not have room for thec component (width, height)
+     */
+    public CompletableFuture<Void> registerComponent(ComponentTemplate componentTemplate, int slot) throws IllegalArgumentException, IllegalStateException {
+        return CompletableFuture.supplyAsync(() -> {
+            if (!componentTemplate.getClass().isAnnotationPresent(Component.class))
+                throw new IllegalArgumentException("Supplied ComponentTemplate does not annotate Component");
+
+            Component component = componentTemplate.getClass().getAnnotation(Component.class);
+            int[] coords = InventoryUtils.calculateXYFromSlot(slot);
+            componentTemplate.setXY(coords[0], coords[1]);
+            int width = component.width();
+            int height = component.height();
+
+
+            checkSpace(coords[0], coords[1], width, height).thenAccept(result -> {
+                if (!result) {
+                    throw new IllegalStateException("Frame does not have room for this component!");
+                }
+                components.put(slot, new AbstractMap.SimpleEntry<>(component, componentTemplate));
+            });
+            return null;
+        });
+    }
+
+    /**
      * Used to fire an onclick event for a slot. This will calculate which component's onclick should be invoked
      *
      * @param slot the clicked slot
@@ -140,7 +171,7 @@ public class Frame {
                 final int startX = componentTemplate.getX();
                 final int startY = componentTemplate.getY();
 
-                boolean match = false;
+                boolean match;
                 for (int x = startX; x < component.width() + startX; x++) {
                     for (int y = startY; y < component.height() + startY; y++) {
 

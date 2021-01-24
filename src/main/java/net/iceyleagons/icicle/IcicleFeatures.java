@@ -58,6 +58,17 @@ public enum IcicleFeatures {
      */
     CHAT(JText::init),
     DEBUG(pl -> Icicle.debug = true),
+    PRELOAD_SCHEMATIC_WORLDEDIT_DB(pl -> {
+        try {
+            long timeNow = System.currentTimeMillis();
+            Class.forName("net.iceyleagons.icicle.schematic.SchematicLoader");
+            if (Icicle.debug)
+                System.out.printf("Elapsed time: %s ms.%n", System.currentTimeMillis() - timeNow);
+        } catch (ClassNotFoundException e) {
+            // Somehow loading these classes failed..? How?
+            e.printStackTrace();
+        }
+    }),
     PRELOAD_REFLECTION(pl -> {
         try {
             long timeNow = System.currentTimeMillis();

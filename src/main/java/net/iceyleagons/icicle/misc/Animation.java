@@ -36,6 +36,8 @@ import java.util.List;
 
 /**
  * @author TOTHTOMI
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
  */
 
 public class Animation {
@@ -53,6 +55,11 @@ public class Animation {
         this.javaPlugin = javaPlugin;
     }
 
+    /**
+     * Starts the animation
+     *
+     * @param async whether to play it asynchronously
+     */
     public void start(boolean async) {
         if (inProgress) throw new IllegalStateException("The animation is already in progress!");
         inProgress = true;
@@ -82,11 +89,19 @@ public class Animation {
         }
     }
 
+    /**
+     * Stops the animation
+     */
     public void terminate() {
         bukkitTask.cancel();
         inProgress = false;
     }
 
+    /**
+     * Adds a frame to the animation
+     *
+     * @param frame the {@link Frame}
+     */
     public void addFrame(Frame frame) {
         frames.add(frame);
     }
@@ -94,7 +109,13 @@ public class Animation {
     @RequiredArgsConstructor
     @Getter
     public static class Frame {
+        /**
+         * Duration in ticks
+         */
         private final int duration;
+        /**
+         * The runnable to run
+         */
         private final Runnable runnable;
     }
 
