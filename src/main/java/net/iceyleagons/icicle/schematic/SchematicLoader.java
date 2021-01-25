@@ -52,7 +52,7 @@ import java.util.concurrent.CompletableFuture;
  * Built with JNBT
  *
  * @author TOTHTOMI
- * @version 1.0.0
+ * @version 1.0.3
  * @since 1.3.5-SNAPSHOT
  */
 public class SchematicLoader {
@@ -117,10 +117,8 @@ public class SchematicLoader {
      */
     private static short[] handleBlocks(CompoundTag nbtTagCompound) {
         byte[] blocks = Objects.requireNonNull(getChildTag(nbtTagCompound.getValue(), "Blocks", ByteArrayTag.class)).getValue();//nbtTagCompound.getByteArray("Blocks");
-        byte[] add = Objects.requireNonNull(getChildTag(nbtTagCompound.getValue(), "AddBlocks", ByteArrayTag.class)).getValue();
-
-        if (add == null) add = new byte[0];
-        if (blocks == null) blocks = new byte[0];
+        ByteArrayTag byteArrayTag = getChildTag(nbtTagCompound.getValue(), "AddBlocks", ByteArrayTag.class);
+        byte[] add = byteArrayTag == null ? new byte[0] : byteArrayTag.getValue();
 
         short[] shortBlocks = new short[blocks.length];
 
