@@ -4,4 +4,4 @@ Icicle helps you build plugins easily by providing useful tools in an easy-to-us
 important notices are listed in our documentation!
 You can check it here.
 
-We've started some private projects, proper documentation will be available soon, 'till then use the javadoc.
+We've started some private projects, proper documentation will be available soon, 'till then use the [javadoc](https://icicle.iceyleagons.net/).
