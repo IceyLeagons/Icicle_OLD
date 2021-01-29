@@ -28,12 +28,9 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
-
-import java.util.List;
-import java.util.Map;
+import org.bukkit.generator.ChunkGenerator;
 
 /**
  * @author TOTHTOMI
@@ -55,12 +52,13 @@ public class Schematic {
     /**
      * Pastes the schematic. Does not load in entities, used only for blocks atm!
      *
-     * @param location the location to paste to
-     * @param yOffset the y coordinate offsate
-     * @param ignoreAir if true the pasting will not place down air blocks
+     * @param location                the location to paste to
+     * @param yOffset                 the y coordinate offsate
+     * @param ignoreAir               if true the pasting will not place down air blocks
      * @param keepOccupiedSolidBlocks if true the already placed solid blocks will not be affected.
+     * @param applyPhysics            whether to apply physics to the placed block
      */
-    public void paste(Location location, int yOffset, boolean ignoreAir, boolean keepOccupiedSolidBlocks) {
+    public void paste(Location location, int yOffset, boolean ignoreAir, boolean keepOccupiedSolidBlocks, boolean applyPhysics) {
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 for (int z = 0; z < length; z++) {
@@ -69,7 +67,7 @@ public class Schematic {
                     int block = blocks[i] & 0xFF;
                     int blockData = data[i] & 0xFF;
 
-                    String bData = SchematicLoader.ids.get(block+":"+blockData);
+                    String bData = SchematicLoader.ids.get(block + ":" + blockData);
 
                     int xCoord = location.getBlockX() - (width >> 1) + x;
                     int yCoord = location.getBlockY() + yOffset + y;
@@ -80,7 +78,43 @@ public class Schematic {
                     if (ignoreAir && blockData1.getMaterial().isAir()) continue;
                     if (keepOccupiedSolidBlocks && !block1.getType().isAir()) continue;
 
-                    block1.setBlockData(blockData1);
+                    block1.setBlockData(blockData1, applyPhysics);
+                }
+            }
+        }
+    }
+
+    /**
+     * Pastes the schematic. Does not load in entities, used only for blocks atm!
+     *
+     * @param chunkData               the {@link org.bukkit.generator.ChunkGenerator.ChunkData} to modify
+     * @param x                       the x coordinate
+     * @param y                       the y coordinate
+     * @param z                       the z coordinate
+     * @param yOffset                 the y coordinate offsate
+     * @param ignoreAir               if true the pasting will not place down air blocks
+     * @param keepOccupiedSolidBlocks if true the already placed solid blocks will not be affected.
+     */
+    public void paste(ChunkGenerator.ChunkData chunkData, int x, int y, int z, int yOffset, boolean ignoreAir, boolean keepOccupiedSolidBlocks) {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                for (int k = 0; k < length; k++) {
+
+                    int index = j * width * length + k * width + i;
+                    int block = blocks[index] & 0xFF;
+                    int blockData = data[index] & 0xFF;
+
+                    String bData = SchematicLoader.ids.get(block + ":" + blockData);
+
+                    int xCoord = x - (width >> 1) + i;
+                    int yCoord = y + yOffset + j;
+                    int zCoord = z - (length >> 1) + k;
+
+                    BlockData blockData1 = Bukkit.createBlockData(bData);
+                    if (ignoreAir && blockData1.getMaterial().isAir()) continue;
+                    if (keepOccupiedSolidBlocks && !chunkData.getType(xCoord, yCoord, zCoord).isAir()) continue;
+
+                    chunkData.setBlock(xCoord, yCoord, zCoord, blockData1);
                 }
             }
         }

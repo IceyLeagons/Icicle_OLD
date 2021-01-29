@@ -130,7 +130,7 @@ public class Frame {
      * Registers a component
      *
      * @param componentTemplate the component
-     * @param slot                the slot
+     * @param slot              the slot
      * @return a {@link CompletableFuture} of {@link Void}
      * @throws IllegalArgumentException if the component does not annotate {@link Component}
      * @throws IllegalStateException    if the frame does not have room for thec component (width, height)

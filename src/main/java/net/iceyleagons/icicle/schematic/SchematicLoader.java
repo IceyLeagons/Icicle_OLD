@@ -29,7 +29,7 @@ import net.iceyleagons.icicle.jnbt.ByteArrayTag;
 import net.iceyleagons.icicle.jnbt.CompoundTag;
 import net.iceyleagons.icicle.jnbt.NBTInputStream;
 import net.iceyleagons.icicle.jnbt.ShortTag;
-import net.iceyleagons.icicle.jnbt.Tag;
+import net.iceyleagons.icicle.misc.NBTUtils;
 import net.iceyleagons.icicle.web.WebUtils;
 import org.json.JSONObject;
 
@@ -40,7 +40,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
@@ -48,16 +47,16 @@ import java.util.concurrent.CompletableFuture;
  * Standalone SchematicLoader
  * We use WorldEdit's legacy.json to convert old IDs to the newer BlockState system, that JSON file is the property of WorldEdit!
  * (https://raw.githubusercontent.com/EngineHub/WorldEdit/master/worldedit-core/src/main/resources/com/sk89q/worldedit/world/registry/legacy.json)
- *
+ * <p>
  * Built with JNBT
  *
  * @author TOTHTOMI
- * @version 1.0.3
+ * @version 1.1.0
  * @since 1.3.5-SNAPSHOT
  */
 public class SchematicLoader {
 
-    static HashMap<String, String> ids = new HashMap<>();
+    public static HashMap<String, String> ids = new HashMap<>();
 
     static {
         try {
@@ -91,14 +90,14 @@ public class SchematicLoader {
                 try (NBTInputStream nbtInputStream = new NBTInputStream(fileInputStream)) {
                     CompoundTag compoundTag = (CompoundTag) nbtInputStream.readTag();
 
-                    short width = Objects.requireNonNull(getChildTag(compoundTag.getValue(), "Width", ShortTag.class)).getValue();
-                    short height = Objects.requireNonNull(getChildTag(compoundTag.getValue(), "Height", ShortTag.class)).getValue();
-                    short length = Objects.requireNonNull(getChildTag(compoundTag.getValue(), "Length", ShortTag.class)).getValue();
+                    short width = Objects.requireNonNull(NBTUtils.getChildTag(compoundTag.getValue(), "Width", ShortTag.class)).getValue();
+                    short height = Objects.requireNonNull(NBTUtils.getChildTag(compoundTag.getValue(), "Height", ShortTag.class)).getValue();
+                    short length = Objects.requireNonNull(NBTUtils.getChildTag(compoundTag.getValue(), "Length", ShortTag.class)).getValue();
 
                     //Map<String, Tag> blockIDs = Objects.requireNonNull(getChildTag(compoundTag.getValue(), "BlockIDs", CompoundTag.class)).getValue();
 
                     short[] blocks = handleBlocks(compoundTag);
-                    byte[] data = Objects.requireNonNull(getChildTag(compoundTag.getValue(), "Data", ByteArrayTag.class)).getValue();
+                    byte[] data = Objects.requireNonNull(NBTUtils.getChildTag(compoundTag.getValue(), "Data", ByteArrayTag.class)).getValue();
 
                     return new Schematic(blocks, data, width, height, length);
                 }
@@ -116,8 +115,8 @@ public class SchematicLoader {
      * @return the resulting short[]
      */
     private static short[] handleBlocks(CompoundTag nbtTagCompound) {
-        byte[] blocks = Objects.requireNonNull(getChildTag(nbtTagCompound.getValue(), "Blocks", ByteArrayTag.class)).getValue();//nbtTagCompound.getByteArray("Blocks");
-        ByteArrayTag byteArrayTag = getChildTag(nbtTagCompound.getValue(), "AddBlocks", ByteArrayTag.class);
+        byte[] blocks = Objects.requireNonNull(NBTUtils.getChildTag(nbtTagCompound.getValue(), "Blocks", ByteArrayTag.class)).getValue();//nbtTagCompound.getByteArray("Blocks");
+        ByteArrayTag byteArrayTag = NBTUtils.getChildTag(nbtTagCompound.getValue(), "AddBlocks", ByteArrayTag.class);
         byte[] add = byteArrayTag == null ? new byte[0] : byteArrayTag.getValue();
 
         short[] shortBlocks = new short[blocks.length];
@@ -135,24 +134,6 @@ public class SchematicLoader {
         }
 
         return shortBlocks;
-    }
-
-    /**
-     *
-     * @param items the values of a Tag
-     * @param key the key to get
-     * @param expected the wanted type
-     * @param <T> the wanted type
-     * @return if the result can be casted to the wanted type it will return that otherwise null
-     */
-    private static <T> T getChildTag(Map<String, Tag> items, String key, Class<T> expected) {
-        if (!items.containsKey(key)) return null;
-
-        Tag tag = items.get(key);
-        if (!expected.isInstance(tag))
-            throw new IllegalArgumentException(key + " tag is not of tag type " + expected.getName());
-
-        return expected.cast(tag);
     }
 
 
