@@ -33,8 +33,8 @@ import net.iceyleagons.icicle.storage.entities.Container;
  */
 public class StorageHandler {
 
-    private static Storage storage;
-    private static boolean active = false;
+    private Storage storage;
+    private boolean active = false;
 
     /**
      * Migrates a {@link Storage} to an other
@@ -42,7 +42,7 @@ public class StorageHandler {
      * @param from
      * @param to
      */
-    public static void migrate(Storage from, Storage to) {
+    public void migrate(Storage from, Storage to) {
         from.getContainers().forEach(container -> {
             container.reloadFromStorage();
             Container clone = container.clone();
@@ -55,7 +55,7 @@ public class StorageHandler {
     /**
      * @return the currently active storage or null
      */
-    public static Storage getActiveStorage() {
+    public Storage getActiveStorage() {
         return active ? storage : null;
     }
 
@@ -64,7 +64,7 @@ public class StorageHandler {
      *
      * @param storageToActivate the {@link Storage}
      */
-    public static void setActiveStorage(Storage storageToActivate) throws StorageException {
+    public void setActiveStorage(Storage storageToActivate) throws StorageException {
         if (storage == null) {
             storage = storageToActivate;
             active = storage.init();

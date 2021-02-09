@@ -28,36 +28,29 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * This class doesn't really have functions, only update checkers.
- * Only purpose is version checking, with all sorts of metadata information.
+ * All methods/utils in Icicle should be used with static access or with the provided constructors!
+ * Only purpose is version checking and providing methods in Classloader without shading.
+ * Also contains metadata information!
  *
  * @author TOTHTOMI
  * @version 1.3.4
  * @since 1.0.0-SNAPSHOT
  */
-public class Icicle {
+public class Icicle extends JavaPlugin {
 
-    public static JavaPlugin registrar;
-    public static boolean debug = false;
-    /**
-     * Whether or not the module is initialized
-     */
-    private static boolean initialized = false;
+    @Override
+    public void onLoad() {
+        PreLoader.preload();
+    }
 
-    /**
-     * This needs to be called before everything else.
-     *
-     * @param plugin          the registrar plugin
-     * @param enabledFeatures the enabled features of the module
-     */
-    public static void init(JavaPlugin plugin, IcicleFeatures... enabledFeatures) {
-        if (!initialized) {
-            registrar = plugin;
+    @Override
+    public void onDisable() {
+        super.onDisable();
+    }
 
-            for (IcicleFeatures enabledFeature : enabledFeatures)
-                enabledFeature.getConsumer().accept(plugin);
-
-            initialized = true;
-        }
+    @Override
+    public void onEnable() {
+        super.onEnable();
     }
 
     /**

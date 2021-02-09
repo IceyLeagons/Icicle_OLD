@@ -34,18 +34,20 @@ import java.util.function.Consumer;
 public class JTextChatExtra {
 
     private final JSONObject extra;
+    private final JText jtext;
 
-    public JTextChatExtra(String text, JTextChatColor color, List<JTextChatFormat> formats) {
+    public JTextChatExtra(String text, JTextChatColor color, List<JTextChatFormat> formats, JText jText) {
         extra = new JSONObject();
         extra.put("text", text);
         extra.put("color", color.getColor());
+        this.jtext = jText;
         formats.forEach(f -> extra.put(f.getFormat(), true));
     }
 
     public void setClickEvent(Player player, Consumer<Player> playerConsumer) {
         String code = RandomStringUtils.randomAlphabetic(10);
         setRunCommand(JText.COMMAND_FORMAT.replace("<code>", code));
-        JText.clickConsumers.put(code, playerConsumer);
+        jtext.getClickConsumers().put(code, playerConsumer);
     }
 
     public void setRunCommand(String command) {

@@ -24,8 +24,9 @@
 
 package net.iceyleagons.icicle.jtext;
 
-import net.iceyleagons.icicle.misc.commands.CommandInjectException;
-import net.iceyleagons.icicle.misc.commands.CommandUtils;
+import lombok.Getter;
+import net.iceyleagons.icicle.commands.CommandInjectException;
+import net.iceyleagons.icicle.commands.CommandUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -48,27 +49,19 @@ public class JText implements CommandExecutor {
 
     public static final String COMMAND = "click";
     public static final String COMMAND_FORMAT = "click <code>";
-    public static JText instance = null;
-    public static Map<String, Consumer<Player>> clickConsumers = null;
+    @Getter
+    private final Map<String, Consumer<Player>> clickConsumers = new HashMap<>();
 
-    /**
-     * Initializes JText
-     *
-     * @param javaPlugin the {@link JavaPlugin}
-     */
-    public static void init(JavaPlugin javaPlugin) {
-        if (instance == null) {
-            instance = new JText();
-            clickConsumers = new HashMap<>();
-        }
-        CommandUtils.init(javaPlugin);
+    public JText(CommandUtils commandUtils) {
+
         try {
-            CommandUtils.injectCommand("click", new JText());
+            commandUtils.injectCommand("click", this);
         } catch (CommandInjectException e) {
             e.printStackTrace();
-            javaPlugin.getLogger().warning("To fix this you will need to reload the server, but it may not improve anything.");
+            commandUtils.getPlugin().getLogger().warning("To fix this you will need to reload the server, but it may not improve anything.");
         }
     }
+
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {

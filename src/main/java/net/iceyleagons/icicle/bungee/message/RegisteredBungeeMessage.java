@@ -49,8 +49,8 @@ public class RegisteredBungeeMessage {
     /**
      * Send the message to BungeeCord main channel with the first online player found in {@link Bukkit#getOnlinePlayers()}.
      */
-    public void send() {
-        send(Iterables.getFirst(Bukkit.getOnlinePlayers(), null));
+    public void send(BungeeUtils bungeeUtils) {
+        send(Iterables.getFirst(Bukkit.getOnlinePlayers(), null), bungeeUtils);
     }
 
     /**
@@ -58,11 +58,12 @@ public class RegisteredBungeeMessage {
      *
      * @param player the sender
      */
-    public void send(Player player) {
+    public void send(Player player, BungeeUtils bungeeUtils) {
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF(bungeeMessage.getId());
         out.writeUTF(bungeeMessage.getMessage());
-        BungeeUtils.send(out, bungeeChannel.getChannelName(), player);
+
+        bungeeUtils.send(out, bungeeChannel.getChannelName(), player);
     }
 
 }

@@ -24,6 +24,7 @@
 
 package net.iceyleagons.icicle.ui;
 
+import lombok.NonNull;
 import net.iceyleagons.icicle.Icicle;
 import net.iceyleagons.icicle.time.SchedulerUtils;
 import net.iceyleagons.icicle.ui.components.ComponentTemplate;
@@ -32,6 +33,7 @@ import net.iceyleagons.icicle.ui.guis.BasePaginatedGUI;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,18 +48,25 @@ import java.util.Optional;
  * @since 1.2.0-SNAPSHOT
  */
 public class GUIManager implements Listener {
-    private static final List<GUITemplate> guis = new ArrayList<>();
+
+    private final List<GUITemplate> guis = new ArrayList<>();
+    private final JavaPlugin javaPlugin;
+
+    public GUIManager(@NonNull JavaPlugin javaPlugin) {
+        this.javaPlugin = javaPlugin;
+        javaPlugin.getServer().getPluginManager().registerEvents(this, javaPlugin);
+    }
 
     /**
      * Registers the given {@link GUITemplate}
      *
      * @param gui the {@link GUITemplate}
      */
-    public static void registerGUI(GUITemplate gui) {
+    public void registerGUI(GUITemplate gui) {
         GUI annotation = gui.getClass().getAnnotation(GUI.class);
         if (annotation != null) {
-            if (Icicle.registrar != null && annotation.autoUpdate()) {
-                SchedulerUtils.runTaskTimer(Icicle.registrar, task -> gui.update(),
+            if (annotation.autoUpdate()) {
+                SchedulerUtils.runTaskTimer(javaPlugin, task -> gui.update(),
                         annotation.updateInterval(), annotation.updateIntervalUnit());
             }
             guis.add(gui);

@@ -56,7 +56,6 @@ public class BungeeChannel {
     public BungeeChannel(String channelName) {
         this.channelName = channelName;
         this.handlerMap = new HashMap<>();
-        BungeeUtils.registerChannel(this);
     }
 
     /**

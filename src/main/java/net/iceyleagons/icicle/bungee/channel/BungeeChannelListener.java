@@ -26,9 +26,11 @@ package net.iceyleagons.icicle.bungee.channel;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
+import lombok.RequiredArgsConstructor;
 import net.iceyleagons.icicle.bungee.BungeeUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
@@ -39,15 +41,18 @@ import java.util.Optional;
  * @version 1.0.0
  * @since 1.0.0-SNAPSHOT
  */
+@RequiredArgsConstructor
 public class BungeeChannelListener implements PluginMessageListener {
 
+    private final BungeeUtils utils;
+
     @Override
-    public void onPluginMessageReceived(String channel, Player player, byte[] message) {
+    public void onPluginMessageReceived(String channel, @NotNull Player player, @NotNull byte[] message) {
         if (!channel.equals("BungeeCord")) return;
         ByteArrayDataInput in = ByteStreams.newDataInput(message);
 
         String subchannel = in.readUTF();
-        Optional<BungeeChannel> bungeeChannelOptional = BungeeUtils.getChannel(subchannel);
+        Optional<BungeeChannel> bungeeChannelOptional = utils.getChannel(subchannel);
         bungeeChannelOptional.ifPresent(bungeeChannel -> bungeeChannel.onBungeeChannelMessage(player, in));
     }
 }

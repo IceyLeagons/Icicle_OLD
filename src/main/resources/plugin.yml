@@ -1,0 +1,8 @@
+name: Icicle
+version: 1.0
+api-version: 1.13
+description: Icicle test
+authors:
+  - TOTHTOMI
+  - G4be_
+main: net.iceyleagons.icicle.Test

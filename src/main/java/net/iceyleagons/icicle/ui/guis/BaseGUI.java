@@ -64,7 +64,6 @@ public abstract class BaseGUI implements GUITemplate {
 
         frames = new ArrayList<>();
         opened = new ArrayList<>();
-        GUIManager.registerGUI(this);
     }
 
     /**
