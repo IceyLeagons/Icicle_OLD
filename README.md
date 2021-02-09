@@ -1,5 +1,7 @@
 # Icicle ![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/net.iceyleagons/icicle?server=https%3A%2F%2Foss.sonatype.org) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7ac8f720a0804656af1515bb878efe1c)](https://app.codacy.com/gh/IceyLeagons/Icicle?utm_source=github.com&utm_medium=referral&utm_content=IceyLeagons/Icicle&utm_campaign=Badge_Grade) ![GitHub](https://img.shields.io/github/license/IceyLeagons/Icicle) ![Love](https://img.shields.io/badge/Made%20with-%E2%9D%A4-red)
 
+All methods can be used via static access or with the declared constructor, but the server owner must place the plugin into the plugins folder, this is to have the classes in the classloader, so you no longer have to shade it in!
+
 Icicle helps you build plugins easily by providing useful tools in an easy-to-use library. All instructions and
 important notices are listed in our documentation!
 You can check it here.
