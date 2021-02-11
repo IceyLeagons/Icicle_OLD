@@ -24,17 +24,21 @@
 
 package net.iceyleagons.icicle.bungee;
 
+import com.google.common.collect.Iterables;
 import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.iceyleagons.icicle.bungee.channel.BungeeChannel;
 import net.iceyleagons.icicle.bungee.channel.BungeeChannelListener;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -58,6 +62,7 @@ public class BungeeUtils {
         messenger.registerOutgoingPluginChannel(javaPlugin, "BungeeCord");
         messenger.registerIncomingPluginChannel(javaPlugin, "BungeeCord", bungeeChannelListener);
     }
+
     /**
      * Sends a {@link ByteArrayDataOutput} on a specific sub-channel to the BungeeCord main channel using the {@link Player}
      *
@@ -69,6 +74,16 @@ public class BungeeUtils {
         player.sendPluginMessage(plugin, channel, output.toByteArray());
     }
 
+
+    /**
+     * Sends a {@link ByteArrayDataOutput} on a specific sub-channel to the BungeeCord main channel using the {@link Player}
+     *
+     * @param output  the output
+     * @param channel the sub channel
+     */
+    public void send(ByteArrayDataOutput output, String channel) {
+        Objects.requireNonNull(Iterables.getFirst(Bukkit.getOnlinePlayers(), null)).sendPluginMessage(plugin, channel, output.toByteArray());
+    }
 
     /**
      * Returns a {@link BungeeChannel} with the given name in on Optional.
@@ -88,6 +103,35 @@ public class BungeeUtils {
      */
     public void registerChannel(BungeeChannel bungeeChannel) {
         bungeeChannelMap.put(bungeeChannel.getChannelName(), bungeeChannel);
+    }
+
+    public void kick(String reason, Player... players) {
+        for (Player player : players) {
+            kickPlayer(reason, player);
+        }
+    }
+
+    private void kickPlayer(String reason, Player player) {
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();;
+        out.writeUTF("KickPlayer");
+        out.writeUTF(player.getName());
+        out.writeUTF(reason);
+
+        send(out, "BungeeCord");
+    }
+
+    public void connectPlayers(String server, Player... players) {
+        for (Player player : players) {
+            connectPlayer(server, player);
+        }
+    }
+
+    private void connectPlayer(String server, Player player) {
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();;
+        out.writeUTF("ConnectOther");
+        out.writeUTF(player.getName());
+        out.writeUTF(server);
+        send(out, "BungeeCord");
     }
 
 }

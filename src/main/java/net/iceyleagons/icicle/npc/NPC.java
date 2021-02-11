@@ -24,6 +24,7 @@
 
 package net.iceyleagons.icicle.npc;
 
+import lombok.Getter;
 import net.iceyleagons.icicle.web.Mojang;
 import net.iceyleagons.icicle.web.WebUtils;
 import net.iceyleagons.icicle.wrapped.WrappedDedicatedServer;
@@ -54,10 +55,13 @@ import java.util.UUID;
  * @version 1.0.0
  * @since 1.3.3-SNAPSHOT
  */
+@Getter
 public class NPC {
 
     private final String name;
     private final String skinName;
+    private NPCListener npcListener;
+    private WrappedEntityPlayer wrappedEntityPlayer;
 
     public NPC(String name, String skinName) {
         this.name = name;
@@ -113,6 +117,15 @@ public class NPC {
 
     }
 
+    public void setupNPCListener(NPCListener npcListener) {
+        this.npcListener = npcListener;
+    }
+
+    public void kill() {
+        if (npcListener != null) npcListener.removeNPC(this);
+        NPC.removeNPC(getWrappedEntityPlayer());
+    }
+
     public WrappedEntityPlayer setup(Location loc) {
         String[] skin = getSkin(skinName);
         if (skin == null) {
@@ -134,6 +147,8 @@ public class NPC {
 
         gameProfile.getProperties().put("textures", new WrappedProperty("textures", skin[0], skin[1]).getNmsObject()); //com.mojang.authlib.properties.Property;
 
+        this.wrappedEntityPlayer = npc;
+        if (npcListener != null) npcListener.addNPC(this);
         return npc;
     }
 }
