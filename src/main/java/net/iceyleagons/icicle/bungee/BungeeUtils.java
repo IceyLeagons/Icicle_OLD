@@ -28,7 +28,6 @@ import com.google.common.collect.Iterables;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import net.iceyleagons.icicle.bungee.channel.BungeeChannel;
 import net.iceyleagons.icicle.bungee.channel.BungeeChannelListener;
 import org.bukkit.Bukkit;

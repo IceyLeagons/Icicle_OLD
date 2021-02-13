@@ -24,7 +24,6 @@
 
 package net.iceyleagons.icicle.npc;
 
-import net.iceyleagons.icicle.wrapped.player.WrappedEntityPlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

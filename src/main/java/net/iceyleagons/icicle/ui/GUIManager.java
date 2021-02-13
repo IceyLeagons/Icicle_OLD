@@ -25,7 +25,6 @@
 package net.iceyleagons.icicle.ui;
 
 import lombok.NonNull;
-import net.iceyleagons.icicle.Icicle;
 import net.iceyleagons.icicle.time.SchedulerUtils;
 import net.iceyleagons.icicle.ui.components.ComponentTemplate;
 import net.iceyleagons.icicle.ui.frame.Frame;

@@ -97,20 +97,26 @@ public class Mojang {
                 JSONObject jsonObject = new JSONObject(response);
                 String uuid = jsonObject.getString("id");
 
-                StringBuilder stringBuilder = new StringBuilder();
-                for (int i = 0; i <= 31; i++) {
-                    stringBuilder.append(uuid.charAt(i));
-                    if (i == 7 || i == 11 || i == 15 || i == 19) {
-                        stringBuilder.append('-');
-                    }
-                }
 
-                return UUID.fromString(stringBuilder.toString());
+                return UUID.fromString(getNormalUUIDFormat(uuid));
             });
         } catch (ExecutionException e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static String getNormalUUIDFormat(String mcUUID) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i = 0; i <= 31; i++) {
+            stringBuilder.append(mcUUID.charAt(i));
+            if (i == 7 || i == 11 || i == 15 || i == 19) {
+                stringBuilder.append('-');
+            }
+        }
+
+        return stringBuilder.toString();
     }
 
 

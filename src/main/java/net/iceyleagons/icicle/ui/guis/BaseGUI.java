@@ -26,7 +26,6 @@ package net.iceyleagons.icicle.ui.guis;
 
 import lombok.Getter;
 import net.iceyleagons.icicle.ui.GUI;
-import net.iceyleagons.icicle.ui.GUIManager;
 import net.iceyleagons.icicle.ui.GUITemplate;
 import net.iceyleagons.icicle.ui.frame.Frame;
 import org.bukkit.Bukkit;

@@ -26,7 +26,7 @@ package net.iceyleagons.icicle.serialization.types;
 
 import net.iceyleagons.icicle.jnbt.CompoundTag;
 import net.iceyleagons.icicle.jnbt.IntTag;
-import net.iceyleagons.icicle.location.BlockUtils;
+import net.iceyleagons.icicle.location.block.BlockUtils;
 import net.iceyleagons.icicle.reflect.Reflections;
 import net.iceyleagons.icicle.serialization.NBTType;
 import net.iceyleagons.icicle.serialization.Serializer;

@@ -29,7 +29,6 @@ import net.iceyleagons.icicle.jnbt.Tag;
 import net.iceyleagons.icicle.misc.NBTUtils;
 
 import java.lang.reflect.Field;
-import java.util.Optional;
 
 /**
  * @author TOTHTOMI

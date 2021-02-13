@@ -24,6 +24,8 @@
 
 package net.iceyleagons.icicle.web;
 
+import lombok.SneakyThrows;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,6 +42,17 @@ import java.nio.charset.StandardCharsets;
  * @since 1.0.0
  */
 public class WebUtils {
+
+    /**
+     * This will open a connection to the given {@link URL} and generates a string with line seperators.
+     *
+     * @param url the URL
+     * @return the read response, can be null!
+     */
+    @SneakyThrows
+    public static String readURL(String url) {
+        return readURL(new URL(url));
+    }
 
     /**
      * This will open a connection to the given {@link URL} and generates a string with line seperators.
