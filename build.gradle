@@ -91,7 +91,7 @@ dependencies {
     // https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-server
 
 
-    implementation group: 'junit', name: 'junit', version: '4.13.1'
+    implementation group: 'junit', name: 'junit', version: '4.13.2'
 
     configurations.implementation.extendsFrom(configurations.extraLibs)
 }
