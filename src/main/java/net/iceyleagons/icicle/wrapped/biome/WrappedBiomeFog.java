@@ -35,7 +35,7 @@ import java.lang.reflect.Method;
  * Wrapped representation BiomeFog
  *
  * @author Gabe
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.3.3-SNAPSHOT
  */
 public class WrappedBiomeFog {
@@ -52,7 +52,9 @@ public class WrappedBiomeFog {
     private static final Method biome_setWaterColor;
     private static final Method biome_setWaterFogColor;
     private static final Method biome_setSkyColor;
+    private static final Method biome_setGrassColorModifier;
     private static final Method biome_setGrassColor;
+    private static final Method biome_setFoliageColor;
     private static final Method biome_setParticles;
     private static final Method biome_setAmbientSounds;
     private static final Method biome_setMoodSounds;
@@ -73,7 +75,9 @@ public class WrappedBiomeFog {
         biome_setWaterColor = Reflections.getMethod(mc_biomefog_a, "b", true, int.class);
         biome_setWaterFogColor = Reflections.getMethod(mc_biomefog_a, "c", true, int.class);
         biome_setSkyColor = Reflections.getMethod(mc_biomefog_a, "d", true, int.class);
-        biome_setGrassColor = Reflections.getMethod(mc_biomefog_a, "a", true, mc_biomefog_grasscolor);
+        biome_setFoliageColor = Reflections.getMethod(mc_biomefog_a, "e", true, int.class);
+        biome_setGrassColor = Reflections.getMethod(mc_biomefog_a, "f", true, int.class);
+        biome_setGrassColorModifier = Reflections.getMethod(mc_biomefog_a, "a", true, mc_biomefog_grasscolor);
         biome_setParticles = Reflections.getMethod(mc_biomefog_a, "a", true, mc_biomeparticles);
         biome_setAmbientSounds = Reflections.getMethod(mc_biomefog_a, "a", true, mc_soundeffect);
         biome_setMoodSounds = Reflections.getMethod(mc_biomefog_a, "a", true, mc_cavesoundsettings);
@@ -100,9 +104,6 @@ public class WrappedBiomeFog {
     public static class Builder {
 
         private Object root;
-        //private WrappedBiomeBase.Geography geography;
-        //private WrappedBiomeBase.Precipitation precipitation;
-        //private WrappedBiomeBase.TemperatureModifier temperatureModifier;
 
         @SneakyThrows
         private Builder() {
@@ -133,8 +134,18 @@ public class WrappedBiomeFog {
             return this;
         }
 
-        public WrappedBiomeFog.Builder setGrassColor(Object color) {
-            this.root = Reflections.invoke(biome_setGrassColor, Object.class, root, color);
+        public WrappedBiomeFog.Builder setFoliageColor(Color color) {
+            this.root = Reflections.invoke(biome_setFoliageColor, Object.class, root, getColor(color));
+            return this;
+        }
+
+        public WrappedBiomeFog.Builder setGrassColor(Color color) {
+            this.root = Reflections.invoke(biome_setGrassColor, Object.class, root, getColor(color));
+            return this;
+        }
+
+        public WrappedBiomeFog.Builder setGrassColorModifier(Object color) {
+            this.root = Reflections.invoke(biome_setGrassColorModifier, Object.class, root, color);
             return this;
         }
 

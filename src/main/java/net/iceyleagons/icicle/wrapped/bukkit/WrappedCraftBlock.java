@@ -83,7 +83,4 @@ public class WrappedCraftBlock {
         breakNaturally.invoke(block, itemStack, triggerSound);
     }
 
-    //TODO CraftBlock, CraftPlayer, CraftEntity, CraftWorld
-
-
 }

@@ -39,7 +39,7 @@ import java.util.Optional;
  * Contains useful functions from Minecraft's DedicatedServer's class
  *
  * @author TOTHTOMI
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.4.0-SNAPSHOT
  */
 @RequiredArgsConstructor
@@ -75,6 +75,7 @@ public class WrappedDedicatedServer {
     private static final Method mc_executeNext;
     private static final Method mc_safeShutdown;
     private static final Method mc_getServerConnection;
+    private static final Method mc_getPlayerList;
 
     private static final Field mc_tpsField;
     private static final Field mc_minecraftSessionService;
@@ -121,6 +122,7 @@ public class WrappedDedicatedServer {
         mc_getServerConnection = getMCMethod("getServerConnection");
         mc_executeNext = getMCMethod("executeNext");
         mc_safeShutdown = getMCMethod("safeShutdown", boolean.class, boolean.class);
+        mc_getPlayerList = getMCMethod("getPlayerList");
 
         //MC fields
         mc_tpsField = getMCField("recentTps");
@@ -283,6 +285,10 @@ public class WrappedDedicatedServer {
 
     public Object getDataPackResources() {
         return Reflections.get(mc_dataPackResources, Object.class, dedicatedServer);
+    }
+
+    public WrappedPlayerList getPlayerList() {
+        return new WrappedPlayerList(Reflections.invoke(mc_getPlayerList, Object.class, dedicatedServer));
     }
 
 
