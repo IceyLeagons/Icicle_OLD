@@ -37,6 +37,7 @@ import org.bukkit.inventory.ItemStack;
 import java.lang.reflect.Method;
 
 /**
+ * Wrapped representation of CraftBlock.
  * Contains useful functions, that are not implemented in the {@link Block} interface directly
  *
  * @author TOTHTOMI
@@ -70,16 +71,36 @@ public class WrappedCraftBlock {
         return new WrappedCraftBlock(block);
     }
 
+    /**
+     * Converts a wrapped biomebase to a bukkit biome.
+     *
+     * @param biomeBase the wrapped biome.
+     * @return null if it's a custom biome, the bukkit Biome if it's a vanilla biome.
+     */
     public static Biome biomeBaseToBiome(WrappedBiomeBase biomeBase) {
         return Reflections.invoke(biomeBaseToBiome, Biome.class, craftBlockClass, WrappedIRegistry.BIOME, biomeBase.getRoot());
     }
 
+    /**
+     * Converts a bukkit Biome into a wrapped BiomeBase.
+     *
+     * @param biome the bukkit biome.
+     * @return the wrapped biomebase representation of the bukkit biome.
+     */
     public static WrappedBiomeBase biomeToBiomeBase(Biome biome) {
         return new WrappedBiomeBase(Reflections.invoke(biomeToBiomeBase, Object.class, craftBlockClass, WrappedIRegistry.BIOME, biome));
     }
 
+    /**
+     * Self-explanatory, eh?
+     * <p>
+     * Breaks the block with the sound enabled.
+     *
+     * @param itemStack    the item stack we want to drop.
+     * @param triggerSound whether or not we want it to play the block-break sound.
+     */
     @SneakyThrows
-    public void dropNaturally(ItemStack itemStack, boolean triggerSound) {
+    public void breakNaturally(ItemStack itemStack, boolean triggerSound) {
         breakNaturally.invoke(block, itemStack, triggerSound);
     }
 

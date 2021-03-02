@@ -31,7 +31,7 @@ import net.iceyleagons.icicle.reflect.Reflections;
 import java.lang.reflect.Constructor;
 
 /**
- * Wrapped representation DataWatcherObject
+ * Wrapped representation of DataWatcherObject
  *
  * @author TOTHTOMI
  * @version 1.0.0

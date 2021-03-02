@@ -65,30 +65,55 @@ public class WrappedPlayerList {
         mc_getPlayerCount = Reflections.getMethod(mc_playerList, "getPlayerCount", true);
     }
 
+    /**
+     * @return the number of players online.
+     */
     public int getPlayerCount() {
         return Reflections.invoke(mc_getPlayerCount, int.class, root);
     }
 
+    /**
+     * @return the render distance of the server. Can be changed dynamically with {@link #setViewDistance(int)}.
+     */
     public int getViewDistance() {
         return Reflections.invoke(mc_getViewDistance, int.class, root);
     }
 
+    /**
+     * @return the amount of players the server was told to allow. Can be changed dynamically with {@link #setMaxPlayers(int)}.
+     */
     public int getMaxPlayers() {
         return Reflections.invoke(mc_getMaxPlayers, int.class, root);
     }
 
+    /**
+     * Changes the maximum amount of players to the specified value.
+     *
+     * @param value self-explanatory.
+     */
     public void setMaxPlayers(int value) {
         Reflections.invoke(mc_setMaxPlayers, Object.class, root, value);
     }
 
+    /**
+     * Changes the render distance of the server to the specified value.
+     *
+     * @param value self-explanatory.
+     */
     public void setViewDistance(int value) {
         Reflections.invoke(mc_setViewDistance, Object.class, root, value);
     }
 
+    /**
+     * Saves all players' data.
+     */
     public void savePlayers() {
         Reflections.invoke(mc_savePlayers, Object.class, root);
     }
 
+    /**
+     * Reloads datapacks.
+     */
     public void reload() {
         Reflections.invoke(mc_reload, Object.class, root);
     }

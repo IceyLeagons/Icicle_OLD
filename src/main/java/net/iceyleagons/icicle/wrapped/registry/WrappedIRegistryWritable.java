@@ -30,7 +30,7 @@ import net.iceyleagons.icicle.reflect.Reflections;
 import java.lang.reflect.Method;
 
 /**
- * Wrapped representation IRegistryWritable
+ * Wrapped representation of IRegistryWritable
  *
  * @author Gabe
  * @version 1.0.0
@@ -64,6 +64,14 @@ public class WrappedIRegistryWritable<T> {
         throw new IllegalArgumentException("Not instance of IRegistryWritable.class");
     }
 
+    /**
+     * Registers an object into the specified resource key.
+     * <p>
+     * <b>This registers with the STABLE lifecycle.</b>
+     *
+     * @param resourceKey this is the key.
+     * @param register    this is the object we wish to register.
+     */
     public void register(WrappedResourceKey resourceKey, Object register) {
         Object lifecycle = Reflections.invoke(life_getStable, mojang_lifecycle, null);
 

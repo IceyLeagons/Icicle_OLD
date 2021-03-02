@@ -30,7 +30,7 @@ import net.iceyleagons.icicle.reflect.Reflections;
 import java.lang.reflect.Method;
 
 /**
- * Wrapped representation PropertyMap
+ * Wrapped representation of PropertyMap
  *
  * @author TOTHTOMI
  * @version 1.0.0
@@ -57,6 +57,12 @@ public class WrappedPropertyMap {
         this.nmsObject = from;
     }
 
+    /**
+     * Puts the specified value at the specified key.
+     *
+     * @param key   self-explanatory.
+     * @param value self-explanatory.
+     */
     public void put(Object key, Object value) {
         Reflections.invoke(put, Void.class, nmsObject, key, value);
     }

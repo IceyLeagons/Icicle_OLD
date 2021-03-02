@@ -27,9 +27,9 @@ package net.iceyleagons.icicle.wrapped.world;
 import lombok.Getter;
 
 /**
- * Wrapped representation World
+ * Wrapped representation of World
  *
- * @author Gabe
+ * @author Gábe
  * @version 1.0.0
  * @since 1.3.3-SNAPSHOT
  */

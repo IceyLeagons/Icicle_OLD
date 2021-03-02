@@ -32,7 +32,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
- * Wrapped representation PlayerConnection
+ * Wrapped representation of PlayerConnection
  *
  * @author TOTHTOMI
  * @version 1.0.0
@@ -69,26 +69,50 @@ public class WrappedPlayerConnection {
         return Reflections.getMethod(pConnectionClass, name, true, parameterTypes);
     }
 
+    /**
+     * @return the network manager that is managing this connection.
+     */
     public WrappedNetworkManager getNetworkManager() {
         return new WrappedNetworkManager(Reflections.get(mc_networkManager, Object.class, playerConnection));
     }
 
+    /**
+     * Send a packet down this connection.
+     *
+     * @param packet self-explanatory.
+     */
     public void sendPacket(Object packet) {
         Reflections.invoke(mc_sendPacket, Void.class, playerConnection, packet);
     }
 
+    /**
+     * @return this players last ping.
+     */
     public Long getLastPing() {
         return Reflections.invoke(mc_getLastPing, Long.class, playerConnection);
     }
 
+    /**
+     * Essentially fakes the last ping of this player.
+     *
+     * @param lastPing the new value it should return.
+     */
     public void setLastPing(long lastPing) {
         Reflections.invoke(mc_setLastPing, Void.class, playerConnection, lastPing);
     }
 
+    /**
+     * Set whether or not the players ping is still pending.
+     *
+     * @param isPending the new value.
+     */
     public void setPendingPing(boolean isPending) {
         Reflections.invoke(mc_setPendingPing, Void.class, playerConnection, isPending);
     }
 
+    /**
+     * @return whether or not we're still awaiting a response from the player.
+     */
     public Boolean isPendingPing() {
         return Reflections.invoke(mc_isPendingPing, Boolean.class, playerConnection);
     }

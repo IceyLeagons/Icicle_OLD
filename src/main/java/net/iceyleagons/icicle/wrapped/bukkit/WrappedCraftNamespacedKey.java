@@ -31,9 +31,9 @@ import org.bukkit.NamespacedKey;
 import java.lang.reflect.Method;
 
 /**
- * Wrapped representation NamespacedKey
+ * Wrapped representation of NamespacedKey
  *
- * @author Gabe
+ * @author Gábe
  * @version 1.0.0
  * @since 1.3.3-SNAPSHOT
  */
@@ -55,18 +55,44 @@ public class WrappedCraftNamespacedKey {
         nm_fromStringOrNull = Reflections.getMethod(bukkit_CraftNamespacedKey, "fromStringOrNull", true, String.class);
     }
 
+    /**
+     * Returns the bukkit NamespacedKey equivalent to the provided MinecraftKey.
+     *
+     * @param root the minecraftkey we wish to get the equivalent of.
+     * @return the bukkit namespacedkey.
+     */
     public static NamespacedKey fromMinecraft(Object root) {
         return Reflections.invoke(nm_fromMinecraft, NamespacedKey.class, null, root);
     }
 
+    /**
+     * Creates a new bukkit NamespacedKey from the provided String.
+     *
+     * @param string the String we wish to get the equivalent of.
+     * @return the bukkit namespacedkey.
+     */
     public static NamespacedKey fromString(String string) {
         return Reflections.invoke(nm_fromString, NamespacedKey.class, null, string);
     }
 
+    /**
+     * Acts pretty much the same way as {@link #fromString(String)} with a little twist.
+     * <p>
+     * Creates a new bukkit NamespacedKey from the provided String.
+     *
+     * @param string the String we wish to get the equivalent of.
+     * @return the bukkit namespacedkey.
+     */
     public static NamespacedKey fromStringOrNull(String string) {
         return Reflections.invoke(nm_fromStringOrNull, NamespacedKey.class, null, string);
     }
 
+    /**
+     * Converts the bukkit NamespacedKey into an NMS MinecraftKey.
+     *
+     * @param key the bukkit namespacedkey.
+     * @return the nms minecraftkey.
+     */
     public static Object toMinecraft(NamespacedKey key) {
         return Reflections.invoke(nm_toMinecraft, Object.class, null, key);
     }

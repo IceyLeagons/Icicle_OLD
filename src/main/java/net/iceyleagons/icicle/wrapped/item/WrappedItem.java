@@ -34,7 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Wrapped representation Item (NMS)
+ * Wrapped representation of Item
  *
  * @author TOTHTOMI
  * @version 1.0.0
@@ -69,13 +69,18 @@ public class WrappedItem {
         return (Map<Object, Integer>) Reflections.invoke(method, Map.class, null);
     }
 
+    /**
+     * @return the maximum stack size for this item.
+     */
     public Integer getMaxStackSize() {
         return Reflections.get(mc_maxStackSize, Integer.class, nmsItem);
     }
 
     /**
-     * Sets the maximum stack size (can go above 64).
+     * Changes the maximum stack size (can go above 64).
      * However since Minecraft's protocol sends/reads item counts as a (signed) byte, this is limited to only 127!
+     * <p>
+     * There's a working work-around around this, but it requires entities so we refrain from doing so.
      *
      * @param value the value to set min. 0 max. 127
      */
@@ -87,6 +92,9 @@ public class WrappedItem {
         Reflections.set(mc_maxStackSize, nmsItem, value);
     }
 
+    /**
+     * @return the burn time of this item.
+     */
     public int getBurnTime() {
         return burnMap.getOrDefault(nmsItem, 0);
     }

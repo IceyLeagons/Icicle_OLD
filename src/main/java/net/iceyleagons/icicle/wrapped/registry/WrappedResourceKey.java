@@ -33,9 +33,9 @@ import org.bukkit.NamespacedKey;
 import java.lang.reflect.Method;
 
 /**
- * Wrapped representation ResourceKey
+ * Wrapped representation of ResourceKey
  *
- * @author Gabe
+ * @author Gábe
  * @version 1.0.0
  * @since 1.3.3-SNAPSHOT
  */

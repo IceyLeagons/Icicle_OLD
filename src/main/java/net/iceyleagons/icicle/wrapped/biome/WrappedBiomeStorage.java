@@ -26,18 +26,18 @@ package net.iceyleagons.icicle.wrapped.biome;
 
 import lombok.Getter;
 import net.iceyleagons.icicle.reflect.Reflections;
+import org.bukkit.Location;
 
 import java.lang.reflect.Method;
 
 /**
- * Wrapped representation BiomeStorage
+ * Wrapped representation of BiomeStorage
  *
- * @author Gabe
+ * @author Gábe
  * @version 1.0.0
  * @since 1.3.3-SNAPSHOT
  */
 public class WrappedBiomeStorage {
-
     private static final Class<?> mc_BiomeStorage;
     private static final Method storage_setBiome;
 
@@ -54,8 +54,26 @@ public class WrappedBiomeStorage {
         this.storage = storage;
     }
 
+    /**
+     * Changes the biome at the specified position to the specified biome.
+     *
+     * @param x         self-explanatory.
+     * @param y         self-explanatory.
+     * @param z         self-explanatory.
+     * @param biomeBase the biome we wish to change it into.
+     */
     public void setBiome(int x, int y, int z, WrappedBiomeBase biomeBase) {
         Reflections.invoke(storage_setBiome, Void.class, storage, x, y, z, biomeBase.getRoot());
+    }
+
+    /**
+     * Changes the biome at the specified position to the specified biome.
+     *
+     * @param location  self-explanatory.
+     * @param biomeBase the biome we wish to change it into.
+     */
+    public void setBiome(Location location, WrappedBiomeBase biomeBase) {
+        Reflections.invoke(storage_setBiome, Void.class, storage, location.getBlockX(), location.getBlockY(), location.getBlockZ(), biomeBase.getRoot());
     }
 
 }

@@ -53,7 +53,7 @@ public class PreLoader {
     public static void preloadReflections() {
         try {
             long timeNow = System.currentTimeMillis();
-            Class.forName("net.iceyleagons.icicle.wrapped.WrappedBlockPosition");
+            Class.forName("net.iceyleagons.icicle.wrapped.world.WrappedBlockPosition");
             Class.forName("net.iceyleagons.icicle.wrapped.WrappedDedicatedServer");
             Class.forName("net.iceyleagons.icicle.wrapped.WrappedTileEntity");
 

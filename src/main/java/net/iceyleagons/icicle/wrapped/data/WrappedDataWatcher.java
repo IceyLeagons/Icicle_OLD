@@ -30,7 +30,7 @@ import net.iceyleagons.icicle.reflect.Reflections;
 import java.lang.reflect.Method;
 
 /**
- * Wrapped representation DataWatcher
+ * Wrapped representation of DataWatcher
  *
  * @author TOTHTOMI
  * @version 1.0.0
@@ -53,6 +53,12 @@ public class WrappedDataWatcher {
         this.nmsObject = origin;
     }
 
+    /**
+     * Changes a property of this data watcher.
+     *
+     * @param dataWatcherObject the object we want to change.
+     * @param object            what we want to change it into.
+     */
     public void set(WrappedDataWatcherObject dataWatcherObject, Object object) {
         Reflections.invoke(mc_set, Void.class, nmsObject, dataWatcherObject.getNmsObject(), object);
     }

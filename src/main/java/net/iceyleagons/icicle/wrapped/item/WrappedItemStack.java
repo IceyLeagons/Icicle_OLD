@@ -32,7 +32,7 @@ import org.bukkit.inventory.ItemStack;
 import java.lang.reflect.Method;
 
 /**
- * Wrapped representation ItemStack (NMS)
+ * Wrapped representation of ItemStack (NMS)
  *
  * @author TOTHTOMI
  * @version 1.0.0
@@ -41,7 +41,6 @@ import java.lang.reflect.Method;
 @RequiredArgsConstructor
 @Getter
 public class WrappedItemStack {
-
     private static final Class<?> cb_CraftItemStack;
     private static final Class<?> mc_ItemStack;
 
@@ -52,7 +51,6 @@ public class WrappedItemStack {
     private static final Method mc_setRepairCost;
 
     private static final Method mc_getItem;
-
 
     static {
         cb_CraftItemStack = Reflections.getNormalCBClass("inventory.CraftItemStack");
@@ -70,31 +68,56 @@ public class WrappedItemStack {
 
     private final Object nmsItemStack;
 
+    /**
+     * Instantiates a WrappedItemStack from a bukkit ItemStack.
+     *
+     * @param itemStack bukkit ItemStack we wish to convert.
+     * @return a wrapped itemstack.
+     */
     public static WrappedItemStack asNMSCopy(ItemStack itemStack) {
-
         Object object = Reflections.invoke(cb_asNMSCopy, Object.class, cb_CraftItemStack, itemStack);
         if (object == null) return null;
 
         return new WrappedItemStack(object);
     }
 
+    /**
+     * Converts a wrapped itemstack into a bukkit ItemStack.
+     *
+     * @param wrappedItemStack self-explanatory.
+     * @return a bukkit itemstack.
+     */
     public static ItemStack asBukkitCopy(WrappedItemStack wrappedItemStack) {
         return Reflections.invoke(cb_asBukkitCopy, ItemStack.class, cb_CraftItemStack, wrappedItemStack.getNmsItemStack());
     }
 
+    /**
+     * @return the item for this itemstack.
+     */
     public WrappedItem getItem() {
         Object o = Reflections.invoke(mc_getItem, Object.class, nmsItemStack);
         return o == null ? null : new WrappedItem(o);
     }
 
+    /**
+     * @return the repair cost of this itemstack.
+     */
     public Integer getRepairCost() {
         return Reflections.invoke(mc_getRepairCost, Integer.class, nmsItemStack);
     }
 
+    /**
+     * Changes the repair cost of this itemstack to the specified value.
+     *
+     * @param cost the new repair cost.
+     */
     public void setRepairCost(int cost) {
         Reflections.invoke(mc_setRepairCost, Void.class, nmsItemStack, cost);
     }
 
+    /**
+     * @return bukkit itemstack clone of this.
+     */
     public ItemStack getBukkitCopy() {
         return asBukkitCopy(this);
     }

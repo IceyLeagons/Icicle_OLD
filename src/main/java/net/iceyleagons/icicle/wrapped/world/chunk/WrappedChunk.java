@@ -26,20 +26,21 @@ package net.iceyleagons.icicle.wrapped.world.chunk;
 
 import lombok.Getter;
 import net.iceyleagons.icicle.reflect.Reflections;
-import net.iceyleagons.icicle.wrapped.WrappedBlockPosition;
+import net.iceyleagons.icicle.wrapped.world.WrappedBlockPosition;
 import net.iceyleagons.icicle.wrapped.WrappedTileEntity;
 import net.iceyleagons.icicle.wrapped.biome.WrappedBiomeStorage;
 import net.iceyleagons.icicle.wrapped.world.WrappedLightEngine;
 import org.bukkit.Chunk;
+import org.bukkit.Location;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Wrapped representation Chunk
+ * Wrapped representation of Chunk
  *
- * @author Gabe
+ * @author Gábe
  * @version 1.0.0
  * @since 1.3.3-SNAPSHOT
  */
@@ -85,38 +86,95 @@ public class WrappedChunk {
         this.chunk = chunk;
     }
 
+    /**
+     * Converts a bukkit chunk into a wrapped NMS chunk.
+     *
+     * @param chunk the bukkit chunk we want to convert.
+     * @return the bukkit chunks handle. (nms chunk)
+     */
     public static WrappedChunk fromBukkit(Chunk chunk) {
         return new WrappedChunk(Reflections.invoke(bukkit_getHandle, Object.class, bukkit_CraftChunk.cast(chunk)));
     }
 
+    /**
+     * Marks a chunk as dirty.
+     * <p>
+     * Used when we want light updates, or we changed blocks. Basically marks the chunk as one that should be sent to the players asap.
+     */
     public void markDirty() {
         Reflections.invoke(chunk_markDirty, Void.class, chunk);
     }
 
+    /**
+     * @return the biomeindex of this chunk.
+     */
     public WrappedBiomeStorage getBiomeIndex() {
         return new WrappedBiomeStorage(Reflections.invoke(chunk_getBiomeIndex, Object.class, chunk));
     }
 
+    /**
+     * @return the light engine of this chunk.
+     */
     public WrappedLightEngine getLightEngine() {
         return new WrappedLightEngine(Reflections.invoke(chunk_getLightEngine, Object.class, chunk));
     }
 
+    /**
+     * @param position the position of the tile entity we want to get.
+     * @return a wrapped tile entity if found, null otherwise.
+     */
     public WrappedTileEntity getTileEntity(WrappedBlockPosition position) {
         return new WrappedTileEntity(Reflections.invoke(chunk_getTileEntity, Object.class, chunk, position.getRoot()));
     }
 
+    /**
+     * Same as {@link #getTileEntity(WrappedBlockPosition)}
+     *
+     * @param location the location of the tile entity we want to get.
+     * @return a wrapped tile entity if found, null otherwise.
+     */
+    public WrappedTileEntity getTileEntity(Location location) {
+        return getTileEntity(new WrappedBlockPosition(location));
+    }
+
+    /**
+     * @param position the position of the tile entity we want to get.
+     * @return a wrapped tile entity if found, null otherwise.
+     */
     public WrappedTileEntity getTileEntityImmediately(WrappedBlockPosition position) {
         return new WrappedTileEntity(Reflections.invoke(chunk_getTileEntityImmediately, Object.class, chunk, position.getRoot()));
     }
 
+    /**
+     * Same as {@link #getTileEntityImmediately(WrappedBlockPosition)}
+     *
+     * @param location the location of the tile entity we want to get.
+     * @return a wrapped tile entity if found, null otherwise.
+     */
+    public WrappedTileEntity getTileEntityImmediately(Location location) {
+        return getTileEntityImmediately(new WrappedBlockPosition(location));
+    }
+
+    /**
+     * Makes the specified position be inhabited by a tile entity.
+     *
+     * @param position   the position we want to change.
+     * @param tileEntity the entity we want to place there.
+     */
     public void setTileEntity(WrappedBlockPosition position, WrappedTileEntity tileEntity) {
         Reflections.invoke(chunk_setTileEntity, Void.class, chunk, position.getRoot(), tileEntity.getEntity());
     }
 
+    /**
+     * @param flag not really sure what this flag is. Probably "force."
+     */
     public void setLoaded(boolean flag) {
         Reflections.invoke(chunk_setLoaded, Void.class, chunk, flag);
     }
 
+    /**
+     * @return the tile entities and their respective positions in this chunk.
+     */
     public Map<WrappedBlockPosition, WrappedTileEntity> getTileEntities() {
         Map<WrappedBlockPosition, WrappedTileEntity> newMap = new HashMap<>();
         Reflections.invoke(chunk_getTileEntities, Map.class, chunk).forEach((pos, entity) -> newMap.put(new WrappedBlockPosition(pos), new WrappedTileEntity(entity)));
@@ -124,18 +182,34 @@ public class WrappedChunk {
         return newMap;
     }
 
+    /**
+     * @return whether or not this chunk needs to be saved. In other words, were there changes in this chunk?
+     */
     public boolean isNeedsSaving() {
         return Reflections.invoke(chunk_isNeedsSaving, boolean.class, chunk);
     }
 
+    /**
+     * Changes the needsSaving boolean.
+     *
+     * @param flag whether or not this chunk needs to be saved.
+     */
     public void setNeedsSaving(boolean flag) {
         Reflections.invoke(chunk_setNeedsSaving, Void.class, chunk, flag);
     }
 
+    /**
+     * @return the position of this chunk.
+     */
     public WrappedChunkCoordIntPair getPos() {
         return new WrappedChunkCoordIntPair(Reflections.invoke(chunk_getPos, Object.class, chunk));
     }
 
+    /**
+     * Same as {@link #getPos()}
+     *
+     * @return the position of this chunk.
+     */
     public WrappedChunkCoordIntPair getPosition() {
         return getPos();
     }

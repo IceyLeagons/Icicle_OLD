@@ -27,15 +27,15 @@ package net.iceyleagons.icicle.wrapped.world.chunk;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.iceyleagons.icicle.reflect.Reflections;
-import net.iceyleagons.icicle.wrapped.WrappedBlockPosition;
+import net.iceyleagons.icicle.wrapped.world.WrappedBlockPosition;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
 /**
- * Wrapped representation ChunkCoordIntPair
+ * Wrapped representation of ChunkCoordIntPair
  *
- * @author Gabe
+ * @author Gábe
  * @version 1.0.0
  * @since 1.3.3-SNAPSHOT
  */
@@ -92,26 +92,46 @@ public class WrappedChunkCoordIntPair {
         this.pair = pair;
     }
 
+    /**
+     * @return this int pair's x coordinate.
+     */
     public Integer getBlockX() {
         return Reflections.invoke(pair_getBlockX, Integer.class, pair);
     }
 
+    /**
+     * @return this int pair's z coordinate.
+     */
     public Integer getBlockZ() {
         return Reflections.invoke(pair_getBlockZ, Integer.class, pair);
     }
 
+    /**
+     * @return this int pair as a block position.
+     */
     public WrappedBlockPosition asPosition() {
         return new WrappedBlockPosition(Reflections.invoke(pair_asPosition, Object.class, pair));
     }
 
+    /**
+     * No idea what this is, looked useful.
+     *
+     * @return this int pair as a block position.
+     */
     public WrappedBlockPosition asPositionDown() {
         return new WrappedBlockPosition(Reflections.invoke(pair_asPositionDown, Object.class, pair));
     }
 
+    /**
+     * @return the region files' x.
+     */
     public Integer getRegionX() {
         return Reflections.invoke(pair_getRegionX, Integer.class, pair);
     }
 
+    /**
+     * @return the region files' z.
+     */
     public Integer getRegionZ() {
         return Reflections.invoke(pair_getRegionZ, Integer.class, pair);
     }

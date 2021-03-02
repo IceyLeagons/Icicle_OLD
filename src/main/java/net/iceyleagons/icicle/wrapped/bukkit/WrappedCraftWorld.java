@@ -26,13 +26,15 @@ package net.iceyleagons.icicle.wrapped.bukkit;
 
 import lombok.Getter;
 import net.iceyleagons.icicle.reflect.Reflections;
-import net.iceyleagons.icicle.wrapped.WrappedBlockPosition;
+import net.iceyleagons.icicle.wrapped.world.WrappedBlockPosition;
 import net.iceyleagons.icicle.wrapped.biome.WrappedBiomeBase;
 import net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutMapChunk;
 import net.iceyleagons.icicle.wrapped.player.WrappedCraftPlayer;
+import net.iceyleagons.icicle.wrapped.registry.WrappedIRegistryCustom;
 import net.iceyleagons.icicle.wrapped.world.WrappedWorld;
 import net.iceyleagons.icicle.wrapped.world.chunk.WrappedChunk;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -105,41 +107,101 @@ public class WrappedCraftWorld {
         throw new IllegalArgumentException("Root not instance of CraftWorld nor String");
     }
 
+    /**
+     * @param blockPosition the position we want to check at.
+     * @return whether or not that chunk containing the aforementioned position is loaded.
+     */
     public Boolean isLoaded(WrappedBlockPosition blockPosition) {
         return Reflections.invoke(world_isLoaded, Boolean.class, Reflections.get(bukkit_nmsWorld, Object.class, craftWorld), blockPosition.getRoot());
     }
 
-    public Object getCustomRegistry() {
-        return Reflections.invoke(ws_getRegistry, Object.class, Reflections.get(bukkit_nmsWorld, Object.class, craftWorld));
+    /**
+     * @return the custom registry of this world.
+     */
+    public WrappedIRegistryCustom getCustomRegistry() {
+        return new WrappedIRegistryCustom(Reflections.invoke(ws_getRegistry, Object.class, Reflections.get(bukkit_nmsWorld, Object.class, craftWorld)));
     }
 
+    /**
+     * @param blockPosition the position we want to get the chunk of.
+     * @return the chunk at the provided position.
+     */
     public WrappedChunk getChunkAtWorldCoords(WrappedBlockPosition blockPosition) {
         return new WrappedChunk(Reflections.invoke(world_getChunkAtWorldCoords, Object.class, Reflections.get(bukkit_nmsWorld, Object.class, craftWorld), blockPosition.getRoot()));
     }
 
+    /**
+     * Same as {@link #setBiome(WrappedBlockPosition, WrappedBiomeBase)}.
+     * <p>
+     * Changes the biome at the specified location to the specified wrapped biome.
+     *
+     * @param x                self-explanatory.
+     * @param y                self-explanatory.
+     * @param z                self-explanatory.
+     * @param wrappedBiomeBase the biome we want to change it to.
+     * @return the chunk we changed the biome in.
+     */
     public WrappedChunk setBiome(int x, int y, int z, WrappedBiomeBase wrappedBiomeBase) {
-        /*WrappedBiomeBase biomeBase = new WrappedBiomeBase(WrappedIRegistry
-                .get(Reflections.invoke(registry_b, Object.class, getCustomRegistry(), WrappedIRegistry.BIOME),
-                        WrappedCraftNamespacedKey.toMinecraft(new NamespacedKey(namespace, key))));*/
-        WrappedBlockPosition blockPosition = new WrappedBlockPosition(x, y, z);
+        return setBiome(new WrappedBlockPosition(x, y, z), wrappedBiomeBase);
+    }
+
+    /**
+     * Same as {@link #setBiome(WrappedBlockPosition, WrappedBiomeBase)}.
+     * <p>
+     * Changes the biome at the specified location to the specified wrapped biome.
+     *
+     * @param location         self-explanatory.
+     * @param wrappedBiomeBase the biome we want to change it to.
+     * @return the chunk we changed the biome in.
+     */
+    public WrappedChunk setBiome(Location location, WrappedBiomeBase wrappedBiomeBase) {
+        return setBiome(new WrappedBlockPosition(location), wrappedBiomeBase);
+    }
+
+    /**
+     * Changes the biome at the specified location to the specified wrapped biome.
+     *
+     * @param blockPosition    self-explanatory.
+     * @param wrappedBiomeBase the biome we want to change it to.
+     * @return the chunk we changed the biome in.
+     */
+    public WrappedChunk setBiome(WrappedBlockPosition blockPosition, WrappedBiomeBase wrappedBiomeBase) {
         WrappedChunk chunk = null;
 
         if (isLoaded(blockPosition) && (chunk = getChunkAtWorldCoords(blockPosition)).getChunk() != null) {
-            chunk.getBiomeIndex().setBiome(x >> 2, y >> 2, z >> 2, wrappedBiomeBase);
+            chunk.getBiomeIndex().setBiome(blockPosition.getX() >> 2, blockPosition.getY() >> 2, blockPosition.getZ() >> 2, wrappedBiomeBase);
             chunk.markDirty();
         }
 
         return chunk;
     }
 
+    /**
+     * @return the nms handle of this craftworld.
+     */
     public WrappedWorld getHandle() {
         return new WrappedWorld(Reflections.invoke(world_getHandle, Object.class, craftWorld));
     }
 
+    /**
+     * Adds a new entity to this world.
+     *
+     * @param entity      entity to add.
+     * @param spawnReason the reason for it's spawning.
+     * @return the entity.
+     */
     public Object addEntity(Object entity, CreatureSpawnEvent.SpawnReason spawnReason) {
         return Reflections.invoke(add_Entity, Object.class, craftWorld, entity, spawnReason);
     }
 
+    /**
+     * Updates the chunk for the specified player.
+     * <p>
+     * VERIFIED NOT WORKING! May cause crash client-side!
+     *
+     * @param player the player we wish to send the update to.
+     * @param chunk  the chunk we want to update.
+     */
     public void sendUpdate(Player player, WrappedChunk chunk) {
         WrappedCraftPlayer.from(player).getHandle().getPlayerConnection().sendPacket(new WrappedPacketPlayOutMapChunk(chunk).getPacket());
     }

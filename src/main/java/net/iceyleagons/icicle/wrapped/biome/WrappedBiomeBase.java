@@ -39,9 +39,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
- * Wrapped representation BiomeBase
+ * Wrapped representation of BiomeBase
  *
- * @author Gabe
+ * @author Gábe
  * @version 1.0.0
  * @since 1.3.3-SNAPSHOT
  */
@@ -114,17 +114,26 @@ public class WrappedBiomeBase {
         this.root = root;
     }
 
+    /**
+     * Registers this biome with the specified id.
+     *
+     * @param namespace the id of this biome.
+     * @return this biome.
+     */
     public WrappedBiomeBase register(NamespacedKey namespace) {
-        // return new WrappedBiomeBase(WrappedRegistryGeneration.register(WrappedIRegistry.BIOME, namespace, root));
-        // return WrappedBiomeRegistry.register(num++, new WrappedResourceKey(WrappedIRegistry.BIOME, namespace), this);
-
-        WrappedIRegistryCustom customRegistry = new WrappedIRegistryCustom(WrappedDedicatedServer.from(Bukkit.getServer()).getCustomRegistry());
-        WrappedIRegistryWritable writable = customRegistry.getWritable(WrappedIRegistry.BIOME);
-        writable.register(new WrappedResourceKey(WrappedIRegistry.BIOME, namespace), root);
+        WrappedIRegistryCustom customRegistry = WrappedDedicatedServer.from(Bukkit.getServer()).getCustomRegistry();
+        customRegistry.getWritable(WrappedIRegistry.BIOME).register(new WrappedResourceKey(WrappedIRegistry.BIOME, namespace), root);
 
         return this;
     }
 
+    /**
+     * Wrapped representation of the inner-class Geography.
+     *
+     * @author Gábe
+     * @version 1.0.0
+     * @since 1.3.3-SNAPSHOT
+     */
     public static enum Geography {
         NONE(Reflections.invoke(mc_geography_valueof, Object.class, null, "NONE")),
         TAIGA(Reflections.invoke(mc_geography_valueof, Object.class, null, "TAIGA")),
@@ -152,6 +161,13 @@ public class WrappedBiomeBase {
         }
     }
 
+    /**
+     * Wrapped representation of the inner-class Precipitation.
+     *
+     * @author Gábe
+     * @version 1.0.0
+     * @since 1.3.3-SNAPSHOT
+     */
     public static enum Precipitation {
         NONE(Reflections.invoke(mc_precipitation_valueof, Object.class, null, "NONE")),
         RAIN(Reflections.invoke(mc_precipitation_valueof, Object.class, null, "RAIN")),
@@ -165,6 +181,13 @@ public class WrappedBiomeBase {
         }
     }
 
+    /**
+     * Wrapped representation of the inner-class TemperatureModifier.
+     *
+     * @author Gábe
+     * @version 1.0.0
+     * @since 1.3.3-SNAPSHOT
+     */
     public static enum TemperatureModifier {
         NONE(Reflections.invoke(mc_temp_valueof, Object.class, null, "NONE")),
         FROZEN(Reflections.invoke(mc_temp_valueof, Object.class, null, "FROZEN"));
@@ -177,6 +200,13 @@ public class WrappedBiomeBase {
         }
     }
 
+    /**
+     * Builder for BiomeBase's.
+     *
+     * @author Gábe
+     * @version 1.0.0
+     * @since 1.3.3-SNAPSHOT
+     */
     public static class Builder {
 
         private final Object root;
@@ -188,35 +218,74 @@ public class WrappedBiomeBase {
             setGeneration();
         }
 
+        /**
+         * @return a new builder instance.
+         */
         public static Builder create() {
             return new Builder();
         }
 
+        /**
+         * Changes the geography to the provided value.
+         *
+         * @param geography the value we wish to change it to.
+         * @return this.
+         */
         public Builder setGeography(Geography geography) {
             Reflections.invoke(biome_setGeography, Void.class, root, geography.getObject());
             return this;
         }
 
+        /**
+         * Changes the precipitation to the provided value.
+         *
+         * @param precipitation the value we wish to change it to.
+         * @return this.
+         */
         public Builder setPrecipitation(Precipitation precipitation) {
             Reflections.invoke(biome_setPrecipitation, Void.class, root, precipitation.getObject());
             return this;
         }
 
+        /**
+         * Changes the temperature modifier to the provided value.
+         *
+         * @param temperatureModifier the value we wish to change it to.
+         * @return this.
+         */
         public Builder setTemperatureModifier(TemperatureModifier temperatureModifier) {
             Reflections.invoke(biome_setTemperatureModifier, Void.class, root, temperatureModifier.getObject());
             return this;
         }
 
+        /**
+         * Changes the downfall to the provided value.
+         *
+         * @param downfall the value we wish to change it to.
+         * @return this.
+         */
         public Builder setDownfall(float downfall) {
             Reflections.invoke(biome_setDownfall, Void.class, root, downfall);
             return this;
         }
 
+        /**
+         * Changes the temperature to the provided value.
+         *
+         * @param temperature the value we wish to change it to.
+         * @return this.
+         */
         public Builder setTemperature(float temperature) {
             Reflections.invoke(biome_setTemperature, Void.class, root, temperature);
             return this;
         }
 
+        /**
+         * Changes the effects to the provided value.
+         *
+         * @param effects the value we wish to change it to.
+         * @return this.
+         */
         public Builder setSpecialEffects(WrappedBiomeFog effects) {
             Reflections.invoke(biome_setSpecialEffects, Void.class, root, effects.getRoot());
             return this;
@@ -242,11 +311,23 @@ public class WrappedBiomeBase {
             return this;
         }
 
+        /**
+         * Changes the depth to the provided value.
+         *
+         * @param depth the value we wish to change it to.
+         * @return this.
+         */
         public Builder setDepth(float depth) {
             Reflections.invoke(biome_setDepth, Void.class, root, depth);
             return this;
         }
 
+        /**
+         * Changes the scale to the provided value.
+         *
+         * @param scale the value we wish to change it to.
+         * @return this.
+         */
         public Builder setScale(float scale) {
             Reflections.invoke(biome_setScale, Void.class, root, scale);
             return this;
@@ -255,7 +336,7 @@ public class WrappedBiomeBase {
         /**
          * Sets mobs to the default mobs.
          *
-         * @return this
+         * @return this.
          */
         public Builder setMobs() {
             setMobs(Reflections.get(mobs_b, Object.class, null));
@@ -265,25 +346,38 @@ public class WrappedBiomeBase {
         /**
          * Sets the generation to the default generation.
          *
-         * @return this
+         * @return this.
          */
         public Builder setGeneration() {
             setGeneration(Reflections.get(generation_b, Object.class, null));
             return this;
         }
 
-        // TODO: FINISH THIS ASAP
+        /**
+         * Changes the mob data to the provided value.
+         *
+         * @param mobData the value we wish to change it to.
+         * @return this.
+         */
         public Builder setMobs(Object mobData) {
             Reflections.invoke(biome_setMobs, Void.class, root, mobData);
             return this;
         }
 
-        // TODO: FINISH THIS ASAP
+        /**
+         * Changes the generation data to the provided value.
+         *
+         * @param generationData the value we wish to change it to.
+         * @return this.
+         */
         public Builder setGeneration(Object generationData) {
             Reflections.invoke(biome_setGeneration, Void.class, root, generationData);
             return this;
         }
 
+        /**
+         * @return the biome base with the provided settings.
+         */
         public WrappedBiomeBase build() {
             return new WrappedBiomeBase(Reflections.invoke(biomebase_build, Object.class, root));
         }

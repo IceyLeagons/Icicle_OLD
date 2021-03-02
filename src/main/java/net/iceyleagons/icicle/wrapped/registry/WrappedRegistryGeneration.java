@@ -31,9 +31,9 @@ import org.bukkit.NamespacedKey;
 import java.lang.reflect.Method;
 
 /**
- * Wrapped representation RegistryGeneration
+ * Wrapped representation of RegistryGeneration
  *
- * @author Gabe
+ * @author Gábe
  * @version 1.0.0
  * @since 1.3.3-SNAPSHOT
  */
@@ -48,6 +48,14 @@ public class WrappedRegistryGeneration {
         gen_register = Reflections.getMethod(mc_RegistryGeneration, "a", true, WrappedIRegistry.mc_IRegistry, WrappedIRegistry.mc_MinecraftKey, Object.class);
     }
 
+    /**
+     * Register an Object into the provided IReqistry on the specified key.
+     *
+     * @param registry an IRegistry object.
+     * @param key      the key to register the object into.
+     * @param obj      the object to register.
+     * @return the registered object.
+     */
     public static <T> T register(Object registry, NamespacedKey key, T obj) {
         return (T) Reflections.invoke(gen_register, Object.class, null, registry, WrappedCraftNamespacedKey.toMinecraft(key), obj);
     }

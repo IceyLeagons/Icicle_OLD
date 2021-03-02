@@ -29,7 +29,7 @@ import net.iceyleagons.icicle.reflect.Reflections;
 import java.lang.reflect.Method;
 
 /**
- * Wrapped representation CraftChatMessage
+ * Wrapped representation of CraftChatMessage
  *
  * @author TOTHTOMI
  * @version 1.0.0
@@ -45,6 +45,12 @@ public class WrappedCraftChatMessage {
         fromString = Reflections.getMethod(cb_craftChatMessage, "fromString", true, String.class);
     }
 
+    /**
+     * Parses a string and converts it into a CraftChatMessage array.
+     *
+     * @param string the string we wish to convert.
+     * @return an array containing CraftChatMessages.
+     */
     public static Object[] fromString(String string) {
         return Reflections.invoke(fromString, Object[].class, cb_craftChatMessage, string);
     }

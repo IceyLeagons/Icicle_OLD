@@ -26,14 +26,13 @@ package net.iceyleagons.icicle.wrapped.world;
 
 import lombok.Getter;
 import net.iceyleagons.icicle.reflect.Reflections;
-import net.iceyleagons.icicle.wrapped.WrappedBlockPosition;
 
 import java.lang.reflect.Method;
 
 /**
- * Wrapped representation LightEngine
+ * Wrapped representation of LightEngine
  *
- * @author Gabe
+ * @author Gábe
  * @version 1.0.0
  * @since 1.3.3-SNAPSHOT
  */
@@ -55,6 +54,11 @@ public class WrappedLightEngine {
         this.engine = engine;
     }
 
+    /**
+     * Tells the light engine to update at a specified location. (blockPosition)
+     *
+     * @param blockPosition the location to update the light at.
+     */
     public void update(WrappedBlockPosition blockPosition) {
         Reflections.invoke(light_update, Void.class, engine, blockPosition.getRoot());
     }

@@ -27,13 +27,20 @@ package net.iceyleagons.icicle.wrapped;
 import lombok.Getter;
 import net.iceyleagons.icicle.reflect.Reflections;
 import net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftWorld;
+import net.iceyleagons.icicle.wrapped.world.WrappedBlockPosition;
 import net.iceyleagons.icicle.wrapped.world.chunk.WrappedChunk;
 import org.bukkit.inventory.InventoryHolder;
 
 import java.lang.reflect.Method;
 
+/**
+ * Wrapped representation of TileEntity
+ *
+ * @author Gábe
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
+ */
 public class WrappedTileEntity {
-
     public static final Class<?> mc_TileEntity;
     private static final Method tile_getChunk;
     private static final Method tile_getWorld;
@@ -67,38 +74,74 @@ public class WrappedTileEntity {
         this.entity = entity;
     }
 
+    /**
+     * @return the "host" chunk.
+     */
     public WrappedChunk getChunk() {
         return new WrappedChunk(Reflections.invoke(tile_getChunk, Object.class, entity));
     }
 
+    /**
+     * @return the "host" world.
+     */
     public WrappedCraftWorld getWorld() {
         return new WrappedCraftWorld(Reflections.invoke(tile_getWorld, Object.class, entity));
     }
 
+    /**
+     * @return whether or not this tile entity belongs to any one world.
+     */
     public Boolean hasWorld() {
         return Reflections.invoke(tile_hasWorld, Boolean.class, entity);
     }
 
+    /**
+     * Run on ticks. I guess redstone components use this?
+     */
     public void update() {
         Reflections.invoke(tile_update, Void.class, entity);
     }
 
+    /**
+     * @return the position of this tile entity.
+     */
     public WrappedBlockPosition getPosition() {
         return new WrappedBlockPosition(Reflections.invoke(tile_getPosition, Object.class, entity));
     }
 
+    /**
+     * Updates the position of this tile entity.
+     *
+     * @param blockPosition the new position of this tile entity.
+     */
     public void setPosition(WrappedBlockPosition blockPosition) {
         Reflections.invoke(tile_setPosition, Void.class, entity, blockPosition.getRoot());
     }
 
+    /**
+     * Invalidates the block cache of this tile entity.
+     */
     public void invalidateBlockCache() {
         Reflections.invoke(tile_invalidateBlockCache, Void.class, entity);
     }
 
+    /**
+     * Same as {@link #getOwner(boolean)} with a true supplied.
+     * <p>
+     * Gets the owner of this tile entity. Used for chests, I guess?
+     *
+     * @return an {@link InventoryHolder}.
+     */
     public InventoryHolder getOwner() {
         return getOwner(true);
     }
 
+    /**
+     * Gets the owner of this tile entity. Used for chests, I guess?
+     *
+     * @param useSnapshot whether or not to look at the current version, or a snapshot of this tile entity. I'm guessing current version would freeze up the server.
+     * @return an {@link InventoryHolder}.
+     */
     public InventoryHolder getOwner(boolean useSnapshot) {
         return Reflections.invoke(tile_getOwner, InventoryHolder.class, entity, useSnapshot);
     }

@@ -31,7 +31,11 @@ import net.iceyleagons.icicle.reflect.Reflections;
 import java.lang.reflect.Field;
 
 /**
+ * Wrapped representation of NetworkManager
+ *
  * @author TOTHTOMI
+ * @version 1.0.0
+ * @since 1.3.3-SNAPSHOT
  */
 @RequiredArgsConstructor
 public class WrappedNetworkManager {
@@ -48,6 +52,9 @@ public class WrappedNetworkManager {
 
     private final Object networkManager;
 
+    /**
+     * @return the channel of network manager.
+     */
     public Channel getChannel() {
         return Reflections.get(mc_channel, Channel.class, networkManager);
     }

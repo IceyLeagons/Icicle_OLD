@@ -33,6 +33,7 @@ import net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftWorld;
 import net.iceyleagons.icicle.wrapped.data.WrappedDataWatcher;
 import net.iceyleagons.icicle.wrapped.mojang.WrappedGameProfile;
 import net.iceyleagons.icicle.wrapped.world.WrappedWorld;
+import org.bukkit.Location;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -112,55 +113,122 @@ public class WrappedEntityPlayer {
         return new WrappedEntityPlayer(handle);
     }
 
+    /**
+     * Teleports and synchronizes the players client to the specified position.
+     *
+     * @param x self-explanatory.
+     * @param y self-explanatory.
+     * @param z self-explanatory.
+     */
     public void teleportAndSync(double x, double y, double z) {
         Reflections.invoke(mc_teleportAndSync, Void.class, entityPlayer, x, y, z);
     }
 
+    /**
+     * Teleports and synchronizes the players client to the specified position.
+     *
+     * @param location self-explanatory.
+     */
+    public void teleportAndSync(Location location) {
+        teleportAndSync(location.getX(), location.getY(), location.getZ());
+    }
+
+    /**
+     * @return the yaw of this player.
+     */
     public Float getYaw() {
         return Reflections.get(mc_yaw, Float.class, entityPlayer);
     }
 
+    /**
+     * @return the pitch of this player.
+     */
     public Float getPitch() {
         return Reflections.get(mc_pitch, Float.class, entityPlayer);
     }
 
+    /**
+     * @return the data watcher assigned to this entity.
+     */
     public WrappedDataWatcher getDataWatcher() {
         Object o = Reflections.invoke(mc_getDataWatcher, Object.class, entityPlayer);
         return new WrappedDataWatcher(o);
     }
 
+    /**
+     * Changes the location of this player to the provided position.
+     *
+     * @param x     self-explanatory.
+     * @param y     self-explanatory.
+     * @param z     self-explanatory.
+     * @param yaw   self-explanatory.
+     * @param pitch self-explanatory.
+     */
     public void setLocation(double x, double y, double z, float yaw, float pitch) {
         Reflections.invoke(mc_setLocation, Void.class, entityPlayer, x, y, z, yaw, pitch);
     }
 
+    /**
+     * Changes the location of this player to the provided position.
+     *
+     * @param location self-explanatory.
+     */
+    public void setLocation(Location location) {
+        Reflections.invoke(mc_setLocation, Void.class, entityPlayer, location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+    }
+
+    /**
+     * @return returns this nms class as a bukkit entity. Probably should be a Player.
+     */
     public Object getBukkitEntity() {
         return Reflections.invoke(mc_getBukkitEntity, Object.class, entityPlayer);
     }
 
+    /**
+     * @return the player connection of this player. Used for sending packets and such.
+     */
     public WrappedPlayerConnection getPlayerConnection() {
         return new WrappedPlayerConnection(Reflections.get(mc_playerConnection, Object.class, entityPlayer));
     }
 
+    /**
+     * @return the game profile of this player.
+     */
     public WrappedGameProfile getGameProfile() {
         return new WrappedGameProfile(Reflections.get(mc_gameProfile, Object.class, entityPlayer));
     }
 
+    /**
+     * @return the id of this entity.
+     */
     public Integer getId() {
         return Reflections.get(mc_id, Integer.class, entityPlayer);
     }
 
+    /**
+     * @return the network manager that's managing this player.
+     */
     public WrappedNetworkManager getNetworkManager() {
         return new WrappedNetworkManager(Reflections.get(mc_networkManager, Object.class, entityPlayer));
     }
 
-    public Object getNMSWorld() {
-        return Reflections.get(mc_world, Object.class, entityPlayer);
+    /**
+     * @return the world this player resides in right now.
+     */
+    public WrappedWorld getNMSWorld() {
+        return new WrappedWorld(Reflections.get(mc_world, Object.class, entityPlayer));
     }
 
+    /**
+     * @return the ping of this player.
+     */
     public Integer getPing() {
         return Reflections.get(mc_ping, Integer.class, entityPlayer);
     }
 
+    /**
+     * @return whether or not the player is frozen. Probably packet-freeze.
+     */
     public Boolean isFrozen() {
         return Reflections.invoke(mc_isFrozen, Boolean.class, entityPlayer);
     }

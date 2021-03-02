@@ -32,9 +32,9 @@ import java.awt.*;
 import java.lang.reflect.Method;
 
 /**
- * Wrapped representation BiomeFog
+ * Wrapped representation of BiomeFog
  *
- * @author Gabe
+ * @author Gábe
  * @version 1.1.0
  * @since 1.3.3-SNAPSHOT
  */
@@ -101,6 +101,13 @@ public class WrappedBiomeFog {
         return rgb;
     }
 
+    /**
+     * A factory used for creating biome fogs.
+     *
+     * @author Gábe
+     * @version 1.1.0
+     * @since 1.3.3-SNAPSHOT
+     */
     public static class Builder {
 
         private Object root;
@@ -114,66 +121,135 @@ public class WrappedBiomeFog {
             return new WrappedBiomeFog.Builder();
         }
 
+        /**
+         * Changes the color of the fog.
+         *
+         * @param color self-explanatory.
+         * @return this.
+         */
         public WrappedBiomeFog.Builder setFogColor(Color color) {
             this.root = Reflections.invoke(biome_setFogColor, Object.class, root, getColor(color));
             return this;
         }
 
+        /**
+         * Changes the color of the water.
+         *
+         * @param color self-explanatory.
+         * @return this.
+         */
         public WrappedBiomeFog.Builder setWaterColor(Color color) {
             this.root = Reflections.invoke(biome_setWaterColor, Object.class, root, getColor(color));
             return this;
         }
 
+        /**
+         * Changes the color of the fog underwater.
+         *
+         * @param color self-explanatory.
+         * @return this.
+         */
         public WrappedBiomeFog.Builder setWaterFogColor(Color color) {
             this.root = Reflections.invoke(biome_setWaterFogColor, Object.class, root, getColor(color));
             return this;
         }
 
+        /**
+         * Changes the color of the sky.
+         *
+         * @param color self-explanatory.
+         * @return this.
+         */
         public WrappedBiomeFog.Builder setSkyColor(Color color) {
             this.root = Reflections.invoke(biome_setSkyColor, Object.class, root, getColor(color));
             return this;
         }
 
+        /**
+         * Changes the color of the foliage.
+         *
+         * @param color self-explanatory.
+         * @return this.
+         */
         public WrappedBiomeFog.Builder setFoliageColor(Color color) {
             this.root = Reflections.invoke(biome_setFoliageColor, Object.class, root, getColor(color));
             return this;
         }
 
+        /**
+         * Changes the color of the grass.
+         *
+         * @param color self-explanatory.
+         * @return this.
+         */
         public WrappedBiomeFog.Builder setGrassColor(Color color) {
             this.root = Reflections.invoke(biome_setGrassColor, Object.class, root, getColor(color));
             return this;
         }
 
+        /**
+         * NOT YET IMPLEMENTED.
+         *
+         * @return this.
+         */
         public WrappedBiomeFog.Builder setGrassColorModifier(Object color) {
             this.root = Reflections.invoke(biome_setGrassColorModifier, Object.class, root, color);
             return this;
         }
 
+        /**
+         * NOT YET IMPLEMENTED.
+         *
+         * @return this.
+         */
         public WrappedBiomeFog.Builder setParticles(Object particle) {
             this.root = Reflections.invoke(biome_setParticles, Object.class, root, particle);
             return this;
         }
 
+        /**
+         * NOT YET IMPLEMENTED.
+         *
+         * @return this.
+         */
         public WrappedBiomeFog.Builder setAmbientSounds(Object sounds) {
             this.root = Reflections.invoke(biome_setAmbientSounds, Object.class, root, sounds);
             return this;
         }
 
+        /**
+         * NOT YET IMPLEMENTED.
+         *
+         * @return this.
+         */
         public WrappedBiomeFog.Builder setMoodSounds(Object sounds) {
             this.root = Reflections.invoke(biome_setMoodSounds, Object.class, root, sounds);
             return this;
         }
 
+        /**
+         * NOT YET IMPLEMENTED.
+         *
+         * @return this.
+         */
         public WrappedBiomeFog.Builder setAdditionalSounds(Object sounds) {
             this.root = Reflections.invoke(biome_setAdditionalSounds, Object.class, root, sounds);
             return this;
         }
 
+        /**
+         * NOT YET IMPLEMENTED.
+         *
+         * @return this.
+         */
         public WrappedBiomeFog.Builder setMusic(Object music) {
             this.root = Reflections.invoke(biome_setMusic, Object.class, root, music);
             return this;
         }
 
+        /**
+         * @return the complete BiomeFog with the settings provided beforehand.
+         */
         public WrappedBiomeFog build() {
             return new WrappedBiomeFog(Reflections.invoke(biome_fog_create, Object.class, root));
         }

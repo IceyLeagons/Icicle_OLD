@@ -34,7 +34,7 @@ import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
 
 /**
- * Wrapped representation CraftPlayer
+ * Wrapped representation of CraftPlayer
  *
  * @author TOTHTOMI
  * @version 1.0.0
@@ -78,14 +78,23 @@ public class WrappedCraftPlayer {
         return new WrappedCraftPlayer(player);
     }
 
+    /**
+     * @return the conversation tracker of this player. CURRENTLY NOT WRAPPED.
+     */
     public Object getConversationTracker() {
         return Reflections.get(cb_getConversationTracker, Object.class, bukkitPlayer);
     }
 
+    /**
+     * @return the protocol version of this client.
+     */
     public Integer getProtocolVersion() {
         return Reflections.invoke(cb_getProtocolVersion, Integer.class, bukkitPlayer);
     }
 
+    /**
+     * @return the socket assigned to this player.
+     */
     public InetSocketAddress getVirtualHost() {
         return Reflections.invoke(cb_getVirtualHost, InetSocketAddress.class, bukkitPlayer);
     }
@@ -94,6 +103,9 @@ public class WrappedCraftPlayer {
         Reflections.invoke(cb_sendActionbar, Void.class, bukkitPlayer, message);
     }*/
 
+    /**
+     * @return this player as an NMS entity.
+     */
     public WrappedEntityPlayer getHandle() {
         return WrappedEntityPlayer.from(Reflections.invoke(cb_getHandle, Object.class, bukkitPlayer));
     }

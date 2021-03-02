@@ -31,9 +31,9 @@ import net.iceyleagons.icicle.wrapped.registry.WrappedResourceKey;
 import java.lang.reflect.Method;
 
 /**
- * Wrapped representation BiomeRegistry
+ * Wrapped representation of BiomeRegistry
  *
- * @author Gabe
+ * @author Gábe
  * @version 1.0.0
  * @since 1.3.3-SNAPSHOT
  */
@@ -47,6 +47,14 @@ public class WrappedBiomeRegistry {
         registry_register = Reflections.getMethod(mc_BiomeRegistry, "a", true, int.class, WrappedIRegistry.mc_ResourceKey, WrappedBiomeBase.mc_BiomeBase);
     }
 
+    /**
+     * Registers a biome into this registry.
+     *
+     * @param id          the id we wish to register it into.
+     * @param resourceKey the resource key of the registrar.
+     * @param biomeBase   the biome base we wish to register.
+     * @return the provided biome base.
+     */
     public static WrappedBiomeBase register(int id, WrappedResourceKey resourceKey, WrappedBiomeBase biomeBase) {
         return new WrappedBiomeBase(Reflections.invoke(registry_register, Object.class, null, id, resourceKey.getResourceKey(), biomeBase.getRoot()));
     }

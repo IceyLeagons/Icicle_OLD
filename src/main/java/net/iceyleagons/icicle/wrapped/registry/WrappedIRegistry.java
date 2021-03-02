@@ -30,9 +30,9 @@ import net.iceyleagons.icicle.reflect.Reflections;
 import java.lang.reflect.Method;
 
 /**
- * Wrapped representation IRegistry
+ * Wrapped representation of IRegistry
  *
- * @author Gabe
+ * @author Gábe
  * @version 1.0.0
  * @since 1.3.3-SNAPSHOT
  */
@@ -59,6 +59,15 @@ public class WrappedIRegistry {
         DIMENSION = Reflections.get(Reflections.getField(mc_IRegistry, "K", true), Object.class, null);
     }
 
+    /**
+     * Retrieves an IRegistry from the root with the specified minecraft key.
+     * <p>
+     * Currently pretty useless, since we don't handle minecraft keys. (AS OF NOW! Subject to change)
+     *
+     * @param root         self-explanatory.
+     * @param minecraftKey self-explanatory.
+     * @return the IRegistry searched for.
+     */
     @SneakyThrows
     public static Object get(Object root, Object minecraftKey) {
         return registry_get.invoke(root, minecraftKey);

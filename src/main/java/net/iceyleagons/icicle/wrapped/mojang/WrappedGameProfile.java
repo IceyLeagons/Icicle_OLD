@@ -33,7 +33,7 @@ import java.lang.reflect.Method;
 import java.util.UUID;
 
 /**
- * Wrapped representation GameProfile
+ * Wrapped representation of GameProfile
  *
  * @author TOTHTOMI
  * @version 1.0.0
@@ -68,15 +68,24 @@ public class WrappedGameProfile {
         this.nmsObject = root;
     }
 
+    /**
+     * @return the id of this profile.
+     */
     public UUID getId() {
         return Reflections.invoke(getId, UUID.class, nmsObject);
     }
 
+    /**
+     * @return the properties of this profile. Containing stuff like skin.
+     */
     public WrappedPropertyMap getProperties() {
         Object obj = Reflections.invoke(getProperties, Object.class, nmsObject);
         return new WrappedPropertyMap(obj);
     }
 
+    /**
+     * @return the name of this profile.
+     */
     public String getName() {
         return Reflections.invoke(getName, String.class, nmsObject);
     }

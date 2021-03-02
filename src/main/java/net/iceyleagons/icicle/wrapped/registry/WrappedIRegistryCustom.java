@@ -30,7 +30,9 @@ import net.iceyleagons.icicle.reflect.Reflections;
 import java.lang.reflect.Method;
 
 /**
- * Wrapped representation IRegistryCustom
+ * Wrapped representation of IRegistryCustom
+ * <p>
+ * {@link Dimension} is a subclass of this.
  *
  * @author Gabe
  * @version 1.0.0
@@ -56,10 +58,19 @@ public class WrappedIRegistryCustom {
         this.root = root;
     }
 
+    /**
+     * Converts the provided key into a writable key. (if possible)
+     *
+     * @param key key we want to convert.
+     * @return an instance of IRegistryWritable.
+     */
     public WrappedIRegistryWritable getWritable(Object key) {
         return new WrappedIRegistryWritable(Reflections.invoke(registry_getWritable, Object.class, root, key));
     }
 
+    /**
+     * @return this as a {@link Dimension}
+     */
     public Dimension asDimension() {
         if (mc_IRegistryCustom_Dimension.isInstance(root))
             return new Dimension(root);
@@ -67,6 +78,11 @@ public class WrappedIRegistryCustom {
         throw new UnsupportedOperationException("Not a Dimension!");
     }
 
+    /**
+     * @author Gábe
+     * @version 1.0.0
+     * @since 1.3.3-SNAPSHOT
+     */
     public static class Dimension extends WrappedIRegistryCustom {
 
         public Dimension(Object dimension) {

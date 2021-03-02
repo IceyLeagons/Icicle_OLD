@@ -29,7 +29,7 @@ import net.iceyleagons.icicle.reflect.Reflections;
 import java.lang.reflect.Field;
 
 /**
- * Wrapped representation DataWatcherRegistry
+ * Wrapped representation of DataWatcherRegistry
  *
  * @author TOTHTOMI
  * @version 1.0.0
@@ -48,6 +48,7 @@ public class WrappedDataWatcherRegistry {
         c = Reflections.getField(mc_dataWatcherRegistry, "c", true);
     }
 
+    // TODO: try to understand what this is.
     public static Object a() {
         return Reflections.get(a, Object.class, null);
     }
