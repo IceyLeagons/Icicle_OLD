@@ -58,7 +58,7 @@ public class LocationSerializer implements Serializer<StringTag, Location> {
             Location location = NBTType.deserialize(compoundTag, name, NBTType.LOCATION, field, Location.class);
             Reflections.set(field, o, location);
         } catch (Exception e) {
-            e.printStackTrace();;
+            e.printStackTrace();
         }
     }
 

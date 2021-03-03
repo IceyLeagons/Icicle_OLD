@@ -43,20 +43,18 @@ public abstract class Config {
 
     public Config(JavaPlugin javaPlugin, String fileName) {
         this.javaPlugin = javaPlugin;
-        this.file = new File(javaPlugin.getDataFolder(), fileName+".yaml");
+        this.file = new File(javaPlugin.getDataFolder(), fileName + ".yaml");
 
-        if (!file.exists()) {
-            if (!file.mkdirs()) throw new IllegalStateException("Could not create config file!");
-        }
+        if (!file.exists() && !file.mkdirs())
+            throw new IllegalStateException("Could not create config file!");
     }
 
     public Config(JavaPlugin javaPlugin, File subFolder, String fileName) {
         this.javaPlugin = javaPlugin;
-        this.file = new File(javaPlugin.getDataFolder() + File.separator + subFolder, fileName+".yaml");
+        this.file = new File(javaPlugin.getDataFolder() + File.separator + subFolder, fileName + ".yaml");
 
-        if (!file.exists()) {
-            if (!file.mkdirs()) throw new IllegalStateException("Could not create config file!");
-        }
+        if (!file.exists() && !file.mkdirs())
+            throw new IllegalStateException("Could not create config file!");
     }
 
     public void reload() {

@@ -61,7 +61,7 @@ public class InventorySerializer implements Serializer<ByteArrayTag, ItemStack[]
                 inventory.setContents(contents);
             }
         } catch (Exception e) {
-            e.printStackTrace();;
+            e.printStackTrace();
         }
     }
 

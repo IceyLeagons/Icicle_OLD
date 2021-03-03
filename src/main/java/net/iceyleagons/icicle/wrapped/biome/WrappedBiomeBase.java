@@ -30,7 +30,6 @@ import net.iceyleagons.icicle.reflect.Reflections;
 import net.iceyleagons.icicle.wrapped.WrappedDedicatedServer;
 import net.iceyleagons.icicle.wrapped.registry.WrappedIRegistry;
 import net.iceyleagons.icicle.wrapped.registry.WrappedIRegistryCustom;
-import net.iceyleagons.icicle.wrapped.registry.WrappedIRegistryWritable;
 import net.iceyleagons.icicle.wrapped.registry.WrappedResourceKey;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;

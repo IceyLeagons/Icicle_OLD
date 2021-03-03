@@ -55,7 +55,7 @@ public class IntSerializer implements Serializer<IntTag, Integer> {
             int integer = NBTType.deserialize(compoundTag, name, NBTType.INTEGER, field, Integer.class);
             Reflections.set(field, o, integer);
         } catch (Exception e) {
-            e.printStackTrace();;
+            e.printStackTrace();
         }
     }
 }

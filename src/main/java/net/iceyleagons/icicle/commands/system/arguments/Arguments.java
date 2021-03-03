@@ -41,6 +41,8 @@ public enum Arguments {
 
     private Object getReturn(Arguments arguments, String fromCommand) throws InvalidArgumentException {
         switch (arguments) {
+            default:
+                return null;
             case STRING:
                 return fromCommand;
             case INTEGER:

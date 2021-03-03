@@ -111,7 +111,7 @@ public class BungeeUtils {
     }
 
     private void kickPlayer(String reason, Player player) {
-        ByteArrayDataOutput out = ByteStreams.newDataOutput();;
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("KickPlayer");
         out.writeUTF(player.getName());
         out.writeUTF(reason);
@@ -126,7 +126,8 @@ public class BungeeUtils {
     }
 
     private void connectPlayer(String server, Player player) {
-        ByteArrayDataOutput out = ByteStreams.newDataOutput();;
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        ;
         out.writeUTF("ConnectOther");
         out.writeUTF(player.getName());
         out.writeUTF(server);

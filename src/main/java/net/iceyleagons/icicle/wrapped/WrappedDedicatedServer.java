@@ -24,7 +24,6 @@
 
 package net.iceyleagons.icicle.wrapped;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.iceyleagons.icicle.reflect.Reflections;

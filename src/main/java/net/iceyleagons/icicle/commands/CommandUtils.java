@@ -91,9 +91,9 @@ public class CommandUtils {
      * @throws CommandInjectException if errors happen during the injection
      */
     public void injectCommand(@NonNull String command, @NonNull CommandExecutor commandExecutor,
-                                     TabCompleter tabCompleter, String usage, String description,
-                                     String permission, String permissionMessage,
-                                     List<String> aliases) throws CommandInjectException {
+                              TabCompleter tabCompleter, String usage, String description,
+                              String permission, String permissionMessage,
+                              List<String> aliases) throws CommandInjectException {
         try {
             final Field bukkitCommandMap = Reflections.getField(plugin.getServer().getClass(), "commandMap", true);
             if (bukkitCommandMap == null) throw new CommandInjectException(command, "CommandMap is unavailable");

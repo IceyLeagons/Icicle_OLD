@@ -57,7 +57,7 @@ public class BlockFaceSerializer implements Serializer<IntTag, BlockFace> {
             BlockFace blockFace = NBTType.deserialize(compoundTag, name, NBTType.BLOCK_FACE, field, BlockFace.class);
             Reflections.set(field, o, blockFace);
         } catch (Exception e) {
-            e.printStackTrace();;
+            e.printStackTrace();
         }
     }
 }

@@ -55,7 +55,7 @@ public class StringSerializer implements Serializer<StringTag, String> {
             String string = NBTType.deserialize(compoundTag, name, NBTType.STRING, field, String.class);
             Reflections.set(field, o, string);
         } catch (Exception e) {
-            e.printStackTrace();;
+            e.printStackTrace();
         }
     }
 }

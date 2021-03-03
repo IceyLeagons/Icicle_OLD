@@ -59,7 +59,7 @@ public class PlayerSerializer implements Serializer<StringTag, OfflinePlayer> {
             Player player = NBTType.deserialize(compoundTag, name, NBTType.PLAYER, field, Player.class);
             Reflections.set(field, o, player);
         } catch (Exception e) {
-            e.printStackTrace();;
+            e.printStackTrace();
         }
     }
 

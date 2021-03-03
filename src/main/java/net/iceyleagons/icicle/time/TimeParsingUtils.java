@@ -40,11 +40,6 @@ public class TimeParsingUtils {
 
     public static final Pattern pattern = Pattern.compile("((\\d*\\.)?\\d+)([Y,M,W,D,m,h])");
 
-    @Test
-    public void test() {
-        System.out.println(parseFromNow("1D 1h"));
-    }
-
     public static LocalDateTime parseFromNow(String input) {
         Matcher matcher = pattern.matcher(input);
         LocalDateTime localDateTime = LocalDateTime.now();
@@ -52,7 +47,7 @@ public class TimeParsingUtils {
             String value = matcher.group(1).trim();
             String token = matcher.group(3).trim();
 
-            TemporalAmount temporalAmount = parse(value+token);
+            TemporalAmount temporalAmount = parse(value + token);
             localDateTime = localDateTime.plus(temporalAmount);
         }
 
