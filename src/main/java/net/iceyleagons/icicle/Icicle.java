@@ -57,7 +57,7 @@ public class Icicle extends JavaPlugin {
      * @return the version of the current icicle library. Our versions use the Semantic versioning.
      */
     public static String getVersion() {
-        return "1.3.7-SNAPSHOT";
+        return "1.3.8-SNAPSHOT";
     }
 
     /**
