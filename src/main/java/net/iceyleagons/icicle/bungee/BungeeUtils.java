@@ -120,14 +120,12 @@ public class BungeeUtils {
     }
 
     public void connectPlayers(String server, Player... players) {
-        for (Player player : players) {
+        for (Player player : players)
             connectPlayer(server, player);
-        }
     }
 
     private void connectPlayer(String server, Player player) {
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
-        ;
         out.writeUTF("ConnectOther");
         out.writeUTF(player.getName());
         out.writeUTF(server);

@@ -24,8 +24,6 @@
 
 package net.iceyleagons.icicle.time;
 
-import org.junit.Test;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.Period;
