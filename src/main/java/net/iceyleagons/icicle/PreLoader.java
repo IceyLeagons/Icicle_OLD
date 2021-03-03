@@ -53,56 +53,65 @@ public class PreLoader {
     public static void preloadReflections() {
         try {
             long timeNow = System.currentTimeMillis();
-            Class.forName("net.iceyleagons.icicle.wrapped.world.WrappedBlockPosition");
-            Class.forName("net.iceyleagons.icicle.wrapped.WrappedDedicatedServer");
-            Class.forName("net.iceyleagons.icicle.wrapped.WrappedTileEntity");
+            Class.forName("net.iceyleagons.icicle.wrapped.biome.WrappedBiomeBase");
+            Class.forName("net.iceyleagons.icicle.wrapped.biome.WrappedBiomeStorage");
+            Class.forName("net.iceyleagons.icicle.wrapped.biome.WrappedBiomeFog");
+            Class.forName("net.iceyleagons.icicle.wrapped.biome.WrappedBiomeRegistry");
+            Class.forName("net.iceyleagons.icicle.wrapped.biome.WrappedBiomeGrid");
 
-            Class.forName("net.iceyleagons.icicle.wrapped.registry.WrappedResourceKey");
-            Class.forName("net.iceyleagons.icicle.wrapped.registry.WrappedIRegistryWritable");
-            Class.forName("net.iceyleagons.icicle.wrapped.registry.WrappedIRegistry");
-            Class.forName("net.iceyleagons.icicle.wrapped.registry.WrappedIRegistryCustom");
-            Class.forName("net.iceyleagons.icicle.wrapped.registry.WrappedRegistryGeneration");
-
-            Class.forName("net.iceyleagons.icicle.wrapped.world.WrappedLightEngine");
-            Class.forName("net.iceyleagons.icicle.wrapped.world.WrappedWorld");
-            Class.forName("net.iceyleagons.icicle.wrapped.world.chunk.WrappedChunk");
-            Class.forName("net.iceyleagons.icicle.wrapped.world.chunk.WrappedChunkCoordIntPair");
-
-            Class.forName("net.iceyleagons.icicle.wrapped.player.WrappedCraftPlayer");
-            Class.forName("net.iceyleagons.icicle.wrapped.player.WrappedEntityPlayer");
-            Class.forName("net.iceyleagons.icicle.wrapped.player.WrappedNetworkManager");
-            Class.forName("net.iceyleagons.icicle.wrapped.player.WrappedPlayerConnection");
-
-            Class.forName("net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutMapChunk");
-            Class.forName("net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutEntity");
-            Class.forName("net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutEntityDestroy");
-            Class.forName("net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutEntityHeadRotation");
-            Class.forName("net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutEntityMetadata");
-            Class.forName("net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutNamedEntitySpawn");
-            Class.forName("net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutPlayerInfo");
-
-            Class.forName("net.iceyleagons.icicle.wrapped.item.WrappedItem");
-            Class.forName("net.iceyleagons.icicle.wrapped.item.WrappedItemStack");
-
-            Class.forName("net.iceyleagons.icicle.wrapped.mojang.WrappedGameProfile");
-            Class.forName("net.iceyleagons.icicle.wrapped.mojang.WrappedProperty");
-            Class.forName("net.iceyleagons.icicle.wrapped.mojang.WrappedPropertyMap");
+            Class.forName("net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftBlock");
+            Class.forName("net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftBlockEntityState");
+            Class.forName("net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftChatMessage");
+            Class.forName("net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftCreatureSpawner");
+            Class.forName("net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftNamespacedKey");
+            Class.forName("net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftWorld");
 
             Class.forName("net.iceyleagons.icicle.wrapped.data.WrappedDataWatcher");
             Class.forName("net.iceyleagons.icicle.wrapped.data.WrappedDataWatcherObject");
             Class.forName("net.iceyleagons.icicle.wrapped.data.WrappedDataWatcherRegistry");
 
-            Class.forName("net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftNamespacedKey");
-            Class.forName("net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftBlock");
-            Class.forName("net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftWorld");
-            Class.forName("net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftChatMessage");
+            Class.forName("net.iceyleagons.icicle.wrapped.entity.WrappedTileEntity");
+            Class.forName("net.iceyleagons.icicle.wrapped.entity.spawner.WrappedMobSpawnerAbstract");
+            Class.forName("net.iceyleagons.icicle.wrapped.entity.spawner.WrappedTileEntityMobSpawner");
 
-            Class.forName("net.iceyleagons.icicle.wrapped.biome.WrappedBiomeBase");
-            Class.forName("net.iceyleagons.icicle.wrapped.biome.WrappedBiomeFog");
-            Class.forName("net.iceyleagons.icicle.wrapped.biome.WrappedBiomeRegistry");
-            Class.forName("net.iceyleagons.icicle.wrapped.biome.WrappedBiomeStorage");
+            Class.forName("net.iceyleagons.icicle.wrapped.item.WrappedItem");
+            Class.forName("net.iceyleagons.icicle.wrapped.item.WrappedItemStack");
 
-            System.out.printf("Elapsed time: %s ms.%n", System.currentTimeMillis() - timeNow);
+            Class.forName("net.iceyleagons.icicle.wrapped.mojang.WrappedGameProfile");
+            Class.forName("net.iceyleagons.icicle.wrapped.mojang.WrappedMojangsonParser");
+            Class.forName("net.iceyleagons.icicle.wrapped.mojang.WrappedProperty");
+            Class.forName("net.iceyleagons.icicle.wrapped.mojang.WrappedPropertyMap");
+
+            Class.forName("net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutEntity");
+            Class.forName("net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutEntityDestroy");
+            Class.forName("net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutEntityHeadRotation");
+            Class.forName("net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutEntityMetadata");
+            Class.forName("net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutMapChunk");
+            Class.forName("net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutNamedEntitySpawn");
+            Class.forName("net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutPlayerInfo");
+
+            Class.forName("net.iceyleagons.icicle.wrapped.player.WrappedCraftPlayer");
+            Class.forName("net.iceyleagons.icicle.wrapped.player.WrappedEntityPlayer");
+            Class.forName("net.iceyleagons.icicle.wrapped.player.WrappedNetworkManager");
+            Class.forName("net.iceyleagons.icicle.wrapped.player.WrappedPlayerConnection");
+            Class.forName("net.iceyleagons.icicle.wrapped.player.WrappedPlayerInteractManager");
+
+            Class.forName("net.iceyleagons.icicle.wrapped.registry.WrappedIRegistry");
+            Class.forName("net.iceyleagons.icicle.wrapped.registry.WrappedIRegistryCustom");
+            Class.forName("net.iceyleagons.icicle.wrapped.registry.WrappedIRegistryWritable");
+            Class.forName("net.iceyleagons.icicle.wrapped.registry.WrappedRegistryGeneration");
+            Class.forName("net.iceyleagons.icicle.wrapped.registry.WrappedResourceKey");
+
+            Class.forName("net.iceyleagons.icicle.wrapped.world.WrappedBlockPosition");
+            Class.forName("net.iceyleagons.icicle.wrapped.world.WrappedLightEngine");
+            Class.forName("net.iceyleagons.icicle.wrapped.world.WrappedWorld");
+            Class.forName("net.iceyleagons.icicle.wrapped.world.chunk.WrappedChunk");
+            Class.forName("net.iceyleagons.icicle.wrapped.world.chunk.WrappedChunkCoordIntPair");
+
+            Class.forName("net.iceyleagons.icicle.wrapped.WrappedDedicatedServer");
+            Class.forName("net.iceyleagons.icicle.wrapped.WrappedEnumGamemode");
+            Class.forName("net.iceyleagons.icicle.wrapped.WrappedPlayerList");
+            System.out.printf("Took %sms to preload wrapped classes.%n", System.currentTimeMillis() - timeNow);
         } catch (ClassNotFoundException e) {
             // Somehow loading these classes failed..? How?
             e.printStackTrace();

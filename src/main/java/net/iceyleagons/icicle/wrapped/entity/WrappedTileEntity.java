@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.wrapped;
+package net.iceyleagons.icicle.wrapped.entity;
 
 import lombok.Getter;
 import net.iceyleagons.icicle.reflect.Reflections;
