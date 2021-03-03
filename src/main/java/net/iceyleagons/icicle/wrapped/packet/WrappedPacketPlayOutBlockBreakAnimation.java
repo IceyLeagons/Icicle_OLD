@@ -7,6 +7,13 @@ import net.iceyleagons.icicle.wrapped.world.WrappedBlockPosition;
 
 import java.lang.reflect.Constructor;
 
+/**
+ * Wrapped representation of PacketPlayOutBlockBreakAnimation
+ *
+ * @author Gábe
+ * @version 1.0.0
+ * @since 1.3.9-SNAPSHOT
+ */
 public class WrappedPacketPlayOutBlockBreakAnimation {
     private static final Class<?> mc_PacketPlayOutBlockBreakAnimation;
 
