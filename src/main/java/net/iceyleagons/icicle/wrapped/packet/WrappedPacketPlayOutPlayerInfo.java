@@ -71,13 +71,22 @@ public class WrappedPacketPlayOutPlayerInfo extends Packet {
         mc_enumPlayerInfoAction_valueOf = Reflections.getMethod(mc_enumPlayerInfoAction, "valueOf", true, String.class);
     }
 
-    private static Object getInstance(EnumPlayerInfoAction enumPlayerInfoAction, WrappedEntityPlayer entityPlayer) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    private static Object getInstance(EnumPlayerInfoAction enumPlayerInfoAction, WrappedEntityPlayer entityPlayer) {
         Object array = Array.newInstance(WrappedEntityPlayer.entityPlayerClass, 1);
         Array.set(array, 0, entityPlayer.getEntityPlayer());
-        return mc_packetPlayOutPlayerInfoConstructor.newInstance(enumPlayerInfoAction.getNmsObject(), array);
+        try {
+            return mc_packetPlayOutPlayerInfoConstructor.newInstance(enumPlayerInfoAction.getNmsObject(), array);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
-    @SneakyThrows
     public WrappedPacketPlayOutPlayerInfo(EnumPlayerInfoAction enumPlayerInfoAction, WrappedEntityPlayer entityPlayer) {
         super(mc_packetPlayOutPlayerInfo, mc_packetPlayOutPlayerInfoConstructor, getInstance(enumPlayerInfoAction, entityPlayer));
     }
