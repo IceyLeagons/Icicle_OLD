@@ -24,45 +24,26 @@
 
 package net.iceyleagons.icicle.wrapped.packet;
 
-import lombok.Getter;
 import lombok.SneakyThrows;
-import net.iceyleagons.icicle.reflect.Reflections;
 import net.iceyleagons.icicle.wrapped.player.WrappedEntityPlayer;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
 
 /**
  * Wrapped representation PacketPlayOutEntityHeadRotation
  *
  * @author TOTHTOMI
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.3.3-SNAPSHOT
  */
-public class WrappedPacketPlayOutEntityHeadRotation {
+public class WrappedPacketPlayOutEntityHeadRotation extends Packet {
 
-    private static final Class<?> mc_packetPlayOutEntityHeadRotation;
-    private static final Constructor<?> constructor;
-    private static final Field a; //id
-    private static final Field b; //byte
-
-    static {
-        mc_packetPlayOutEntityHeadRotation = Reflections.getNormalNMSClass("PacketPlayOutEntityHeadRotation");
-        //Class<?> mc_entity = Reflections.getNormalNMSClass("Entity");
-        constructor = Reflections.getConstructor(mc_packetPlayOutEntityHeadRotation, true);
-        a = Reflections.getField(mc_packetPlayOutEntityHeadRotation, "a", true);
-        b = Reflections.getField(mc_packetPlayOutEntityHeadRotation, "b", true);
-    }
-
-    @Getter
-    private final Object packet;
 
     @SneakyThrows
     public WrappedPacketPlayOutEntityHeadRotation(WrappedEntityPlayer entityPlayer, byte rotation) {
-        packet = constructor.newInstance();
+        super("PacketPlayOutEntityHeadRotation");
         int id = entityPlayer.getId() != null ? entityPlayer.getId() : (int) Math.ceil(Math.random() * 1000) + 2000;//entityPlayer.getId();
-        Reflections.set(a, packet, id);
-        Reflections.set(b, packet, rotation);
+
+        setField("a", id);
+        setField("b", rotation);
     }
 
 }

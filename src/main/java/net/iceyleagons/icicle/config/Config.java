@@ -32,7 +32,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 
 /**
+ * Abstract class for easier config creation.
+ *
  * @author TOTHTOMI
+ * @since 1.4.0-SNAPSHOT
+ * @version 1.0.0s
  */
 @Getter
 public abstract class Config {

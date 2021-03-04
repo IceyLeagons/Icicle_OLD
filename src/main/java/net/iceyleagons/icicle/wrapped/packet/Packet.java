@@ -32,11 +32,16 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * (in preparation)
+ * Packet abstract class for wrapping
  *
  * @author TOTHTOMI
+ * @version 1.0.0
+ * @since 1.4.0-SNAPSHOT
  */
 @Getter
 public abstract class Packet {
@@ -44,13 +49,45 @@ public abstract class Packet {
     private static boolean setup = false;
     private static Class<?> nms_Class;
     private static Constructor<?> constructor;
+    private static Map<String, Field> fields = new HashMap<>();
 
     private final Object packet;
+
+    @SneakyThrows
+    protected Packet(String clazz, Class<?>[] parameterTypes, Object... parameters) {
+        setupStatic(clazz, parameterTypes);
+        this.packet = constructor.newInstance(parameters);
+    }
+
+    protected Packet(Class<?> clazz, Constructor<?> constructor1, Object instance) {
+        nms_Class = clazz;
+        constructor = constructor1;
+
+        this.packet = instance;
+    }
 
     @SneakyThrows
     protected Packet(String clazz, Object... parameters) {
         setupStatic(clazz, parameters);
         this.packet = constructor.newInstance(parameters);
+    }
+
+    public <T> T getFromField(String name, Class<T> wantedType) {
+        return Reflections.get(getField(name), wantedType, packet);
+    }
+
+    public void setField(String name, Object value) {
+        Reflections.set(getField(name), packet, value);
+    }
+
+    private Field getField(String name) {
+        if (!fields.containsKey(name)) {
+            Field field = Reflections.getField(nms_Class, name, true);
+            fields.put(name, field);
+            return field;
+        }
+
+        return fields.get(name);
     }
 
     public void sendAll() {
@@ -73,6 +110,14 @@ public abstract class Packet {
         }
 
         return classes;
+    }
+
+    private static void setupStatic(String clazz, Class<?>... paramTypes) {
+        if (!setup) {
+            setup = true;
+            nms_Class = Reflections.getNormalNMSClass(clazz);
+            constructor = Reflections.getConstructor(nms_Class, true, paramTypes);
+        }
     }
 
     private static void setupStatic(String clazz, Object... params) {

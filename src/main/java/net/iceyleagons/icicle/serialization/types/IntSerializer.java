@@ -52,7 +52,7 @@ public class IntSerializer implements Serializer<IntTag, Integer> {
     @Override
     public void inject(CompoundTag compoundTag, String name, Field field, Object o) {
         try {
-            int integer = NBTType.deserialize(compoundTag, name, NBTType.INTEGER, field, Integer.class);
+            int integer = NBTType.INTEGER.deserialize(compoundTag, name, field, Integer.class);
             Reflections.set(field, o, integer);
         } catch (Exception e) {
             e.printStackTrace();

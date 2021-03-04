@@ -35,12 +35,12 @@ import net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutEntity;
 import net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutEntityDestroy;
 import net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutNamedEntitySpawn;
 import net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutPlayerInfo;
-import net.iceyleagons.icicle.wrapped.player.WrappedCraftPlayer;
 import net.iceyleagons.icicle.wrapped.player.WrappedEntityPlayer;
 import net.iceyleagons.icicle.wrapped.player.WrappedPlayerInteractManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.json.JSONObject;
 
 import java.net.URL;
@@ -75,16 +75,15 @@ public class NPC {
     }
 
     public static void spawnNPCPacket(WrappedEntityPlayer npc, Player player) {
-        WrappedCraftPlayer wrappedCraftPlayer = WrappedCraftPlayer.from(player);
 
         WrappedPacketPlayOutPlayerInfo wrappedPacketPlayOutPlayerInfo = new WrappedPacketPlayOutPlayerInfo(WrappedPacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, npc);
-        wrappedCraftPlayer.getHandle().getPlayerConnection().sendPacket(wrappedPacketPlayOutPlayerInfo.getPacket());
+        wrappedPacketPlayOutPlayerInfo.send(player);//.getHandle().getPlayerConnection().sendPacket(wrappedPacketPlayOutPlayerInfo.getPacket());
 
         WrappedPacketPlayOutNamedEntitySpawn namedEntitySpawn = new WrappedPacketPlayOutNamedEntitySpawn(npc);
-        wrappedCraftPlayer.getHandle().getPlayerConnection().sendPacket(namedEntitySpawn.getPacket());
+        namedEntitySpawn.send(player);
 
         WrappedPacketPlayOutEntity.PacketPlayOutEntityLook packetPlayOutEntityLook = new WrappedPacketPlayOutEntity.PacketPlayOutEntityLook(npc.getId(), (byte) ((npc.getYaw() * 256 / 360)), (byte) ((npc.getPitch() * 256 / 360)), false);
-        wrappedCraftPlayer.getHandle().getPlayerConnection().sendPacket(packetPlayOutEntityLook.getPacket());
+        packetPlayOutEntityLook.send(player);
 
     }
 
@@ -111,9 +110,8 @@ public class NPC {
     }
 
     public static void removeNPC(Player player, WrappedEntityPlayer npc) {
-        WrappedCraftPlayer wrappedCraftPlayer = WrappedCraftPlayer.from(player);
         WrappedPacketPlayOutEntityDestroy packetPlayOutEntityDestroy = new WrappedPacketPlayOutEntityDestroy(npc.getId());
-        wrappedCraftPlayer.getHandle().getPlayerConnection().sendPacket(packetPlayOutEntityDestroy);
+        packetPlayOutEntityDestroy.send(player);
 
     }
 
@@ -150,5 +148,11 @@ public class NPC {
         this.wrappedEntityPlayer = npc;
         if (npcListener != null) npcListener.addNPC(this);
         return npc;
+    }
+
+    public static NPCListener get(JavaPlugin javaPlugin) {
+        NPCListener npcListener = new NPCListener();
+        javaPlugin.getServer().getPluginManager().registerEvents(npcListener, javaPlugin);
+        return npcListener;
     }
 }

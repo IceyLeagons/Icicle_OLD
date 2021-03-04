@@ -24,43 +24,23 @@
 
 package net.iceyleagons.icicle.wrapped.packet;
 
-import lombok.Getter;
 import lombok.SneakyThrows;
-import net.iceyleagons.icicle.reflect.Reflections;
 import net.iceyleagons.icicle.wrapped.world.chunk.WrappedChunk;
-
-import java.lang.reflect.Constructor;
 
 /**
  * Wrapped representation PacketPlayOutMapChunk
  *
  * @author Gabe
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.3.3-SNAPSHOT
  */
-public class WrappedPacketPlayOutMapChunk {
-
-    private static final Class<?> mc_PacketPlayOutMapChunk;
-    private static Constructor<?> chunk_instance;
-
-    static {
-        mc_PacketPlayOutMapChunk = Reflections.getNormalNMSClass("PacketPlayOutMapChunk");
-
-        try {
-            chunk_instance = mc_PacketPlayOutMapChunk.getDeclaredConstructor(WrappedChunk.mc_Chunk, int.class);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Getter
-    private final Object packet;
+public class WrappedPacketPlayOutMapChunk extends Packet {
 
     @SneakyThrows
     public WrappedPacketPlayOutMapChunk(WrappedChunk chunk, int priority) {
-
-
-        this.packet = chunk_instance.newInstance(chunk.getChunk(), priority);
+        super("PacketPlayOutMapChunk",
+                new Class<?>[]{WrappedChunk.mc_Chunk, int.class},
+                chunk.getChunk(), priority);
     }
 
     public WrappedPacketPlayOutMapChunk(WrappedChunk chunk) {

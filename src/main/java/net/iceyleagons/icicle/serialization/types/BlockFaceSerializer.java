@@ -54,7 +54,7 @@ public class BlockFaceSerializer implements Serializer<IntTag, BlockFace> {
     @Override
     public void inject(CompoundTag compoundTag, String name, Field field, Object o) {
         try {
-            BlockFace blockFace = NBTType.deserialize(compoundTag, name, NBTType.BLOCK_FACE, field, BlockFace.class);
+            BlockFace blockFace = NBTType.BLOCK_FACE.deserialize(compoundTag, name, field, BlockFace.class);
             Reflections.set(field, o, blockFace);
         } catch (Exception e) {
             e.printStackTrace();

@@ -34,16 +34,17 @@ import net.iceyleagons.icicle.wrapped.player.WrappedEntityPlayer;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
  * Wrapped representation PacketPlayOutPlayerInfo
  *
  * @author TOTHTOMI
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.3.3-SNAPSHOT
  */
-public class WrappedPacketPlayOutPlayerInfo {
+public class WrappedPacketPlayOutPlayerInfo extends Packet {
 
     private static final Class<?> mc_packetPlayOutPlayerInfo;
     private static final Class<?> mc_playerInfoData;
@@ -70,14 +71,15 @@ public class WrappedPacketPlayOutPlayerInfo {
         mc_enumPlayerInfoAction_valueOf = Reflections.getMethod(mc_enumPlayerInfoAction, "valueOf", true, String.class);
     }
 
-    @Getter
-    private final Object packet;
+    private static Object getInstance(EnumPlayerInfoAction enumPlayerInfoAction, WrappedEntityPlayer entityPlayer) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+        Object array = Array.newInstance(WrappedEntityPlayer.entityPlayerClass, 1);
+        Array.set(array, 0, entityPlayer.getEntityPlayer());
+        return mc_packetPlayOutPlayerInfoConstructor.newInstance(enumPlayerInfoAction.getNmsObject(), array);
+    }
 
     @SneakyThrows
     public WrappedPacketPlayOutPlayerInfo(EnumPlayerInfoAction enumPlayerInfoAction, WrappedEntityPlayer entityPlayer) {
-        Object array = Array.newInstance(WrappedEntityPlayer.entityPlayerClass, 1);
-        Array.set(array, 0, entityPlayer.getEntityPlayer());
-        packet = mc_packetPlayOutPlayerInfoConstructor.newInstance(enumPlayerInfoAction.getNmsObject(), array);
+        super(mc_packetPlayOutPlayerInfo, mc_packetPlayOutPlayerInfoConstructor, getInstance(enumPlayerInfoAction, entityPlayer));
     }
 
     @RequiredArgsConstructor

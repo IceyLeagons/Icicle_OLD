@@ -33,6 +33,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
 
 /**
  * Contains basic operations regarding Website connections and requests.
@@ -64,16 +65,13 @@ public class WebUtils {
         try {
             URLConnection urlConnection = url.openConnection();
             try (InputStream inputStream = urlConnection.getInputStream()) {
-                try (InputStreamReader inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8)) {
-                    try (BufferedReader bufferedReader = new BufferedReader(inputStreamReader)) {
-                        StringBuilder stringBuilder = new StringBuilder();
-                        String line;
-                        while ((line = bufferedReader.readLine()) != null) {
-                            stringBuilder.append(line);
-                            stringBuilder.append(System.lineSeparator());
-                        }
-                        return stringBuilder.toString();
-                    }
+                try (Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8.name())) {
+                    StringBuilder stringBuilder = new StringBuilder();
+
+                    while (scanner.hasNextLine())
+                        stringBuilder.append(scanner.nextLine()).append("\n");
+
+                    return stringBuilder.toString();
                 }
             }
         } catch (IOException e) {

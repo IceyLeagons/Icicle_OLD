@@ -55,7 +55,7 @@ public class LocationUtils {
 
         return String.format("%s;%f;%f;%f;%f;%f",
                 Objects.requireNonNull(location.getWorld()).getUID().toString(), location.getX(), location.getY(),
-                location.getZ(), location.getYaw(), location.getPitch()).replaceAll(";", String.valueOf(joinChar));
+                location.getZ(), location.getYaw(), location.getPitch()).replaceAll(";", String.valueOf(joinChar)).replaceAll(",", ".");
     }
 
     public static void playSoundAtLocation(@NonNull Location location, @NonNull Sound sound, float volume, float pitch) {

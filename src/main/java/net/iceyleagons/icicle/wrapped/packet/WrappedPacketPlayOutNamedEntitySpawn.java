@@ -24,37 +24,19 @@
 
 package net.iceyleagons.icicle.wrapped.packet;
 
-import lombok.Getter;
-import lombok.SneakyThrows;
 import net.iceyleagons.icicle.reflect.Reflections;
 import net.iceyleagons.icicle.wrapped.player.WrappedEntityPlayer;
-
-import java.lang.reflect.Constructor;
 
 /**
  * Wrapped representation PacketPlayOutNamedEntitySpawn
  *
  * @author TOTHTOMI
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.3.3-SNAPSHOT
  */
-public class WrappedPacketPlayOutNamedEntitySpawn {
+public class WrappedPacketPlayOutNamedEntitySpawn extends Packet {
 
-    private static final Class<?> mc_PacketPlayOutNamedEntitySpawn;
-    private static final Constructor<?> constructor;
-
-    static {
-        mc_PacketPlayOutNamedEntitySpawn = Reflections.getNormalNMSClass("PacketPlayOutNamedEntitySpawn");
-        Class<?> mc_entityHuman = Reflections.getNormalNMSClass("EntityHuman");
-        constructor = Reflections.getConstructor(mc_PacketPlayOutNamedEntitySpawn, true, mc_entityHuman);
-    }
-
-    @Getter
-    private final Object packet;
-
-    @SneakyThrows
     public WrappedPacketPlayOutNamedEntitySpawn(WrappedEntityPlayer entityPlayer) {
-        this.packet = constructor.newInstance(entityPlayer.getEntityPlayer());
+        super("PacketPlayOutNamedEntitySpawn", new Class<?>[]{Reflections.getNormalNMSClass("EntityHuman")}, entityPlayer);
     }
-
 }

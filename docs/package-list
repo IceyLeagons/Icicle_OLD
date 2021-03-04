@@ -13,7 +13,7 @@ net.iceyleagons.icicle.math
 net.iceyleagons.icicle.math.matrix
 net.iceyleagons.icicle.misc
 net.iceyleagons.icicle.commands
-net.iceyleagons.icicle.geo
+net.iceyleagons.icicle.localization.geo
 net.iceyleagons.icicle.collections.map
 net.iceyleagons.icicle.misc.maps
 net.iceyleagons.icicle.npc

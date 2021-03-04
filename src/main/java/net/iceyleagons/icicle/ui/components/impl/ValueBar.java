@@ -40,8 +40,8 @@ import org.bukkit.inventory.ItemStack;
  */
 @Component(
         id = "value_bar",
-        width = -1, //Takes up one slot
-        height = -1 // /\
+        width = -1,
+        height = -1
 )
 public class ValueBar implements ComponentTemplate, OrientableComponent, VariableSizeComponent {
 

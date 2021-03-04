@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package net.iceyleagons.icicle.geo;
+package net.iceyleagons.icicle.localization.geo;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

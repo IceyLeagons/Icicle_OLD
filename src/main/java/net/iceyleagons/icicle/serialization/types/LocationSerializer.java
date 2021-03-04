@@ -49,13 +49,13 @@ public class LocationSerializer implements Serializer<StringTag, Location> {
     public Location deserialize(CompoundTag compoundTag, String name) {
 
         StringTag stringTag = getChildTag(compoundTag, name, StringTag.class);
-        return stringTag == null ? null : LocationUtils.deserializeLocation(stringTag.getValue().replaceAll(",", "."), ";");
+        return stringTag == null ? null : LocationUtils.deserializeLocation(stringTag.getValue(), ";");
     }
 
     @Override
     public void inject(CompoundTag compoundTag, String name, Field field, Object o) {
         try {
-            Location location = NBTType.deserialize(compoundTag, name, NBTType.LOCATION, field, Location.class);
+            Location location = NBTType.LOCATION.deserialize(compoundTag, name, field, Location.class);
             Reflections.set(field, o, location);
         } catch (Exception e) {
             e.printStackTrace();

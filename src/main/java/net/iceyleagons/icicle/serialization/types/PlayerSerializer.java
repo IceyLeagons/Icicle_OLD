@@ -56,7 +56,7 @@ public class PlayerSerializer implements Serializer<StringTag, OfflinePlayer> {
     @Override
     public void inject(CompoundTag compoundTag, String name, Field field, Object o) {
         try {
-            Player player = NBTType.deserialize(compoundTag, name, NBTType.PLAYER, field, Player.class);
+            Player player = NBTType.PLAYER.deserialize(compoundTag, name, field, Player.class);
             Reflections.set(field, o, player);
         } catch (Exception e) {
             e.printStackTrace();

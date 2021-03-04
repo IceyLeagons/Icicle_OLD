@@ -24,35 +24,20 @@
 
 package net.iceyleagons.icicle.wrapped.packet;
 
-import lombok.Getter;
 import lombok.SneakyThrows;
-import net.iceyleagons.icicle.reflect.Reflections;
-
-import java.lang.reflect.Constructor;
 
 /**
  * Wrapped representation PacketPlayOutEntityDestroy
  *
  * @author TOTHTOMI
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.3.3-SNAPSHOT
  */
-public class WrappedPacketPlayOutEntityDestroy {
-
-    private static final Class<?> mc_packetPlayOutEntityDestroy;
-    private static final Constructor<?> constructor;
-
-    static {
-        mc_packetPlayOutEntityDestroy = Reflections.getNormalNMSClass("PacketPlayOutEntityDestroy");
-        constructor = Reflections.getConstructor(mc_packetPlayOutEntityDestroy, true, int[].class);
-    }
-
-    @Getter
-    private final Object packet;
+public class WrappedPacketPlayOutEntityDestroy extends Packet {
 
     @SneakyThrows
     public WrappedPacketPlayOutEntityDestroy(int... var) {
-        packet = constructor.newInstance(var);
+        super("PacketPlayOutEntityDestroy", var);
     }
 
 }

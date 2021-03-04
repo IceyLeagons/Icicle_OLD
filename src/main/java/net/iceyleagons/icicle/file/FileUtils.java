@@ -26,17 +26,19 @@ package net.iceyleagons.icicle.file;
 
 import lombok.NonNull;
 import lombok.SneakyThrows;
+import org.jetbrains.annotations.Nullable;
 
-import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.util.Scanner;
 
 /**
  * Contains useful stuff for {@link File}s
@@ -92,6 +94,7 @@ public class FileUtils {
      * @param file the {@link File} to create
      * @return the passed {@link File}
      */
+    @Nullable
     public static File createFileSafely(@NonNull File file) {
         if (file.exists()) return file;
         try {
@@ -123,17 +126,24 @@ public class FileUtils {
      * @param file the {@link File} to read
      * @return the content
      */
+    @Nullable
     public static String readFile(@NonNull File file) {
-        StringBuilder contentBuilder = new StringBuilder();
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String sCurrentLine;
-            while ((sCurrentLine = br.readLine()) != null) {
-                contentBuilder.append(sCurrentLine).append(System.lineSeparator());
+
+        try (InputStream inputStream = new FileInputStream(file)) {
+            try (Scanner scanner = new Scanner(inputStream)) {
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while (scanner.hasNextLine()) {
+                    stringBuilder.append(scanner.hasNextLine()).append("\n");
+                }
+
+                return stringBuilder.toString();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return contentBuilder.toString();
+
+        return null;
     }
 
 }

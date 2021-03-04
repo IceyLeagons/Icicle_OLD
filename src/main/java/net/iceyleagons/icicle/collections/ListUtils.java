@@ -30,7 +30,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * Useful things regarding Lists
+ *
  * @author TOTHTOMI
+ * @version 1.0.0
+ * @since 1.4.0-SNAPSHOT
  */
 public class ListUtils {
 

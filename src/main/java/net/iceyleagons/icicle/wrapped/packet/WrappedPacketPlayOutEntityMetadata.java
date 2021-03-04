@@ -24,38 +24,23 @@
 
 package net.iceyleagons.icicle.wrapped.packet;
 
-import lombok.Getter;
 import lombok.SneakyThrows;
-import net.iceyleagons.icicle.reflect.Reflections;
 import net.iceyleagons.icicle.wrapped.data.WrappedDataWatcher;
-
-import java.lang.reflect.Constructor;
 
 /**
  * Wrapped representation PacketPlayOutEntityMetadata
  *
  * @author TOTHTOMI
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.3.3-SNAPSHOT
  */
-public class WrappedPacketPlayOutEntityMetadata {
-
-    private static final Class<?> mc_PacketPlayOutEntityMetadata;
-    private static final Constructor<?> constructor;
-
-
-    static {
-        mc_PacketPlayOutEntityMetadata = Reflections.getNormalNMSClass("PacketPlayOutEntityMetadata");
-        constructor = Reflections.getConstructor(mc_PacketPlayOutEntityMetadata, true, int.class, WrappedDataWatcher.class, boolean.class);
-
-    }
-
-    @Getter
-    private final Object packet;
+public class WrappedPacketPlayOutEntityMetadata extends Packet {
 
     @SneakyThrows
     public WrappedPacketPlayOutEntityMetadata(int i, WrappedDataWatcher dataWatcher, boolean b) {
-        this.packet = constructor.newInstance(i, dataWatcher.getNmsObject(), b);
+        super("PacketPlayOutEntityMetadata",
+                new Class<?>[]{int.class, WrappedDataWatcher.mc_dataWatcher, boolean.class},
+                i, dataWatcher.getNmsObject(), b);
     }
 
 }

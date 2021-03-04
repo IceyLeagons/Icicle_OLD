@@ -62,9 +62,17 @@ public enum NBTType {
     private final Class<?> requiredType;
     private final Class<?> returnType;
 
-    public static Tag serialize(NBTType nbtType, Field field, Object object, String name) throws IllegalArgumentException{
+    public Tag serialize(Field field, Object object, String name) throws IllegalArgumentException {
+        return NBTType.serialize(this, field, object, name);
+    }
+
+    public static Tag serialize(NBTType nbtType, Field field, Object object, String name) throws IllegalArgumentException {
         if (!nbtType.getRequiredType().equals(field.getType())) throw new IllegalArgumentException("Field is not type of requiredType!");
         return nbtType.getSerializer().serialize(field, object, name);
+    }
+
+    public <T> T deserialize(CompoundTag tag, String name, Field field, Class<T> wantedType) throws IllegalArgumentException, ClassCastException {
+        return NBTType.deserialize(tag, name, this, field, wantedType);
     }
 
     public static <T> T deserialize(CompoundTag tag, String name, NBTType nbtType, Field field, Class<T> wantedType) throws IllegalArgumentException, ClassCastException {

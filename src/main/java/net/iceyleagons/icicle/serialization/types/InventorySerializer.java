@@ -55,7 +55,7 @@ public class InventorySerializer implements Serializer<ByteArrayTag, ItemStack[]
     @Override
     public void inject(CompoundTag compoundTag, String name, Field field, Object o) {
         try {
-            ItemStack[] contents = NBTType.deserialize(compoundTag, name, NBTType.INVENTORY, field, ItemStack[].class);
+            ItemStack[] contents = NBTType.INVENTORY.deserialize(compoundTag, name, field, ItemStack[].class);
             Inventory inventory = Reflections.get(field, Inventory.class, o);
             if (inventory != null) {
                 inventory.setContents(contents);
