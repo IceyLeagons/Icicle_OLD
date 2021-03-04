@@ -97,8 +97,8 @@ public class WrappedMobSpawnerAbstract {
     /**
      * @return whether or not this spawner is activated.
      */
-    public boolean isActivated() {
-        return Reflections.invoke(mc_isActivated, boolean.class, root);
+    public Boolean isActivated() {
+        return Reflections.invoke(mc_isActivated, Boolean.class, root);
     }
 
     /**
@@ -187,8 +187,8 @@ public class WrappedMobSpawnerAbstract {
     /**
      * @return the number of entities spawned per spawn interval.
      */
-    public int getSpawnCount() {
-        return Reflections.get(mc_spawnCount, int.class, root);
+    public Integer getSpawnCount() {
+        return Reflections.get(mc_spawnCount, Integer.class, root);
     }
 
     /**
@@ -203,8 +203,8 @@ public class WrappedMobSpawnerAbstract {
     /**
      * @return the range that entities spawn in.
      */
-    public int getSpawnRange() {
-        return Reflections.get(mc_spawnRange, int.class, root);
+    public Integer getSpawnRange() {
+        return Reflections.get(mc_spawnRange, Integer.class, root);
     }
 
     /**
@@ -219,8 +219,8 @@ public class WrappedMobSpawnerAbstract {
     /**
      * @return the delay between spawns.
      */
-    public int getSpawnDelay() {
-        return Reflections.get(mc_spawnDelay, int.class, root);
+    public Integer getSpawnDelay() {
+        return Reflections.get(mc_spawnDelay, Integer.class, root);
     }
 
     /**
@@ -235,8 +235,8 @@ public class WrappedMobSpawnerAbstract {
     /**
      * @return the minimum delay between spawns.
      */
-    public int getMinSpawnDelay() {
-        return Reflections.get(mc_minSpawnDelay, int.class, root);
+    public Integer getMinSpawnDelay() {
+        return Reflections.get(mc_minSpawnDelay, Integer.class, root);
     }
 
     /**
@@ -251,8 +251,8 @@ public class WrappedMobSpawnerAbstract {
     /**
      * @return the maximum delay between spawns.
      */
-    public int getMaxSpawnDelay() {
-        return Reflections.get(mc_maxSpawnDelay, int.class, root);
+    public Integer getMaxSpawnDelay() {
+        return Reflections.get(mc_maxSpawnDelay, Integer.class, root);
     }
 
     /**
@@ -267,8 +267,8 @@ public class WrappedMobSpawnerAbstract {
     /**
      * @return the maximum amount of nearby entities.
      */
-    public int getMaxNearbyEntities() {
-        return Reflections.get(mc_maxNearbyEntities, int.class, root);
+    public Integer getMaxNearbyEntities() {
+        return Reflections.get(mc_maxNearbyEntities, Integer.class, root);
     }
 
     /**
@@ -283,8 +283,8 @@ public class WrappedMobSpawnerAbstract {
     /**
      * @return the range that a player needs to be in for entities to spawn.
      */
-    public int getRequiredPlayerRange() {
-        return Reflections.get(mc_requiredPlayerRange, int.class, root);
+    public Integer getRequiredPlayerRange() {
+        return Reflections.get(mc_requiredPlayerRange, Integer.class, root);
     }
 
     /**

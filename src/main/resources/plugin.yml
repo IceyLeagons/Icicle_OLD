@@ -5,4 +5,4 @@ description: Icicle test
 authors:
   - TOTHTOMI
   - G4be_
-main: net.iceyleagons.icicle.Test
+main: net.iceyleagons.icicle.Icicle

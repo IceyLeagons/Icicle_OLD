@@ -68,22 +68,22 @@ public class WrappedPlayerList {
     /**
      * @return the number of players online.
      */
-    public int getPlayerCount() {
-        return Reflections.invoke(mc_getPlayerCount, int.class, root);
+    public Integer getPlayerCount() {
+        return Reflections.invoke(mc_getPlayerCount, Integer.class, root);
     }
 
     /**
      * @return the render distance of the server. Can be changed dynamically with {@link #setViewDistance(int)}.
      */
-    public int getViewDistance() {
-        return Reflections.invoke(mc_getViewDistance, int.class, root);
+    public Integer getViewDistance() {
+        return Reflections.invoke(mc_getViewDistance, Integer.class, root);
     }
 
     /**
      * @return the amount of players the server was told to allow. Can be changed dynamically with {@link #setMaxPlayers(int)}.
      */
-    public int getMaxPlayers() {
-        return Reflections.invoke(mc_getMaxPlayers, int.class, root);
+    public Integer getMaxPlayers() {
+        return Reflections.invoke(mc_getMaxPlayers, Integer.class, root);
     }
 
     /**

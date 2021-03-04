@@ -14,22 +14,8 @@ import java.lang.reflect.Constructor;
  * @version 1.0.0
  * @since 1.3.9-SNAPSHOT
  */
-public class WrappedPacketPlayOutBlockBreakAnimation {
-    private static final Class<?> mc_PacketPlayOutBlockBreakAnimation;
-
-    private static final Constructor<?> packet_constructor;
-
-    static {
-        mc_PacketPlayOutBlockBreakAnimation = Reflections.getNormalNMSClass("PacketPlayOutBlockBreakAnimation");
-
-        packet_constructor = Reflections.getConstructor(mc_PacketPlayOutBlockBreakAnimation, true, int.class, WrappedBlockPosition.mc_BlockPosition, int.class);
-    }
-
-    @Getter
-    private final Object packet;
-
-    @SneakyThrows
+public class WrappedPacketPlayOutBlockBreakAnimation extends Packet {
     public WrappedPacketPlayOutBlockBreakAnimation(int playerId, WrappedBlockPosition blockPosition, int damage) {
-        this.packet = packet_constructor.newInstance(playerId, blockPosition.getRoot(), damage);
+        super("PacketPlayOutBlockBreakAnimation", new Class<?>[]{int.class, WrappedBlockPosition.mc_BlockPosition, int.class}, playerId, blockPosition.getRoot(), damage);
     }
 }
