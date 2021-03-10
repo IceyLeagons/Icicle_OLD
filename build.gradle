@@ -84,7 +84,7 @@ dependencies {
     implementation 'net.java.dev.jna:jna-platform:5.7.0'
 
     compile group: 'com.h2database', name: 'h2', version: '1.4.200'
-    compile 'org.mongodb:mongo-java-driver:3.12.7'
+    compile 'org.mongodb:mongo-java-driver:3.12.8'
 
     // https://mvnrepository.com/artifact/org.reflections/reflections
     extraLibs group: 'org.reflections', name: 'reflections', version: '0.9.12'
