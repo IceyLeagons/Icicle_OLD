@@ -53,6 +53,14 @@ public abstract class Config {
             throw new IllegalStateException("Could not create config file!");
     }
 
+    public Config(JavaPlugin javaPlugin, File file) {
+        this.javaPlugin = javaPlugin;
+        this.file = file;
+
+        if (!file.exists() && !file.mkdirs())
+            throw new IllegalStateException("Could not create config file!");
+    }
+
     public Config(JavaPlugin javaPlugin, File subFolder, String fileName) {
         this.javaPlugin = javaPlugin;
         this.file = new File(javaPlugin.getDataFolder() + File.separator + subFolder, fileName + ".yaml");

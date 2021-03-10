@@ -7,3 +7,17 @@ important notices are listed in our documentation!
 You can check it here.
 
 We've started some private projects, proper documentation will be available soon, 'till then use the [javadoc](https://icicle.iceyleagons.net/).
+
+# Supporters
+
+<img src="https://user-images.githubusercontent.com/36101494/110477295-47795e80-80e3-11eb-9c3e-bf57776e3680.png" width="280">
+
+- GitBook happily hooked us up with their powerful documentation tool/service.
+- Check them out [here](https://www.gitbook.com/?utm_source=content&utm_medium=trademark&utm_campaign=iceyleagons)!
+
+<hr>
+
+<img src="https://user-images.githubusercontent.com/36101494/110478780-fd917800-80e4-11eb-9358-fcc8de4baa99.png" width="120">
+
+- This project is developed with JetBrains products. We have access to such tools with an [open source license](https://www.jetbrains.com/community/opensource).
+- Check them out [here](https://jb.gg/OpenSource)!
