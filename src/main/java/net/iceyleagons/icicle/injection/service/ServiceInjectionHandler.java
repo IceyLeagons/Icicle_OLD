@@ -1,8 +1,11 @@
 package net.iceyleagons.icicle.injection.service;
 
 import net.iceyleagons.icicle.injection.AbstractInjectionHandler;
+import net.iceyleagons.icicle.injection.annotations.EventListener;
 import net.iceyleagons.icicle.injection.annotations.InjectionHandler;
 import net.iceyleagons.icicle.reflect.Reflections;
+import org.bukkit.Bukkit;
+import org.bukkit.event.Listener;
 
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
@@ -21,10 +24,13 @@ public class ServiceInjectionHandler extends AbstractInjectionHandler {
     @Override
     public void postInitialization() {
         Set<Class<?>> classes = super.getInjectionHandlerRegistry().getRootPackage().getTypesAnnotatedWith(Service.class);
+
         classes.forEach(clazz -> {
             Constructor<?> constructor = Reflections.getConstructor(clazz, true);
             if (constructor == null) {
-                super.getInjectionHandlerRegistry().getLogger().severe("Cannot initialize @Service named " + clazz.getName() + ", since it does not have an empty constructor!");
+                if (!clazz.isAnnotation()) {
+                    super.getInjectionHandlerRegistry().getLogger().severe("Cannot initialize @Service named " + clazz.getName() + ", since it does not have an empty constructor!");
+                }
             } else {
                 try {
                     Object instance = constructor.newInstance();
@@ -38,12 +44,21 @@ public class ServiceInjectionHandler extends AbstractInjectionHandler {
 
         //We inject the service later, so we can inject other service into it, this way we're making sure those services have already been registered
         services.values().forEach(service -> super.getInjectionHandlerRegistry().injectObject(service));
+
+        //Since EventListener is a subcategory of Service, we register them here
+        services.values().stream().filter(service -> service.getClass().isAnnotationPresent(EventListener.class)).forEach(listener -> {
+            if (listener instanceof Listener) {
+                Listener bukkitListener = (Listener) listener;
+                Bukkit.getPluginManager().registerEvents(bukkitListener, super.getJavaPlugin());
+            }
+        });
+
     }
 
     @Override
     public void inject(Object o) {
         Arrays.stream(o.getClass().getDeclaredFields())
-                .filter(field -> field.isAnnotationPresent(ServiceField.class))
+                .filter(field -> field.isAnnotationPresent(ServiceField.class) || field.isAnnotationPresent(EventListener.class))
                 .peek(field -> field.setAccessible(true))
                 .forEach(field -> {
                     Class<?> type = field.getType();

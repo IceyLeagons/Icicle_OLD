@@ -24,6 +24,7 @@
 
 package net.iceyleagons.icicle;
 
+import net.iceyleagons.icicle.injection.InjectionHandlerRegistry;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -51,6 +52,7 @@ public class Icicle extends JavaPlugin {
     @Override
     public void onEnable() {
         super.onEnable();
+        new InjectionHandlerRegistry(this, "net.iceyleagons.icicle.testing").init();
     }
 
     /**

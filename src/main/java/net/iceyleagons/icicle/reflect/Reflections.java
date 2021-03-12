@@ -105,8 +105,7 @@ public class Reflections {
             Constructor<?> constructor = clazz.getDeclaredConstructor(parameterTypes);
             constructor.setAccessible(forceAccessible);
             return constructor;
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+        } catch (NoSuchMethodException ignored) {
         }
 
         return null;

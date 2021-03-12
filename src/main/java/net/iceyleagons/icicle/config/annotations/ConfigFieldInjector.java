@@ -3,6 +3,7 @@ package net.iceyleagons.icicle.config.annotations;
 import net.iceyleagons.icicle.config.Config;
 import net.iceyleagons.icicle.injection.AbstractInjectionHandler;
 import net.iceyleagons.icicle.injection.annotations.InjectionHandler;
+import net.iceyleagons.icicle.reflect.Reflections;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -34,6 +35,7 @@ public class ConfigFieldInjector extends AbstractInjectionHandler {
 
                     YamlConfiguration config = getConfig(name);
                     if (config == null) throw new IllegalStateException("Invalid config with name: " + name);
+
 
                     Object value = config.get(key);
                     if (wantedType.isInstance(value)) {

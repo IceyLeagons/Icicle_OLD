@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 @Getter
 public class InjectionHandlerRegistry {
 
-    private final Reflections rootPackage;
+    private Reflections rootPackage;
     private final JavaPlugin plugin;
     private final Logger logger = Logger.getLogger(InjectionHandlerRegistry.class.getName());
     private final Map<Class<? extends Annotation>, AbstractInjectionHandler> injectionHandlers = new HashMap();
@@ -30,6 +30,9 @@ public class InjectionHandlerRegistry {
      */
     public InjectionHandlerRegistry(JavaPlugin javaPlugin, String rootPackage) {
         this.rootPackage = new Reflections(rootPackage);
+        this.rootPackage = this.rootPackage.merge(new Reflections("net.iceyleagons.icicle.injection")); //contributors! we don't want to add the entirety of Icicle here, to save time!
+        this.rootPackage = this.rootPackage.merge(new Reflections("net.iceyleagons.icicle.config")); //   /\
+
         this.plugin = javaPlugin;
     }
 
@@ -47,11 +50,13 @@ public class InjectionHandlerRegistry {
      */
     private void loadHandlers() {
         Set<Class<?>> classes = rootPackage.getTypesAnnotatedWith(InjectionHandler.class);
+
         classes.forEach(clazz -> {
             if (clazz.getSuperclass().equals(AbstractInjectionHandler.class)) {
                 Constructor<?> constructor = net.iceyleagons.icicle.reflect.Reflections.getConstructor(clazz, true);
                 if (constructor == null) {
-                    logger.severe("Could not find empty constructor for AbstractInjectionHandler named " + clazz.getName());
+                    if (!clazz.isAnnotation())
+                        logger.severe("Could not find empty constructor for AbstractInjectionHandler named " + clazz.getName());
                 } else {
                     try {
                         AbstractInjectionHandler abstractInjectionHandler = (AbstractInjectionHandler) constructor.newInstance();
@@ -89,10 +94,12 @@ public class InjectionHandlerRegistry {
      */
     private void injectInjectableObjects() {
         Set<Class<?>> classes = rootPackage.getTypesAnnotatedWith(Autowired.class);
+
         classes.forEach(clazz -> {
             Constructor<?> constructor = net.iceyleagons.icicle.reflect.Reflections.getConstructor(clazz, true);
             if (constructor == null) {
-                logger.severe("Could not find empty constructor for Injectable named " + clazz.getName());
+                if (!clazz.isAnnotation())
+                    logger.severe("Could not find empty constructor for Injectable named " + clazz.getName());
             } else {
                 try {
                     Object object = constructor.newInstance();
