@@ -56,7 +56,8 @@ public class ClassScanningHandler {
         //TODO does not work in some cases, needs the ordering system!!!!
         annotationHandlers.values().forEach(annotationHandler -> {
             List<Object> objects = annotationHandler.getObjects();
-            autowiringHandler.autowireObjects(objects);
+            objects.forEach(autowiringHandler::autowireObject);
+
         });
     }
 

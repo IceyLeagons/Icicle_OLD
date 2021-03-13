@@ -1,5 +1,6 @@
 package net.iceyleagons.icicle.registry;
 
+import net.iceyleagons.icicle.commands.PluginCommandManager;
 import net.iceyleagons.icicle.reflect.ClassScanningHandler;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -11,6 +12,7 @@ public class IciclePluginManager {
     private final Map<JavaPlugin, RegisteredPlugin> registeredPluginList = new HashMap<>();
 
     public void register(RegisteredPlugin registeredPlugin) {
+        registeredPlugin.setPluginCommandManager(new PluginCommandManager(registeredPlugin));
         registeredPlugin.setClassScanningHandler(new ClassScanningHandler(registeredPlugin));
         registeredPluginList.put(registeredPlugin.getJavaPlugin(), registeredPlugin);
 

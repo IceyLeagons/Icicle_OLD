@@ -60,9 +60,6 @@ public class Icicle extends JavaPlugin {
         pluginRegistry = new IciclePluginManager();
 
         IciclePluginBootstrapper.bootstrap(this, "net.iceyleagons.icicle");
-        Listener listener = new Listener();
-        Bukkit.getServer().getPluginManager().registerEvents(listener, this);
-        IciclePluginBootstrapper.get(this).getAutowiringHandler().autowireObject(listener);
         super.onEnable();
     }
 

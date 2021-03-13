@@ -1,7 +1,9 @@
-package net.iceyleagons.icicle.annotations.handlers;
+package net.iceyleagons.icicle.annotations.handlers.impl;
 
 import lombok.Getter;
 import net.iceyleagons.icicle.annotations.Service;
+import net.iceyleagons.icicle.annotations.handlers.AbstractAnnotationHandler;
+import net.iceyleagons.icicle.annotations.handlers.AnnotationHandler;
 import org.reflections.Reflections;
 
 import java.lang.reflect.Constructor;
