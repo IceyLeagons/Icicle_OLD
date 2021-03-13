@@ -66,6 +66,10 @@ public abstract class Packet {
         this.packet = instance;
     }
 
+    protected Packet(Class<?> clazz, Object instance) {
+        this(clazz, null, instance);
+    }
+
     @SneakyThrows
     protected Packet(String clazz, Object... parameters) {
         setupStatic(clazz, parameters);

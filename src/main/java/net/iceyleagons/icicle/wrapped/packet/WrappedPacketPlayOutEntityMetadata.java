@@ -43,4 +43,8 @@ public class WrappedPacketPlayOutEntityMetadata extends Packet {
                 i, dataWatcher.getNmsObject(), b);
     }
 
+    public WrappedPacketPlayOutEntityMetadata(Class<?> clazz, Object instance) {
+        super(clazz, instance);
+    }
+
 }

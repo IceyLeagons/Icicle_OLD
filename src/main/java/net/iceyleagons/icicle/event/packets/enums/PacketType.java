@@ -1,5 +1,8 @@
 package net.iceyleagons.icicle.event.packets.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import net.iceyleagons.icicle.wrapped.packet.*;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
@@ -8,13 +11,22 @@ import java.util.Arrays;
  * The currently implemented types of packets we catch.
  *
  * @author Gábe
- * @version 1.0.0
+ * @version 1.1.0
  * @since 2.0.0-SNAPSHOT
  */
+@AllArgsConstructor
+@Getter
 public enum PacketType {
-    PLAY_OUT_ENTITY_HEAD_ROTATION, PLAY_OUT_BLOCK_BREAK_ANIMATION,
-    PLAY_OUT_ENTITY_DESTROY, PLAY_OUT_ENTITY_METADATA, PLAY_OUT_MAP_CHUNK,
-    PLAY_OUT_NAMED_ENTITY_SPAWN, PLAY_OUT_PLAYER_INFO, PLAY_OUT_ENTITY;
+    PLAY_OUT_ENTITY_HEAD_ROTATION(WrappedPacketPlayOutEntityHeadRotation.class),
+    PLAY_OUT_BLOCK_BREAK_ANIMATION(WrappedPacketPlayOutBlockBreakAnimation.class),
+    PLAY_OUT_ENTITY_DESTROY(WrappedPacketPlayOutEntityDestroy.class),
+    PLAY_OUT_ENTITY_METADATA(WrappedPacketPlayOutEntityMetadata.class),
+    PLAY_OUT_MAP_CHUNK(WrappedPacketPlayOutMapChunk.class),
+    PLAY_OUT_NAMED_ENTITY_SPAWN(WrappedPacketPlayOutNamedEntitySpawn.class),
+    PLAY_OUT_PLAYER_INFO(WrappedPacketPlayOutPlayerInfo.class),
+    PLAY_OUT_ENTITY_LOOK(WrappedPacketPlayOutEntity.PacketPlayOutEntityLook.class);
+
+    private Class<? extends Packet> packetClass;
 
     @Nullable
     public static PacketType getFromPacket(Object packet) {

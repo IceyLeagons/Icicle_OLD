@@ -38,6 +38,10 @@ public class WrappedPacketPlayOutEntity {
         public PacketPlayOutEntityLook(int id, byte yaw, byte pitch, boolean bool) {
             super("PacketPlayOutEntity$PacketPlayOutEntityLook", id, yaw, pitch, bool);
         }
+
+        public PacketPlayOutEntityLook(Class<?> clazz, Object instance) {
+            super(clazz, instance);
+        }
     }
 
 }

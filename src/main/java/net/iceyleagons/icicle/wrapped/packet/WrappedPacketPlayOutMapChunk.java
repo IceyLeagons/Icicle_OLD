@@ -47,4 +47,8 @@ public class WrappedPacketPlayOutMapChunk extends Packet {
         this(chunk, 20);
     }
 
+    public WrappedPacketPlayOutMapChunk(Class<?> clazz, Object instance) {
+        super(clazz, instance);
+    }
+
 }

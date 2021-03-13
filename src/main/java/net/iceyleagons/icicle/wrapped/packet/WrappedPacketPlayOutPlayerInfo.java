@@ -91,6 +91,10 @@ public class WrappedPacketPlayOutPlayerInfo extends Packet {
         super(mc_packetPlayOutPlayerInfo, mc_packetPlayOutPlayerInfoConstructor, getInstance(enumPlayerInfoAction, entityPlayer));
     }
 
+    public WrappedPacketPlayOutPlayerInfo(Class<?> clazz, Object instance) {
+        super(clazz, instance);
+    }
+
     @RequiredArgsConstructor
     @Getter
     public enum EnumPlayerInfoAction {

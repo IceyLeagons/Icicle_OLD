@@ -46,4 +46,8 @@ public class WrappedPacketPlayOutEntityHeadRotation extends Packet {
         setField("b", rotation);
     }
 
+    public WrappedPacketPlayOutEntityHeadRotation(Class<?> clazz, Object instance) {
+        super(clazz, instance);
+    }
+
 }

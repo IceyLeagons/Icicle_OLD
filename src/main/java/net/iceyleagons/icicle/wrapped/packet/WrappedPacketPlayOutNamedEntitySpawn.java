@@ -39,4 +39,8 @@ public class WrappedPacketPlayOutNamedEntitySpawn extends Packet {
     public WrappedPacketPlayOutNamedEntitySpawn(WrappedEntityPlayer entityPlayer) {
         super("PacketPlayOutNamedEntitySpawn", new Class<?>[]{Reflections.getNormalNMSClass("EntityHuman")}, entityPlayer);
     }
+
+    public WrappedPacketPlayOutNamedEntitySpawn(Class<?> clazz, Object instance) {
+        super(clazz, instance);
+    }
 }

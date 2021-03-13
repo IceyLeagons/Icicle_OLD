@@ -24,8 +24,11 @@
 
 package net.iceyleagons.icicle;
 
+import net.iceyleagons.icicle.event.Events;
+import net.iceyleagons.icicle.event.packets.PacketInterception;
 import net.iceyleagons.icicle.registry.IciclePluginManager;
-import org.bukkit.Bukkit;
+import org.bukkit.event.player.PlayerEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -58,6 +61,9 @@ public class Icicle extends JavaPlugin {
     public void onEnable() {
         enabled = true;
         pluginRegistry = new IciclePluginManager();
+
+        // Inject player with our packet interceptor.
+        Events.createBukkitConsumer(this, PlayerJoinEvent.class).asObservable().map(PlayerEvent::getPlayer).subscribe(PacketInterception::injectPlayer);
 
         IciclePluginBootstrapper.bootstrap(this, "net.iceyleagons.icicle");
         super.onEnable();

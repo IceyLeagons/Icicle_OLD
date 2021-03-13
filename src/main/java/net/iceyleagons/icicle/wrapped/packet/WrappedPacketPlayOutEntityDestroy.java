@@ -40,4 +40,8 @@ public class WrappedPacketPlayOutEntityDestroy extends Packet {
         super("PacketPlayOutEntityDestroy", var);
     }
 
+    public WrappedPacketPlayOutEntityDestroy(Class<?> clazz, Object instance) {
+        super(clazz, instance);
+    }
+
 }
