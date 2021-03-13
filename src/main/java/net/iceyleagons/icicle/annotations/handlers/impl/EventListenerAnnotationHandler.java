@@ -4,6 +4,8 @@ import lombok.Getter;
 import net.iceyleagons.icicle.annotations.EventListener;
 import net.iceyleagons.icicle.annotations.handlers.AbstractAnnotationHandler;
 import net.iceyleagons.icicle.annotations.handlers.AnnotationHandler;
+import net.iceyleagons.icicle.event.Events;
+import net.iceyleagons.icicle.event.packets.PacketListener;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.reflections.Reflections;
@@ -34,10 +36,10 @@ public class EventListenerAnnotationHandler extends AbstractAnnotationHandler {
                         if (serviceObject instanceof Listener) {
                             this.eventListeners.put(listener, serviceObject);
                             Bukkit.getPluginManager().registerEvents((Listener) serviceObject, super.getRegisteredPlugin().getJavaPlugin());
-
-                        } else {
-                            getLogger().warning(String.format("Class named %s does not implement Listener while using annotation EventListener!", listener.getName()));
-                        }
+                        } else if (serviceObject instanceof PacketListener)
+                            Events.registerPacketListener((PacketListener) serviceObject);
+                        else
+                            getLogger().warning(String.format("Class named %s does not implement Listener or PacketListener while using the EventListener annotation!", listener.getName()));
                     } else {
                         getLogger().warning(String.format("Class named %s does not have an empty constructor!", listener.getName()));
                     }
