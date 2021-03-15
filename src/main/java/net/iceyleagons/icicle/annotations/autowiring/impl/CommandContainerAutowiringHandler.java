@@ -4,7 +4,7 @@ import net.iceyleagons.icicle.annotations.Autowired;
 import net.iceyleagons.icicle.annotations.autowiring.AbstractAutowiringHandler;
 import net.iceyleagons.icicle.annotations.autowiring.AutowiringHandler;
 import net.iceyleagons.icicle.annotations.commands.CommandContainer;
-import net.iceyleagons.icicle.annotations.handlers.impl.CommandContainerAnnotationHandler;
+import net.iceyleagons.icicle.annotations.handlers.impl.commands.CommandContainerAnnotationHandler;
 import net.iceyleagons.icicle.reflect.Reflections;
 
 import java.lang.reflect.Field;

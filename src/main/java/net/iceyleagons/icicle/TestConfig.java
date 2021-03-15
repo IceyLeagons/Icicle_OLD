@@ -13,4 +13,6 @@ public class TestConfig extends AbstractConfiguration {
     @ConfigPath("test.second")
     public String second = "This is the second message";
 
+
+
 }

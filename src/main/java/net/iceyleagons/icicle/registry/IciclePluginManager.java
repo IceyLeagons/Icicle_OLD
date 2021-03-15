@@ -1,6 +1,6 @@
 package net.iceyleagons.icicle.registry;
 
-import net.iceyleagons.icicle.commands.PluginCommandManager;
+import net.iceyleagons.icicle.commands.system.PluginCommandManager;
 import net.iceyleagons.icicle.reflect.ClassScanningHandler;
 import org.bukkit.plugin.java.JavaPlugin;
 

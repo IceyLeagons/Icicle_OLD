@@ -1,8 +1,10 @@
-package net.iceyleagons.icicle.commands;
+package net.iceyleagons.icicle.commands.system;
 
 import lombok.Getter;
 import net.iceyleagons.icicle.annotations.commands.Command;
 import net.iceyleagons.icicle.annotations.commands.CommandContainer;
+import net.iceyleagons.icicle.commands.CommandInjectException;
+import net.iceyleagons.icicle.commands.CommandUtils;
 import net.iceyleagons.icicle.math.MathUtils;
 import net.iceyleagons.icicle.registry.RegisteredPlugin;
 import org.bukkit.Bukkit;
@@ -25,6 +27,7 @@ public class PluginCommandManager implements CommandExecutor, TabCompleter {
     private final RegisteredPlugin registeredPlugin;
     private final CommandUtils commandUtils;
     private final Map<String, RegisteredCommand> commands = new HashMap<>();
+    private final Map<Class<?>, CommandParameterHandlerTemplate> parameterHandlers = new HashMap<>();
 
     private final Map<String, String> messages = new HashMap<>();
 
@@ -136,6 +139,12 @@ public class PluginCommandManager implements CommandExecutor, TabCompleter {
     }
 
     private Object handleParameter(Class<?> type, CommandSender sender, String arg) {
+        if (parameterHandlers.containsKey(type)) {
+            return parameterHandlers.get(type).parseFromSting(arg, sender, type);
+        }
+
+        return null;
+        /*
         if (type == String.class) {
             return arg;
 
@@ -157,6 +166,8 @@ public class PluginCommandManager implements CommandExecutor, TabCompleter {
         }
 
         return null;
+
+         */
     }
 
     @Nullable

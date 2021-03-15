@@ -1,4 +1,4 @@
-package net.iceyleagons.icicle.annotations.handlers.impl;
+package net.iceyleagons.icicle.annotations.handlers.impl.commands;
 
 import lombok.Getter;
 import net.iceyleagons.icicle.annotations.commands.CommandContainer;

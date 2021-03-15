@@ -4,7 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import net.iceyleagons.icicle.commands.PluginCommandManager;
+import net.iceyleagons.icicle.commands.system.PluginCommandManager;
 import net.iceyleagons.icicle.reflect.AutowiringHandler;
 import net.iceyleagons.icicle.reflect.ClassScanningHandler;
 import org.bukkit.plugin.java.JavaPlugin;

@@ -69,17 +69,16 @@ public abstract class AbstractConfiguration {
                 yamlConfiguration.set(path, value);
             }
         });
+
         yamlConfiguration.save(file);
+        reloadFromConfig();
     }
 
     @SneakyThrows
     public void saveToConfig() {
         Map<String, Object> values = getValues();
 
-        values.forEach((path, value) -> {
-            yamlConfiguration.set(path, value);
-
-        });
+        values.forEach((path, value) -> yamlConfiguration.set(path, value));
         yamlConfiguration.save(file);
     }
 

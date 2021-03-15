@@ -1,4 +1,4 @@
-package net.iceyleagons.icicle.commands;
+package net.iceyleagons.icicle.commands.system;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
