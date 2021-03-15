@@ -12,12 +12,12 @@ import io.reactivex.rxjava3.functions.Consumer;
  */
 public class EventConsumerImpl<T> implements EventConsumer<T> {
 
-    static boolean overwriteEnabled = true;
+    public static boolean overwriteEnabled = true;
 
-    String event;
-    Consumer<T> handler;
-    Consumer<Throwable> errorHandler;
-    boolean init = false;
+    public String event;
+    public Consumer<T> handler;
+    public Consumer<Throwable> errorHandler;
+    public boolean init = false;
 
     public static <T> EventConsumerImpl<T> from(Class<T> event) {
         EventConsumerImpl<T> consumer = new EventConsumerImpl<>();
@@ -49,7 +49,7 @@ public class EventConsumerImpl<T> implements EventConsumer<T> {
     @Override
     public Observable<T> asObservable() {
         if (init && !overwriteEnabled)
-            throw new RuntimeException("Tried to overwrite existing observable. Was this intentional? If it was, please enable #overwriteEnabled.");
+            throw new IllegalStateException("Tried to overwrite existing observable. Was this intentional? If it was, please enable #overwriteEnabled.");
 
         init = true;
 

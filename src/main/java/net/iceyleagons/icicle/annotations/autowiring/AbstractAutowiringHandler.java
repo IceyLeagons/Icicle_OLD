@@ -7,6 +7,14 @@ import net.iceyleagons.icicle.registry.RegisteredPlugin;
 import java.lang.reflect.Field;
 import java.util.logging.Logger;
 
+/**
+ * Responsible for handling autowiring for a specific annotations.
+ * Must be used with @{@link AutowiringHandler}
+ *
+ * @author TOTHTOMI
+ * @version 1.0.0
+ * @since 2.0.0
+ */
 @Data
 public abstract class AbstractAutowiringHandler {
 
@@ -16,7 +24,11 @@ public abstract class AbstractAutowiringHandler {
     private ClassScanningHandler classScanningHandler;
     private AutowiringHandler annotation;
 
-    public void postInitialization() {}
+    /**
+     * This method is called after initialization, use this as a constructor basically.
+     */
+    public void postInitialization() {
+    }
 
     /**
      * Used to check whether this AutowiringHandler supports the field, to avoid unnecessary injection.
@@ -30,7 +42,7 @@ public abstract class AbstractAutowiringHandler {
      * This is called after postInitialization, you'll need to write your own scanning logic, and you have to
      * manage those registered objects. We've decided on this structure for better modularity.
      *
-     * @param field the field to inject
+     * @param field  the field to inject
      * @param object the object to inject into
      */
     public abstract void inject(Field field, Object object);

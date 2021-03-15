@@ -36,7 +36,7 @@ public class PacketInterception {
     @SneakyThrows
     public static void injectPlayer(Player player) {
         if (injected.contains(player))
-            throw new RuntimeException("Cannot inject player twice!");
+            throw new IllegalStateException("Cannot inject player twice!");
 
         injected.add(player);
         Channel channel = WrappedCraftPlayer.from(player).getHandle().getNetworkManager().getChannel();

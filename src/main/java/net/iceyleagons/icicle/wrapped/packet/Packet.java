@@ -49,7 +49,7 @@ public abstract class Packet {
     private static boolean setup = false;
     private static Class<?> nms_Class;
     private static Constructor<?> constructor;
-    private static Map<String, Field> fields = new HashMap<>();
+    private static final Map<String, Field> fields = new HashMap<>();
 
     private final Object packet;
 
@@ -74,6 +74,40 @@ public abstract class Packet {
     protected Packet(String clazz, Object... parameters) {
         setupStatic(clazz, parameters);
         this.packet = constructor.newInstance(parameters);
+    }
+
+    private static Class<?>[] getClassesFromParameters(Object... params) {
+        Class<?>[] classes = new Class<?>[params.length];
+
+        for (int i = 0; i < params.length; i++) {
+            classes[i] = params[i].getClass();
+        }
+
+        return classes;
+    }
+
+    private static void setupStatic(Class<?> clazz, Constructor<?> constructor1) {
+        if (!setup) {
+            setup = true;
+            nms_Class = clazz;
+            constructor = constructor1;
+        }
+    }
+
+    private static void setupStatic(String clazz, Class<?>... paramTypes) {
+        if (!setup) {
+            setup = true;
+            nms_Class = Reflections.getNormalNMSClass(clazz);
+            constructor = Reflections.getConstructor(nms_Class, true, paramTypes);
+        }
+    }
+
+    private static void setupStatic(String clazz, Object... params) {
+        if (!setup) {
+            setup = true;
+            nms_Class = Reflections.getNormalNMSClass(clazz);
+            constructor = Reflections.getConstructor(nms_Class, true, getClassesFromParameters(params));
+        }
     }
 
     public <T> T getFromField(String name, Class<T> wantedType) {
@@ -104,31 +138,5 @@ public abstract class Packet {
 
     public void send(WrappedCraftPlayer wrappedCraftPlayer) {
         wrappedCraftPlayer.getHandle().getPlayerConnection().sendPacket(getPacket());
-    }
-
-    private static Class<?>[] getClassesFromParameters(Object... params) {
-        Class<?>[] classes = new Class<?>[params.length];
-
-        for (int i = 0; i < params.length; i++) {
-            classes[i] = params[i].getClass();
-        }
-
-        return classes;
-    }
-
-    private static void setupStatic(String clazz, Class<?>... paramTypes) {
-        if (!setup) {
-            setup = true;
-            nms_Class = Reflections.getNormalNMSClass(clazz);
-            constructor = Reflections.getConstructor(nms_Class, true, paramTypes);
-        }
-    }
-
-    private static void setupStatic(String clazz, Object... params) {
-        if (!setup) {
-            setup = true;
-            nms_Class = Reflections.getNormalNMSClass(clazz);
-            constructor = Reflections.getConstructor(nms_Class, true, getClassesFromParameters(params));
-        }
     }
 }

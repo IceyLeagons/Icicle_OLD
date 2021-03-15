@@ -40,11 +40,7 @@ import java.lang.reflect.Method;
 @RequiredArgsConstructor
 public class WrappedPlayerList {
 
-    @NonNull
-    private final Object root;
-
     private static final Class mc_playerList;
-
     private static final Method mc_reload;
     private static final Method mc_getViewDistance;
     private static final Method mc_setViewDistance; // #a(int)
@@ -65,6 +61,9 @@ public class WrappedPlayerList {
         mc_getPlayerCount = Reflections.getMethod(mc_playerList, "getPlayerCount", true);
     }
 
+    @NonNull
+    private final Object root;
+
     /**
      * @return the number of players online.
      */
@@ -77,6 +76,15 @@ public class WrappedPlayerList {
      */
     public Integer getViewDistance() {
         return Reflections.invoke(mc_getViewDistance, Integer.class, root);
+    }
+
+    /**
+     * Changes the render distance of the server to the specified value.
+     *
+     * @param value self-explanatory.
+     */
+    public void setViewDistance(int value) {
+        Reflections.invoke(mc_setViewDistance, Object.class, root, value);
     }
 
     /**
@@ -93,15 +101,6 @@ public class WrappedPlayerList {
      */
     public void setMaxPlayers(int value) {
         Reflections.invoke(mc_setMaxPlayers, Object.class, root, value);
-    }
-
-    /**
-     * Changes the render distance of the server to the specified value.
-     *
-     * @param value self-explanatory.
-     */
-    public void setViewDistance(int value) {
-        Reflections.invoke(mc_setViewDistance, Object.class, root, value);
     }
 
     /**

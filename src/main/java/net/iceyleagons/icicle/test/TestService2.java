@@ -1,6 +1,5 @@
 package net.iceyleagons.icicle.test;
 
-import net.iceyleagons.icicle.annotations.Autowired;
 import net.iceyleagons.icicle.annotations.Service;
 
 @Service

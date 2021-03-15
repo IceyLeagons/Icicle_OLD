@@ -26,9 +26,9 @@ package net.iceyleagons.icicle.wrapped.world.chunk;
 
 import lombok.Getter;
 import net.iceyleagons.icicle.reflect.Reflections;
-import net.iceyleagons.icicle.wrapped.world.WrappedBlockPosition;
-import net.iceyleagons.icicle.wrapped.entity.WrappedTileEntity;
 import net.iceyleagons.icicle.wrapped.biome.WrappedBiomeStorage;
+import net.iceyleagons.icicle.wrapped.entity.WrappedTileEntity;
+import net.iceyleagons.icicle.wrapped.world.WrappedBlockPosition;
 import net.iceyleagons.icicle.wrapped.world.WrappedLightEngine;
 import org.bukkit.Chunk;
 import org.bukkit.Location;

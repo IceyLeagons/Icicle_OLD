@@ -102,22 +102,6 @@ public class WrappedMobSpawnerAbstract {
     }
 
     /**
-     * @param object is a minecraftkey.
-     */
-    public void setMobName(Object object) {
-        Reflections.invoke(mc_setMobName, Void.class, root, object);
-    }
-
-    /**
-     * Same as {@link #setMobName(Object)}.
-     *
-     * @param namespacedKey the namespace of the mob name.
-     */
-    public void setMobName(NamespacedKey namespacedKey) {
-        Reflections.invoke(mc_setMobName, Void.class, root, WrappedCraftNamespacedKey.toMinecraft(namespacedKey));
-    }
-
-    /**
      * NOT CURRENTLY IMPLEMENTED.
      *
      * @param object the mobspawnerdata we wish to change it to.
@@ -131,6 +115,22 @@ public class WrappedMobSpawnerAbstract {
      */
     public Object getMobName() {
         return Reflections.invoke(mc_getMobName, Object.class, root);
+    }
+
+    /**
+     * @param object is a minecraftkey.
+     */
+    public void setMobName(Object object) {
+        Reflections.invoke(mc_setMobName, Void.class, root, object);
+    }
+
+    /**
+     * Same as {@link #setMobName(Object)}.
+     *
+     * @param namespacedKey the namespace of the mob name.
+     */
+    public void setMobName(NamespacedKey namespacedKey) {
+        Reflections.invoke(mc_setMobName, Void.class, root, WrappedCraftNamespacedKey.toMinecraft(namespacedKey));
     }
 
     /**

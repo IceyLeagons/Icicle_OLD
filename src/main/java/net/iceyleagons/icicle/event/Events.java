@@ -31,9 +31,9 @@ import java.util.stream.Collectors;
  * @since 2.0.0-SNAPSHOT
  */
 public class Events {
-    static Scheduler.Worker worker;
-    static Map<PacketType, Map<Method, Object>> packetMethods = new ConcurrentHashMap<>();
-    static Map<String, Set<EventConsumer>> events = new ConcurrentHashMap<>();
+    public static Scheduler.Worker worker;
+    public static Map<PacketType, Map<Method, Object>> packetMethods = new ConcurrentHashMap<>();
+    public static Map<String, Set<EventConsumer>> events = new ConcurrentHashMap<>();
 
     static {
         worker = Schedulers.from(ForkJoinPool.commonPool()).createWorker();

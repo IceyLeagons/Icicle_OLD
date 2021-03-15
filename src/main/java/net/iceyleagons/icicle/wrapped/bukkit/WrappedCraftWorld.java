@@ -26,11 +26,11 @@ package net.iceyleagons.icicle.wrapped.bukkit;
 
 import lombok.Getter;
 import net.iceyleagons.icicle.reflect.Reflections;
-import net.iceyleagons.icicle.wrapped.world.WrappedBlockPosition;
 import net.iceyleagons.icicle.wrapped.biome.WrappedBiomeBase;
 import net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutMapChunk;
 import net.iceyleagons.icicle.wrapped.player.WrappedCraftPlayer;
 import net.iceyleagons.icicle.wrapped.registry.WrappedIRegistryCustom;
+import net.iceyleagons.icicle.wrapped.world.WrappedBlockPosition;
 import net.iceyleagons.icicle.wrapped.world.WrappedWorld;
 import net.iceyleagons.icicle.wrapped.world.chunk.WrappedChunk;
 import org.bukkit.Bukkit;

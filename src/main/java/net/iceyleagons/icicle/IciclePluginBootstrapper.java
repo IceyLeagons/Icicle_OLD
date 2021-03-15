@@ -7,14 +7,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 /**
  * Statically accessible class to register and bootstrap plugins built with Icicle
  *
+ * @author TOTHTOMI
  * @version 1.0.0
  * @since 2.0.0-SNAPSHOT
- * @author TOTHTOMI
  */
 public class IciclePluginBootstrapper {
 
     /**
-     * @param javaPlugin the plugin
+     * @param javaPlugin  the plugin
      * @param rootPackage the rootPackage of your plugin, it's usually: groupName.artifactName
      */
     public static void bootstrap(JavaPlugin javaPlugin, String rootPackage) {

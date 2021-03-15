@@ -6,9 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * @author TOTHTOMI
  * @version 1.0.0
  * @since 2.0.0
- * @author TOTHTOMI
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

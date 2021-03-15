@@ -74,16 +74,6 @@ public class WrappedMojangsonParser {
     }
 
     /**
-     * Parses the string provided in the constructor.
-     *
-     * @return the parse result. (an nbttagcompound)
-     */
-    // NBTTagCompound
-    public Object parse() {
-        return Reflections.invoke(parser_parse, Object.class, root);
-    }
-
-    /**
      * Parses the provided string into an NBTTagCompound.
      *
      * @param nbt the string to parse.
@@ -92,6 +82,16 @@ public class WrappedMojangsonParser {
     // NBTTagCompound
     public static Object parse(String nbt) {
         return Reflections.invoke(parser_parseStatic, Object.class, null, nbt);
+    }
+
+    /**
+     * Parses the string provided in the constructor.
+     *
+     * @return the parse result. (an nbttagcompound)
+     */
+    // NBTTagCompound
+    public Object parse() {
+        return Reflections.invoke(parser_parse, Object.class, root);
     }
 
     /**

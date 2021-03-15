@@ -27,13 +27,9 @@ package net.iceyleagons.icicle;
 import net.iceyleagons.icicle.event.Events;
 import net.iceyleagons.icicle.event.packets.PacketInterception;
 import net.iceyleagons.icicle.registry.IciclePluginManager;
-import org.bukkit.Bukkit;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.logging.Logger;
 
 /**
  * This class doesn't really have functions, only update checkers.
@@ -49,29 +45,6 @@ public class Icicle extends JavaPlugin {
 
     public static boolean enabled = false;
     public static IciclePluginManager pluginRegistry;
-
-    @Override
-    public void onLoad() {
-
-    }
-
-    @Override
-    public void onDisable() {
-        enabled = false;
-        super.onDisable();
-    }
-
-    @Override
-    public void onEnable() {
-        enabled = true;
-        pluginRegistry = new IciclePluginManager();
-
-        // Inject player with our packet interceptor.
-        Events.createBukkitConsumer(this, PlayerJoinEvent.class).asObservable().map(PlayerEvent::getPlayer).subscribe(PacketInterception::injectPlayer);
-
-        IciclePluginBootstrapper.bootstrap(this, "net.iceyleagons.icicle");
-        super.onEnable();
-    }
 
     /**
      * @return the version of the current icicle library. Our versions use the Semantic versioning.
@@ -98,6 +71,44 @@ public class Icicle extends JavaPlugin {
     public static String getCopyrightText() {
         return "This project was built upon IceyLeagons' Icicle Library v" + getVersion() +
                 " (Licensed under the terms of MIT License)";
+    }
+
+    /**
+     * Called by Bukkit.
+     *
+     * @see JavaPlugin#onLoad()
+     */
+    @Override
+    public void onLoad() {
+
+    }
+
+    /**
+     * Called by Bukkit.
+     *
+     * @see JavaPlugin#onDisable()
+     */
+    @Override
+    public void onDisable() {
+        enabled = false;
+        super.onDisable();
+    }
+
+    /**
+     * Called by Bukkit.
+     *
+     * @see JavaPlugin#onEnable()
+     */
+    @Override
+    public void onEnable() {
+        enabled = true;
+        pluginRegistry = new IciclePluginManager();
+
+        // Inject player with our packet interceptor.
+        Events.createBukkitConsumer(this, PlayerJoinEvent.class).asObservable().map(PlayerEvent::getPlayer).subscribe(PacketInterception::injectPlayer);
+
+        IciclePluginBootstrapper.bootstrap(this, "net.iceyleagons.icicle");
+        super.onEnable();
     }
 
 }

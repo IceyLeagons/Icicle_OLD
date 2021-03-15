@@ -71,6 +71,14 @@ public class WrappedPacketPlayOutPlayerInfo extends Packet {
         mc_enumPlayerInfoAction_valueOf = Reflections.getMethod(mc_enumPlayerInfoAction, "valueOf", true, String.class);
     }
 
+    public WrappedPacketPlayOutPlayerInfo(EnumPlayerInfoAction enumPlayerInfoAction, WrappedEntityPlayer entityPlayer) {
+        super(mc_packetPlayOutPlayerInfo, mc_packetPlayOutPlayerInfoConstructor, getInstance(enumPlayerInfoAction, entityPlayer));
+    }
+
+    public WrappedPacketPlayOutPlayerInfo(Class<?> clazz, Object instance) {
+        super(clazz, instance);
+    }
+
     private static Object getInstance(EnumPlayerInfoAction enumPlayerInfoAction, WrappedEntityPlayer entityPlayer) {
         Object array = Array.newInstance(WrappedEntityPlayer.entityPlayerClass, 1);
         Array.set(array, 0, entityPlayer.getEntityPlayer());
@@ -85,14 +93,6 @@ public class WrappedPacketPlayOutPlayerInfo extends Packet {
         }
 
         return null;
-    }
-
-    public WrappedPacketPlayOutPlayerInfo(EnumPlayerInfoAction enumPlayerInfoAction, WrappedEntityPlayer entityPlayer) {
-        super(mc_packetPlayOutPlayerInfo, mc_packetPlayOutPlayerInfoConstructor, getInstance(enumPlayerInfoAction, entityPlayer));
-    }
-
-    public WrappedPacketPlayOutPlayerInfo(Class<?> clazz, Object instance) {
-        super(clazz, instance);
     }
 
     @RequiredArgsConstructor

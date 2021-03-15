@@ -43,8 +43,6 @@ public class WrappedBlockPosition {
 
     public static final Class<?> mc_BlockPosition;
     private static final Class<?> mc_BaseBlockPosition;
-    private static Constructor<?> block_constructor;
-
     private static final Method base_isValidLocation;
     private static final Method base_getX;
     private static final Method base_getY;
@@ -52,6 +50,7 @@ public class WrappedBlockPosition {
     private static final Method base_setX;
     private static final Method base_setY;
     private static final Method base_setZ;
+    private static Constructor<?> block_constructor;
 
     static {
         mc_BlockPosition = Reflections.getNormalNMSClass("BlockPosition");
@@ -102,20 +101,6 @@ public class WrappedBlockPosition {
     }
 
     /**
-     * @return the y coordinate of this position.
-     */
-    public int getY() {
-        return Reflections.invoke(base_getY, int.class, root);
-    }
-
-    /**
-     * @return the z coordinate of this position.
-     */
-    public int getZ() {
-        return Reflections.invoke(base_getZ, int.class, root);
-    }
-
-    /**
      * Changes the x coordinate of this position.
      *
      * @param x the new value.
@@ -125,12 +110,26 @@ public class WrappedBlockPosition {
     }
 
     /**
+     * @return the y coordinate of this position.
+     */
+    public int getY() {
+        return Reflections.invoke(base_getY, int.class, root);
+    }
+
+    /**
      * Changes the y coordinate of this position.
      *
      * @param y the new value.
      */
     public void setY(int y) {
         Reflections.invoke(base_setY, Void.class, root, y);
+    }
+
+    /**
+     * @return the z coordinate of this position.
+     */
+    public int getZ() {
+        return Reflections.invoke(base_getZ, int.class, root);
     }
 
     /**

@@ -43,7 +43,7 @@ public class AutowiringHandler {
      * Used for autowiring special objects like: Main class, Beans
      *
      * @param object the object to inject to
-     * @param field the field to inject to
+     * @param field  the field to inject to
      */
     private void injectSpecialCases(Object object, Field field) {
         if (field.getType().equals(classScanningHandler.getRegisteredPlugin().getMainClass())) {

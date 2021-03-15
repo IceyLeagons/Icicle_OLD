@@ -91,11 +91,10 @@ public class PluginCommandManager implements CommandExecutor, TabCompleter {
         Object object = command.getObject();
         Method method = command.getMethod();
 
-        if (annotation.playerOnly()) {
-            if (!(sender instanceof Player)) {
-                sendMessage(sender, "player_only");
-                return;
-            }
+        if (annotation.playerOnly() && !(sender instanceof Player)) {
+            sendMessage(sender, "player_only");
+            return;
+
         }
 
         Class<?>[] parameterTypes = method.getParameterTypes();

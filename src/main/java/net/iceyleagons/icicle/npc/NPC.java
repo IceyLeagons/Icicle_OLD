@@ -115,6 +115,12 @@ public class NPC {
 
     }
 
+    public static NPCListener get(JavaPlugin javaPlugin) {
+        NPCListener npcListener = new NPCListener();
+        javaPlugin.getServer().getPluginManager().registerEvents(npcListener, javaPlugin);
+        return npcListener;
+    }
+
     public void setupNPCListener(NPCListener npcListener) {
         this.npcListener = npcListener;
     }
@@ -148,11 +154,5 @@ public class NPC {
         this.wrappedEntityPlayer = npc;
         if (npcListener != null) npcListener.addNPC(this);
         return npc;
-    }
-
-    public static NPCListener get(JavaPlugin javaPlugin) {
-        NPCListener npcListener = new NPCListener();
-        javaPlugin.getServer().getPluginManager().registerEvents(npcListener, javaPlugin);
-        return npcListener;
     }
 }

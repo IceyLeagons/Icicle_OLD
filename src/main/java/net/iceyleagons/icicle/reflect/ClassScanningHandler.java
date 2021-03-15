@@ -39,7 +39,6 @@ public class ClassScanningHandler {
     }
 
 
-
     public void initialize() {
         Preconditions.checkArgument(!initialized, new IllegalStateException("ClassScanningHandler has already been initialized!"));
 
