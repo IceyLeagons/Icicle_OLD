@@ -2,6 +2,7 @@ package net.iceyleagons.icicle.reflect;
 
 import com.google.common.base.Preconditions;
 import lombok.Getter;
+import net.iceyleagons.icicle.annotations.Bean;
 import net.iceyleagons.icicle.annotations.autowiring.AbstractAutowiringHandler;
 import net.iceyleagons.icicle.annotations.handlers.AbstractAnnotationHandler;
 import net.iceyleagons.icicle.annotations.handlers.AnnotationHandler;
@@ -9,12 +10,10 @@ import net.iceyleagons.icicle.registry.RegisteredPlugin;
 import org.reflections.Reflections;
 
 import java.lang.reflect.Constructor;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
 
+@Getter
 public class ClassScanningHandler {
 
     private final RegisteredPlugin registeredPlugin;
@@ -22,9 +21,7 @@ public class ClassScanningHandler {
     private final Reflections rootPackage;
     private final Logger logger = Logger.getLogger(ClassScanningHandler.class.getName());
 
-    @Getter
     private final Map<Class<?>, AbstractAnnotationHandler> annotationHandlers = new HashMap<>();
-    @Getter
     private final Map<Class<?>, AbstractAutowiringHandler> autowiringHandlers = new HashMap<>();
 
 
@@ -120,6 +117,30 @@ public class ClassScanningHandler {
         });
 
         autowiringHandlers.values().forEach(AbstractAutowiringHandler::postInitialization);
+    }
+
+    public void registerBeansInObject(Object object) {
+        Arrays.stream(object.getClass().getDeclaredMethods())
+                .filter(method -> method.isAnnotationPresent(Bean.class))
+                .peek(method -> method.setAccessible(true))
+                .forEach(method -> {
+                    if (method.getReturnType().equals(Void.class)) {
+                        getLogger().warning("Unsupported bean type in class " + object.getClass().getName() + ", named " + method.getName());
+                    } else {
+                        try {
+                            if (method.getParameterTypes().length != 0) {
+                                getLogger().warning("Bean must not have parameters in class " + object.getClass().getName() + ", named " + method.getName());
+                            } else {
+                                Object obj = method.invoke(object);
+                                getAutowiringHandler().getBeans().put(method.getReturnType(), obj);
+                            }
+                        } catch (Exception e) {
+                            getLogger().warning("Could not register bean in class " + object.getClass().getName() + ", named " + method.getName());
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
     }
 
 

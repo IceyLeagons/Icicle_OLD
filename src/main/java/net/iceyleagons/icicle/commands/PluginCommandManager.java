@@ -5,28 +5,45 @@ import net.iceyleagons.icicle.annotations.commands.Command;
 import net.iceyleagons.icicle.annotations.commands.CommandContainer;
 import net.iceyleagons.icicle.math.MathUtils;
 import net.iceyleagons.icicle.registry.RegisteredPlugin;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 @Getter
-public class PluginCommandManager implements CommandExecutor {
+public class PluginCommandManager implements CommandExecutor, TabCompleter {
 
     private final RegisteredPlugin registeredPlugin;
     private final CommandUtils commandUtils;
     private final Map<String, RegisteredCommand> commands = new HashMap<>();
 
+    private final Map<String, String> messages = new HashMap<>();
+
     public PluginCommandManager(RegisteredPlugin registeredPlugin) {
         this.registeredPlugin = registeredPlugin;
         this.commandUtils = new CommandUtils(registeredPlugin.getJavaPlugin());
+        insertDefaultMessages();
+    }
+
+    private void insertDefaultMessages() {
+        messages.put("permission", "&cWe're sorry, but you do not have sufficient permissions, to perfom this command!");
+
+        messages.put("player_only", "&cPlayer only command!");
+        messages.put("arguments_few", "&cToo few arguments!");
+        messages.put("arguments_many", "&cToo many arguments!");
+        messages.put("exception", "&cAn internal exception happened! (See console for details)");
+
+        messages.put("parameter_number_invalid", "&cParameter expected to be a number.");
+        messages.put("parameter_player_not_found", "&cPlayer not found. Are they online?");
     }
 
     public void registerCommandContainer(Object o) {
@@ -38,21 +55,18 @@ public class PluginCommandManager implements CommandExecutor {
                         RegisteredCommand registeredCommand = new RegisteredCommand(o, method, annotation);
 
                         commands.put(annotation.value(), registeredCommand);
+                        Arrays.stream(annotation.aliases()).forEach(alias -> commands.put(alias, registeredCommand));
 
                         try {
-                            commandUtils.injectCommand(annotation.value(), this);
+                            commandUtils.injectCommand(annotation.value(), this, this,
+                                    annotation.usage().isEmpty() ? null : annotation.usage(),
+                                    annotation.description().isEmpty() ? null : annotation.description(),
+                                    annotation.permission().isEmpty() ? null : annotation.permission(),
+                                    ChatColor.translateAlternateColorCodes('&', messages.get("permission")),
+                                    Arrays.asList(annotation.aliases().clone()));
                         } catch (CommandInjectException e) {
                             e.printStackTrace();
                         }
-
-                        Arrays.stream(annotation.aliases()).forEach(alias -> {
-                            try {
-                                commandUtils.injectCommand(alias, this);
-                            } catch (CommandInjectException e) {
-                                e.printStackTrace();
-                            }
-                            commands.put(alias, registeredCommand);
-                        });
                     });
         }
     }
@@ -66,6 +80,12 @@ public class PluginCommandManager implements CommandExecutor {
         return true;
     }
 
+    private void sendMessage(CommandSender sender, String key) {
+        if (messages.containsKey(key)) {
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messages.get(key)));
+        }
+    }
+
     private void handleCommand(RegisteredCommand command, CommandSender sender, String[] args) {
         Command annotation = command.getAnnotation();
         Object object = command.getObject();
@@ -73,7 +93,7 @@ public class PluginCommandManager implements CommandExecutor {
 
         if (annotation.playerOnly()) {
             if (!(sender instanceof Player)) {
-                sender.sendMessage("Player only command!");
+                sendMessage(sender, "player_only");
                 return;
             }
         }
@@ -82,10 +102,10 @@ public class PluginCommandManager implements CommandExecutor {
         Object[] parameters = new Object[parameterTypes.length];
 
         if (args.length < parameterTypes.length - 1) {
-            sender.sendMessage("Too few arguments!");
+            sendMessage(sender, "arguments_few");
             return;
         } else if (args.length > parameterTypes.length - 1) {
-            sender.sendMessage("Too many arguments!");
+            sendMessage(sender, "arguments_many");
             return;
         }
 
@@ -100,7 +120,7 @@ public class PluginCommandManager implements CommandExecutor {
 
             Object handled = handleParameter(type, sender, args[commandArgCounter++]);
             if (handled == null) {
-                sender.sendMessage("An exception happened!");
+                sendMessage(sender, "exception");
                 return;
             }
 
@@ -108,10 +128,10 @@ public class PluginCommandManager implements CommandExecutor {
         }
 
         try {
-            Object returnedResponse = method.invoke(object, parameters);
+            method.invoke(object, parameters);
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
-            sender.sendMessage("An exception happened! 2");
+            sendMessage(sender, "exception");
         }
 
     }
@@ -119,16 +139,34 @@ public class PluginCommandManager implements CommandExecutor {
     private Object handleParameter(Class<?> type, CommandSender sender, String arg) {
         if (type == String.class) {
             return arg;
+
         } else if (type == Integer.class) {
             if (!MathUtils.isNumber(arg)) {
-                sender.sendMessage("Invalid number!");
+                sendMessage(sender, "parameter_number_invalid");
                 return null;
             }
 
+            return Integer.parseInt(arg);
         } else if (type == Player.class) {
+            Player player = Bukkit.getPlayer(arg);
+            if (player == null) {
+                sendMessage(sender, "parameter_player_not_found");
+                return null;
+            }
 
+            return player;
         }
 
         return null;
+    }
+
+    @Nullable
+    @Override
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull org.bukkit.command.Command command, @NotNull String alias, @NotNull String[] args) {
+        final List<String> completions = new ArrayList<>();
+        String token = (args.length == 0 ? "" : args[args.length - 1]);
+        StringUtil.copyPartialMatches(token, commands.keySet(), completions);
+        Collections.sort(completions);
+        return completions;
     }
 }
