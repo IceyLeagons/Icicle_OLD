@@ -2,6 +2,7 @@ package net.iceyleagons.icicle.commands.system.handlers;
 
 import net.iceyleagons.icicle.annotations.commands.CommandParameterHandler;
 import net.iceyleagons.icicle.commands.system.CommandParameterHandlerTemplate;
+import net.iceyleagons.icicle.commands.system.PluginCommandManager;
 import net.iceyleagons.icicle.math.MathUtils;
 import org.bukkit.command.CommandSender;
 
@@ -15,29 +16,29 @@ import org.bukkit.command.CommandSender;
 public class NumberParameterHandler implements CommandParameterHandlerTemplate {
 
     @Override
-    public Object parseFromSting(String input, CommandSender sender, Class<?> requiredType) {
-        if (!MathUtils.isNumber(input)) {
-            sender.sendMessage("§cInvalid number.");
+    public Object parseFromSting(String input, CommandSender sender, Class<?> requiredType, PluginCommandManager pluginCommandManager) {
+        try {
+            if (requiredType.equals(int.class) || requiredType.equals(Integer.class))
+                return Integer.parseInt(input);
+
+
+            if (requiredType.equals(long.class) || requiredType.equals(Long.class))
+                return Long.parseLong(input);
+
+
+            if (requiredType.equals(short.class) || requiredType.equals(Short.class))
+                return Short.parseShort(input);
+
+            if (requiredType.equals(float.class) || requiredType.equals(Float.class))
+                return Float.parseFloat(input);
+
+            if (requiredType.equals(double.class) || requiredType.equals(Double.class))
+                return Double.parseDouble(input);
+
+        } catch (NumberFormatException e) {
+            pluginCommandManager.sendMessage(sender, "parameter_number_invalid");
             return null;
         }
-
-        if (requiredType.equals(int.class) || requiredType.equals(Integer.class))
-            return requiredType.cast(Integer.parseInt(input)); //this is so if it needs an int for example it will get casted automatically
-
-
-        if (requiredType.equals(long.class) || requiredType.equals(Long.class))
-            return requiredType.cast(Long.parseLong(input)); //this is so if it needs an int for example it will get casted automatically
-
-
-        if (requiredType.equals(short.class) || requiredType.equals(Short.class))
-            return requiredType.cast(Short.parseShort(input)); //this is so if it needs an int for example it will get casted automatically
-
-        if (requiredType.equals(float.class) || requiredType.equals(Float.class))
-            return requiredType.cast(Float.parseFloat(input)); //this is so if it needs an int for example it will get casted automatically
-
-        if (requiredType.equals(double.class) || requiredType.equals(Double.class))
-            return requiredType.cast(Double.parseDouble(input)); //this is so if it needs an int for example it will get casted automatically
-
         return null;
     }
 

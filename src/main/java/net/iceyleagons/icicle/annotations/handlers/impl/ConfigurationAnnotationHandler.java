@@ -27,7 +27,7 @@ public class ConfigurationAnnotationHandler extends AbstractAnnotationHandler {
         configurations.forEach(config -> {
             try {
                 if (!config.isAnnotation() && !config.isInterface()) {
-                    if (config.getSuperclass().equals(AbstractConfiguration.class)) {
+                    if (config.getSuperclass().isAssignableFrom(AbstractConfiguration.class)) {
                         Constructor<?> constructor = net.iceyleagons.icicle.reflect.Reflections.getConstructor(config, true);
                         if (constructor != null) {
                             Configuration configuration = config.getAnnotation(Configuration.class);

@@ -60,7 +60,6 @@ public class AutowiringHandler {
      * @param object the object to autowire
      */
     public void autowireObject(Object object) {
-        System.out.println("Autowiring object " + object.getClass().getName());
         Arrays.stream(object.getClass().getDeclaredFields())
                 .peek(field -> field.setAccessible(true))
                 .forEach(field -> {

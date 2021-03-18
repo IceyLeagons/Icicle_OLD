@@ -2,6 +2,7 @@ package net.iceyleagons.icicle.commands.system.handlers;
 
 import net.iceyleagons.icicle.annotations.commands.CommandParameterHandler;
 import net.iceyleagons.icicle.commands.system.CommandParameterHandlerTemplate;
+import net.iceyleagons.icicle.commands.system.PluginCommandManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -10,11 +11,11 @@ import org.bukkit.entity.Player;
 public class PlayerParameterHandler implements CommandParameterHandlerTemplate {
 
     @Override
-    public Object parseFromSting(String input, CommandSender sender, Class<?> requiredType) {
+    public Object parseFromSting(String input, CommandSender sender, Class<?> requiredType, PluginCommandManager pluginCommandManager) {
         Player player = Bukkit.getPlayer(input);
 
         if (player == null) {
-            sender.sendMessage("§cPlayer named " + input + " is offline!");
+            pluginCommandManager.sendMessage(sender, "parameter_player_not_found");
             return null;
         }
 

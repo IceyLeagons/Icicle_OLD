@@ -24,12 +24,20 @@
 
 package net.iceyleagons.icicle;
 
+import net.iceyleagons.icicle.annotations.Autowired;
 import net.iceyleagons.icicle.event.Events;
 import net.iceyleagons.icicle.event.packets.PacketInterception;
 import net.iceyleagons.icicle.registry.IciclePluginManager;
+import net.iceyleagons.icicle.registry.RegisteredPlugin;
+import net.iceyleagons.icicle.storage.StorageHandlerService;
+import net.iceyleagons.icicle.storage.handlers.sql.MySQL;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.java.JavaPluginLoader;
+
+import java.io.File;
 
 /**
  * This class doesn't really have functions, only update checkers.
@@ -42,6 +50,20 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @since 1.0.0-SNAPSHOT
  */
 public class Icicle extends JavaPlugin {
+
+    /**
+     * It's, because of Unit Testing
+     */
+    public Icicle() {
+        super();
+    }
+
+    /**
+     * It's here, because of Unit Testing
+     */
+    protected Icicle(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
+        super(loader, description, dataFolder, file);
+    }
 
     public static boolean enabled = false;
     public static IciclePluginManager pluginRegistry;

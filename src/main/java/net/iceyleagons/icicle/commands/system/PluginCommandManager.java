@@ -47,6 +47,7 @@ public class PluginCommandManager implements CommandExecutor, TabCompleter {
 
         messages.put("parameter_number_invalid", "&cParameter expected to be a number.");
         messages.put("parameter_player_not_found", "&cPlayer not found. Are they online?");
+        messages.put("parameter_uuid_invalid", "&CInvalid UUID format!");
     }
 
     public void registerCommandContainer(Object o) {
@@ -83,7 +84,7 @@ public class PluginCommandManager implements CommandExecutor, TabCompleter {
         return true;
     }
 
-    private void sendMessage(CommandSender sender, String key) {
+    public void sendMessage(CommandSender sender, String key) {
         if (messages.containsKey(key)) {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messages.get(key)));
         }
@@ -122,7 +123,6 @@ public class PluginCommandManager implements CommandExecutor, TabCompleter {
 
             Object handled = handleParameter(type, sender, args[commandArgCounter++]);
             if (handled == null) {
-                sendMessage(sender, "exception");
                 return;
             }
 
@@ -140,7 +140,7 @@ public class PluginCommandManager implements CommandExecutor, TabCompleter {
 
     private Object handleParameter(Class<?> type, CommandSender sender, String arg) {
         if (parameterHandlers.containsKey(type)) {
-            return parameterHandlers.get(type).parseFromSting(arg, sender, type);
+            return parameterHandlers.get(type).parseFromSting(arg, sender, type, this);
         }
 
         return null;

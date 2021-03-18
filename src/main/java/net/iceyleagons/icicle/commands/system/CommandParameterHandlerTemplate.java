@@ -20,8 +20,9 @@ public interface CommandParameterHandlerTemplate {
      * @param input the input the user has given
      * @param sender the {@link CommandSender} used to send error messages.
      * @param requiredType is the type you want to supply, usually used if there are multiple types this handler can handle
+     * @param pluginCommandManager is the {@link PluginCommandManager}, mainly used for translations (getMessages())
      * @return the parsed object or null if it cannot be parsed
      */
-    Object parseFromSting(String input, CommandSender sender, Class<?> requiredType);
+    Object parseFromSting(String input, CommandSender sender, Class<?> requiredType, PluginCommandManager pluginCommandManager);
 
 }

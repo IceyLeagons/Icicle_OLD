@@ -43,7 +43,7 @@ import java.util.Scanner;
 public class WebUtils {
 
     /**
-     * This will open a connection to the given {@link URL} and generates a string with line seperators.
+     * This will open a connection to the given {@link URL} and generate a string with line separators.
      *
      * @param url the URL
      * @return the read response, can be null!
@@ -54,7 +54,7 @@ public class WebUtils {
     }
 
     /**
-     * This will open a connection to the given {@link URL} and generates a string with line seperators.
+     * This will open a connection to the given {@link URL} and generate a string with line separators.
      *
      * @param url the {@link URL}
      * @return the read response, can be null!

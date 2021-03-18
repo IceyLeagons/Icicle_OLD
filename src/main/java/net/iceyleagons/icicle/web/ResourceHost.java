@@ -22,7 +22,7 @@ public class ResourceHost {
     /**
      * The access url to the root page of the resourcehost api.
      */
-    static String fileHostUrl = "https://resourcehost.iceyleagons.net/";
+    public static final String fileHostUrl = "https://resourcehost.iceyleagons.net/";
 
     /**
      * Uploads a file and returns the direct download link for it.
