@@ -7,6 +7,19 @@ All **instructions, guides and our FAQ** are listed in our [documentation](https
 
 Javadoc is available at [https://icicle.iceyleagons.net/](https://icicle.iceyleagons.net/)
 
+# Features
+
+Icicle is so feature-rich, that we cannot list everything here, but to get an idea, here are the main features:
+
+ - a stupidly simple, and easy to use
+ - auto-wiring and services (or in other words: Spring features in Spigot)
+ - a unique command system (annotations, automatic argument parsing/checking)
+ - standalone schematic pasting (no need to install WorldEdit)
+ - multi-database type handling in one interface (easy migrating from one to other)
+ - useful helper functions for every common problem/"suffering"
+ - big collection of wrapped Minecraft classes aka. modify Minecraft extensively (NMS with reflection)
+ - packet interception
+
 # Contributing
 
 Everyone is welcome to contribute to Icicle. If you want to do so, please start, by reading our [Contribution Guidelines](https://github.com/IceyLeagons/Icicle/blob/master/CONTRIBUTING.md).
@@ -22,7 +35,6 @@ Icicle is licensed under the permissive **MIT License**. You can read ours [here
 - GitBook happily hooked us up with their powerful documentation tool/service.
 - Check them out [here](https://www.gitbook.com/?utm_source=content&utm_medium=trademark&utm_campaign=iceyleagons)!
 
-<hr>
 
 <img src="https://user-images.githubusercontent.com/36101494/110478780-fd917800-80e4-11eb-9358-fcc8de4baa99.png" width="120">
 
