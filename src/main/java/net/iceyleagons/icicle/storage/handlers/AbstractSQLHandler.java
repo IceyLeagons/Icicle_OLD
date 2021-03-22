@@ -26,7 +26,8 @@ public abstract class AbstractSQLHandler extends AbstractStorageHandler {
 
             Object response = null;
 
-            String query = String.format("SELECT DISTINCT * FROM %s.%s WHERE %s = ?", getDatabaseName(), containerName, idField.getName());
+            String query = getDatabaseName() == null ? String.format("SELECT DISTINCT * FROM %s WHERE %s = ?", containerName, idField.getName()) :
+                    String.format("SELECT DISTINCT * FROM %s.%s WHERE %s = ?", getDatabaseName(), containerName, idField.getName());
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setObject(1, id);
@@ -89,16 +90,20 @@ public abstract class AbstractSQLHandler extends AbstractStorageHandler {
 
     private String getInsertQuery(ContainerField idField, String containerName, ContainerField[] fields, boolean update) {
         if (update) {
-            String query = "UPDATE %s.%s SET %s WHERE %s = ?";
+            String query = getDatabaseName() == null ? "UPDATE %s SET %s WHERE %s = ?" : "UPDATE %s.%s SET %s WHERE %s = ?";
             StringBuilder stringBuilder = new StringBuilder();
             for (ContainerField field : fields) {
                 stringBuilder.append(field.getName()).append(" = ?, ");
             }
 
-            return String.format(query, getDatabaseName(), containerName, removeChar(stringBuilder.toString(), 2), idField.getName());
+            return getDatabaseName() == null ? String.format(query, containerName, removeChar(stringBuilder.toString(), 2), idField.getName()) :
+                    String.format(query, getDatabaseName(), containerName, removeChar(stringBuilder.toString(), 2), idField.getName());
         }
-        String query = "INSERT INTO %s.%s (%s) VALUES (%s)";
-        return String.format(query, getDatabaseName(), containerName, getInsertQueryParamNames(idField, fields), getInsertQueryParamValues(fields));
+
+
+        String query = getDatabaseName() == null ? "INSERT INTO %s (%s) VALUES (%s)" : "INSERT INTO %s.%s (%s) VALUES (%s)";
+        return getDatabaseName() == null ? String.format(query, containerName, getInsertQueryParamNames(idField, fields), getInsertQueryParamValues(fields)) :
+                String.format(query, getDatabaseName(), containerName, getInsertQueryParamNames(idField, fields), getInsertQueryParamValues(fields));
     }
 
     private String getInsertQueryParamNames(ContainerField idField, ContainerField[] fields) {

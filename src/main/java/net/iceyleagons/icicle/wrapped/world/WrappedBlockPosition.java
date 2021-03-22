@@ -27,10 +27,13 @@ package net.iceyleagons.icicle.wrapped.world;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.wrapped.helpers.WrappingHelpers;
 import org.bukkit.Location;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+
+import static net.iceyleagons.icicle.wrapped.helpers.WrappingHelpers.fromIntegerObject;
 
 /**
  * Wrapped representation of BlockPosition
@@ -90,14 +93,14 @@ public class WrappedBlockPosition {
      * @return whether or not this is a valid minecraft location.
      */
     public boolean isValidLocation() {
-        return Reflections.invoke(base_isValidLocation, boolean.class, root);
+        return WrappingHelpers.fromBooleanObject(Reflections.invoke(base_isValidLocation, boolean.class, root));
     }
 
     /**
      * @return the x coordinate of this position.
      */
     public int getX() {
-        return Reflections.invoke(base_getX, int.class, root);
+        return fromIntegerObject(Reflections.invoke(base_getX, int.class, root));
     }
 
     /**
@@ -113,7 +116,7 @@ public class WrappedBlockPosition {
      * @return the y coordinate of this position.
      */
     public int getY() {
-        return Reflections.invoke(base_getY, int.class, root);
+        return fromIntegerObject(Reflections.invoke(base_getY, int.class, root));
     }
 
     /**
@@ -129,7 +132,7 @@ public class WrappedBlockPosition {
      * @return the z coordinate of this position.
      */
     public int getZ() {
-        return Reflections.invoke(base_getZ, int.class, root);
+        return fromIntegerObject(Reflections.invoke(base_getZ, int.class, root));
     }
 
     /**

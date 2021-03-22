@@ -55,6 +55,7 @@ public class ClassScanningHandler {
             objects.forEach(autowiringHandler::autowireObject);
 
         });
+        autowiringHandler.autowireObject(registeredPlugin);
     }
 
     private void loadAnnotationHandlers() {

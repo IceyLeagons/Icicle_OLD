@@ -26,6 +26,10 @@ public abstract class AbstractConfiguration {
     @Setter
     private Object origin;
 
+    @Getter
+    @Setter
+    private String header = null;
+
     @Setter
     private RegisteredPlugin registeredPlugin;
 
@@ -63,6 +67,8 @@ public abstract class AbstractConfiguration {
     @SneakyThrows
     public void loadDefaultValues() {
         Map<String, Object> values = getValues();
+
+        if (header != null) yamlConfiguration.options().header(header);
 
         values.forEach((path, value) -> {
             if (!yamlConfiguration.contains(path)) {

@@ -24,6 +24,10 @@ public class StorageHandlerService {
 
     private final Map<Class<?>, StorageContainer> storageContainerMap = new HashMap<>();
 
+    public void cleanup() {
+        if (this.currentStorage != null) this.currentStorage.cleanup();;
+    }
+
     public void registerEntityClass(Class<?> clazz) {
         if (storageContainerMap.containsKey(clazz)) return;
 
@@ -68,6 +72,8 @@ public class StorageHandlerService {
                 e.printStackTrace();
             }
         });
+
+        if (this.currentStorage != null) this.currentStorage.cleanup();
         this.currentStorage = abstractStorageHandler;
     }
 

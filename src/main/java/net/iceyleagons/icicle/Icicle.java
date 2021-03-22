@@ -31,6 +31,7 @@ import net.iceyleagons.icicle.registry.IciclePluginManager;
 import net.iceyleagons.icicle.registry.RegisteredPlugin;
 import net.iceyleagons.icicle.storage.StorageHandlerService;
 import net.iceyleagons.icicle.storage.handlers.sql.MySQL;
+import org.bukkit.Bukkit;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -50,6 +51,9 @@ import java.io.File;
  * @since 1.0.0-SNAPSHOT
  */
 public class Icicle extends JavaPlugin {
+
+    @Autowired
+    public IcicleConfig icicleConfig;
 
     /**
      * It's, because of Unit Testing
@@ -80,8 +84,21 @@ public class Icicle extends JavaPlugin {
      *
      * @return will always return false atm
      */
-    public static boolean checkForUpdates() {
+    public boolean checkForUpdates() {
+        if (!icicleConfig.checkForUpdates) return false;
+
+        //TODO actually checking
         return false;
+    }
+
+    /**
+     * This method will setup our Metrics for bStats.
+     * Metrics is only set up if it's enabled in the config.
+     */
+    public void setupBStats() {
+        if (icicleConfig.metricsEnabled) {
+            //TODO
+        }
     }
 
     /**
@@ -113,7 +130,6 @@ public class Icicle extends JavaPlugin {
     @Override
     public void onDisable() {
         enabled = false;
-        super.onDisable();
     }
 
     /**
@@ -125,12 +141,17 @@ public class Icicle extends JavaPlugin {
     public void onEnable() {
         enabled = true;
         pluginRegistry = new IciclePluginManager();
+        IciclePluginBootstrapper.bootstrap(this, "net.iceyleagons.icicle");
 
         // Inject player with our packet interceptor.
         Events.createBukkitConsumer(this, PlayerJoinEvent.class).asObservable().map(PlayerEvent::getPlayer).subscribe(PacketInterception::injectPlayer);
 
-        IciclePluginBootstrapper.bootstrap(this, "net.iceyleagons.icicle");
-        super.onEnable();
+        if (checkForUpdates()) {
+            //TODO
+            Bukkit.getConsoleSender().sendMessage("&eIcicle is outdated!");
+        }
+
+        setupBStats();
     }
 
 }

@@ -1,6 +1,7 @@
 package net.iceyleagons.icicle.annotations.handlers.impl;
 
 import lombok.Getter;
+import net.iceyleagons.icicle.annotations.config.ConfigHeader;
 import net.iceyleagons.icicle.annotations.config.Configuration;
 import net.iceyleagons.icicle.annotations.handlers.AbstractAnnotationHandler;
 import net.iceyleagons.icicle.annotations.handlers.AnnotationHandler;
@@ -34,6 +35,10 @@ public class ConfigurationAnnotationHandler extends AbstractAnnotationHandler {
 
                             Object object = constructor.newInstance();
                             AbstractConfiguration configObject = (AbstractConfiguration) object;
+
+                            if (config.isAnnotationPresent(ConfigHeader.class)) {
+                                configObject.setHeader(config.getAnnotation(ConfigHeader.class).value());
+                            }
 
                             configObject.setOrigin(object);
                             configObject.setPathToFile(configuration.value());
