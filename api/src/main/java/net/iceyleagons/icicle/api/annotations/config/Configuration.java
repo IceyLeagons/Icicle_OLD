@@ -1,4 +1,4 @@
-package net.iceyleagons.icicle.annotations.config;
+package net.iceyleagons.icicle.api.annotations.config;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -2,7 +2,6 @@ package net.iceyleagons.icicle.event.packets.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import icicle.wrapped.packet.*;
 import net.iceyleagons.icicle.wrapped.packet.*;
 import org.jetbrains.annotations.Nullable;
 

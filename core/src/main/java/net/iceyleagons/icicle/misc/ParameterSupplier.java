@@ -1,2 +1,7 @@
-package net.iceyleagons.icicle.misc;public class ParameterSupplier {
+package net.iceyleagons.icicle.misc;
+
+public interface ParameterSupplier<K, V> {
+
+    V get(K value);
+
 }

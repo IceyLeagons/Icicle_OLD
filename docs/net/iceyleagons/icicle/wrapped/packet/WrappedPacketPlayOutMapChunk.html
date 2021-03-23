@@ -93,7 +93,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <!-- ======== START OF CLASS DATA ======== -->
 <main role="main">
 <div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">net.iceyleagons.icicle.wrapped.packet</a></div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">icicle.wrapped.packet</a></div>
 <h2 title="Class WrappedPacketPlayOutMapChunk" class="title">Class WrappedPacketPlayOutMapChunk</h2>
 </div>
 <div class="contentContainer">
@@ -101,10 +101,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="Packet.html" title="class in net.iceyleagons.icicle.wrapped.packet">net.iceyleagons.icicle.wrapped.packet.Packet</a></li>
+<li><a href="Packet.html" title="class in icicle.wrapped.packet">Packet</a></li>
 <li>
 <ul class="inheritance">
-<li>net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutMapChunk</li>
+<li>WrappedPacketPlayOutMapChunk</li>
 </ul>
 </li>
 </ul>
@@ -115,7 +115,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <hr>
 <pre>public class <span class="typeNameLabel">WrappedPacketPlayOutMapChunk</span>
-extends <a href="Packet.html" title="class in net.iceyleagons.icicle.wrapped.packet">Packet</a></pre>
+extends <a href="Packet.html" title="class in icicle.wrapped.packet">Packet</a></pre>
 <div class="block">Wrapped representation PacketPlayOutMapChunk</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -143,11 +143,11 @@ extends <a href="Packet.html" title="class in net.iceyleagons.icicle.wrapped.pac
 </tr>
 <tbody>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(net.iceyleagons.icicle.wrapped.world.chunk.WrappedChunk)">WrappedPacketPlayOutMapChunk</a></span>&#8203;(<a href="../world/chunk/WrappedChunk.html" title="class in net.iceyleagons.icicle.wrapped.world.chunk">WrappedChunk</a>&nbsp;chunk)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(WrappedChunk)">WrappedPacketPlayOutMapChunk</a></span>&#8203;(<a href="../world/chunk/WrappedChunk.html" title="class in icicle.wrapped.world.chunk">WrappedChunk</a>&nbsp;chunk)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(net.iceyleagons.icicle.wrapped.world.chunk.WrappedChunk,int)">WrappedPacketPlayOutMapChunk</a></span>&#8203;(<a href="../world/chunk/WrappedChunk.html" title="class in net.iceyleagons.icicle.wrapped.world.chunk">WrappedChunk</a>&nbsp;chunk,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(WrappedChunk,int)">WrappedPacketPlayOutMapChunk</a></span>&#8203;(<a href="../world/chunk/WrappedChunk.html" title="class in icicle.wrapped.world.chunk">WrappedChunk</a>&nbsp;chunk,
                             int&nbsp;priority)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -165,11 +165,11 @@ extends <a href="Packet.html" title="class in net.iceyleagons.icicle.wrapped.pac
 </a>
 <h3>Method Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.net.iceyleagons.icicle.wrapped.packet.Packet">
+<li class="blockList"><a id="methods.inherited.from.class.Packet">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;net.iceyleagons.icicle.wrapped.packet.<a href="Packet.html" title="class in net.iceyleagons.icicle.wrapped.packet">Packet</a></h3>
-<code><a href="Packet.html#getFromField(java.lang.String,java.lang.Class)">getFromField</a>, <a href="Packet.html#send(net.iceyleagons.icicle.wrapped.player.WrappedCraftPlayer)">send</a>, <a href="Packet.html#send(org.bukkit.entity.Player)">send</a>, <a href="Packet.html#sendAll()">sendAll</a>, <a href="Packet.html#setField(java.lang.String,java.lang.Object)">setField</a></code></li>
+<h3>Methods inherited from class&nbsp;icicle.wrapped.packet.<a href="Packet.html" title="class in icicle.wrapped.packet">Packet</a></h3>
+<code><a href="Packet.html#getFromField(java.lang.String,java.lang.Class)">getFromField</a>, <a href="Packet.html#send(WrappedCraftPlayer)">send</a>, <a href="Packet.html#send(org.bukkit.entity.Player)">send</a>, <a href="Packet.html#sendAll()">sendAll</a>, <a href="Packet.html#setField(java.lang.String,java.lang.Object)">setField</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -194,23 +194,23 @@ extends <a href="Packet.html" title="class in net.iceyleagons.icicle.wrapped.pac
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(net.iceyleagons.icicle.wrapped.world.chunk.WrappedChunk,int)">
+<a id="&lt;init&gt;(WrappedChunk,int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>WrappedPacketPlayOutMapChunk</h4>
-<pre>public&nbsp;WrappedPacketPlayOutMapChunk&#8203;(<a href="../world/chunk/WrappedChunk.html" title="class in net.iceyleagons.icicle.wrapped.world.chunk">WrappedChunk</a>&nbsp;chunk,
+<pre>public&nbsp;WrappedPacketPlayOutMapChunk&#8203;(<a href="../world/chunk/WrappedChunk.html" title="class in icicle.wrapped.world.chunk">WrappedChunk</a>&nbsp;chunk,
                                     int&nbsp;priority)</pre>
 </li>
 </ul>
-<a id="&lt;init&gt;(net.iceyleagons.icicle.wrapped.world.chunk.WrappedChunk)">
+<a id="&lt;init&gt;(WrappedChunk)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>WrappedPacketPlayOutMapChunk</h4>
-<pre>public&nbsp;WrappedPacketPlayOutMapChunk&#8203;(<a href="../world/chunk/WrappedChunk.html" title="class in net.iceyleagons.icicle.wrapped.world.chunk">WrappedChunk</a>&nbsp;chunk)</pre>
+<pre>public&nbsp;WrappedPacketPlayOutMapChunk&#8203;(<a href="../world/chunk/WrappedChunk.html" title="class in icicle.wrapped.world.chunk">WrappedChunk</a>&nbsp;chunk)</pre>
 </li>
 </ul>
 </li>

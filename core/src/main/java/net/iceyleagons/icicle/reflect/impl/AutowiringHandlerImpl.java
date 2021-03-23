@@ -1,10 +1,11 @@
-package net.iceyleagons.icicle.reflect;
+package net.iceyleagons.icicle.reflect.impl;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import net.iceyleagons.icicle.api.annotations.AbstractAutowiringHandler;
-import net.iceyleagons.icicle.api.annotations.AbstractAnnotationHandler;
+import net.iceyleagons.icicle.api.annotations.handlers.AbstractAutowiringHandler;
+import net.iceyleagons.icicle.api.annotations.handlers.AbstractAnnotationHandler;
 import net.iceyleagons.icicle.api.reflect.AutowiringHandler;
+import net.iceyleagons.icicle.reflect.Reflections;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;

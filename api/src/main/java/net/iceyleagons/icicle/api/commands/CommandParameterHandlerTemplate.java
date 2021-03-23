@@ -1,4 +1,4 @@
-package net.iceyleagons.icicle.api.plugin;
+package net.iceyleagons.icicle.api.commands;
 
 
 import net.iceyleagons.icicle.api.annotations.commands.CommandParameterHandler;

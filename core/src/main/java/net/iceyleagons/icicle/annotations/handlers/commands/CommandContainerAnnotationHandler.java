@@ -1,10 +1,10 @@
-package net.iceyleagons.icicle.api.annotations.handlers.impl.commands;
+package net.iceyleagons.icicle.annotations.handlers.commands;
 
 import lombok.Getter;
 import net.iceyleagons.icicle.api.annotations.commands.CommandContainer;
-import net.iceyleagons.icicle.api.annotations.AbstractAnnotationHandler;
+import net.iceyleagons.icicle.api.annotations.handlers.AbstractAnnotationHandler;
 import net.iceyleagons.icicle.api.annotations.handlers.AnnotationHandler;
-import net.iceyleagons.icicle.reflect.Reflections;
+import org.reflections.Reflections;
 
 import java.lang.reflect.Constructor;
 import java.util.*;
@@ -27,7 +27,7 @@ public class CommandContainerAnnotationHandler extends AbstractAnnotationHandler
         containers.forEach(container -> {
             try {
                 if (!container.isAnnotation() && !container.isInterface()) {
-                    Constructor<?> constructor = Reflections.getConstructor(container, true);
+                    Constructor<?> constructor = net.iceyleagons.icicle.reflect.Reflections.getConstructor(container, true);
                     if (constructor != null) {
                         Object commandContainerObject = constructor.newInstance();
                         commandContainers.put(container, commandContainerObject);

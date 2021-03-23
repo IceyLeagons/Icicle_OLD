@@ -1,8 +1,8 @@
 package net.iceyleagons.icicle;
 
-import net.iceyleagons.icicle.annotations.config.ConfigHeader;
-import net.iceyleagons.icicle.annotations.config.ConfigPath;
-import net.iceyleagons.icicle.annotations.config.Configuration;
+import net.iceyleagons.icicle.api.annotations.config.ConfigHeader;
+import net.iceyleagons.icicle.api.annotations.config.ConfigPath;
+import net.iceyleagons.icicle.api.annotations.config.Configuration;
 
 @ConfigHeader("For information about the config options, please check our documentation here: https://docs.iceyleagons.net/icicle/")
 @Configuration("config.yml")

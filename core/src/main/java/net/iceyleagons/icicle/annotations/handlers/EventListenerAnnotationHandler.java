@@ -1,14 +1,14 @@
-package net.iceyleagons.icicle.api.annotations.handlers.impl;
+package net.iceyleagons.icicle.annotations.handlers;
 
 import lombok.Getter;
 import net.iceyleagons.icicle.api.annotations.EventListener;
-import net.iceyleagons.icicle.api.annotations.AbstractAnnotationHandler;
+import net.iceyleagons.icicle.api.annotations.handlers.AbstractAnnotationHandler;
 import net.iceyleagons.icicle.api.annotations.handlers.AnnotationHandler;
 import net.iceyleagons.icicle.event.Events;
 import net.iceyleagons.icicle.event.packets.PacketListener;
-import net.iceyleagons.icicle.reflect.Reflections;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
+import org.reflections.Reflections;
 
 import java.lang.reflect.Constructor;
 import java.util.*;
@@ -30,7 +30,7 @@ public class EventListenerAnnotationHandler extends AbstractAnnotationHandler {
         listeners.forEach(listener -> {
             try {
                 if (!listener.isAnnotation() && !listener.isInterface()) {
-                    Constructor<?> constructor = Reflections.getConstructor(listener, true);
+                    Constructor<?> constructor = net.iceyleagons.icicle.reflect.Reflections.getConstructor(listener, true);
                     if (constructor != null) {
                         Object serviceObject = constructor.newInstance();
                         if (serviceObject instanceof Listener) {

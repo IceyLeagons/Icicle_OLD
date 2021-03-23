@@ -24,10 +24,13 @@
 
 package net.iceyleagons.icicle;
 
-import net.iceyleagons.icicle.annotations.Autowired;
+import net.iceyleagons.icicle.api.IciclePlugin;
+import net.iceyleagons.icicle.api.IciclePluginBootstrapper;
+import net.iceyleagons.icicle.api.annotations.Autowired;
+import net.iceyleagons.icicle.api.annotations.ServiceProvider;
+import net.iceyleagons.icicle.api.plugin.IciclePluginManager;
 import net.iceyleagons.icicle.event.Events;
 import net.iceyleagons.icicle.event.packets.PacketInterception;
-import net.iceyleagons.icicle.registry.IciclePluginManager;
 import org.bukkit.Bukkit;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -47,10 +50,11 @@ import java.io.File;
  * @version 2.0.0
  * @since 1.0.0-SNAPSHOT
  */
-public class Icicle extends JavaPlugin {
+public class Icicle extends JavaPlugin implements IciclePlugin {
 
     @Autowired
     public IcicleConfig icicleConfig;
+    private IciclePluginManagerImpl pluginRegistry;
 
     /**
      * It's, because of Unit Testing
@@ -66,13 +70,11 @@ public class Icicle extends JavaPlugin {
         super(loader, description, dataFolder, file);
     }
 
-    public static boolean enabled = false;
-    public static IciclePluginManager pluginRegistry;
-
     /**
      * @return the version of the current icicle library. Our versions use the Semantic versioning.
      */
-    public static String getVersion() {
+    @Override
+    public String getVersion() {
         return "2.0.0-SNAPSHOT";
     }
 
@@ -104,7 +106,8 @@ public class Icicle extends JavaPlugin {
      *
      * @return our copyright text
      */
-    public static String getCopyrightText() {
+    @Override
+    public String getCopyrightText() {
         return "This project was built upon IceyLeagons' Icicle Library v" + getVersion() +
                 " (Licensed under the terms of MIT License)";
     }
@@ -126,7 +129,7 @@ public class Icicle extends JavaPlugin {
      */
     @Override
     public void onDisable() {
-        enabled = false;
+
     }
 
     /**
@@ -136,9 +139,9 @@ public class Icicle extends JavaPlugin {
      */
     @Override
     public void onEnable() {
-        enabled = true;
-        pluginRegistry = new IciclePluginManager();
-        IciclePluginBootstrapper.bootstrap(this, "net/iceyleagons/icicle");
+        pluginRegistry = new IciclePluginManagerImpl();
+        IciclePluginBootstrapper.registerIcicleInstance(this);
+        IciclePluginBootstrapper.bootstrap(this, "net.iceyleagons.icicle");
 
         // Inject player with our packet interceptor.
         Events.createBukkitConsumer(this, PlayerJoinEvent.class).asObservable().map(PlayerEvent::getPlayer).subscribe(PacketInterception::injectPlayer);
@@ -151,4 +154,14 @@ public class Icicle extends JavaPlugin {
         setupBStats();
     }
 
+
+    @Override
+    public JavaPlugin getPlugin() {
+        return this;
+    }
+
+    @Override
+    public IciclePluginManager getIciclePluginManager() {
+        return this.pluginRegistry;
+    }
 }

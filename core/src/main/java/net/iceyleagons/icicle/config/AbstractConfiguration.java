@@ -4,8 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import net.iceyleagons.icicle.api.annotations.config.ConfigPath;
+import net.iceyleagons.icicle.api.plugin.RegisteredPlugin;
 import net.iceyleagons.icicle.reflect.Reflections;
-import net.iceyleagons.icicle.registry.RegisteredPlugin;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;

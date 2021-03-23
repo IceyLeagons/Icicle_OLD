@@ -1,7 +1,7 @@
-package net.iceyleagons.icicle.api.annotations.handlers.impl.storage;
+package net.iceyleagons.icicle.annotations.handlers.storage;
 
 import lombok.Getter;
-import net.iceyleagons.icicle.api.annotations.AbstractAnnotationHandler;
+import net.iceyleagons.icicle.api.annotations.handlers.AbstractAnnotationHandler;
 import net.iceyleagons.icicle.api.annotations.handlers.AnnotationHandler;
 import net.iceyleagons.icicle.api.annotations.storage.Entity;
 import org.reflections.Reflections;

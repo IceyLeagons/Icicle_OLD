@@ -1,10 +1,10 @@
-package net.iceyleagons.icicle.api.annotations.handlers.impl.commands;
+package net.iceyleagons.icicle.annotations.handlers.commands;
 
 import net.iceyleagons.icicle.api.annotations.commands.CommandParameterHandler;
-import net.iceyleagons.icicle.api.annotations.AbstractAnnotationHandler;
+import net.iceyleagons.icicle.api.annotations.handlers.AbstractAnnotationHandler;
 import net.iceyleagons.icicle.api.annotations.handlers.AnnotationHandler;
-import net.iceyleagons.icicle.commands.system.CommandParameterHandlerTemplate;
-import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.api.commands.CommandParameterHandlerTemplate;
+import org.reflections.Reflections;
 
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
@@ -21,7 +21,7 @@ public class CommandParameterAnnotationHandler extends AbstractAnnotationHandler
             try {
                 if (!handler.isAnnotation() && !handler.isInterface()) {
                     if (Arrays.stream(handler.getInterfaces()).collect(Collectors.toList()).contains(CommandParameterHandlerTemplate.class)) {
-                        Constructor<?> constructor = Reflections.getConstructor(handler, true);
+                        Constructor<?> constructor = net.iceyleagons.icicle.reflect.Reflections.getConstructor(handler, true);
                         if (constructor != null) {
                             CommandParameterHandler commandParameterHandler = handler.getAnnotation(CommandParameterHandler.class);
 

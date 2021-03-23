@@ -1,10 +1,10 @@
-package net.iceyleagons.icicle.annotations.autowiring.impl;
+package net.iceyleagons.icicle.annotations.autowiring;
 
-import net.iceyleagons.icicle.annotations.Autowired;
-import net.iceyleagons.icicle.annotations.EventListener;
-import net.iceyleagons.icicle.api.annotations.AbstractAutowiringHandler;
-import net.iceyleagons.icicle.annotations.autowiring.AutowiringHandler;
-import net.iceyleagons.icicle.api.annotations.handlers.impl.EventListenerAnnotationHandler;
+import net.iceyleagons.icicle.api.annotations.Autowired;
+import net.iceyleagons.icicle.api.annotations.EventListener;
+import net.iceyleagons.icicle.api.annotations.handlers.AbstractAutowiringHandler;
+import net.iceyleagons.icicle.api.annotations.handlers.AutowiringHandler;
+import net.iceyleagons.icicle.annotations.handlers.EventListenerAnnotationHandler;
 import net.iceyleagons.icicle.reflect.Reflections;
 
 import java.lang.reflect.Field;

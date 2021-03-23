@@ -99,7 +99,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <!-- ======== START OF CLASS DATA ======== -->
 <main role="main">
 <div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">net.iceyleagons.icicle.storage.impl</a></div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">icicle.storage.impl</a></div>
 <h2 title="Class SQLDatabase" class="title">Class SQLDatabase</h2>
 </div>
 <div class="contentContainer">
@@ -107,10 +107,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="../Storage.html" title="class in net.iceyleagons.icicle.storage">net.iceyleagons.icicle.storage.Storage</a></li>
+<li><a href="../Storage.html" title="class in icicle.storage">icicle.storage.Storage</a></li>
 <li>
 <ul class="inheritance">
-<li>net.iceyleagons.icicle.storage.impl.SQLDatabase</li>
+<li>icicle.storage.impl.SQLDatabase</li>
 </ul>
 </li>
 </ul>
@@ -121,11 +121,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="sql/H2.html" title="class in net.iceyleagons.icicle.storage.impl.sql">H2</a></code>, <code><a href="sql/MariaDB.html" title="class in net.iceyleagons.icicle.storage.impl.sql">MariaDB</a></code>, <code><a href="sql/MySQL.html" title="class in net.iceyleagons.icicle.storage.impl.sql">MySQL</a></code>, <code><a href="sql/PostgreSQL.html" title="class in net.iceyleagons.icicle.storage.impl.sql">PostgreSQL</a></code>, <code><a href="sql/SQLite.html" title="class in net.iceyleagons.icicle.storage.impl.sql">SQLite</a></code></dd>
+<dd><code><a href="sql/H2.html" title="class in icicle.storage.impl.sql">H2</a></code>, <code><a href="sql/MariaDB.html" title="class in icicle.storage.impl.sql">MariaDB</a></code>, <code><a href="sql/MySQL.html" title="class in icicle.storage.impl.sql">MySQL</a></code>, <code><a href="sql/PostgreSQL.html" title="class in icicle.storage.impl.sql">PostgreSQL</a></code>, <code><a href="sql/SQLite.html" title="class in icicle.storage.impl.sql">SQLite</a></code></dd>
 </dl>
 <hr>
 <pre>public abstract class <span class="typeNameLabel">SQLDatabase</span>
-extends <a href="../Storage.html" title="class in net.iceyleagons.icicle.storage">Storage</a></pre>
+extends <a href="../Storage.html" title="class in icicle.storage">Storage</a></pre>
 <div class="block">Handles all SQL based databases</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -162,10 +162,10 @@ extends <a href="../Storage.html" title="class in net.iceyleagons.icicle.storage
 </table>
 </div>
 <ul class="blockList">
-<li class="blockList"><a id="fields.inherited.from.class.net.iceyleagons.icicle.storage.Storage">
+<li class="blockList"><a id="fields.inherited.from.class.icicle.storage.Storage">
 <!--   -->
 </a>
-<h3>Fields inherited from class&nbsp;net.iceyleagons.icicle.storage.<a href="../Storage.html" title="class in net.iceyleagons.icicle.storage">Storage</a></h3>
+<h3>Fields inherited from class&nbsp;icicle.storage.<a href="../Storage.html" title="class in icicle.storage">Storage</a></h3>
 <code><a href="../Storage.html#containerMap">containerMap</a>, <a href="../Storage.html#lastUpdated">lastUpdated</a>, <a href="../Storage.html#type">type</a></code></li>
 </ul>
 </li>
@@ -187,8 +187,8 @@ extends <a href="../Storage.html" title="class in net.iceyleagons.icicle.storage
 </tr>
 <tbody>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,net.iceyleagons.icicle.storage.StorageType,java.util.logging.Logger)">SQLDatabase</a></span>&#8203;(java.lang.String&nbsp;databaseName,
-           <a href="../StorageType.html" title="enum in net.iceyleagons.icicle.storage">StorageType</a>&nbsp;type,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,icicle.storage.StorageType,java.util.logging.Logger)">SQLDatabase</a></span>&#8203;(java.lang.String&nbsp;databaseName,
+           <a href="../StorageType.html" title="enum in icicle.storage">StorageType</a>&nbsp;type,
            java.util.logging.Logger&nbsp;logger)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -219,7 +219,7 @@ extends <a href="../Storage.html" title="class in net.iceyleagons.icicle.storage
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#applyChanges()">applyChanges</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Documented in <a href="../Storage.html" title="class in net.iceyleagons.icicle.storage"><code>Storage</code></a>
+<div class="block">Documented in <a href="../Storage.html" title="class in icicle.storage"><code>Storage</code></a>
  Customized to fit the SQL database types</div>
 </td>
 </tr>
@@ -227,7 +227,7 @@ extends <a href="../Storage.html" title="class in net.iceyleagons.icicle.storage
 <td class="colFirst"><code>protected boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#closeConnection()">closeConnection</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Documented in <a href="../Storage.html" title="class in net.iceyleagons.icicle.storage"><code>Storage</code></a></div>
+<div class="block">Documented in <a href="../Storage.html" title="class in icicle.storage"><code>Storage</code></a></div>
 </td>
 </tr>
 <tr class="altColor" id="i2">
@@ -236,15 +236,15 @@ extends <a href="../Storage.html" title="class in net.iceyleagons.icicle.storage
           java.lang.Object&nbsp;value,
           java.lang.String&nbsp;containerName)</code></th>
 <td class="colLast">
-<div class="block">Documented in <a href="../Storage.html" title="class in net.iceyleagons.icicle.storage"><code>Storage</code></a>
+<div class="block">Documented in <a href="../Storage.html" title="class in icicle.storage"><code>Storage</code></a>
  Customized to fit the SQL database types</div>
 </td>
 </tr>
 <tr class="rowColor" id="i3">
-<td class="colFirst"><code>java.util.List&lt;<a href="../entities/ContainerData.html" title="class in net.iceyleagons.icicle.storage.entities">ContainerData</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getData(net.iceyleagons.icicle.storage.entities.Container)">getData</a></span>&#8203;(<a href="../entities/Container.html" title="class in net.iceyleagons.icicle.storage.entities">Container</a>&nbsp;container)</code></th>
+<td class="colFirst"><code>java.util.List&lt;<a href="../entities/ContainerData.html" title="class in icicle.storage.entities">ContainerData</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getData(icicle.storage.entities.Container)">getData</a></span>&#8203;(<a href="../entities/Container.html" title="class in icicle.storage.entities">Container</a>&nbsp;container)</code></th>
 <td class="colLast">
-<div class="block">Documented in <a href="../Storage.html" title="class in net.iceyleagons.icicle.storage"><code>Storage</code></a>
+<div class="block">Documented in <a href="../Storage.html" title="class in icicle.storage"><code>Storage</code></a>
  Customized to fit the SQL database types</div>
 </td>
 </tr>
@@ -252,14 +252,14 @@ extends <a href="../Storage.html" title="class in net.iceyleagons.icicle.storage
 <td class="colFirst"><code>protected abstract boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#init()">init</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Documented in <a href="../Storage.html" title="class in net.iceyleagons.icicle.storage"><code>Storage</code></a></div>
+<div class="block">Documented in <a href="../Storage.html" title="class in icicle.storage"><code>Storage</code></a></div>
 </td>
 </tr>
 <tr class="rowColor" id="i5">
 <td class="colFirst"><code>protected abstract boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openConnection()">openConnection</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Documented in <a href="../Storage.html" title="class in net.iceyleagons.icicle.storage"><code>Storage</code></a></div>
+<div class="block">Documented in <a href="../Storage.html" title="class in icicle.storage"><code>Storage</code></a></div>
 </td>
 </tr>
 </tbody>
@@ -267,11 +267,11 @@ extends <a href="../Storage.html" title="class in net.iceyleagons.icicle.storage
 </div>
 </div>
 <ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.net.iceyleagons.icicle.storage.Storage">
+<li class="blockList"><a id="methods.inherited.from.class.icicle.storage.Storage">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;net.iceyleagons.icicle.storage.<a href="../Storage.html" title="class in net.iceyleagons.icicle.storage">Storage</a></h3>
-<code><a href="../Storage.html#addContainer(net.iceyleagons.icicle.storage.entities.Container)">addContainer</a>, <a href="../Storage.html#error(java.lang.String)">error</a>, <a href="../Storage.html#getContainers()">getContainers</a>, <a href="../Storage.html#info(java.lang.String)">info</a>, <a href="../Storage.html#warn(java.lang.String)">warn</a></code></li>
+<h3>Methods inherited from class&nbsp;icicle.storage.<a href="../Storage.html" title="class in icicle.storage">Storage</a></h3>
+<code><a href="../Storage.html#addContainer(icicle.storage.entities.Container)">addContainer</a>, <a href="../Storage.html#error(java.lang.String)">error</a>, <a href="../Storage.html#getContainers()">getContainers</a>, <a href="../Storage.html#info(java.lang.String)">info</a>, <a href="../Storage.html#warn(java.lang.String)">warn</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -315,19 +315,19 @@ extends <a href="../Storage.html" title="class in net.iceyleagons.icicle.storage
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(java.lang.String,net.iceyleagons.icicle.storage.StorageType,java.util.logging.Logger)">
+<a id="&lt;init&gt;(java.lang.String,icicle.storage.StorageType,java.util.logging.Logger)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>SQLDatabase</h4>
 <pre>public&nbsp;SQLDatabase&#8203;(java.lang.String&nbsp;databaseName,
-                   <a href="../StorageType.html" title="enum in net.iceyleagons.icicle.storage">StorageType</a>&nbsp;type,
+                   <a href="../StorageType.html" title="enum in icicle.storage">StorageType</a>&nbsp;type,
                    java.util.logging.Logger&nbsp;logger)</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>databaseName</code> - the databaseName</dd>
-<dd><code>type</code> - the <a href="../StorageType.html" title="enum in net.iceyleagons.icicle.storage"><code>StorageType</code></a></dd>
+<dd><code>type</code> - the <a href="../StorageType.html" title="enum in icicle.storage"><code>StorageType</code></a></dd>
 <dd><code>logger</code> - the <code>Logger</code> to use</dd>
 </dl>
 </li>
@@ -349,15 +349,15 @@ extends <a href="../Storage.html" title="class in net.iceyleagons.icicle.storage
 <li class="blockList">
 <h4>init</h4>
 <pre class="methodSignature">protected abstract&nbsp;boolean&nbsp;init()
-                         throws <a href="../StorageException.html" title="class in net.iceyleagons.icicle.storage">StorageException</a></pre>
-<div class="block">Documented in <a href="../Storage.html" title="class in net.iceyleagons.icicle.storage"><code>Storage</code></a></div>
+                         throws <a href="../StorageException.html" title="class in icicle.storage">StorageException</a></pre>
+<div class="block">Documented in <a href="../Storage.html" title="class in icicle.storage"><code>Storage</code></a></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../Storage.html#init()">init</a></code>&nbsp;in class&nbsp;<code><a href="../Storage.html" title="class in net.iceyleagons.icicle.storage">Storage</a></code></dd>
+<dd><code><a href="../Storage.html#init()">init</a></code>&nbsp;in class&nbsp;<code><a href="../Storage.html" title="class in icicle.storage">Storage</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if successful</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../StorageException.html" title="class in net.iceyleagons.icicle.storage">StorageException</a></code> - if the expected Driver class is not found</dd>
+<dd><code><a href="../StorageException.html" title="class in icicle.storage">StorageException</a></code> - if the expected Driver class is not found</dd>
 </dl>
 </li>
 </ul>
@@ -368,15 +368,15 @@ extends <a href="../Storage.html" title="class in net.iceyleagons.icicle.storage
 <li class="blockList">
 <h4>openConnection</h4>
 <pre class="methodSignature">protected abstract&nbsp;boolean&nbsp;openConnection()
-                                   throws <a href="../StorageException.html" title="class in net.iceyleagons.icicle.storage">StorageException</a></pre>
-<div class="block">Documented in <a href="../Storage.html" title="class in net.iceyleagons.icicle.storage"><code>Storage</code></a></div>
+                                   throws <a href="../StorageException.html" title="class in icicle.storage">StorageException</a></pre>
+<div class="block">Documented in <a href="../Storage.html" title="class in icicle.storage"><code>Storage</code></a></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../Storage.html#openConnection()">openConnection</a></code>&nbsp;in class&nbsp;<code><a href="../Storage.html" title="class in net.iceyleagons.icicle.storage">Storage</a></code></dd>
+<dd><code><a href="../Storage.html#openConnection()">openConnection</a></code>&nbsp;in class&nbsp;<code><a href="../Storage.html" title="class in icicle.storage">Storage</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if successful</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../StorageException.html" title="class in net.iceyleagons.icicle.storage">StorageException</a></code> - if an issue happens during opening a connection to the database</dd>
+<dd><code><a href="../StorageException.html" title="class in icicle.storage">StorageException</a></code> - if an issue happens during opening a connection to the database</dd>
 </dl>
 </li>
 </ul>
@@ -387,10 +387,10 @@ extends <a href="../Storage.html" title="class in net.iceyleagons.icicle.storage
 <li class="blockList">
 <h4>closeConnection</h4>
 <pre class="methodSignature">protected&nbsp;boolean&nbsp;closeConnection()</pre>
-<div class="block">Documented in <a href="../Storage.html" title="class in net.iceyleagons.icicle.storage"><code>Storage</code></a></div>
+<div class="block">Documented in <a href="../Storage.html" title="class in icicle.storage"><code>Storage</code></a></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../Storage.html#closeConnection()">closeConnection</a></code>&nbsp;in class&nbsp;<code><a href="../Storage.html" title="class in net.iceyleagons.icicle.storage">Storage</a></code></dd>
+<dd><code><a href="../Storage.html#closeConnection()">closeConnection</a></code>&nbsp;in class&nbsp;<code><a href="../Storage.html" title="class in icicle.storage">Storage</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if successful</dd>
 </dl>
@@ -405,11 +405,11 @@ extends <a href="../Storage.html" title="class in net.iceyleagons.icicle.storage
 <pre class="methodSignature">public&nbsp;void&nbsp;deleteData&#8203;(java.lang.String&nbsp;key,
                        java.lang.Object&nbsp;value,
                        java.lang.String&nbsp;containerName)</pre>
-<div class="block">Documented in <a href="../Storage.html" title="class in net.iceyleagons.icicle.storage"><code>Storage</code></a>
+<div class="block">Documented in <a href="../Storage.html" title="class in icicle.storage"><code>Storage</code></a>
  Customized to fit the SQL database types</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../Storage.html#deleteData(java.lang.String,java.lang.Object,java.lang.String)">deleteData</a></code>&nbsp;in class&nbsp;<code><a href="../Storage.html" title="class in net.iceyleagons.icicle.storage">Storage</a></code></dd>
+<dd><code><a href="../Storage.html#deleteData(java.lang.String,java.lang.Object,java.lang.String)">deleteData</a></code>&nbsp;in class&nbsp;<code><a href="../Storage.html" title="class in icicle.storage">Storage</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>key</code> - the key</dd>
 <dd><code>value</code> - the filter</dd>
@@ -417,22 +417,22 @@ extends <a href="../Storage.html" title="class in net.iceyleagons.icicle.storage
 </dl>
 </li>
 </ul>
-<a id="getData(net.iceyleagons.icicle.storage.entities.Container)">
+<a id="getData(icicle.storage.entities.Container)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getData</h4>
-<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="../entities/ContainerData.html" title="class in net.iceyleagons.icicle.storage.entities">ContainerData</a>&gt;&nbsp;getData&#8203;(<a href="../entities/Container.html" title="class in net.iceyleagons.icicle.storage.entities">Container</a>&nbsp;container)</pre>
-<div class="block">Documented in <a href="../Storage.html" title="class in net.iceyleagons.icicle.storage"><code>Storage</code></a>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="../entities/ContainerData.html" title="class in icicle.storage.entities">ContainerData</a>&gt;&nbsp;getData&#8203;(<a href="../entities/Container.html" title="class in icicle.storage.entities">Container</a>&nbsp;container)</pre>
+<div class="block">Documented in <a href="../Storage.html" title="class in icicle.storage"><code>Storage</code></a>
  Customized to fit the SQL database types</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../Storage.html#getData(net.iceyleagons.icicle.storage.entities.Container)">getData</a></code>&nbsp;in class&nbsp;<code><a href="../Storage.html" title="class in net.iceyleagons.icicle.storage">Storage</a></code></dd>
+<dd><code><a href="../Storage.html#getData(icicle.storage.entities.Container)">getData</a></code>&nbsp;in class&nbsp;<code><a href="../Storage.html" title="class in icicle.storage">Storage</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>container</code> - the container to get the data from</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>all data for a <a href="../entities/Container.html" title="class in net.iceyleagons.icicle.storage.entities"><code>Container</code></a></dd>
+<dd>all data for a <a href="../entities/Container.html" title="class in icicle.storage.entities"><code>Container</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -443,11 +443,11 @@ extends <a href="../Storage.html" title="class in net.iceyleagons.icicle.storage
 <li class="blockList">
 <h4>applyChanges</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;applyChanges()</pre>
-<div class="block">Documented in <a href="../Storage.html" title="class in net.iceyleagons.icicle.storage"><code>Storage</code></a>
+<div class="block">Documented in <a href="../Storage.html" title="class in icicle.storage"><code>Storage</code></a>
  Customized to fit the SQL database types</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../Storage.html#applyChanges()">applyChanges</a></code>&nbsp;in class&nbsp;<code><a href="../Storage.html" title="class in net.iceyleagons.icicle.storage">Storage</a></code></dd>
+<dd><code><a href="../Storage.html#applyChanges()">applyChanges</a></code>&nbsp;in class&nbsp;<code><a href="../Storage.html" title="class in icicle.storage">Storage</a></code></dd>
 </dl>
 </li>
 </ul>
