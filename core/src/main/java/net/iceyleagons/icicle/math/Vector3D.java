@@ -24,18 +24,20 @@
 
 package net.iceyleagons.icicle.math;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.util.Vector;
 
 @Data
-@AllArgsConstructor
+@RequiredArgsConstructor
 public strictfp class Vector3D {
 
+    @NonNull
     private double x;
+    @NonNull
     private double y;
+    @NonNull
     private double z;
 
     public Vector3D(Vector vector) {

@@ -1,15 +1,14 @@
-package net.iceyleagons.icicle.reflect.impl;
+package net.iceyleagons.icicle.reflect;
 
 import com.google.common.base.Preconditions;
 import lombok.Getter;
-import net.iceyleagons.icicle.api.annotations.handlers.AutowiringHandler;
+import net.iceyleagons.icicle.api.annotations.AutowiringHandler;
 import net.iceyleagons.icicle.api.annotations.Bean;
-import net.iceyleagons.icicle.api.annotations.handlers.AbstractAutowiringHandler;
-import net.iceyleagons.icicle.api.annotations.handlers.AbstractAnnotationHandler;
-import net.iceyleagons.icicle.api.annotations.handlers.AnnotationHandler;
+import net.iceyleagons.icicle.api.annotations.AbstractAutowiringHandler;
+import net.iceyleagons.icicle.api.annotations.AbstractAnnotationHandler;
+import net.iceyleagons.icicle.api.AnnotationHandler;
 import net.iceyleagons.icicle.api.plugin.RegisteredPlugin;
 import net.iceyleagons.icicle.api.reflect.ClassScanningHandler;
-import net.iceyleagons.icicle.reflect.Reflections;
 
 import java.lang.reflect.Constructor;
 import java.util.*;

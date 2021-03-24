@@ -1,12 +1,12 @@
-package net.iceyleagons.icicle.annotations.handlers;
+package net.iceyleagons.icicle.api.annotations.handlers.impl;
 
 import lombok.Getter;
 import net.iceyleagons.icicle.api.annotations.config.ConfigHeader;
 import net.iceyleagons.icicle.api.annotations.config.Configuration;
-import net.iceyleagons.icicle.api.annotations.handlers.AbstractAnnotationHandler;
+import net.iceyleagons.icicle.api.annotations.AbstractAnnotationHandler;
 import net.iceyleagons.icicle.api.annotations.handlers.AnnotationHandler;
 import net.iceyleagons.icicle.config.AbstractConfiguration;
-import org.reflections.Reflections;
+import net.iceyleagons.icicle.reflect.Reflections;
 
 import java.lang.reflect.Constructor;
 import java.util.*;
@@ -22,7 +22,6 @@ public class ConfigurationAnnotationHandler extends AbstractAnnotationHandler {
         return new ArrayList<>(configs.values());
     }
 
-
     @Override
     public void scanAndHandleClasses(Reflections reflections) {
         Set<Class<?>> configurations = reflections.getTypesAnnotatedWith(Configuration.class);
@@ -30,7 +29,7 @@ public class ConfigurationAnnotationHandler extends AbstractAnnotationHandler {
             try {
                 if (!config.isAnnotation() && !config.isInterface()) {
                     if (config.getSuperclass().isAssignableFrom(AbstractConfiguration.class)) {
-                        Constructor<?> constructor = net.iceyleagons.icicle.reflect.Reflections.getConstructor(config, true);
+                        Constructor<?> constructor = Reflections.getConstructor(config, true);
                         if (constructor != null) {
                             Configuration configuration = config.getAnnotation(Configuration.class);
 

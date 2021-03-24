@@ -1,9 +1,9 @@
-package net.iceyleagons.icicle;
+package net.iceyleagons.icicle.registry;
 
 import net.iceyleagons.icicle.api.plugin.IciclePluginManager;
 import net.iceyleagons.icicle.api.plugin.RegisteredPlugin;
 import net.iceyleagons.icicle.commands.system.PluginCommandManagerImpl;
-import net.iceyleagons.icicle.reflect.impl.ClassScanningHandlerImpl;
+import net.iceyleagons.icicle.reflect.ClassScanningHandlerImpl;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;

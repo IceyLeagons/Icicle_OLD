@@ -3,12 +3,9 @@ package net.iceyleagons.icicle.commands.system;
 import lombok.Getter;
 import net.iceyleagons.icicle.api.annotations.commands.Command;
 import net.iceyleagons.icicle.api.annotations.commands.CommandContainer;
-import net.iceyleagons.icicle.api.commands.CommandParameterHandlerTemplate;
-import net.iceyleagons.icicle.api.commands.PluginCommandManager;
-import net.iceyleagons.icicle.api.commands.RegisteredCommand;
-import net.iceyleagons.icicle.api.plugin.RegisteredPlugin;
 import net.iceyleagons.icicle.commands.CommandInjectException;
 import net.iceyleagons.icicle.commands.CommandUtils;
+import net.iceyleagons.icicle.registry.RegisteredPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -23,7 +20,7 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 @Getter
-public class PluginCommandManagerImpl implements PluginCommandManager, CommandExecutor, TabCompleter {
+public class PluginCommandManager implements CommandExecutor, TabCompleter {
 
     private final RegisteredPlugin registeredPlugin;
     private final CommandUtils commandUtils;
@@ -32,7 +29,7 @@ public class PluginCommandManagerImpl implements PluginCommandManager, CommandEx
 
     private final Map<String, String> messages = new HashMap<>();
 
-    public PluginCommandManagerImpl(RegisteredPlugin registeredPlugin) {
+    public PluginCommandManager(RegisteredPlugin registeredPlugin) {
         this.registeredPlugin = registeredPlugin;
         this.commandUtils = new CommandUtils(registeredPlugin.getJavaPlugin());
         insertDefaultMessages();
@@ -51,7 +48,6 @@ public class PluginCommandManagerImpl implements PluginCommandManager, CommandEx
         messages.put("parameter_uuid_invalid", "&CInvalid UUID format!");
     }
 
-    @Override
     public void registerCommandContainer(Object o) {
         if (o.getClass().isAnnotationPresent(CommandContainer.class)) {
             Arrays.stream(o.getClass().getDeclaredMethods())
@@ -146,6 +142,30 @@ public class PluginCommandManagerImpl implements PluginCommandManager, CommandEx
         }
 
         return null;
+        /*
+        if (type == String.class) {
+            return arg;
+
+        } else if (type == Integer.class) {
+            if (!MathUtils.isNumber(arg)) {
+                sendMessage(sender, "parameter_number_invalid");
+                return null;
+            }
+
+            return Integer.parseInt(arg);
+        } else if (type == Player.class) {
+            Player player = Bukkit.getPlayer(arg);
+            if (player == null) {
+                sendMessage(sender, "parameter_player_not_found");
+                return null;
+            }
+
+            return player;
+        }
+
+        return null;
+
+         */
     }
 
     @Nullable

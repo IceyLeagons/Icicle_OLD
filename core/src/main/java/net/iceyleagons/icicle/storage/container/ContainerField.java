@@ -1,7 +1,7 @@
 package net.iceyleagons.icicle.storage.container;
 
 import lombok.Getter;
-import net.iceyleagons.icicle.api.annotations.storage.FieldName;
+import net.iceyleagons.icicle.annotations.storage.FieldName;
 
 import java.lang.reflect.Field;
 

@@ -1,4 +1,4 @@
-package net.iceyleagons.icicle.api.annotations.handlers;
+package net.iceyleagons.icicle.api.annotations;
 
 import lombok.Data;
 import net.iceyleagons.icicle.api.reflect.ClassScanningHandler;

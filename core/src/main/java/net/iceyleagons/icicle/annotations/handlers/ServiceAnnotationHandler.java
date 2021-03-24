@@ -1,10 +1,10 @@
-package net.iceyleagons.icicle.annotations.handlers;
+package net.iceyleagons.icicle.api.annotations.handlers.impl;
 
 import lombok.Getter;
 import net.iceyleagons.icicle.api.annotations.Service;
-import net.iceyleagons.icicle.api.annotations.handlers.AbstractAnnotationHandler;
+import net.iceyleagons.icicle.api.annotations.AbstractAnnotationHandler;
 import net.iceyleagons.icicle.api.annotations.handlers.AnnotationHandler;
-import org.reflections.Reflections;
+import net.iceyleagons.icicle.reflect.Reflections;
 
 import java.lang.reflect.Constructor;
 import java.util.*;
@@ -26,7 +26,7 @@ public class ServiceAnnotationHandler extends AbstractAnnotationHandler {
         services.forEach(service -> {
             try {
                 if (!service.isAnnotation() && !service.isInterface()) {
-                    Constructor<?> constructor = net.iceyleagons.icicle.reflect.Reflections.getConstructor(service, true);
+                    Constructor<?> constructor = Reflections.getConstructor(service, true);
                     if (constructor != null) {
                         Object serviceObject = constructor.newInstance();
                         this.services.put(service, serviceObject);

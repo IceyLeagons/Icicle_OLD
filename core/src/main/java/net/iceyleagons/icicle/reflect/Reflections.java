@@ -24,7 +24,6 @@
 
 package net.iceyleagons.icicle.reflect;
 
-import lombok.NonNull;
 import org.bukkit.Bukkit;
 
 import java.lang.reflect.Constructor;
@@ -121,7 +120,7 @@ public class Reflections {
      * @param parameterTypes  the parameter types for that method
      * @return the method
      */
-    public static Method getMethod(@NonNull final Class<?> clazz, @NonNull String methodName, boolean forceAccessible, final Class<?>... parameterTypes) {
+    public static Method getMethod(final Class<?> clazz, String methodName, boolean forceAccessible, final Class<?>... parameterTypes) {
         try {
             Method method = clazz.getDeclaredMethod(methodName, parameterTypes);
             if (forceAccessible)
@@ -143,29 +142,7 @@ public class Reflections {
      * @param args       {@link Method#invoke(Object, Object...)}
      * @return will try to cast the invoke result if successful if not null
      */
-    public static <T> T invoke(@NonNull Method method, @NonNull Class<T> wantedType, Object o, Object... args) {
-        try {
-            Object result = method.invoke(o, args);
-
-            return wantedType.isInstance(result) ? wantedType.cast(result) : null;
-        } catch (IllegalAccessException | InvocationTargetException | ClassCastException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
-     * Invokes the method without you having to deal with exceptions.
-     * The same as {@link #invoke(Method, Class, Object, Object...)}, but with Object[] instead.
-     * This is so we can use it indirectly.
-     *
-     * @param method     the method
-     * @param wantedType is the type you want the result to be in
-     * @param o          {@link Method#invoke(Object, Object...)}
-     * @param args       {@link Method#invoke(Object, Object...)}
-     * @return will try to cast the invoke result if successful if not null
-     */
-    public static <T> T invokeFromObjectArray(@NonNull Method method, @NonNull Class<T> wantedType, Object o, Object[] args) {
+    public static <T> T invoke(Method method, Class<T> wantedType, Object o, Object... args) {
         try {
             Object result = method.invoke(o, args);
 
@@ -184,7 +161,7 @@ public class Reflections {
      * @param o          {@link Method#invoke(Object, Object...)}
      * @return will try to cast the invoke result if successful if not null
      */
-    public static <T> T get(@NonNull Field field, @NonNull Class<T> wantedType, @NonNull Object o) {
+    public static <T> T get(Field field, Class<T> wantedType, Object o) {
         try {
             Object result = field.get(o);
             return wantedType.isInstance(result) ? wantedType.cast(result) : null;
@@ -194,7 +171,7 @@ public class Reflections {
         return null;
     }
 
-    public static void set(@NonNull Field field, @NonNull Object object, Object value) {
+    public static void set(Field field, Object object, Object value) {
         try {
             field.set(object, value);
         } catch (IllegalAccessException e) {

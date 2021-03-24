@@ -1,6 +1,6 @@
-package net.iceyleagons.icicle.api.annotations.handlers;
+package net.iceyleagons.icicle.api.annotations;
 
-import net.iceyleagons.icicle.api.annotations.handlers.AbstractAutowiringHandler;
+import net.iceyleagons.icicle.api.annotations.AbstractAutowiringHandler;
 
 import java.lang.annotation.*;
 

@@ -1,4 +1,2 @@
 rootProject.name = 'icicle'
-include 'api'
-include 'core'
 

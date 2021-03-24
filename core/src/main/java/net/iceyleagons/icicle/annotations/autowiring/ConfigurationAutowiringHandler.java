@@ -1,10 +1,10 @@
-package net.iceyleagons.icicle.annotations.autowiring;
+package net.iceyleagons.icicle.annotations.autowiring.impl;
 
-import net.iceyleagons.icicle.api.annotations.Autowired;
-import net.iceyleagons.icicle.api.annotations.handlers.AbstractAutowiringHandler;
-import net.iceyleagons.icicle.api.annotations.handlers.AutowiringHandler;
+import net.iceyleagons.icicle.annotations.Autowired;
+import net.iceyleagons.icicle.api.annotations.AbstractAutowiringHandler;
+import net.iceyleagons.icicle.annotations.autowiring.AutowiringHandler;
 import net.iceyleagons.icicle.api.annotations.config.Configuration;
-import net.iceyleagons.icicle.annotations.handlers.ConfigurationAnnotationHandler;
+import net.iceyleagons.icicle.api.annotations.handlers.impl.ConfigurationAnnotationHandler;
 import net.iceyleagons.icicle.config.AbstractConfiguration;
 import net.iceyleagons.icicle.reflect.Reflections;
 

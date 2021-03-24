@@ -1,10 +1,9 @@
-package net.iceyleagons.icicle.api.plugin;
+package net.iceyleagons.icicle.api.registry;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import net.iceyleagons.icicle.api.commands.PluginCommandManager;
 import net.iceyleagons.icicle.api.reflect.AutowiringHandler;
 import net.iceyleagons.icicle.api.reflect.ClassScanningHandler;
 import org.bukkit.plugin.java.JavaPlugin;
