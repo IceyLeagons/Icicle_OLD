@@ -62,8 +62,8 @@ configurations {
 
 dependencies {
     implementation 'com.mojang:brigadier:1.0.17'
-    compileOnly 'org.projectlombok:lombok:1.18.18'
-    annotationProcessor 'org.projectlombok:lombok:1.18.16'
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
 
     extraLibs group: 'org.json', name: 'json', version: '20210307'
 
