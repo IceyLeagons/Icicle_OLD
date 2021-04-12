@@ -2,7 +2,7 @@ package net.iceyleagons.icicle.annotations.autowiring;
 
 import lombok.Data;
 import net.iceyleagons.icicle.reflect.ClassScanningHandler;
-import net.iceyleagons.icicle.registry.RegisteredPlugin;
+import net.iceyleagons.icicle.plugin.RegisteredPlugin;
 
 import java.lang.reflect.Field;
 import java.util.logging.Logger;

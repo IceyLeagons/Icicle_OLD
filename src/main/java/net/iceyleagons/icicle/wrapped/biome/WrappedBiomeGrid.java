@@ -24,10 +24,8 @@
 
 package net.iceyleagons.icicle.wrapped.biome;
 
-import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.wrapped.utils.WrappedClass;
 import org.bukkit.generator.ChunkGenerator;
-
-import java.lang.reflect.Field;
 
 /**
  * Wrapping the CraftBukkit CustomBiomeGrid embedded class.
@@ -37,15 +35,8 @@ import java.lang.reflect.Field;
  * @since 1.3.8-SNAPSHOT
  */
 public class WrappedBiomeGrid {
-
-    private static Class<?> cb_CustomBiomeGrid;
-
-    private static Field cb_biomeStorage;
-
     static {
-        cb_CustomBiomeGrid = Reflections.getNormalCBClass("generator.CustomChunkGenerator$CustomBiomeGrid");
-
-        cb_biomeStorage = Reflections.getField(cb_CustomBiomeGrid, "biome", true);
+        WrappedClass.getCBClass("generator.CustomChunkGenerator$CustomBiomeGrid").lookupField(Object.class, "biome");
     }
 
     /**
@@ -55,13 +46,7 @@ public class WrappedBiomeGrid {
      * @return wrapped biome storage.
      */
     public static WrappedBiomeStorage getBiomeStorage(ChunkGenerator.BiomeGrid grid) {
-        try {
-            return new WrappedBiomeStorage(cb_biomeStorage.get(grid));
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        return new WrappedBiomeStorage(WrappedClass.getCBClass("generator.CustomChunkGenerator$CustomBiomeGrid").getField("biome").get(grid));
     }
 
 }

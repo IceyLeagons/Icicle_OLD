@@ -3,7 +3,7 @@ package net.iceyleagons.icicle.annotations.autowiring.impl;
 import net.iceyleagons.icicle.annotations.Autowired;
 import net.iceyleagons.icicle.annotations.autowiring.AbstractAutowiringHandler;
 import net.iceyleagons.icicle.annotations.autowiring.AutowiringHandler;
-import net.iceyleagons.icicle.annotations.commands.CommandContainer;
+import net.iceyleagons.icicle.commands.annotations.CommandContainer;
 import net.iceyleagons.icicle.annotations.handlers.impl.commands.CommandContainerAnnotationHandler;
 import net.iceyleagons.icicle.reflect.Reflections;
 

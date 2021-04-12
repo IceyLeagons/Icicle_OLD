@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.iceyleagons.icicle.annotations.autowiring.AbstractAutowiringHandler;
 import net.iceyleagons.icicle.annotations.handlers.AbstractAnnotationHandler;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -48,6 +49,8 @@ public class AutowiringHandler {
     private void injectSpecialCases(Object object, Field field) {
         if (field.getType().equals(classScanningHandler.getRegisteredPlugin().getMainClass())) {
             Reflections.set(field, object, classScanningHandler.getRegisteredPlugin().getJavaPlugin());
+        } else if (field.getType().equals(JavaPlugin.class)) {
+            Reflections.set(field, object, classScanningHandler.getRegisteredPlugin().getJavaPlugin());
         } else if (beans.containsKey(field.getType())) {
             Reflections.set(field, object, beans.get(field.getType()));
         }
@@ -71,6 +74,8 @@ public class AutowiringHandler {
                         }
                     });
                 });
+
+        classScanningHandler.getRegisteredPlugin().getSchedulerService().registerObject(object);
     }
 
 }

@@ -30,6 +30,7 @@ import lombok.SneakyThrows;
 import net.iceyleagons.icicle.reflect.Reflections;
 import net.iceyleagons.icicle.wrapped.biome.WrappedBiomeBase;
 import net.iceyleagons.icicle.wrapped.registry.WrappedIRegistry;
+import net.iceyleagons.icicle.wrapped.utils.WrappedClass;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
@@ -46,22 +47,11 @@ import java.lang.reflect.Method;
  */
 @RequiredArgsConstructor
 public class WrappedCraftBlock {
-
-    private static final Class<?> craftBlockClass;
-
-    private static final Method breakNaturally;
-    private static final Method biomeBaseToBiome;
-    private static final Method biomeToBiomeBase;
-
     static {
-        craftBlockClass = Reflections.getNormalCBClass("block.CraftBlock");
-
-        Class<?> registry = Reflections.getNormalNMSClass("IRegistry");
-        Class<?> biomeBase = Reflections.getNormalNMSClass("BiomeBase");
-
-        breakNaturally = Reflections.getMethod(craftBlockClass, "breakNaturally", true, ItemStack.class, boolean.class);
-        biomeBaseToBiome = Reflections.getMethod(craftBlockClass, "biomeBaseToBiome", true, registry, biomeBase);
-        biomeToBiomeBase = Reflections.getMethod(craftBlockClass, "biomeToBiomeBase", true, registry, Biome.class);
+        WrappedClass.getCBClass("block.CraftBlock")
+                .lookupMethod("breakNaturally", null, ItemStack.class, boolean.class)
+                .lookupMethod(Biome.class, "biomeBaseToBiome", null, WrappedClass.getNMSClass("IRegistry").getClazz(), WrappedClass.getNMSClass("BiomeBase").getClazz())
+                .lookupMethod("biomeToBiomeBase", null, WrappedClass.getNMSClass("IRegistry").getClazz(), Biome.class);
     }
 
     @Getter
@@ -78,7 +68,7 @@ public class WrappedCraftBlock {
      * @return null if it's a custom biome, the bukkit Biome if it's a vanilla biome.
      */
     public static Biome biomeBaseToBiome(WrappedBiomeBase biomeBase) {
-        return Reflections.invoke(biomeBaseToBiome, Biome.class, craftBlockClass, WrappedIRegistry.BIOME, biomeBase.getRoot());
+        return (Biome) WrappedClass.getCBClass("block.CraftBlock").getMethod("biomeBaseToBiome").invoke(null, biomeBase.getRoot());
     }
 
     /**
@@ -88,7 +78,7 @@ public class WrappedCraftBlock {
      * @return the wrapped biomebase representation of the bukkit biome.
      */
     public static WrappedBiomeBase biomeToBiomeBase(Biome biome) {
-        return new WrappedBiomeBase(Reflections.invoke(biomeToBiomeBase, Object.class, craftBlockClass, WrappedIRegistry.BIOME, biome));
+        return new WrappedBiomeBase(WrappedClass.getCBClass("block.CraftBlock").getMethod("biomeToBiomeBase").invoke(null, biome));
     }
 
     /**
@@ -101,7 +91,7 @@ public class WrappedCraftBlock {
      */
     @SneakyThrows
     public void breakNaturally(ItemStack itemStack, boolean triggerSound) {
-        breakNaturally.invoke(block, itemStack, triggerSound);
+        WrappedClass.getCBClass("block.CraftBlock").getMethod("breakNaturally").invokeNoReturn(block, itemStack, triggerSound);
     }
 
 }

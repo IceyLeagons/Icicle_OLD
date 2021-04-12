@@ -31,6 +31,7 @@ import net.iceyleagons.icicle.wrapped.WrappedDedicatedServer;
 import net.iceyleagons.icicle.wrapped.registry.WrappedIRegistry;
 import net.iceyleagons.icicle.wrapped.registry.WrappedIRegistryCustom;
 import net.iceyleagons.icicle.wrapped.registry.WrappedResourceKey;
+import net.iceyleagons.icicle.wrapped.utils.WrappedClass;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 
@@ -45,65 +46,31 @@ import java.lang.reflect.Method;
  * @since 1.3.3-SNAPSHOT
  */
 public class WrappedBiomeBase {
-
-    public static final Class<?> mc_BiomeBase;
-    private static final Class<?> mc_biomebase_a;
-    private static final Class<?> mc_biomefog;
-    private static final Class<?> mc_biomesettingsmobs;
-    private static final Class<?> mc_biomesettingsgeneration;
-
-    private static final Field generation_b;
-    private static final Field mobs_b;
-
-    private static final Class<? extends Enum<?>> mc_biomebase_geography;
-    private static final Class<? extends Enum<?>> mc_biomebase_precipitation;
-    private static final Class<? extends Enum<?>> mc_biomebase_temperaturemodifier;
-
-    private static final Method mc_geography_valueof;
-    private static final Method mc_precipitation_valueof;
-    private static final Method mc_temp_valueof;
-
-    private static final Method biome_setDepth;
-    private static final Method biome_setScale;
-    private static final Method biome_setTemperature;
-    private static final Method biome_setDownfall;
-    private static final Method biome_setSpecialEffects;
-    private static final Method biome_setMobs;
-    private static final Method biome_setGeneration;
-    private static final Method biome_setTemperatureModifier;
-    private static final Method biome_setPrecipitation;
-    private static final Method biome_setGeography;
-    private static final Method biomebase_build;
-
     static {
-        mc_BiomeBase = Reflections.getNormalNMSClass("BiomeBase");
+        WrappedClass.getNMSClass("BiomeSettingsMobs")
+                .lookupField("b");
+        WrappedClass.getNMSClass("BiomeSettingsGeneration")
+                .lookupField("b");
 
-        mc_biomefog = Reflections.getNormalNMSClass("BiomeFog");
-        mc_biomebase_a = Reflections.getNormalNMSClass("BiomeBase$a");
-        mc_biomesettingsmobs = Reflections.getNormalNMSClass("BiomeSettingsMobs");
-        mc_biomesettingsgeneration = Reflections.getNormalNMSClass("BiomeSettingsGeneration");
+        WrappedClass.getNMSClass("BiomeBase$Geography")
+                .lookupMethod("valueOf", null, String.class);
+        WrappedClass.getNMSClass("BiomeBase$Precipitation")
+                .lookupMethod("valueOf", null, String.class);
+        WrappedClass.getNMSClass("BiomeBase$TemperatureModifier")
+                .lookupMethod("valueOf", null, String.class);
 
-        generation_b = Reflections.getField(mc_biomesettingsgeneration, "b", true);
-        mobs_b = Reflections.getField(mc_biomesettingsmobs, "b", true);
-
-        mc_biomebase_geography = (Class<? extends Enum<?>>) Reflections.getNormalNMSClass("BiomeBase$Geography");
-        mc_geography_valueof = Reflections.getMethod(mc_biomebase_geography, "valueOf", true, String.class);
-        mc_biomebase_precipitation = (Class<? extends Enum<?>>) Reflections.getNormalNMSClass("BiomeBase$Precipitation");
-        mc_precipitation_valueof = Reflections.getMethod(mc_biomebase_precipitation, "valueOf", true, String.class);
-        mc_biomebase_temperaturemodifier = (Class<? extends Enum<?>>) Reflections.getNormalNMSClass("BiomeBase$TemperatureModifier");
-        mc_temp_valueof = Reflections.getMethod(mc_biomebase_temperaturemodifier, "valueOf", true, String.class);
-
-        biome_setDepth = Reflections.getMethod(mc_biomebase_a, "a", true, float.class);
-        biome_setScale = Reflections.getMethod(mc_biomebase_a, "b", true, float.class);
-        biome_setTemperature = Reflections.getMethod(mc_biomebase_a, "c", true, float.class);
-        biome_setDownfall = Reflections.getMethod(mc_biomebase_a, "d", true, float.class);
-        biome_setSpecialEffects = Reflections.getMethod(mc_biomebase_a, "a", true, mc_biomefog);
-        biome_setMobs = Reflections.getMethod(mc_biomebase_a, "a", true, mc_biomesettingsmobs);
-        biome_setGeneration = Reflections.getMethod(mc_biomebase_a, "a", true, mc_biomesettingsgeneration);
-        biome_setTemperatureModifier = Reflections.getMethod(mc_biomebase_a, "a", true, mc_biomebase_temperaturemodifier);
-        biome_setPrecipitation = Reflections.getMethod(mc_biomebase_a, "a", true, mc_biomebase_precipitation);
-        biome_setGeography = Reflections.getMethod(mc_biomebase_a, "a", true, mc_biomebase_geography);
-        biomebase_build = Reflections.getMethod(mc_biomebase_a, "a", true);
+        WrappedClass.getNMSClass("BiomeBase$a")
+                .lookupMethod("a", "setDepth", float.class)
+                .lookupMethod("b", "setScale", float.class)
+                .lookupMethod("c", "setTemperature", float.class)
+                .lookupMethod("d", "setDownfall", float.class)
+                .lookupMethod("a", "setSpecialEffects", WrappedClass.getNMSClass("BiomeFog").getClazz())
+                .lookupMethod("a", "setMobs", WrappedClass.getNMSClass("BiomeSettingsMobs").getClazz())
+                .lookupMethod("a", "setGeneration", WrappedClass.getNMSClass("BiomeSettingsGeneration").getClazz())
+                .lookupMethod("a", "setTemperatureModifier", WrappedClass.getNMSClass("BiomeBase$TemperatureModifier").getClazz())
+                .lookupMethod("a", "setPrecipitation", WrappedClass.getNMSClass("BiomeBase$Precipitation").getClazz())
+                .lookupMethod("a", "setGeography", WrappedClass.getNMSClass("BiomeBase$Geography").getClazz())
+                .lookupMethod("a", "build");
     }
 
     @Getter
@@ -134,29 +101,29 @@ public class WrappedBiomeBase {
      * @since 1.3.3-SNAPSHOT
      */
     public static enum Geography {
-        NONE(Reflections.invoke(mc_geography_valueof, Object.class, null, "NONE")),
-        TAIGA(Reflections.invoke(mc_geography_valueof, Object.class, null, "TAIGA")),
-        EXTREME_HILLS(Reflections.invoke(mc_geography_valueof, Object.class, null, "EXTREME_HILLS")),
-        JUNGLE(Reflections.invoke(mc_geography_valueof, Object.class, null, "JUNGLE")),
-        MESA(Reflections.invoke(mc_geography_valueof, Object.class, null, "MESA")),
-        PLAINS(Reflections.invoke(mc_geography_valueof, Object.class, null, "PLAINS")),
-        SAVANNA(Reflections.invoke(mc_geography_valueof, Object.class, null, "SAVANNA")),
-        ICY(Reflections.invoke(mc_geography_valueof, Object.class, null, "ICY")),
-        THEEND(Reflections.invoke(mc_geography_valueof, Object.class, null, "THEEND")),
-        BEACH(Reflections.invoke(mc_geography_valueof, Object.class, null, "BEACH")),
-        FOREST(Reflections.invoke(mc_geography_valueof, Object.class, null, "FOREST")),
-        OCEAN(Reflections.invoke(mc_geography_valueof, Object.class, null, "OCEAN")),
-        DESERT(Reflections.invoke(mc_geography_valueof, Object.class, null, "DESERT")),
-        RIVER(Reflections.invoke(mc_geography_valueof, Object.class, null, "RIVER")),
-        SWAMP(Reflections.invoke(mc_geography_valueof, Object.class, null, "SWAMP")),
-        MUSHROOM(Reflections.invoke(mc_geography_valueof, Object.class, null, "MUSHROOM")),
-        NETHER(Reflections.invoke(mc_geography_valueof, Object.class, null, "NETHER"));
+        NONE("NONE"),
+        TAIGA("TAIGA"),
+        EXTREME_HILLS("EXTREME_HILLS"),
+        JUNGLE("JUNGLE"),
+        MESA("MESA"),
+        PLAINS("PLAINS"),
+        SAVANNA("SAVANNA"),
+        ICY("ICY"),
+        THE_END("THEEND"),
+        BEACH("BEACH"),
+        FOREST("FOREST"),
+        OCEAN("OCEAN"),
+        DESERT("DESERT"),
+        RIVER("RIVER"),
+        SWAMP("SWAMP"),
+        MUSHROOM("MUSHROOM"),
+        NETHER("NETHER");
 
         @Getter
         private final Object object;
 
-        Geography(Object object) {
-            this.object = object;
+        Geography(String value) {
+            this.object = WrappedClass.getNMSClass("BiomeBase$Geography").getMethod("valueOf").invoke(null, value);
         }
     }
 
@@ -168,15 +135,15 @@ public class WrappedBiomeBase {
      * @since 1.3.3-SNAPSHOT
      */
     public static enum Precipitation {
-        NONE(Reflections.invoke(mc_precipitation_valueof, Object.class, null, "NONE")),
-        RAIN(Reflections.invoke(mc_precipitation_valueof, Object.class, null, "RAIN")),
-        SNOW(Reflections.invoke(mc_precipitation_valueof, Object.class, null, "SNOW"));
+        NONE("NONE"),
+        RAIN("RAIN"),
+        SNOW("SNOW");
 
         @Getter
         private final Object object;
 
-        Precipitation(Object object) {
-            this.object = object;
+        Precipitation(String value) {
+            this.object = WrappedClass.getNMSClass("BiomeBase$Precipitation").getMethod("valueOf").invoke(null, value);
         }
     }
 
@@ -188,14 +155,14 @@ public class WrappedBiomeBase {
      * @since 1.3.3-SNAPSHOT
      */
     public static enum TemperatureModifier {
-        NONE(Reflections.invoke(mc_temp_valueof, Object.class, null, "NONE")),
-        FROZEN(Reflections.invoke(mc_temp_valueof, Object.class, null, "FROZEN"));
+        NONE("NONE"),
+        FROZEN("FROZEN");
 
         @Getter
         private final Object object;
 
-        TemperatureModifier(Object object) {
-            this.object = object;
+        TemperatureModifier(String value) {
+            this.object = WrappedClass.getNMSClass("BiomeBase$TemperatureModifier").getMethod("valueOf").invoke(null, value);
         }
     }
 
@@ -212,7 +179,7 @@ public class WrappedBiomeBase {
 
         @SneakyThrows
         private Builder() {
-            this.root = mc_biomebase_a.getDeclaredConstructor().newInstance();
+            this.root = WrappedClass.getNMSClass("BiomeBase$a").newInstance();
             setMobs();
             setGeneration();
         }
@@ -231,7 +198,7 @@ public class WrappedBiomeBase {
          * @return this.
          */
         public Builder setGeography(Geography geography) {
-            Reflections.invoke(biome_setGeography, Void.class, root, geography.getObject());
+            WrappedClass.getNMSClass("BiomeBase$a").getMethod("setGeography").invokeNoReturn(root, geography.getObject());
             return this;
         }
 
@@ -242,7 +209,7 @@ public class WrappedBiomeBase {
          * @return this.
          */
         public Builder setPrecipitation(Precipitation precipitation) {
-            Reflections.invoke(biome_setPrecipitation, Void.class, root, precipitation.getObject());
+            WrappedClass.getNMSClass("BiomeBase$a").getMethod("setPrecipitation").invokeNoReturn(root, precipitation.getObject());
             return this;
         }
 
@@ -253,7 +220,7 @@ public class WrappedBiomeBase {
          * @return this.
          */
         public Builder setTemperatureModifier(TemperatureModifier temperatureModifier) {
-            Reflections.invoke(biome_setTemperatureModifier, Void.class, root, temperatureModifier.getObject());
+            WrappedClass.getNMSClass("BiomeBase$a").getMethod("setTemperatureModifier").invokeNoReturn(root, temperatureModifier.getObject());
             return this;
         }
 
@@ -264,7 +231,7 @@ public class WrappedBiomeBase {
          * @return this.
          */
         public Builder setDownfall(float downfall) {
-            Reflections.invoke(biome_setDownfall, Void.class, root, downfall);
+            WrappedClass.getNMSClass("BiomeBase$a").getMethod("setDownfall").invokeNoReturn(root, downfall);
             return this;
         }
 
@@ -275,7 +242,7 @@ public class WrappedBiomeBase {
          * @return this.
          */
         public Builder setTemperature(float temperature) {
-            Reflections.invoke(biome_setTemperature, Void.class, root, temperature);
+            WrappedClass.getNMSClass("BiomeBase$a").getMethod("setTemperature").invokeNoReturn(root, temperature);
             return this;
         }
 
@@ -286,7 +253,7 @@ public class WrappedBiomeBase {
          * @return this.
          */
         public Builder setSpecialEffects(WrappedBiomeFog effects) {
-            Reflections.invoke(biome_setSpecialEffects, Void.class, root, effects.getRoot());
+            WrappedClass.getNMSClass("BiomeBase$a").getMethod("setSpecialEffects").invokeNoReturn(root, effects.getRoot());
             return this;
         }
 
@@ -317,7 +284,7 @@ public class WrappedBiomeBase {
          * @return this.
          */
         public Builder setDepth(float depth) {
-            Reflections.invoke(biome_setDepth, Void.class, root, depth);
+            WrappedClass.getNMSClass("BiomeBase$a").getMethod("setDepth").invokeNoReturn(root, depth);
             return this;
         }
 
@@ -328,7 +295,7 @@ public class WrappedBiomeBase {
          * @return this.
          */
         public Builder setScale(float scale) {
-            Reflections.invoke(biome_setScale, Void.class, root, scale);
+            WrappedClass.getNMSClass("BiomeBase$a").getMethod("setScale").invokeNoReturn(root, scale);
             return this;
         }
 
@@ -338,7 +305,7 @@ public class WrappedBiomeBase {
          * @return this.
          */
         public Builder setMobs() {
-            setMobs(Reflections.get(mobs_b, Object.class, null));
+            setMobs(WrappedClass.getNMSClass("BiomeSettingsMobs").getField("b").get(null));
             return this;
         }
 
@@ -348,7 +315,7 @@ public class WrappedBiomeBase {
          * @return this.
          */
         public Builder setGeneration() {
-            setGeneration(Reflections.get(generation_b, Object.class, null));
+            setGeneration(WrappedClass.getNMSClass("BiomeSettingsGeneration").getField("b").get(null));
             return this;
         }
 
@@ -359,7 +326,7 @@ public class WrappedBiomeBase {
          * @return this.
          */
         public Builder setMobs(Object mobData) {
-            Reflections.invoke(biome_setMobs, Void.class, root, mobData);
+            WrappedClass.getNMSClass("BiomeBase$a").getMethod("setMobs").invokeNoReturn(root, mobData);
             return this;
         }
 
@@ -370,7 +337,7 @@ public class WrappedBiomeBase {
          * @return this.
          */
         public Builder setGeneration(Object generationData) {
-            Reflections.invoke(biome_setGeneration, Void.class, root, generationData);
+            WrappedClass.getNMSClass("BiomeBase$a").getMethod("setGeneration").invokeNoReturn(root, generationData);
             return this;
         }
 
@@ -378,7 +345,7 @@ public class WrappedBiomeBase {
          * @return the biome base with the provided settings.
          */
         public WrappedBiomeBase build() {
-            return new WrappedBiomeBase(Reflections.invoke(biomebase_build, Object.class, root));
+            return new WrappedBiomeBase(WrappedClass.getNMSClass("BiomeBase$a").getMethod("build").invoke(root));
         }
     }
 }

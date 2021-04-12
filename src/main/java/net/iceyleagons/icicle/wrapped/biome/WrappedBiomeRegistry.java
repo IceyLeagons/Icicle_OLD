@@ -27,6 +27,7 @@ package net.iceyleagons.icicle.wrapped.biome;
 import net.iceyleagons.icicle.reflect.Reflections;
 import net.iceyleagons.icicle.wrapped.registry.WrappedIRegistry;
 import net.iceyleagons.icicle.wrapped.registry.WrappedResourceKey;
+import net.iceyleagons.icicle.wrapped.utils.WrappedClass;
 
 import java.lang.reflect.Method;
 
@@ -39,12 +40,8 @@ import java.lang.reflect.Method;
  */
 public class WrappedBiomeRegistry {
 
-    private static final Class<?> mc_BiomeRegistry;
-    private static final Method registry_register;
-
     static {
-        mc_BiomeRegistry = Reflections.getNormalNMSClass("BiomeRegistry");
-        registry_register = Reflections.getMethod(mc_BiomeRegistry, "a", true, int.class, WrappedIRegistry.mc_ResourceKey, WrappedBiomeBase.mc_BiomeBase);
+        WrappedClass.getNMSClass("BiomeRegistry").lookupMethod("a", null, int.class, WrappedClass.getNMSClass("ResourceKey").getClazz(), WrappedClass.getNMSClass("BiomeBase").getClazz());
     }
 
     /**
@@ -56,7 +53,7 @@ public class WrappedBiomeRegistry {
      * @return the provided biome base.
      */
     public static WrappedBiomeBase register(int id, WrappedResourceKey resourceKey, WrappedBiomeBase biomeBase) {
-        return new WrappedBiomeBase(Reflections.invoke(registry_register, Object.class, null, id, resourceKey.getResourceKey(), biomeBase.getRoot()));
+        return new WrappedBiomeBase(WrappedClass.getNMSClass("BiomeRegistry").getMethod("a").invoke(null, id, resourceKey, biomeBase));
     }
 
 }

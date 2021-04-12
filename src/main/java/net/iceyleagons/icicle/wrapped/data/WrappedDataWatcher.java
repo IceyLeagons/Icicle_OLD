@@ -26,6 +26,7 @@ package net.iceyleagons.icicle.wrapped.data;
 
 import lombok.Getter;
 import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.wrapped.utils.WrappedClass;
 
 import java.lang.reflect.Method;
 
@@ -37,13 +38,9 @@ import java.lang.reflect.Method;
  * @since 1.3.3-SNAPSHOT
  */
 public class WrappedDataWatcher {
-
-    public static final Class<?> mc_dataWatcher;
-    private static final Method mc_set;
-
     static {
-        mc_dataWatcher = Reflections.getNormalNMSClass("DataWatcher");
-        mc_set = Reflections.getMethod(mc_dataWatcher, "set", true, WrappedDataWatcherObject.mc_dataWatcherObject, Object.class);
+        WrappedClass.getNMSClass("DataWatcher")
+                .lookupMethod("set", null, WrappedClass.getNMSClass("DataWatcherObject").getClazz(), Object.class);
     }
 
     @Getter
@@ -60,7 +57,7 @@ public class WrappedDataWatcher {
      * @param object            what we want to change it into.
      */
     public void set(WrappedDataWatcherObject dataWatcherObject, Object object) {
-        Reflections.invoke(mc_set, Void.class, nmsObject, dataWatcherObject.getNmsObject(), object);
+        WrappedClass.getNMSClass("DataWatcher").getMethod("set").invokeNoReturn(nmsObject, dataWatcherObject.getNmsObject(), object);
     }
 
 }

@@ -1,13 +1,11 @@
 package net.iceyleagons.icicle.commands.system;
 
 import lombok.Getter;
-import net.iceyleagons.icicle.annotations.commands.Command;
-import net.iceyleagons.icicle.annotations.commands.CommandContainer;
+import net.iceyleagons.icicle.commands.annotations.Command;
+import net.iceyleagons.icicle.commands.annotations.CommandContainer;
 import net.iceyleagons.icicle.commands.CommandInjectException;
 import net.iceyleagons.icicle.commands.CommandUtils;
-import net.iceyleagons.icicle.math.MathUtils;
-import net.iceyleagons.icicle.registry.RegisteredPlugin;
-import org.bukkit.Bukkit;
+import net.iceyleagons.icicle.plugin.RegisteredPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

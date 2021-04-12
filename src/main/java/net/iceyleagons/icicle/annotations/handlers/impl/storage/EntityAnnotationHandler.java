@@ -3,7 +3,7 @@ package net.iceyleagons.icicle.annotations.handlers.impl.storage;
 import lombok.Getter;
 import net.iceyleagons.icicle.annotations.handlers.AbstractAnnotationHandler;
 import net.iceyleagons.icicle.annotations.handlers.AnnotationHandler;
-import net.iceyleagons.icicle.annotations.storage.Entity;
+import net.iceyleagons.icicle.storage.annotations.Entity;
 import org.reflections.Reflections;
 
 import java.util.ArrayList;

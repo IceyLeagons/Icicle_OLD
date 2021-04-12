@@ -1,5 +1,6 @@
-package net.iceyleagons.icicle.registry;
+package net.iceyleagons.icicle.plugin;
 
+import net.iceyleagons.icicle.scheduling.SchedulerService;
 import net.iceyleagons.icicle.commands.system.PluginCommandManager;
 import net.iceyleagons.icicle.reflect.ClassScanningHandler;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -14,6 +15,7 @@ public class IciclePluginManager {
     public void register(RegisteredPlugin registeredPlugin) {
         registeredPlugin.setPluginCommandManager(new PluginCommandManager(registeredPlugin));
         registeredPlugin.setClassScanningHandler(new ClassScanningHandler(registeredPlugin));
+        registeredPlugin.setSchedulerService(new SchedulerService(registeredPlugin));
         registeredPluginList.put(registeredPlugin.getJavaPlugin(), registeredPlugin);
 
     }

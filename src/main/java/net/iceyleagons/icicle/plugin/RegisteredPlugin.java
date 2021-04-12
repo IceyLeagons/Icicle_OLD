@@ -1,9 +1,10 @@
-package net.iceyleagons.icicle.registry;
+package net.iceyleagons.icicle.plugin;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import net.iceyleagons.icicle.scheduling.SchedulerService;
 import net.iceyleagons.icicle.commands.system.PluginCommandManager;
 import net.iceyleagons.icicle.reflect.AutowiringHandler;
 import net.iceyleagons.icicle.reflect.ClassScanningHandler;
@@ -24,5 +25,7 @@ public class RegisteredPlugin {
     private AutowiringHandler autowiringHandler;
     @Setter
     private PluginCommandManager pluginCommandManager;
+    @Setter
+    private SchedulerService schedulerService;
 
 }

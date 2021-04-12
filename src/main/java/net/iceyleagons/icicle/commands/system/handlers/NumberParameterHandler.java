@@ -1,9 +1,8 @@
 package net.iceyleagons.icicle.commands.system.handlers;
 
-import net.iceyleagons.icicle.annotations.commands.CommandParameterHandler;
+import net.iceyleagons.icicle.commands.annotations.CommandParameterHandler;
 import net.iceyleagons.icicle.commands.system.CommandParameterHandlerTemplate;
 import net.iceyleagons.icicle.commands.system.PluginCommandManager;
-import net.iceyleagons.icicle.math.MathUtils;
 import org.bukkit.command.CommandSender;
 
 @CommandParameterHandler({

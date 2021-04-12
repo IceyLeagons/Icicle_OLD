@@ -24,9 +24,7 @@
 
 package net.iceyleagons.icicle.wrapped.bukkit;
 
-import net.iceyleagons.icicle.reflect.Reflections;
-
-import java.lang.reflect.Method;
+import net.iceyleagons.icicle.wrapped.utils.WrappedClass;
 
 /**
  * Wrapped representation of CraftChatMessage
@@ -36,13 +34,9 @@ import java.lang.reflect.Method;
  * @since 1.3.3-SNAPSHOT
  */
 public class WrappedCraftChatMessage {
-
-    private static final Class<?> cb_craftChatMessage;
-    private static final Method fromString;
-
     static {
-        cb_craftChatMessage = Reflections.getNormalCBClass("util.CraftChatMessage");
-        fromString = Reflections.getMethod(cb_craftChatMessage, "fromString", true, String.class);
+        WrappedClass.getCBClass("util.CraftChatMessage")
+                .lookupMethod(Object[].class, "fromString", null, String.class);
     }
 
     /**
@@ -52,7 +46,7 @@ public class WrappedCraftChatMessage {
      * @return an array containing CraftChatMessages.
      */
     public static Object[] fromString(String string) {
-        return Reflections.invoke(fromString, Object[].class, cb_craftChatMessage, string);
+        return (Object[]) WrappedClass.getCBClass("util.CraftChatMessage").getMethod("fromString").invoke(null, string);
     }
 
 }

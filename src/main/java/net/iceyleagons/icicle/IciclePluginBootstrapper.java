@@ -1,8 +1,7 @@
 package net.iceyleagons.icicle;
 
 import com.google.common.base.Preconditions;
-import net.iceyleagons.icicle.commands.system.RegisteredCommand;
-import net.iceyleagons.icicle.registry.RegisteredPlugin;
+import net.iceyleagons.icicle.plugin.RegisteredPlugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**

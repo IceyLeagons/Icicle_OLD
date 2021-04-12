@@ -1,4 +1,4 @@
-package net.iceyleagons.icicle.annotations.commands;
+package net.iceyleagons.icicle.storage.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,11 +7,8 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface CommandParameterHandler {
+public @interface ContainerName {
 
-    /**
-     * @return the list of types this handler is responsible for.
-     */
-    Class<?>[] value();
+    String value();
 
 }

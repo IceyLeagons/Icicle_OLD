@@ -27,6 +27,7 @@ package net.iceyleagons.icicle.wrapped.bukkit;
 import lombok.Getter;
 import net.iceyleagons.icicle.reflect.Reflections;
 import net.iceyleagons.icicle.wrapped.entity.WrappedTileEntity;
+import net.iceyleagons.icicle.wrapped.utils.WrappedClass;
 import org.bukkit.block.TileState;
 
 import java.lang.reflect.Method;
@@ -39,29 +40,23 @@ import java.lang.reflect.Method;
  * @since 1.3.8-SNAPSHOT
  */
 public class WrappedCraftBlockEntityState {
-
-    private static final Class<?> bukkit_CraftBlockEntityState;
-
-    private static final Method bukkit_getTileEntity;
-
     static {
-        bukkit_CraftBlockEntityState = Reflections.getNormalCBClass("block.CraftBlockEntityState");
-
-        bukkit_getTileEntity = Reflections.getMethod(bukkit_CraftBlockEntityState, "getTileEntity", true);
+        WrappedClass.getCBClass("block.CraftBlockEntityState")
+                .lookupMethod("getTileEntity", null);
     }
 
     @Getter
     private final Object root;
 
     public WrappedCraftBlockEntityState(TileState tileState) {
-        this.root = bukkit_CraftBlockEntityState.cast(tileState);
+        this.root = WrappedClass.getCBClass("block.CraftBlockEntityState").cast(tileState);
     }
 
     /**
      * @return the tile entity object for this tile state.
      */
     public WrappedTileEntity getTileEntity() {
-        return new WrappedTileEntity(Reflections.invoke(bukkit_getTileEntity, Object.class, root));
+        return new WrappedTileEntity(WrappedClass.getCBClass("block.CraftBlockEntityState").getMethod("getTileEntity").invoke(root));
     }
 
 }

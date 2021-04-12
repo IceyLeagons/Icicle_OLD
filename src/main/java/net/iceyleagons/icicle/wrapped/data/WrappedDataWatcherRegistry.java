@@ -25,6 +25,7 @@
 package net.iceyleagons.icicle.wrapped.data;
 
 import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.wrapped.utils.WrappedClass;
 
 import java.lang.reflect.Field;
 
@@ -36,25 +37,19 @@ import java.lang.reflect.Field;
  * @since 1.3.3-SNAPSHOT
  */
 public class WrappedDataWatcherRegistry {
-
-
-    private static final Class<?> mc_dataWatcherRegistry;
-    private static final Field a;
-    private static final Field c;
-
     static {
-        mc_dataWatcherRegistry = Reflections.getNormalNMSClass("DataWatcherRegistry");
-        a = Reflections.getField(mc_dataWatcherRegistry, "a", true);
-        c = Reflections.getField(mc_dataWatcherRegistry, "c", true);
+        WrappedClass.getNMSClass("DataWatcherRegistry")
+                .lookupField("a")
+                .lookupField("c");
     }
 
     // TODO: try to understand what this is.
     public static Object a() {
-        return Reflections.get(a, Object.class, null);
+        return WrappedClass.getNMSClass("DataWatcherRegistry").getField("a").get(null);
     }
 
     public static Object c() {
-        return Reflections.get(c, Object.class, null);
+        return WrappedClass.getNMSClass("DataWatcherRegistry").getField("c").get(null);
     }
 
 }

@@ -3,9 +3,9 @@ package net.iceyleagons.icicle.storage;
 import net.iceyleagons.icicle.annotations.Autowired;
 import net.iceyleagons.icicle.annotations.Service;
 import net.iceyleagons.icicle.annotations.handlers.impl.storage.EntityAnnotationHandler;
-import net.iceyleagons.icicle.annotations.storage.ContainerName;
-import net.iceyleagons.icicle.annotations.storage.Entity;
-import net.iceyleagons.icicle.annotations.storage.Id;
+import net.iceyleagons.icicle.storage.annotations.ContainerName;
+import net.iceyleagons.icicle.storage.annotations.Entity;
+import net.iceyleagons.icicle.storage.annotations.Id;
 import net.iceyleagons.icicle.storage.container.ContainerField;
 import net.iceyleagons.icicle.storage.container.StorageContainer;
 

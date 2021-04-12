@@ -3,7 +3,7 @@ package net.iceyleagons.icicle.commands.system;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import net.iceyleagons.icicle.annotations.commands.Command;
+import net.iceyleagons.icicle.commands.annotations.Command;
 
 import java.lang.reflect.Method;
 

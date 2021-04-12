@@ -27,6 +27,7 @@ package net.iceyleagons.icicle.wrapped.entity;
 import lombok.Getter;
 import net.iceyleagons.icicle.reflect.Reflections;
 import net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftWorld;
+import net.iceyleagons.icicle.wrapped.utils.WrappedClass;
 import net.iceyleagons.icicle.wrapped.world.WrappedBlockPosition;
 import net.iceyleagons.icicle.wrapped.world.chunk.WrappedChunk;
 import org.bukkit.inventory.InventoryHolder;
@@ -41,36 +42,22 @@ import java.lang.reflect.Method;
  * @since 1.3.3-SNAPSHOT
  */
 public class WrappedTileEntity {
-    public static final Class<?> mc_TileEntity;
-    private static final Method tile_getChunk;
-    private static final Method tile_getWorld;
-    private static final Method tile_hasWorld;
-    private static final Method tile_update;
-    private static final Method tile_getPosition;
-    private static final Method tile_invalidateBlockCache;
-    private static final Method tile_setPosition;
-    private static final Method tile_getOwner;
-
     static {
-        mc_TileEntity = Reflections.getNormalNMSClass("TileEntity");
-
-        tile_getChunk = Reflections.getMethod(mc_TileEntity, "getCurrentChunk", true);
-        tile_getWorld = Reflections.getMethod(mc_TileEntity, "getWorld", true);
-        tile_hasWorld = Reflections.getMethod(mc_TileEntity, "hasWorld", true);
-        tile_update = Reflections.getMethod(mc_TileEntity, "update", true);
-        tile_getPosition = Reflections.getMethod(mc_TileEntity, "getPosition", true);
-        tile_invalidateBlockCache = Reflections.getMethod(mc_TileEntity, "invalidateBlockCache", true);
-        tile_setPosition = Reflections.getMethod(mc_TileEntity, "setPosition", true, WrappedBlockPosition.mc_BlockPosition);
-        tile_getOwner = Reflections.getMethod(mc_TileEntity, "getOwner", true, boolean.class);
+        WrappedClass.getNMSClass("TileEntity")
+                .lookupMethod("getCurrentChunk", "getChunk")
+                .lookupMethod("getWorld", null)
+                .lookupMethod("hasWorld", null)
+                .lookupMethod("update", null)
+                .lookupMethod("getPosition", null)
+                .lookupMethod("invalidateBlockCache", null)
+                .lookupMethod("setPosition", null, WrappedClass.getNMSClass("BlockPosition").getClazz())
+                .lookupMethod("getOwner", null, boolean.class);
     }
 
     @Getter
     private final Object entity;
 
     public WrappedTileEntity(Object entity) {
-        if (!mc_TileEntity.isInstance(entity))
-            throw new IllegalArgumentException("Provided object not instance of TileEntity.");
-
         this.entity = entity;
     }
 
@@ -78,7 +65,7 @@ public class WrappedTileEntity {
      * @return the "host" chunk.
      */
     public WrappedChunk getChunk() {
-        return new WrappedChunk(Reflections.invoke(tile_getChunk, Object.class, entity));
+        return new WrappedChunk(WrappedClass.getNMSClass("TileEntity").getMethod("getChunk").invoke(entity));
     }
 
     /**

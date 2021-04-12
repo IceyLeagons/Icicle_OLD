@@ -1,11 +1,9 @@
 package net.iceyleagons.icicle.annotations.handlers.impl.commands;
 
-import net.iceyleagons.icicle.annotations.commands.CommandParameterHandler;
-import net.iceyleagons.icicle.annotations.config.Configuration;
+import net.iceyleagons.icicle.commands.annotations.CommandParameterHandler;
 import net.iceyleagons.icicle.annotations.handlers.AbstractAnnotationHandler;
 import net.iceyleagons.icicle.annotations.handlers.AnnotationHandler;
 import net.iceyleagons.icicle.commands.system.CommandParameterHandlerTemplate;
-import net.iceyleagons.icicle.config.AbstractConfiguration;
 import org.reflections.Reflections;
 
 import java.lang.reflect.Constructor;

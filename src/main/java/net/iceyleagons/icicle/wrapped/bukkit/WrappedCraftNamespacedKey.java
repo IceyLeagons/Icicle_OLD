@@ -26,6 +26,7 @@ package net.iceyleagons.icicle.wrapped.bukkit;
 
 import net.iceyleagons.icicle.reflect.Reflections;
 import net.iceyleagons.icicle.wrapped.registry.WrappedIRegistry;
+import net.iceyleagons.icicle.wrapped.utils.WrappedClass;
 import org.bukkit.NamespacedKey;
 
 import java.lang.reflect.Method;
@@ -38,21 +39,12 @@ import java.lang.reflect.Method;
  * @since 1.3.3-SNAPSHOT
  */
 public class WrappedCraftNamespacedKey {
-
-    private static final Class<?> bukkit_CraftNamespacedKey;
-
-    private static final Method nm_toMinecraft;
-    private static final Method nm_fromMinecraft;
-    private static final Method nm_fromString;
-    private static final Method nm_fromStringOrNull;
-
     static {
-        bukkit_CraftNamespacedKey = Reflections.getNormalCBClass("util.CraftNamespacedKey");
-
-        nm_toMinecraft = Reflections.getMethod(bukkit_CraftNamespacedKey, "toMinecraft", true, NamespacedKey.class);
-        nm_fromMinecraft = Reflections.getMethod(bukkit_CraftNamespacedKey, "fromMinecraft", true, WrappedIRegistry.mc_MinecraftKey);
-        nm_fromString = Reflections.getMethod(bukkit_CraftNamespacedKey, "fromString", true, String.class);
-        nm_fromStringOrNull = Reflections.getMethod(bukkit_CraftNamespacedKey, "fromStringOrNull", true, String.class);
+        WrappedClass.getCBClass("util.CraftNamespacedKey")
+                .lookupMethod("toMinecraft", null, NamespacedKey.class)
+                .lookupMethod(NamespacedKey.class, "fromMinecraft", null, WrappedClass.getNMSClass("MinecraftKey").getClazz())
+                .lookupMethod(NamespacedKey.class, "fromString", null, String.class)
+                .lookupMethod(NamespacedKey.class, "fromStringOrNull", null, String.class);
     }
 
     /**
@@ -62,7 +54,7 @@ public class WrappedCraftNamespacedKey {
      * @return the bukkit namespacedkey.
      */
     public static NamespacedKey fromMinecraft(Object root) {
-        return Reflections.invoke(nm_fromMinecraft, NamespacedKey.class, null, root);
+        return (NamespacedKey) WrappedClass.getCBClass("util.CraftNamespacedKey").getMethod("fromMinecraft").invoke(null, root);
     }
 
     /**
@@ -72,7 +64,7 @@ public class WrappedCraftNamespacedKey {
      * @return the bukkit namespacedkey.
      */
     public static NamespacedKey fromString(String string) {
-        return Reflections.invoke(nm_fromString, NamespacedKey.class, null, string);
+        return (NamespacedKey) WrappedClass.getCBClass("util.CraftNamespacedKey").getMethod("fromString").invoke(null, string);
     }
 
     /**
@@ -84,7 +76,7 @@ public class WrappedCraftNamespacedKey {
      * @return the bukkit namespacedkey.
      */
     public static NamespacedKey fromStringOrNull(String string) {
-        return Reflections.invoke(nm_fromStringOrNull, NamespacedKey.class, null, string);
+        return (NamespacedKey) WrappedClass.getCBClass("util.CraftNamespacedKey").getMethod("fromStringOrNull").invoke(null, string);
     }
 
     /**
@@ -94,6 +86,6 @@ public class WrappedCraftNamespacedKey {
      * @return the nms minecraftkey.
      */
     public static Object toMinecraft(NamespacedKey key) {
-        return Reflections.invoke(nm_toMinecraft, Object.class, null, key);
+        return WrappedClass.getCBClass("util.CraftNamespacedKey").getMethod("toMinecraft").invoke(null, key);
     }
 }

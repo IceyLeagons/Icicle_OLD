@@ -1,16 +1,16 @@
-package net.iceyleagons.icicle.annotations.config;
+package net.iceyleagons.icicle.storage.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target(ElementType.TYPE)
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Configuration {
+public @interface FieldName {
 
     /**
-     * @return path to the yaml config file
+     * @return the name of the field
      */
     String value();
 

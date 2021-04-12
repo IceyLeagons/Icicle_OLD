@@ -1,11 +1,12 @@
 package net.iceyleagons.icicle.commands.system;
 
 
+import net.iceyleagons.icicle.commands.annotations.CommandParameterHandler;
 import org.bukkit.command.CommandSender;
 
 /**
  * Responsible for parsing string inputs into the desired type.
- * Classes implementing this must implement {@link net.iceyleagons.icicle.annotations.commands.CommandParameterHandler}
+ * Classes implementing this must implement {@link CommandParameterHandler}
  *
  * @version 1.0.0
  * @since 2.0.0

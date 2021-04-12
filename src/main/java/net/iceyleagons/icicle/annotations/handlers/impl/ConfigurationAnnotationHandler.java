@@ -1,8 +1,8 @@
 package net.iceyleagons.icicle.annotations.handlers.impl;
 
 import lombok.Getter;
-import net.iceyleagons.icicle.annotations.config.ConfigHeader;
-import net.iceyleagons.icicle.annotations.config.Configuration;
+import net.iceyleagons.icicle.config.annotations.ConfigHeader;
+import net.iceyleagons.icicle.config.annotations.Configuration;
 import net.iceyleagons.icicle.annotations.handlers.AbstractAnnotationHandler;
 import net.iceyleagons.icicle.annotations.handlers.AnnotationHandler;
 import net.iceyleagons.icicle.config.AbstractConfiguration;

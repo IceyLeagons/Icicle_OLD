@@ -30,6 +30,7 @@ import net.iceyleagons.icicle.wrapped.biome.WrappedBiomeBase;
 import net.iceyleagons.icicle.wrapped.packet.WrappedPacketPlayOutMapChunk;
 import net.iceyleagons.icicle.wrapped.player.WrappedCraftPlayer;
 import net.iceyleagons.icicle.wrapped.registry.WrappedIRegistryCustom;
+import net.iceyleagons.icicle.wrapped.utils.WrappedClass;
 import net.iceyleagons.icicle.wrapped.world.WrappedBlockPosition;
 import net.iceyleagons.icicle.wrapped.world.WrappedWorld;
 import net.iceyleagons.icicle.wrapped.world.chunk.WrappedChunk;
@@ -50,36 +51,17 @@ import java.lang.reflect.Method;
  * @since 1.3.3-SNAPSHOT
  */
 public class WrappedCraftWorld {
-
-    public static final Class<?> mc_World;
-    public static final Class<?> mc_WorldServer;
-    private static final Class<?> mc_CraftWorld;
-    //private static final Class<?> mc_IRegistryCustom;
-    private static final Method world_isLoaded;
-    private static final Method world_getChunkAtWorldCoords;
-    private static final Method world_getHandle;
-    private static final Method nmsWorld_getWorld;
-    private static final Method ws_getRegistry;
-    //private static final Method registry_b;
-    private static final Method add_Entity;
-    private static final Field bukkit_nmsWorld;
-
     static {
-        mc_CraftWorld = Reflections.getNormalCBClass("CraftWorld");
-        mc_World = Reflections.getNormalNMSClass("World");
-        mc_WorldServer = Reflections.getNormalNMSClass("WorldServer");
-        //mc_IRegistryCustom = Reflections.getNormalNMSClass("IRegistryCustom");
-
-        world_isLoaded = Reflections.getMethod(mc_World, "isLoaded", true, WrappedBlockPosition.mc_BlockPosition);
-        world_getChunkAtWorldCoords = Reflections.getMethod(mc_World, "getChunkAtWorldCoords", true, WrappedBlockPosition.mc_BlockPosition);
-        world_getHandle = Reflections.getMethod(mc_CraftWorld, "getHandle", true);
-        nmsWorld_getWorld = Reflections.getMethod(mc_World, "getWorld", true);
-        ws_getRegistry = Reflections.getMethod(mc_WorldServer, "r", true);
-        //registry_b = Reflections.getMethod(mc_IRegistryCustom, "b", true, WrappedIRegistry.mc_ResourceKey);
-        add_Entity = Reflections.getMethod(mc_CraftWorld, "addEntity", true,
-                Reflections.getNormalNMSClass("Entity"), CreatureSpawnEvent.SpawnReason.class);
-
-        bukkit_nmsWorld = Reflections.getField(mc_CraftWorld, "world", true);
+        WrappedClass.getNMSClass("World")
+                .lookupMethod("isLoaded", null, WrappedClass.getNMSClass("BlockPosition").getClazz())
+                .lookupMethod("getChunkAtWorldCoords", null, WrappedClass.getNMSClass("BlockPosition").getClazz())
+                .lookupMethod("getWorld", null);
+        WrappedClass.getCBClass("CraftWorld")
+                .lookupMethod("getHandle", null)
+                .lookupMethod("addEntity", null, WrappedClass.getNMSClass("Entity").getClazz(), CreatureSpawnEvent.SpawnReason.class)
+                .lookupField("world");
+        WrappedClass.getNMSClass("WorldServer")
+                .lookupMethod("r", "getRegistry");
     }
 
     @Getter
@@ -87,22 +69,22 @@ public class WrappedCraftWorld {
 
     public WrappedCraftWorld(Object root) {
         if (root instanceof World) {
-            craftWorld = mc_CraftWorld.cast(root);
+            craftWorld = WrappedClass.getCBClass("CraftWorld").cast(root);
             return;
         }
 
-        if (root.getClass().isInstance(mc_World)) {
-            craftWorld = Reflections.invoke(nmsWorld_getWorld, Object.class, root);
+        if (WrappedClass.getNMSClass("World").isInstance(root)) {
+            craftWorld = WrappedClass.getNMSClass("World").getMethod("getWorld").invoke(root);
             return;
         }
 
-        if (mc_CraftWorld.isInstance(root)) {
+        if (WrappedClass.getCBClass("CraftWorld").isInstance(root)) {
             craftWorld = root;
             return;
         }
 
         if (root instanceof String)
-            craftWorld = mc_CraftWorld.cast(Bukkit.getWorld((String) root));
+            craftWorld = new WrappedCraftWorld(Bukkit.getWorld((String) root)).getCraftWorld();
 
         throw new IllegalArgumentException("Root not instance of CraftWorld nor String");
     }
@@ -112,14 +94,14 @@ public class WrappedCraftWorld {
      * @return whether or not that chunk containing the aforementioned position is loaded.
      */
     public Boolean isLoaded(WrappedBlockPosition blockPosition) {
-        return Reflections.invoke(world_isLoaded, Boolean.class, Reflections.get(bukkit_nmsWorld, Object.class, craftWorld), blockPosition.getRoot());
+        return (Boolean) WrappedClass.getNMSClass("World").getMethod("isLoaded").invoke(WrappedClass.getCBClass("CraftWorld").getField("world").get(craftWorld), blockPosition.getRoot());
     }
 
     /**
      * @return the custom registry of this world.
      */
     public WrappedIRegistryCustom getCustomRegistry() {
-        return new WrappedIRegistryCustom(Reflections.invoke(ws_getRegistry, Object.class, Reflections.get(bukkit_nmsWorld, Object.class, craftWorld)));
+        return new WrappedIRegistryCustom(WrappedClass.getNMSClass("World").getMethod("getRegistry").invoke(WrappedClass.getCBClass("CraftWorld").getField("world").get(craftWorld)));
     }
 
     /**
@@ -127,7 +109,7 @@ public class WrappedCraftWorld {
      * @return the chunk at the provided position.
      */
     public WrappedChunk getChunkAtWorldCoords(WrappedBlockPosition blockPosition) {
-        return new WrappedChunk(Reflections.invoke(world_getChunkAtWorldCoords, Object.class, Reflections.get(bukkit_nmsWorld, Object.class, craftWorld), blockPosition.getRoot()));
+        return new WrappedChunk(WrappedClass.getNMSClass("World").getMethod("getChunkAtWoorlCoords").invoke(WrappedClass.getCBClass("CraftWorld").getField("world").get(craftWorld), blockPosition.getRoot()));
     }
 
     /**
@@ -180,7 +162,7 @@ public class WrappedCraftWorld {
      * @return the nms handle of this craftworld.
      */
     public WrappedWorld getHandle() {
-        return new WrappedWorld(Reflections.invoke(world_getHandle, Object.class, craftWorld));
+        return new WrappedWorld(WrappedClass.getCBClass("CraftWorld").getMethod("getHandle").invoke(craftWorld));
     }
 
     /**
@@ -191,7 +173,7 @@ public class WrappedCraftWorld {
      * @return the entity.
      */
     public Object addEntity(Object entity, CreatureSpawnEvent.SpawnReason spawnReason) {
-        return Reflections.invoke(add_Entity, Object.class, craftWorld, entity, spawnReason);
+        return WrappedClass.getCBClass("CraftWorld").getMethod("addEntity").invoke(craftWorld, entity, spawnReason);
     }
 
     /**

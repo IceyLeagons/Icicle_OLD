@@ -27,6 +27,7 @@ package net.iceyleagons.icicle.wrapped.data;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.wrapped.utils.WrappedClass;
 
 import java.lang.reflect.Constructor;
 
@@ -39,20 +40,12 @@ import java.lang.reflect.Constructor;
  */
 public class WrappedDataWatcherObject {
 
-    public static final Class<?> mc_dataWatcherObject;
-    private static final Constructor<?> constructor;
-
-    static {
-        mc_dataWatcherObject = Reflections.getNormalNMSClass("DataWatcherObject");
-        constructor = Reflections.getConstructor(mc_dataWatcherObject, true, int.class, Reflections.getNormalNMSClass("DataWatcherSerializer"));
-    }
-
     @Getter
     private final Object nmsObject;
 
     @SneakyThrows
     public WrappedDataWatcherObject(int i, Object dws) {
-        this.nmsObject = constructor.newInstance(i, dws);
+        this.nmsObject = WrappedClass.getNMSClass("DataWatcherObject").newInstance(i, dws);
     }
 
 }

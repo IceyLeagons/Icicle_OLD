@@ -1,17 +1,17 @@
-package net.iceyleagons.icicle.annotations.storage;
+package net.iceyleagons.icicle.commands.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target(ElementType.FIELD)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface FieldName {
+public @interface CommandParameterHandler {
 
     /**
-     * @return the name of the field
+     * @return the list of types this handler is responsible for.
      */
-    String value();
+    Class<?>[] value();
 
 }

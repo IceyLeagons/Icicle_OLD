@@ -1,14 +1,11 @@
-package net.iceyleagons.icicle.annotations.config;
+package net.iceyleagons.icicle.storage.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target(ElementType.FIELD)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ConfigPath {
-
-    String value();
-
+public @interface Entity {
 }

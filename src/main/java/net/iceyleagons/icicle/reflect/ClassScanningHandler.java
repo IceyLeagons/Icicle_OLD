@@ -6,7 +6,7 @@ import net.iceyleagons.icicle.annotations.Bean;
 import net.iceyleagons.icicle.annotations.autowiring.AbstractAutowiringHandler;
 import net.iceyleagons.icicle.annotations.handlers.AbstractAnnotationHandler;
 import net.iceyleagons.icicle.annotations.handlers.AnnotationHandler;
-import net.iceyleagons.icicle.registry.RegisteredPlugin;
+import net.iceyleagons.icicle.plugin.RegisteredPlugin;
 import org.reflections.Reflections;
 
 import java.lang.reflect.Constructor;

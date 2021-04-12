@@ -27,6 +27,7 @@ package net.iceyleagons.icicle.wrapped.biome;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.wrapped.utils.WrappedClass;
 
 import java.awt.*;
 import java.lang.reflect.Method;
@@ -39,51 +40,20 @@ import java.lang.reflect.Method;
  * @since 1.3.3-SNAPSHOT
  */
 public class WrappedBiomeFog {
-
-    private static final Class<?> mc_biomefog_a;
-    private static final Class<?> mc_biomefog_grasscolor;
-    private static final Class<?> mc_biomeparticles;
-    private static final Class<?> mc_soundeffect;
-    private static final Class<?> mc_cavesoundsettings;
-    private static final Class<?> mc_cavesound;
-    private static final Class<?> mc_music;
-
-    private static final Method biome_setFogColor;
-    private static final Method biome_setWaterColor;
-    private static final Method biome_setWaterFogColor;
-    private static final Method biome_setSkyColor;
-    private static final Method biome_setGrassColorModifier;
-    private static final Method biome_setGrassColor;
-    private static final Method biome_setFoliageColor;
-    private static final Method biome_setParticles;
-    private static final Method biome_setAmbientSounds;
-    private static final Method biome_setMoodSounds;
-    private static final Method biome_setAdditionalSounds;
-    private static final Method biome_setMusic;
-    private static final Method biome_fog_create;
-
     static {
-        mc_biomefog_a = Reflections.getNormalNMSClass("BiomeFog$a");
-        mc_biomefog_grasscolor = Reflections.getNormalNMSClass("BiomeFog$GrassColor");
-        mc_biomeparticles = Reflections.getNormalNMSClass("BiomeParticles");
-        mc_soundeffect = Reflections.getNormalNMSClass("SoundEffect");
-        mc_cavesoundsettings = Reflections.getNormalNMSClass("CaveSoundSettings");
-        mc_cavesound = Reflections.getNormalNMSClass("CaveSound");
-        mc_music = Reflections.getNormalNMSClass("Music");
-
-        biome_setFogColor = Reflections.getMethod(mc_biomefog_a, "a", true, int.class);
-        biome_setWaterColor = Reflections.getMethod(mc_biomefog_a, "b", true, int.class);
-        biome_setWaterFogColor = Reflections.getMethod(mc_biomefog_a, "c", true, int.class);
-        biome_setSkyColor = Reflections.getMethod(mc_biomefog_a, "d", true, int.class);
-        biome_setFoliageColor = Reflections.getMethod(mc_biomefog_a, "e", true, int.class);
-        biome_setGrassColor = Reflections.getMethod(mc_biomefog_a, "f", true, int.class);
-        biome_setGrassColorModifier = Reflections.getMethod(mc_biomefog_a, "a", true, mc_biomefog_grasscolor);
-        biome_setParticles = Reflections.getMethod(mc_biomefog_a, "a", true, mc_biomeparticles);
-        biome_setAmbientSounds = Reflections.getMethod(mc_biomefog_a, "a", true, mc_soundeffect);
-        biome_setMoodSounds = Reflections.getMethod(mc_biomefog_a, "a", true, mc_cavesoundsettings);
-        biome_setAdditionalSounds = Reflections.getMethod(mc_biomefog_a, "a", true, mc_cavesound);
-        biome_setMusic = Reflections.getMethod(mc_biomefog_a, "a", true, mc_music);
-        biome_fog_create = Reflections.getMethod(mc_biomefog_a, "a", true);
+        WrappedClass.getNMSClass("BiomeFog$a").lookupMethod("a", "setFogColor", int.class)
+                .lookupMethod("b", "setWaterColor", int.class)
+                .lookupMethod("c", "setWaterFogColor", int.class)
+                .lookupMethod("d", "SkyColor", int.class)
+                .lookupMethod("e", "setFoliageColor", int.class)
+                .lookupMethod("f", "setGrassColor", int.class)
+                .lookupMethod("a", "setGrassColorModifier", WrappedClass.getNMSClass("BiomeFog$GrassColor").getClazz())
+                .lookupMethod("a", "setParticles", WrappedClass.getNMSClass("BiomeParticles").getClazz())
+                .lookupMethod("a", "setSoundEffects", WrappedClass.getNMSClass("SoundEffect").getClazz())
+                .lookupMethod("a", "setMoodSounds", WrappedClass.getNMSClass("CaveSoundSettings").getClazz())
+                .lookupMethod("a", "setAdditionalSounds", WrappedClass.getNMSClass("CaveSound").getClazz())
+                .lookupMethod("a", "setMusic", WrappedClass.getNMSClass("Music").getClazz())
+                .lookupMethod("a", "build");
     }
 
     @Getter
@@ -114,7 +84,7 @@ public class WrappedBiomeFog {
 
         @SneakyThrows
         private Builder() {
-            this.root = mc_biomefog_a.getDeclaredConstructor().newInstance();
+            this.root = WrappedClass.getNMSClass("BiomeFog$a").newInstance();
         }
 
         public static WrappedBiomeFog.Builder create() {
@@ -128,7 +98,7 @@ public class WrappedBiomeFog {
          * @return this.
          */
         public WrappedBiomeFog.Builder setFogColor(Color color) {
-            this.root = Reflections.invoke(biome_setFogColor, Object.class, root, getColor(color));
+            this.root = WrappedClass.getNMSClass("BiomeFog$a").getMethod("setFogColor").invoke(root, getColor(color));
             return this;
         }
 
@@ -139,7 +109,7 @@ public class WrappedBiomeFog {
          * @return this.
          */
         public WrappedBiomeFog.Builder setWaterColor(Color color) {
-            this.root = Reflections.invoke(biome_setWaterColor, Object.class, root, getColor(color));
+            this.root = WrappedClass.getNMSClass("BiomeFog$a").getMethod("setWaterColor").invoke(root, getColor(color));
             return this;
         }
 
@@ -150,7 +120,7 @@ public class WrappedBiomeFog {
          * @return this.
          */
         public WrappedBiomeFog.Builder setWaterFogColor(Color color) {
-            this.root = Reflections.invoke(biome_setWaterFogColor, Object.class, root, getColor(color));
+            this.root = WrappedClass.getNMSClass("BiomeFog$a").getMethod("setWaterFogColor").invoke(root, getColor(color));
             return this;
         }
 
@@ -161,7 +131,7 @@ public class WrappedBiomeFog {
          * @return this.
          */
         public WrappedBiomeFog.Builder setSkyColor(Color color) {
-            this.root = Reflections.invoke(biome_setSkyColor, Object.class, root, getColor(color));
+            this.root = WrappedClass.getNMSClass("BiomeFog$a").getMethod("setSkyColor").invoke(root, getColor(color));
             return this;
         }
 
@@ -172,7 +142,7 @@ public class WrappedBiomeFog {
          * @return this.
          */
         public WrappedBiomeFog.Builder setFoliageColor(Color color) {
-            this.root = Reflections.invoke(biome_setFoliageColor, Object.class, root, getColor(color));
+            this.root = WrappedClass.getNMSClass("BiomeFog$a").getMethod("setFoliageColor").invoke(root, getColor(color));
             return this;
         }
 
@@ -183,7 +153,7 @@ public class WrappedBiomeFog {
          * @return this.
          */
         public WrappedBiomeFog.Builder setGrassColor(Color color) {
-            this.root = Reflections.invoke(biome_setGrassColor, Object.class, root, getColor(color));
+            this.root = WrappedClass.getNMSClass("BiomeFog$a").getMethod("setGrassColor").invoke(root, getColor(color));
             return this;
         }
 
@@ -193,7 +163,7 @@ public class WrappedBiomeFog {
          * @return this.
          */
         public WrappedBiomeFog.Builder setGrassColorModifier(Object color) {
-            this.root = Reflections.invoke(biome_setGrassColorModifier, Object.class, root, color);
+            this.root = WrappedClass.getNMSClass("BiomeFog$a").getMethod("setGrassColorModifier").invoke(root, color);
             return this;
         }
 
@@ -203,7 +173,7 @@ public class WrappedBiomeFog {
          * @return this.
          */
         public WrappedBiomeFog.Builder setParticles(Object particle) {
-            this.root = Reflections.invoke(biome_setParticles, Object.class, root, particle);
+            this.root = WrappedClass.getNMSClass("BiomeFog$a").getMethod("setParticles").invoke(root, particle);
             return this;
         }
 
@@ -213,7 +183,7 @@ public class WrappedBiomeFog {
          * @return this.
          */
         public WrappedBiomeFog.Builder setAmbientSounds(Object sounds) {
-            this.root = Reflections.invoke(biome_setAmbientSounds, Object.class, root, sounds);
+            this.root = WrappedClass.getNMSClass("BiomeFog$a").getMethod("setAmbientSounds").invoke(root, sounds);
             return this;
         }
 
@@ -223,7 +193,7 @@ public class WrappedBiomeFog {
          * @return this.
          */
         public WrappedBiomeFog.Builder setMoodSounds(Object sounds) {
-            this.root = Reflections.invoke(biome_setMoodSounds, Object.class, root, sounds);
+            this.root = WrappedClass.getNMSClass("BiomeFog$a").getMethod("setMoodSounds").invoke(root, sounds);
             return this;
         }
 
@@ -233,7 +203,7 @@ public class WrappedBiomeFog {
          * @return this.
          */
         public WrappedBiomeFog.Builder setAdditionalSounds(Object sounds) {
-            this.root = Reflections.invoke(biome_setAdditionalSounds, Object.class, root, sounds);
+            this.root = WrappedClass.getNMSClass("BiomeFog$a").getMethod("setAdditionalSounds").invoke(root, sounds);
             return this;
         }
 
@@ -243,7 +213,7 @@ public class WrappedBiomeFog {
          * @return this.
          */
         public WrappedBiomeFog.Builder setMusic(Object music) {
-            this.root = Reflections.invoke(biome_setMusic, Object.class, root, music);
+            this.root = WrappedClass.getNMSClass("BiomeFog$a").getMethod("setMusic").invoke(root, music);
             return this;
         }
 
@@ -251,7 +221,7 @@ public class WrappedBiomeFog {
          * @return the complete BiomeFog with the settings provided beforehand.
          */
         public WrappedBiomeFog build() {
-            return new WrappedBiomeFog(Reflections.invoke(biome_fog_create, Object.class, root));
+            return new WrappedBiomeFog(WrappedClass.getNMSClass("BiomeFog$a").getMethod("build").invoke(root));
         }
     }
 

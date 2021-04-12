@@ -1,9 +1,9 @@
 package net.iceyleagons.icicle;
 
-import net.iceyleagons.icicle.annotations.storage.ContainerName;
-import net.iceyleagons.icicle.annotations.storage.Entity;
-import net.iceyleagons.icicle.annotations.storage.FieldName;
-import net.iceyleagons.icicle.annotations.storage.Id;
+import net.iceyleagons.icicle.storage.annotations.ContainerName;
+import net.iceyleagons.icicle.storage.annotations.Entity;
+import net.iceyleagons.icicle.storage.annotations.FieldName;
+import net.iceyleagons.icicle.storage.annotations.Id;
 
 @ContainerName("entities")
 @Entity
