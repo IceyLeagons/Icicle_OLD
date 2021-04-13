@@ -82,7 +82,7 @@ public class Icicle extends JavaPlugin {
      * @return will always return false atm
      */
     public boolean checkForUpdates() {
-        if (!icicleConfig.checkForUpdates) return false;
+       // if (!icicleConfig.checkForUpdates) return false;
 
         //TODO actually checking
         return false;
@@ -93,9 +93,9 @@ public class Icicle extends JavaPlugin {
      * Metrics is only set up if it's enabled in the config.
      */
     public void setupBStats() {
-        if (icicleConfig.metricsEnabled) {
+        //if (icicleConfig.metricsEnabled) {
             //TODO
-        }
+        //}
     }
 
     /**

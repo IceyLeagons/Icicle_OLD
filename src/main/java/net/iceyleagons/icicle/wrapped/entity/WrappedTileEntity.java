@@ -72,28 +72,29 @@ public class WrappedTileEntity {
      * @return the "host" world.
      */
     public WrappedCraftWorld getWorld() {
-        return new WrappedCraftWorld(Reflections.invoke(tile_getWorld, Object.class, entity));
+        return null;//
+        // new WrappedCraftWorld(Reflections.invoke(tile_getWorld, Object.class, entity));
     }
 
     /**
      * @return whether or not this tile entity belongs to any one world.
      */
     public Boolean hasWorld() {
-        return Reflections.invoke(tile_hasWorld, Boolean.class, entity);
+        return null;//Reflections.invoke(tile_hasWorld, Boolean.class, entity);
     }
 
     /**
      * Run on ticks. I guess redstone components use this?
      */
     public void update() {
-        Reflections.invoke(tile_update, Void.class, entity);
+        //Reflections.invoke(tile_update, Void.class, entity);
     }
 
     /**
      * @return the position of this tile entity.
      */
     public WrappedBlockPosition getPosition() {
-        return new WrappedBlockPosition(Reflections.invoke(tile_getPosition, Object.class, entity));
+        return null;//new WrappedBlockPosition(Reflections.invoke(tile_getPosition, Object.class, entity));
     }
 
     /**
@@ -102,14 +103,14 @@ public class WrappedTileEntity {
      * @param blockPosition the new position of this tile entity.
      */
     public void setPosition(WrappedBlockPosition blockPosition) {
-        Reflections.invoke(tile_setPosition, Void.class, entity, blockPosition.getRoot());
+        //Reflections.invoke(tile_setPosition, Void.class, entity, blockPosition.getRoot());
     }
 
     /**
      * Invalidates the block cache of this tile entity.
      */
     public void invalidateBlockCache() {
-        Reflections.invoke(tile_invalidateBlockCache, Void.class, entity);
+        //Reflections.invoke(tile_invalidateBlockCache, Void.class, entity);
     }
 
     /**
@@ -130,7 +131,7 @@ public class WrappedTileEntity {
      * @return an {@link InventoryHolder}.
      */
     public InventoryHolder getOwner(boolean useSnapshot) {
-        return Reflections.invoke(tile_getOwner, InventoryHolder.class, entity, useSnapshot);
+        return null;//Reflections.invoke(tile_getOwner, InventoryHolder.class, entity, useSnapshot);
     }
 
 }

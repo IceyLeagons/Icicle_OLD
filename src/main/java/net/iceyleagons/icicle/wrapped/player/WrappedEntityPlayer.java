@@ -32,6 +32,7 @@ import net.iceyleagons.icicle.wrapped.WrappedDedicatedServer;
 import net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftWorld;
 import net.iceyleagons.icicle.wrapped.data.WrappedDataWatcher;
 import net.iceyleagons.icicle.wrapped.mojang.WrappedGameProfile;
+import net.iceyleagons.icicle.wrapped.utils.WrappedClass;
 import net.iceyleagons.icicle.wrapped.world.WrappedWorld;
 import org.bukkit.Location;
 
@@ -89,7 +90,7 @@ public class WrappedEntityPlayer {
         mc_setLocation = Reflections.getMethod(mc_Entity, "setLocation", true, double.class, double.class, double.class, float.class, float.class);
 
         constructor = Reflections.getConstructor(entityPlayerClass, true, WrappedDedicatedServer.mcServerClass,
-                WrappedCraftWorld.mc_WorldServer, WrappedGameProfile.mojang_gameProfile, WrappedPlayerInteractManager.mc_playerInteractManager);
+                WrappedClass.getNMSClass("World").getClazz(), WrappedGameProfile.mojang_gameProfile, WrappedPlayerInteractManager.mc_playerInteractManager);
 
         //public EntityPlayer(MinecraftServer minecraftserver, WorldServer worldserver, GameProfile gameprofile, PlayerInteractManager playerinteractmanager)
     }

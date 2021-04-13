@@ -28,6 +28,7 @@ import lombok.Getter;
 import net.iceyleagons.icicle.reflect.Reflections;
 import net.iceyleagons.icicle.wrapped.biome.WrappedBiomeStorage;
 import net.iceyleagons.icicle.wrapped.entity.WrappedTileEntity;
+import net.iceyleagons.icicle.wrapped.utils.WrappedClass;
 import net.iceyleagons.icicle.wrapped.world.WrappedBlockPosition;
 import net.iceyleagons.icicle.wrapped.world.WrappedLightEngine;
 import org.bukkit.Chunk;
@@ -70,7 +71,7 @@ public class WrappedChunk {
         chunk_getLightEngine = Reflections.getMethod(mc_Chunk, "e", true);
         chunk_getTileEntity = Reflections.getMethod(mc_Chunk, "getTileEntity", true, WrappedBlockPosition.mc_BlockPosition);
         chunk_getTileEntityImmediately = Reflections.getMethod(mc_Chunk, "getTileEntityImmediately", true, WrappedBlockPosition.mc_BlockPosition);
-        chunk_setTileEntity = Reflections.getMethod(mc_Chunk, "setTileEntity", true, WrappedBlockPosition.mc_BlockPosition, WrappedTileEntity.mc_TileEntity);
+        chunk_setTileEntity = Reflections.getMethod(mc_Chunk, "setTileEntity", true, WrappedBlockPosition.mc_BlockPosition, WrappedClass.getNMSClass("TileEntity").getClazz());
         chunk_setLoaded = Reflections.getMethod(mc_Chunk, "setLoaded", true, boolean.class);
         chunk_getTileEntities = Reflections.getMethod(mc_Chunk, "getTileEntities", true);
         chunk_setNeedsSaving = Reflections.getMethod(mc_Chunk, "setNeedsSaving", true, boolean.class);

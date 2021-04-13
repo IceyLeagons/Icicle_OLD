@@ -32,4 +32,6 @@ public interface Heap<T extends HeapItem<T>> {
      */
     T pop(); //removes first
 
+    int getSize();
+
 }

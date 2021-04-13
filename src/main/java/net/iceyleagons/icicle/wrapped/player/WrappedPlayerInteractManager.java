@@ -28,6 +28,7 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import net.iceyleagons.icicle.reflect.Reflections;
 import net.iceyleagons.icicle.wrapped.bukkit.WrappedCraftWorld;
+import net.iceyleagons.icicle.wrapped.utils.WrappedClass;
 import net.iceyleagons.icicle.wrapped.world.WrappedWorld;
 
 import java.lang.reflect.Constructor;
@@ -46,7 +47,7 @@ public class WrappedPlayerInteractManager {
 
     static {
         mc_playerInteractManager = Reflections.getNormalNMSClass("PlayerInteractManager");
-        constructor = Reflections.getConstructor(mc_playerInteractManager, true, WrappedCraftWorld.mc_WorldServer);
+        constructor = Reflections.getConstructor(mc_playerInteractManager, true, WrappedClass.getNMSClass("World").getClazz());
     }
 
     @Getter

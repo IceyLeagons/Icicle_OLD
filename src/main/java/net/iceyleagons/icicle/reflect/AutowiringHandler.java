@@ -75,7 +75,7 @@ public class AutowiringHandler {
                     });
                 });
 
-        classScanningHandler.getRegisteredPlugin().getSchedulerService().registerObject(object);
+        //classScanningHandler.getRegisteredPlugin().getSchedulerService().registerObject(object);
     }
 
 }

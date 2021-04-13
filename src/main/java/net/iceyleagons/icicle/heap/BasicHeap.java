@@ -9,7 +9,8 @@ import java.util.Objects;
 
 public class BasicHeap<T extends HeapItem<T>> implements Heap<T> {
 
-    private final T[] array;
+    private T[] array;
+    private final Class<T> clazz;
     @Getter
     private int itemCount;
 
@@ -17,6 +18,7 @@ public class BasicHeap<T extends HeapItem<T>> implements Heap<T> {
     public BasicHeap(@NonNull Class<T> clazz, int heapSize) {
         Preconditions.checkState(heapSize >= 0, new IllegalStateException("Heap size must be larger or equal to 0!"));
         this.itemCount = 0;
+        this.clazz = clazz;
         this.array = (T[]) Array.newInstance(clazz, heapSize);
     }
 
@@ -67,8 +69,15 @@ public class BasicHeap<T extends HeapItem<T>> implements Heap<T> {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings({"unchecked"})
     @Override
     public void add(T item) {
+        if (itemCount+1 >= array.length) {
+            T[] newArray = (T[]) Array.newInstance(clazz, array.length+10);
+            System.arraycopy(array, 0, newArray, 0, array.length);
+            this.array = newArray;
+        }
+
         item.setHeapIndex(itemCount);
         array[itemCount] = item;
 
@@ -106,6 +115,11 @@ public class BasicHeap<T extends HeapItem<T>> implements Heap<T> {
         sortDownward(array[0]);
 
         return firstItem;
+    }
+
+    @Override
+    public int getSize() {
+        return itemCount;
     }
 
 }

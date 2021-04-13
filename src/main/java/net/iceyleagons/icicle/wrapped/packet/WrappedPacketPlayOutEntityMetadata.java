@@ -26,6 +26,7 @@ package net.iceyleagons.icicle.wrapped.packet;
 
 import lombok.SneakyThrows;
 import net.iceyleagons.icicle.wrapped.data.WrappedDataWatcher;
+import net.iceyleagons.icicle.wrapped.utils.WrappedClass;
 
 /**
  * Wrapped representation PacketPlayOutEntityMetadata
@@ -39,7 +40,7 @@ public class WrappedPacketPlayOutEntityMetadata extends Packet {
     @SneakyThrows
     public WrappedPacketPlayOutEntityMetadata(int i, WrappedDataWatcher dataWatcher, boolean b) {
         super("PacketPlayOutEntityMetadata",
-                new Class<?>[]{int.class, WrappedDataWatcher.mc_dataWatcher, boolean.class},
+                new Class<?>[]{int.class, WrappedClass.getNMSClass("DataWatcher").getClazz(), boolean.class},
                 i, dataWatcher.getNmsObject(), b);
     }
 
