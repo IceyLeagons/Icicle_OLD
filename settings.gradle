@@ -1,2 +1,10 @@
 rootProject.name = 'icicle'
 
+include 'icicle-utils' //utility classes that does not require icicle-core (autowiring, annotations) aka. can be used standalone
+
+include 'icicle-core' //main project, containing the autowiring, annotations handlers etc. requires icicle-utils
+include 'icicle-storage' //module for database related tasks, requires icicle-core
+include 'icicle-ui' //module for UI, requires icicle-core
+
+include 'icicle-wrapping' //contains all wrapped classes and NMS related things
+
