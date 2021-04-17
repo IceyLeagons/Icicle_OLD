@@ -8,7 +8,7 @@ import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.CreateCollectionOptions;
-import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.utils.Reflections;
 import net.iceyleagons.icicle.storage.AbstractStorageHandler;
 import net.iceyleagons.icicle.storage.container.ContainerField;
 import net.iceyleagons.icicle.storage.container.StorageContainer;

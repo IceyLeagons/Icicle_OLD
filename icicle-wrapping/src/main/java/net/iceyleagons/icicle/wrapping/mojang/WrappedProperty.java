@@ -26,7 +26,7 @@ package net.iceyleagons.icicle.wrapping.mojang;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
-import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.utils.Reflections;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Constructor;

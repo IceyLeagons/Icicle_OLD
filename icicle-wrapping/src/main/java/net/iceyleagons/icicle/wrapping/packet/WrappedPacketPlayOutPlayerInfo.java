@@ -27,7 +27,7 @@ package net.iceyleagons.icicle.wrapping.packet;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.utils.Reflections;
 import net.iceyleagons.icicle.wrapping.WrappedEnumGamemode;
 import net.iceyleagons.icicle.wrapping.mojang.WrappedGameProfile;
 import net.iceyleagons.icicle.wrapping.player.WrappedEntityPlayer;

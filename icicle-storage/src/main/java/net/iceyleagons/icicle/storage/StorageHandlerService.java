@@ -2,7 +2,7 @@ package net.iceyleagons.icicle.storage;
 
 import net.iceyleagons.icicle.annotations.Autowired;
 import net.iceyleagons.icicle.annotations.Service;
-import net.iceyleagons.icicle.annotations.handlers.impl.storage.EntityAnnotationHandler;
+import net.iceyleagons.icicle.storage.annotations.EntityAnnotationHandler;
 import net.iceyleagons.icicle.storage.annotations.ContainerName;
 import net.iceyleagons.icicle.storage.annotations.Entity;
 import net.iceyleagons.icicle.storage.annotations.Id;

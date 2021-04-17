@@ -25,8 +25,8 @@
 package net.iceyleagons.icicle.npc;
 
 import lombok.Getter;
-import net.iceyleagons.icicleold.utils.web.Mojang;
-import net.iceyleagons.icicleold.utils.web.WebUtils;
+import net.iceyleagons.icicle.utils.web.Mojang;
+import net.iceyleagons.icicle.utils.web.WebUtils;
 import net.iceyleagons.icicleold.wrapped.WrappedDedicatedServer;
 import net.iceyleagons.icicle.wrapping.bukkit.WrappedCraftWorld;
 import net.iceyleagons.icicle.wrapping.mojang.WrappedGameProfile;

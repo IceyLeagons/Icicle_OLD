@@ -26,7 +26,7 @@ package net.iceyleagons.icicle.wrapping;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.utils.Reflections;
 import net.iceyleagons.icicle.wrapping.registry.WrappedIRegistryCustom;
 import net.iceyleagons.icicle.wrapping.registry.WrappedResourceKey;
 import org.bukkit.Server;

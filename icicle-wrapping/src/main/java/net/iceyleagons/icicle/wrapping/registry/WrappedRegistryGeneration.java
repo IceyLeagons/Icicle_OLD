@@ -24,7 +24,7 @@
 
 package net.iceyleagons.icicle.wrapping.registry;
 
-import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.utils.Reflections;
 import net.iceyleagons.icicle.wrapping.bukkit.WrappedCraftNamespacedKey;
 import org.bukkit.NamespacedKey;
 

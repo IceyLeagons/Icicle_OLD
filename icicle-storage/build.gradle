@@ -6,12 +6,30 @@ group 'net.iceyleagons'
 version '2.0.0-SNAPSHOT'
 
 repositories {
+
+    maven {
+        name = "Spigot Repository"
+        url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+    }
+
     mavenCentral()
+}
+
+jar {
+    from {
+        configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+configurations {
+    extraLibs
 }
 
 dependencies {
     compileOnly project(":icicle-utils")
     compileOnly project(":icicle-core")
+
+    extraLibs group: 'org.reflections', name: 'reflections', version: '0.9.12'
 
     compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.22'
     compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.32.3.2'
@@ -35,6 +53,8 @@ dependencies {
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+
+    configurations.implementation.extendsFrom(configurations.extraLibs)
 }
 
 test {

@@ -1,7 +1,7 @@
 package net.iceyleagons.icicle.storage.handlers;
 
 import com.google.common.base.Preconditions;
-import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.utils.Reflections;
 import net.iceyleagons.icicle.storage.AbstractStorageHandler;
 import net.iceyleagons.icicle.storage.container.ContainerField;
 import net.iceyleagons.icicle.storage.container.StorageContainer;

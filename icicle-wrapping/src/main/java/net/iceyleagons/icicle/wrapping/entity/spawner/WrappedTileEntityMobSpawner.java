@@ -24,7 +24,7 @@
 
 package net.iceyleagons.icicle.wrapping.entity.spawner;
 
-import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.utils.Reflections;
 import net.iceyleagons.icicle.wrapping.entity.WrappedTileEntity;
 
 import java.lang.reflect.Method;

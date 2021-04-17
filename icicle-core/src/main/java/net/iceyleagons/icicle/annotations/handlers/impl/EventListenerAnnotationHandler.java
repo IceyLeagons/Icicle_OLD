@@ -30,7 +30,7 @@ public class EventListenerAnnotationHandler extends AbstractAnnotationHandler {
         listeners.forEach(listener -> {
             try {
                 if (!listener.isAnnotation() && !listener.isInterface()) {
-                    Constructor<?> constructor = net.iceyleagons.icicle.reflect.Reflections.getConstructor(listener, true);
+                    Constructor<?> constructor = net.iceyleagons.icicle.utils.Reflections.getConstructor(listener, true);
                     if (constructor != null) {
                         Object serviceObject = constructor.newInstance();
                         if (serviceObject instanceof Listener) {

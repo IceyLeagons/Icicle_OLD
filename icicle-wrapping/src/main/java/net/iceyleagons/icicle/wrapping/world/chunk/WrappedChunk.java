@@ -25,7 +25,7 @@
 package net.iceyleagons.icicle.wrapping.world.chunk;
 
 import lombok.Getter;
-import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.utils.Reflections;
 import net.iceyleagons.icicle.wrapping.biome.WrappedBiomeStorage;
 import net.iceyleagons.icicle.wrapping.entity.WrappedTileEntity;
 import net.iceyleagons.icicle.wrapping.utils.WrappedClass;

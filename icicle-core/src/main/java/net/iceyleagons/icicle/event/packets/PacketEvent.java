@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import net.iceyleagons.icicle.event.packets.enums.PacketDirection;
 import net.iceyleagons.icicle.event.packets.enums.PacketType;
-import net.iceyleagons.icicle.wrapping.packet.Packet;
 import org.bukkit.entity.Player;
 
 /**
@@ -34,7 +33,7 @@ public class PacketEvent {
      * Our wrapped version of that packet.
      */
     @NonNull
-    private final Packet wrappedPacket;
+    private final IPacket wrappedPacket;
     /**
      * The direction this packet is going.
      */

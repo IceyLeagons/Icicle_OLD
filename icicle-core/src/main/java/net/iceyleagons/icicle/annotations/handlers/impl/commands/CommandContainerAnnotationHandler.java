@@ -27,7 +27,7 @@ public class CommandContainerAnnotationHandler extends AbstractAnnotationHandler
         containers.forEach(container -> {
             try {
                 if (!container.isAnnotation() && !container.isInterface()) {
-                    Constructor<?> constructor = net.iceyleagons.icicle.reflect.Reflections.getConstructor(container, true);
+                    Constructor<?> constructor = net.iceyleagons.icicle.utils.Reflections.getConstructor(container, true);
                     if (constructor != null) {
                         Object commandContainerObject = constructor.newInstance();
                         commandContainers.put(container, commandContainerObject);

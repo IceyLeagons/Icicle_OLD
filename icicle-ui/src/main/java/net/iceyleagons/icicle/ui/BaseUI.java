@@ -1,7 +1,7 @@
 package net.iceyleagons.icicle.ui;
 
 import lombok.Getter;
-import net.iceyleagons.icicleold.utils.item.InventoryUtils;
+import net.iceyleagons.icicle.utils.item.InventoryUtils;
 import net.iceyleagons.icicle.ui.interaction.UIInteractionHandler;
 import net.iceyleagons.icicle.ui.openers.UIOpeningHandler;
 import net.iceyleagons.icicle.ui.openers.impl.PerPlayerHandler;

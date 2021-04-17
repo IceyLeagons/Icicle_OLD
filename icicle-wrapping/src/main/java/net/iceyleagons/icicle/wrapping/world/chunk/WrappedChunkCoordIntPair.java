@@ -26,7 +26,7 @@ package net.iceyleagons.icicle.wrapping.world.chunk;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
-import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.utils.Reflections;
 import net.iceyleagons.icicle.wrapping.world.WrappedBlockPosition;
 
 import java.lang.reflect.Constructor;

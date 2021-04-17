@@ -1,6 +1,6 @@
 package net.iceyleagons.icicle.ui.interaction;
 
-import net.iceyleagons.icicleold.utils.item.InventoryUtils;
+import net.iceyleagons.icicle.utils.item.InventoryUtils;
 import net.iceyleagons.icicle.ui.BaseUI;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

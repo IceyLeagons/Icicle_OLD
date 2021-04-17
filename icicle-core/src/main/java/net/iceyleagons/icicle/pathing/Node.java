@@ -4,7 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import net.iceyleagons.icicleold.utils.heap.HeapItem;
+import net.iceyleagons.icicle.utils.heap.HeapItem;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
 import org.jetbrains.annotations.NotNull;

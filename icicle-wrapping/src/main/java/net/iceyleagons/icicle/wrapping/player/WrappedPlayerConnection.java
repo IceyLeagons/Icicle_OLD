@@ -26,7 +26,7 @@ package net.iceyleagons.icicle.wrapping.player;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.utils.Reflections;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

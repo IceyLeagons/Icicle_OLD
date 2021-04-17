@@ -25,7 +25,7 @@
 package net.iceyleagons.icicle.wrapping.entity.spawner;
 
 import lombok.Getter;
-import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.utils.Reflections;
 import net.iceyleagons.icicle.wrapping.bukkit.WrappedCraftNamespacedKey;
 import net.iceyleagons.icicle.wrapping.world.WrappedBlockPosition;
 import net.iceyleagons.icicle.wrapping.world.WrappedWorld;

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.iceyleagons.icicle.annotations.autowiring.AbstractAutowiringHandler;
 import net.iceyleagons.icicle.annotations.handlers.AbstractAnnotationHandler;
+import net.iceyleagons.icicle.utils.Reflections;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.Field;

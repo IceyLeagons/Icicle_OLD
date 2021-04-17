@@ -63,7 +63,7 @@ public class ClassScanningHandler {
         classes.forEach(clazz -> {
             try {
                 if (clazz.getSuperclass().equals(AbstractAnnotationHandler.class) && !clazz.isAnnotation() && !clazz.isInterface()) {
-                    Constructor<?> constructor = net.iceyleagons.icicle.reflect.Reflections.getConstructor(clazz, true);
+                    Constructor<?> constructor = net.iceyleagons.icicle.utils.Reflections.getConstructor(clazz, true);
                     if (constructor != null) {
                         AbstractAnnotationHandler abstractAnnotationHandler = (AbstractAnnotationHandler) constructor.newInstance();
 
@@ -94,7 +94,7 @@ public class ClassScanningHandler {
         classes.forEach(clazz -> {
             try {
                 if (clazz.getSuperclass().equals(AbstractAutowiringHandler.class) && !clazz.isAnnotation() && !clazz.isInterface()) {
-                    Constructor<?> constructor = net.iceyleagons.icicle.reflect.Reflections.getConstructor(clazz, true);
+                    Constructor<?> constructor = net.iceyleagons.icicle.utils.Reflections.getConstructor(clazz, true);
                     if (constructor != null) {
                         AbstractAutowiringHandler abstractAutowiringHandler = (AbstractAutowiringHandler) constructor.newInstance();
 

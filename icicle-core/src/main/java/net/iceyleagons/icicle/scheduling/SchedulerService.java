@@ -1,6 +1,6 @@
 package net.iceyleagons.icicle.scheduling;
 
-import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.utils.Reflections;
 import net.iceyleagons.icicle.plugin.RegisteredPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;

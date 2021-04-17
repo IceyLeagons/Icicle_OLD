@@ -21,7 +21,7 @@ public class CommandParameterAnnotationHandler extends AbstractAnnotationHandler
             try {
                 if (!handler.isAnnotation() && !handler.isInterface()) {
                     if (Arrays.stream(handler.getInterfaces()).collect(Collectors.toList()).contains(CommandParameterHandlerTemplate.class)) {
-                        Constructor<?> constructor = net.iceyleagons.icicle.reflect.Reflections.getConstructor(handler, true);
+                        Constructor<?> constructor = net.iceyleagons.icicle.utils.Reflections.getConstructor(handler, true);
                         if (constructor != null) {
                             CommandParameterHandler commandParameterHandler = handler.getAnnotation(CommandParameterHandler.class);
 

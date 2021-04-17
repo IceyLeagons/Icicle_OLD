@@ -26,7 +26,7 @@ package net.iceyleagons.icicle.wrapping.world;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
-import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.utils.Reflections;
 import net.iceyleagons.icicle.wrapping.helpers.WrappingHelpers;
 import org.bukkit.Location;
 

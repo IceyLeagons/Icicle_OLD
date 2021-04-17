@@ -26,7 +26,7 @@ public class ServiceAnnotationHandler extends AbstractAnnotationHandler {
         services.forEach(service -> {
             try {
                 if (!service.isAnnotation() && !service.isInterface()) {
-                    Constructor<?> constructor = net.iceyleagons.icicle.reflect.Reflections.getConstructor(service, true);
+                    Constructor<?> constructor = net.iceyleagons.icicle.utils.Reflections.getConstructor(service, true);
                     if (constructor != null) {
                         Object serviceObject = constructor.newInstance();
                         this.services.put(service, serviceObject);

@@ -24,7 +24,7 @@
 
 package net.iceyleagons.icicle.wrapping.packet;
 
-import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.utils.Reflections;
 import net.iceyleagons.icicle.wrapping.player.WrappedEntityPlayer;
 
 /**

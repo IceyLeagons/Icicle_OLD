@@ -2,7 +2,7 @@ package net.iceyleagons.icicle;
 
 import net.iceyleagons.icicle.annotations.Autowired;
 import net.iceyleagons.icicle.annotations.EventListener;
-import net.iceyleagons.icicleold.utils.misc.Benchmark;
+import net.iceyleagons.icicle.utils.misc.Benchmark;
 import net.iceyleagons.icicle.pathing.AStar;
 import net.iceyleagons.icicle.pathing.Pathfinder;
 import org.bukkit.Bukkit;

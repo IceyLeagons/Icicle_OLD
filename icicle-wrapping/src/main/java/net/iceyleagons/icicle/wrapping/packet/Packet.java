@@ -26,7 +26,8 @@ package net.iceyleagons.icicle.wrapping.packet;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
-import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.event.packets.IPacket;
+import net.iceyleagons.icicle.utils.Reflections;
 import net.iceyleagons.icicle.wrapping.player.WrappedCraftPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -44,7 +45,7 @@ import java.util.Map;
  * @since 1.4.0-SNAPSHOT
  */
 @Getter
-public abstract class Packet {
+public abstract class Packet implements IPacket {
 
     private static boolean setup = false;
     private static Class<?> nms_Class;
@@ -110,10 +111,12 @@ public abstract class Packet {
         }
     }
 
+    @Override
     public <T> T getFromField(String name, Class<T> wantedType) {
         return Reflections.get(getField(name), wantedType, packet);
     }
 
+    @Override
     public void setField(String name, Object value) {
         Reflections.set(getField(name), packet, value);
     }
@@ -128,10 +131,12 @@ public abstract class Packet {
         return fields.get(name);
     }
 
+    @Override
     public void sendAll() {
         Bukkit.getServer().getOnlinePlayers().forEach(this::send);
     }
 
+    @Override
     public void send(Player player) {
         send(WrappedCraftPlayer.from(player));
     }

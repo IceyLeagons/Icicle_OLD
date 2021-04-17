@@ -1,8 +1,8 @@
 package net.iceyleagons.icicle.pathing;
 
 import com.google.common.base.Preconditions;
-import net.iceyleagons.icicleold.utils.heap.BasicHeap;
-import net.iceyleagons.icicleold.utils.heap.Heap;
+import net.iceyleagons.icicle.utils.heap.BasicHeap;
+import net.iceyleagons.icicle.utils.heap.Heap;
 import org.bukkit.Location;
 
 import java.util.*;

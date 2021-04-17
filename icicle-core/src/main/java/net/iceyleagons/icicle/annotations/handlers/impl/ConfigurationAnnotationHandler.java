@@ -29,7 +29,7 @@ public class ConfigurationAnnotationHandler extends AbstractAnnotationHandler {
             try {
                 if (!config.isAnnotation() && !config.isInterface()) {
                     if (config.getSuperclass().isAssignableFrom(AbstractConfiguration.class)) {
-                        Constructor<?> constructor = net.iceyleagons.icicle.reflect.Reflections.getConstructor(config, true);
+                        Constructor<?> constructor = net.iceyleagons.icicle.utils.Reflections.getConstructor(config, true);
                         if (constructor != null) {
                             Configuration configuration = config.getAnnotation(Configuration.class);
 

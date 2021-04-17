@@ -6,6 +6,10 @@ group 'net.iceyleagons'
 version '2.0.0-SNAPSHOT'
 
 repositories {
+    maven {
+        name = "Spigot Repository"
+        url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+    }
     mavenCentral()
 }
 

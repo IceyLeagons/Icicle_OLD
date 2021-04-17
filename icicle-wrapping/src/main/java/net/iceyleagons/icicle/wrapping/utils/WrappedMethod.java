@@ -1,7 +1,7 @@
 package net.iceyleagons.icicle.wrapping.utils;
 
 import lombok.NonNull;
-import net.iceyleagons.icicle.reflect.Reflections;
+import net.iceyleagons.icicle.utils.Reflections;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Method;
