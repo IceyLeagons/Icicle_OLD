@@ -1,0 +1,26 @@
+version: 2
+updates:
+- package-ecosystem: gradle
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: io.netty:netty-transport
+    versions:
+    - 4.1.60.Final
+    - 4.1.62.Final
+  - dependency-name: net.java.dev.jna:jna
+    versions:
+    - 5.7.0
+  - dependency-name: org.eclipse.jetty:jetty-server
+    versions:
+    - 11.0.1
+  - dependency-name: org.eclipse.jetty:jetty-servlet
+    versions:
+    - 11.0.1
+  - dependency-name: com.vanniktech:gradle-maven-publish-plugin
+    versions:
+    - 0.14.0
+    - 0.14.1
+    - 0.14.2
