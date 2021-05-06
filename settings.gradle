@@ -1,2 +1,4 @@
 rootProject.name = 'icicle'
+include 'common'
+include 'v1.16.5_R01'
 
