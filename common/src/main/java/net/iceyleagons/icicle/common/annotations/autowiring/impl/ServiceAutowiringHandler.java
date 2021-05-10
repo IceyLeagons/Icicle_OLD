@@ -16,8 +16,8 @@ public class ServiceAutowiringHandler extends AbstractAutowiringHandler {
     public ServiceAnnotationHandler serviceAnnotationHandler;
 
     @Override
-    public boolean isSupported(Field field) {
-        return field.getType().isAnnotationPresent(Service.class);
+    public boolean isSupported(Class<?> clazz) {
+        return clazz.isAnnotationPresent(Service.class);
     }
 
     @Override
@@ -25,8 +25,16 @@ public class ServiceAutowiringHandler extends AbstractAutowiringHandler {
         Class<?> type = field.getType();
         if (serviceAnnotationHandler.getServices().containsKey(type)) {
             Object service = serviceAnnotationHandler.getServices().get(type);
-            System.out.println(service);
             Reflections.set(field, object, service);
         }
+    }
+
+    @Override
+    public Object get(Class<?> type) {
+        if (serviceAnnotationHandler.getServices().containsKey(type)) {
+            return serviceAnnotationHandler.getServices().get(type);
+        }
+
+        return null;
     }
 }

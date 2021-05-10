@@ -10,10 +10,9 @@ import java.lang.reflect.Field;
 @AutowiringHandler(AnnotationHandler.class)
 public class AnnotationHandlerAutowiringHandler extends AbstractAutowiringHandler {
 
-
     @Override
-    public boolean isSupported(Field field) {
-        return field.getType().isAnnotationPresent(AnnotationHandler.class);
+    public boolean isSupported(Class<?> clazz) {
+        return clazz.isAnnotationPresent(AnnotationHandler.class);
     }
 
     @Override
@@ -21,5 +20,13 @@ public class AnnotationHandlerAutowiringHandler extends AbstractAutowiringHandle
         if (super.getClassScanningHandler().getAnnotationHandlers().containsKey(field.getType())) {
             Reflections.set(field, object, super.getClassScanningHandler().getAnnotationHandlers().get(field.getType()));
         }
+    }
+
+    @Override
+    public Object get(Class<?> type) {
+        if (super.getClassScanningHandler().getAnnotationHandlers().containsKey(type)) {
+           return super.getClassScanningHandler().getAnnotationHandlers().get(type);
+        }
+        return null;
     }
 }

@@ -36,7 +36,17 @@ public abstract class AbstractAutowiringHandler {
      * @param field the {@link Field} to check
      * @return true if supported, false otherwise
      */
-    public abstract boolean isSupported(Field field);
+    public boolean isSupported(Field field) {
+        return isSupported(field.getType());
+    }
+
+    /**
+     * Used to check whether this AutowiringHandler supports the type, to avoid unnecessary injection.
+     *
+     * @param clazz to check
+     * @return true if supported, false otherwise
+     */
+    public abstract boolean isSupported(Class<?> clazz);
 
     /**
      * This is called after postInitialization, you'll need to write your own scanning logic, and you have to
@@ -46,5 +56,7 @@ public abstract class AbstractAutowiringHandler {
      * @param object the object to inject into
      */
     public abstract void inject(Field field, Object object);
+
+    public abstract Object get(Class<?> type);
 
 }

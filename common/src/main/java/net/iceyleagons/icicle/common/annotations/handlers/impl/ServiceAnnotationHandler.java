@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.iceyleagons.icicle.common.annotations.Service;
 import net.iceyleagons.icicle.common.annotations.handlers.AbstractAnnotationHandler;
 import net.iceyleagons.icicle.common.annotations.handlers.AnnotationHandler;
+import net.iceyleagons.icicle.common.annotations.handlers.HandlerClass;
 import org.reflections.Reflections;
 
 import java.lang.reflect.Constructor;
@@ -21,17 +22,22 @@ public class ServiceAnnotationHandler extends AbstractAnnotationHandler {
     }
 
     @Override
-    public void scanAndHandleClasses(Reflections reflections) {
-        Set<Class<?>> services = reflections.getTypesAnnotatedWith(Service.class);
-        services.forEach(service -> {
+    public void scanAndHandleClasses(List<HandlerClass> classes) {
+        classes.forEach(service -> {
             try {
-                if (!service.isAnnotation() && !service.isInterface()) {
-                    Constructor<?> constructor = net.iceyleagons.icicle.common.reflect.Reflections.getConstructor(service, true);
-                    if (constructor != null) {
-                        Object serviceObject = constructor.newInstance();
-                        this.services.put(service, serviceObject);
+                if (service.isNormalClass()) {
+                    Optional<Constructor<?>> constructor = service.getEmptyConstructor();
+                    if (constructor.isPresent()) {
+                        Object serviceObject = constructor.get().newInstance();
+
+                        this.services.put(service.getClazz(), serviceObject);
                     } else {
-                        getLogger().warning(String.format("Class named %s does not have an empty constructor!", service.getName()));
+                        Optional<Constructor<?>> autowiredConstructor = service.getAutowiredConstructor();
+                        if (autowiredConstructor.isPresent()) {
+                            this.services.put(service.getClazz(), createObjectAndAutowireFromConstructor(autowiredConstructor.get()));
+                        } else {
+                            getLogger().warning(String.format("Class named %s does not have an empty constructor!", service.getName()));
+                        }
                     }
                 } else {
                     getLogger().warning(String.format("Class named %s is not supported for annotation: Service!", service.getName()));

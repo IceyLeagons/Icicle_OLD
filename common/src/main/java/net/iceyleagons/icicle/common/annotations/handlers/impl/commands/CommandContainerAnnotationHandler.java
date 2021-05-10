@@ -1,6 +1,7 @@
 package net.iceyleagons.icicle.common.annotations.handlers.impl.commands;
 
 import lombok.Getter;
+import net.iceyleagons.icicle.common.annotations.handlers.HandlerClass;
 import net.iceyleagons.icicle.common.commands.annotations.CommandContainer;
 import net.iceyleagons.icicle.common.annotations.handlers.AbstractAnnotationHandler;
 import net.iceyleagons.icicle.common.annotations.handlers.AnnotationHandler;
@@ -22,17 +23,21 @@ public class CommandContainerAnnotationHandler extends AbstractAnnotationHandler
 
 
     @Override
-    public void scanAndHandleClasses(Reflections reflections) {
-        Set<Class<?>> containers = reflections.getTypesAnnotatedWith(CommandContainer.class);
-        containers.forEach(container -> {
+    public void scanAndHandleClasses(List<HandlerClass> classes)  {
+        classes.forEach(container -> {
             try {
-                if (!container.isAnnotation() && !container.isInterface()) {
-                    Constructor<?> constructor = net.iceyleagons.icicle.common.reflect.Reflections.getConstructor(container, true);
-                    if (constructor != null) {
-                        Object commandContainerObject = constructor.newInstance();
-                        commandContainers.put(container, commandContainerObject);
+                if (container.isNormalClass()) {
+                    Optional<Constructor<?>> constructor = container.getEmptyConstructor();
+                    if (constructor.isPresent()) {
+                        Object commandContainerObject = constructor.get().newInstance();
+                        commandContainers.put(container.getClazz(), commandContainerObject);
                     } else {
-                        getLogger().warning(String.format("Class named %s does not have an empty constructor!", container.getName()));
+                        Optional<Constructor<?>> autowiredConstructor = container.getAutowiredConstructor();
+                        if (autowiredConstructor.isPresent()) {
+                            commandContainers.put(container.getClazz(), super.createObjectAndAutowireFromConstructor(autowiredConstructor.get()));
+                        } else {
+                            getLogger().warning(String.format("Class named %s does not have an empty constructor!", container.getName()));
+                        }
                     }
                 } else {
                     getLogger().warning(String.format("Class named %s is not supported for annotation: CommandContainer!", container.getName()));

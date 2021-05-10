@@ -16,8 +16,8 @@ public class EventListenerAutowiringHandler extends AbstractAutowiringHandler {
     public EventListenerAnnotationHandler annotationHandler;
 
     @Override
-    public boolean isSupported(Field field) {
-        return field.getType().isAnnotationPresent(EventListener.class);
+    public boolean isSupported(Class<?> clazz) {
+        return clazz.isAnnotationPresent(EventListener.class);
     }
 
     @Override
@@ -27,5 +27,13 @@ public class EventListenerAutowiringHandler extends AbstractAutowiringHandler {
             Object service = annotationHandler.getEventListeners().get(type);
             Reflections.set(field, object, service);
         }
+    }
+
+    @Override
+    public Object get(Class<?> type) {
+        if (annotationHandler.getEventListeners().containsKey(type)) {
+            return annotationHandler.getEventListeners().get(type);
+        }
+        return null;
     }
 }

@@ -5,9 +5,11 @@ import net.iceyleagons.icicle.common.reflect.ClassScanningHandler;
 import net.iceyleagons.icicle.common.plugin.RegisteredPlugin;
 import org.reflections.Reflections;
 
+import java.lang.reflect.Constructor;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  * Responsible for handling (scanning, registering and managing) a specific annotation.
@@ -27,7 +29,7 @@ public abstract class AbstractAnnotationHandler {
     private AnnotationHandler annotation;
 
     /**
-     * Called right after initialization, but before {@link #scanAndHandleClasses(Reflections)},
+     * Called right after initialization, but before {@link #scanAndHandleClasses(List)},
      * use this as your constructor.
      */
     public void postInitialization() {
@@ -46,8 +48,16 @@ public abstract class AbstractAnnotationHandler {
      * This is called after postInitialization, you'll need to write your own scanning logic, and you have to
      * manage those registered objects. We've decided on this structure for better modularity.
      *
-     * @param reflections the reflections you can use to scan for the classes
+     * @param classes the classes flagged with the annotation present in {@link AnnotationHandler#value()}
      */
-    public abstract void scanAndHandleClasses(Reflections reflections);
+    public abstract void scanAndHandleClasses(List<HandlerClass> classes);
 
+    public void handleClasses(Reflections reflections) {
+        scanAndHandleClasses(reflections.getTypesAnnotatedWith(annotation).stream()
+                .map(HandlerClass::new).collect(Collectors.toList()));
+    }
+
+    protected Object createObjectAndAutowireFromConstructor(Constructor<?> constructor) {
+        return classScanningHandler.getAutowiringHandler().createObjectAndAutowireFromConstructor(constructor);
+    }
 }

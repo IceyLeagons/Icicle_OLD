@@ -18,7 +18,12 @@ public class ConfigurationAutowiringHandler extends AbstractAutowiringHandler {
 
     @Override
     public boolean isSupported(Field field) {
-        return field.getType().isAnnotationPresent(Configuration.class);
+        return isSupported(field.getType());
+    }
+
+    @Override
+    public boolean isSupported(Class<?> clazz) {
+        return clazz.isAnnotationPresent(Configuration.class);
     }
 
     @Override
@@ -29,5 +34,14 @@ public class ConfigurationAutowiringHandler extends AbstractAutowiringHandler {
             AbstractConfiguration service = configurationAnnotationHandler.getConfigs().get(type);
             Reflections.set(field, object, service);
         }
+    }
+
+    @Override
+    public Object get(Class<?> type) {
+        if (configurationAnnotationHandler.getConfigs().containsKey(type)) {
+            return configurationAnnotationHandler.getConfigs().get(type);
+        }
+
+        return null;
     }
 }

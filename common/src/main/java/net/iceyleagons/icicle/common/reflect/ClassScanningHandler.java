@@ -85,7 +85,7 @@ public class ClassScanningHandler {
 
         annotationHandlers.values().forEach(annotationHandler -> {
             annotationHandler.postInitialization();
-            annotationHandler.scanAndHandleClasses(this.rootPackage);
+            annotationHandler.handleClasses(this.rootPackage);
         });
     }
 

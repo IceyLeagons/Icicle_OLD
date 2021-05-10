@@ -16,8 +16,8 @@ public class CommandContainerAutowiringHandler extends AbstractAutowiringHandler
     public CommandContainerAnnotationHandler annotationHandler;
 
     @Override
-    public boolean isSupported(Field field) {
-        return field.getType().isAnnotationPresent(CommandContainer.class);
+    public boolean isSupported(Class<?> clazz) {
+        return clazz.isAnnotationPresent(CommandContainer.class);
     }
 
     @Override
@@ -27,6 +27,15 @@ public class CommandContainerAutowiringHandler extends AbstractAutowiringHandler
             Object service = annotationHandler.getCommandContainers().get(type);
             Reflections.set(field, object, service);
         }
+    }
+
+    @Override
+    public Object get(Class<?> type) {
+        if (annotationHandler.getCommandContainers().containsKey(type)) {
+            return annotationHandler.getCommandContainers().get(type);
+        }
+
+        return null;
     }
 }
 

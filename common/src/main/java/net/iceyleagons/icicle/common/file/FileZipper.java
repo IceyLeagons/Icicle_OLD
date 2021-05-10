@@ -72,7 +72,7 @@ public class FileZipper {
                 try (FileOutputStream fileOutputStream = new FileOutputStream(output)) {
                     byte[] buffer = new byte[1024];
                     int len;
-                    while ((len = fileInputStream.read(buffer)) != -1) {
+                    while ((len = gzipInputStream.read(buffer)) != -1) {
                         fileOutputStream.write(buffer, 0, len);
                     }
                 }

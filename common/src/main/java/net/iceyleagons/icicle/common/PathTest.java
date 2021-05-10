@@ -20,8 +20,13 @@ import java.util.List;
 public class PathTest implements Listener {
 
     public Pathfinder pathfinder = new AStar();
+
+    private final Icicle icicle;
+
     @Autowired
-    public Icicle icicle;
+    public PathTest(Icicle icicle) {
+        this.icicle = icicle;
+    }
 
     private Location loc1;
     private Location loc2;

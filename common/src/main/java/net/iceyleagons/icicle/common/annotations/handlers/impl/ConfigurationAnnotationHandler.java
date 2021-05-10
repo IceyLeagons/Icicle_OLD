@@ -1,6 +1,7 @@
 package net.iceyleagons.icicle.common.annotations.handlers.impl;
 
 import lombok.Getter;
+import net.iceyleagons.icicle.common.annotations.handlers.HandlerClass;
 import net.iceyleagons.icicle.common.config.annotations.ConfigHeader;
 import net.iceyleagons.icicle.common.config.annotations.Configuration;
 import net.iceyleagons.icicle.common.annotations.handlers.AbstractAnnotationHandler;
@@ -23,32 +24,27 @@ public class ConfigurationAnnotationHandler extends AbstractAnnotationHandler {
     }
 
     @Override
-    public void scanAndHandleClasses(Reflections reflections) {
-        Set<Class<?>> configurations = reflections.getTypesAnnotatedWith(Configuration.class);
-        configurations.forEach(config -> {
+    public void scanAndHandleClasses(List<HandlerClass> classes) {
+        classes.forEach(handlerClass -> {
+            Class<?> config = handlerClass.getClazz();
             try {
-                if (!config.isAnnotation() && !config.isInterface()) {
-                    if (config.getSuperclass().isAssignableFrom(AbstractConfiguration.class)) {
-                        Constructor<?> constructor = net.iceyleagons.icicle.common.reflect.Reflections.getConstructor(config, true);
-                        if (constructor != null) {
+                if (handlerClass.isNormalClass()) {
+                    if (handlerClass.isSuperClassAssignable(AbstractConfiguration.class)) {
+                        Optional<Constructor<?>> constructorOpt = handlerClass.getEmptyConstructor();
+                        if (constructorOpt.isPresent()) {
+
                             Configuration configuration = config.getAnnotation(Configuration.class);
-
-                            Object object = constructor.newInstance();
-                            AbstractConfiguration configObject = (AbstractConfiguration) object;
-
-                            if (config.isAnnotationPresent(ConfigHeader.class)) {
-                                configObject.setHeader(config.getAnnotation(ConfigHeader.class).value());
-                            }
-
-                            configObject.setOrigin(object);
-                            configObject.setPathToFile(configuration.value());
-                            configObject.setRegisteredPlugin(super.getRegisteredPlugin());
-                            configObject.init();
-
-
-                            configs.put(config, configObject);
+                            Object object = constructorOpt.get().newInstance();
+                            handleConfig(config, configuration, object);
                         } else {
-                            getLogger().warning(String.format("Class named %s does not have an empty constructor!", config.getName()));
+                            Optional<Constructor<?>> autowiredConstructor = handlerClass.getAutowiredConstructor();
+                            if (autowiredConstructor.isPresent()) {
+                                Configuration configuration = config.getAnnotation(Configuration.class);
+                                Object object = super.createObjectAndAutowireFromConstructor(autowiredConstructor.get());
+                                handleConfig(config, configuration, object);
+                            } else {
+                                getLogger().warning(String.format("Class named %s does not have an empty constructor!", config.getName()));
+                            }
                         }
                     } else {
                         getLogger().warning(String.format("Class named %s is annotated with @Configuration but it does not extend AbstractConfiguration!", config.getName()));
@@ -64,6 +60,22 @@ public class ConfigurationAnnotationHandler extends AbstractAnnotationHandler {
 
         configs.values().forEach(container ->
                 super.getRegisteredPlugin().getPluginCommandManager().registerCommandContainer(container));
+    }
+
+    private void handleConfig(Class<?> config, Configuration configuration, Object object) {
+        AbstractConfiguration configObject = (AbstractConfiguration) object;
+
+        if (config.isAnnotationPresent(ConfigHeader.class)) {
+            configObject.setHeader(config.getAnnotation(ConfigHeader.class).value());
+        }
+
+        configObject.setOrigin(object);
+        configObject.setPathToFile(configuration.value());
+        configObject.setRegisteredPlugin(super.getRegisteredPlugin());
+        configObject.init();
+
+
+        configs.put(config, configObject);
     }
 }
 

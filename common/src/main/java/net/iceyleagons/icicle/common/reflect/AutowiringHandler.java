@@ -1,12 +1,16 @@
 package net.iceyleagons.icicle.common.reflect;
 
+import com.google.common.base.Preconditions;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import net.iceyleagons.icicle.common.annotations.Autowired;
 import net.iceyleagons.icicle.common.annotations.autowiring.AbstractAutowiringHandler;
 import net.iceyleagons.icicle.common.annotations.handlers.AbstractAnnotationHandler;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +42,30 @@ public class AutowiringHandler {
                         }
                     } //TODO warning
                 });
+    }
+
+    public Object createObjectAndAutowireFromConstructor(Constructor<?> constructor) {
+        Preconditions.checkArgument(constructor.isAnnotationPresent(Autowired.class), "Constructor is not annotated with @Autowired!");
+
+        Class<?>[] types = constructor.getParameterTypes();
+        Object[] params = new Object[types.length];
+
+        classScanningHandler.getAutowiringHandlers().values().forEach(autowiringHandler -> {
+            for (int i = 0; i < types.length; i++) {
+                Class<?> type = types[i];
+                if (autowiringHandler.isSupported(type)) {
+                    params[i] = autowiringHandler.get(type);
+                }
+            }
+        });
+
+        try {
+            return constructor.newInstance(params);
+        } catch (InstantiationException | InvocationTargetException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     /**
