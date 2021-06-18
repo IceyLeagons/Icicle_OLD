@@ -2,7 +2,7 @@ package net.iceyleagons.icicle.annotations.handlers.impl.custom;
 
 import net.iceyleagons.icicle.RegisteredIciclePlugin;
 import net.iceyleagons.icicle.annotations.Scheduled;
-import net.iceyleagons.icicle.annotations.handlers.CustomAnnotationHandler;
+import net.iceyleagons.icicle.annotations.handlers.annotations.CustomAnnotationHandler;
 import net.iceyleagons.icicle.annotations.handlers.CustomAnnotationHandlerListener;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
@@ -18,7 +18,7 @@ public class ScheduledAnnotationListener implements CustomAnnotationHandlerListe
         registeredIciclePlugin.getClassScanner().getMethodsAnnotatedWithInsideClazz(object.getClass(), Scheduled.class).forEach(method -> {
             Scheduled annotation = method.getAnnotation(Scheduled.class);
 
-            Bukkit.getScheduler().runTaskTimer(registeredIciclePlugin.getJavaPlugin(), task -> handleMethodInvoking(method, object, task), annotation.delay(), annotation.interval());
+            registeredIciclePlugin.getJavaPlugin().getServer().getScheduler().runTaskTimer(registeredIciclePlugin.getJavaPlugin(), task -> handleMethodInvoking(method, object, task), annotation.delay(), annotation.interval());
         });
     }
 

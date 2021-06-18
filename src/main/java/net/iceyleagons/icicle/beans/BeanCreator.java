@@ -15,8 +15,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @AllArgsConstructor
 public class BeanCreator {
@@ -28,32 +27,55 @@ public class BeanCreator {
         final RegisteredBeanDictionary registeredBeanDictionary = registeredIciclePlugin.getRegisteredBeanDictionary();
 
         final Map<Class<?>, AutoCreationHandlerListener> handlers = classScanner.getAutoCreationHandlers();
+        final TreeMap<Integer, Constructor<?>> constructors = new TreeMap<>(); //with this we're first creating the autocreation classes with the least parameter types, so less chance of requiring something that has not yet been registered
 
         classScanner.getAutoCreationClasses().forEach(c -> {
             Asserts.isSize(1, c.getDeclaredConstructors(), "Class must have only 1 public constructor!");
 
             final Constructor<?> constructor = c.getDeclaredConstructors()[0];
-            final Object object = scanAndCreateBeans(createObject(constructor, registeredBeanDictionary), registeredBeanDictionary);
-
-
-            if (object != null) {
-                for (Annotation annotation : object.getClass().getAnnotations()) {
-                    if (handlers.containsKey(annotation.annotationType())) {
-                        handlers.get(object.getClass()).onCreated(annotation.annotationType(), registeredIciclePlugin);
-                    }
-                }
-
-                callCustomAnnotationHandlers(object);
-                registeredBeanDictionary.registerBean(object);
-            }
+            constructors.put(constructor.getParameterCount(), constructor);
         });
+
+        handleAutoCreationConstructors(constructors, registeredBeanDictionary, handlers);
+    }
+
+    private void handleAutoCreationConstructors(final TreeMap<Integer, Constructor<?>> constructors, RegisteredBeanDictionary registeredBeanDictionary, final Map<Class<?>, AutoCreationHandlerListener> handlers) {
+        Map<Class<?>, Constructor<?>> constructorMap = new HashMap<>();
+        constructors.forEach((i, c) -> constructorMap.put(c.getDeclaringClass(), c));
+
+
+        for (Constructor<?> constructor : constructorMap.values()) {
+            if (registeredBeanDictionary.contains(constructor.getDeclaringClass())) continue;
+
+            for (Class<?> parameterType : constructor.getParameterTypes()) {
+                if (!registeredBeanDictionary.contains(parameterType)) {
+                    createFromConstructor(constructorMap.get(parameterType), registeredBeanDictionary, handlers);
+                }
+            }
+
+            createFromConstructor(constructor, registeredBeanDictionary, handlers);
+        }
+    }
+
+    private void createFromConstructor(Constructor<?> constructor, RegisteredBeanDictionary registeredBeanDictionary, final Map<Class<?>, AutoCreationHandlerListener> handlers) {
+        final Object object = scanAndCreateBeans(createObject(constructor, registeredBeanDictionary), registeredBeanDictionary);
+        if (object != null) {
+            for (Annotation annotation : object.getClass().getAnnotations()) {
+                if (handlers.containsKey(annotation.annotationType())) {
+                    handlers.get(object.getClass()).onCreated(annotation.annotationType(), registeredIciclePlugin);
+                }
+            }
+
+            callCustomAnnotationHandlers(object);
+            registeredBeanDictionary.registerBean(object);
+        }
     }
 
     private Object createObject(Constructor<?> constructor, RegisteredBeanDictionary registeredBeanDictionary) {
         Asserts.notNull(registeredBeanDictionary, "RegisteredBeanDictionary must not be null!");
 
         if (constructor.isAnnotationPresent(Autowired.class)) {
-            return AutowiringUtils.autowireAndCreateInstance(constructor, registeredBeanDictionary); //TODO constructor may want to autowire beans that have not been initialized yet, therefore make an ordering system here
+            return AutowiringUtils.autowireAndCreateInstance(constructor, registeredBeanDictionary);
         } else {
             Asserts.isTrue(constructor.getParameterTypes().length == 0, "Constructor is not annotated with @Autowired, so should not contain parameters!");
             try {
@@ -99,6 +121,10 @@ public class BeanCreator {
             }
         });
 
+        return createMethodOverrides(object, registeredBeanDictionary);
+    }
+
+    private Object createMethodOverrides(Object object, RegisteredBeanDictionary registeredBeanDictionary) {
         final Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(object.getClass());
         enhancer.setCallback((MethodInterceptor) (obj, method, args, proxy) -> {

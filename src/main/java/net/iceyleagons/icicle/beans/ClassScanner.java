@@ -2,9 +2,9 @@ package net.iceyleagons.icicle.beans;
 
 import lombok.RequiredArgsConstructor;
 import net.iceyleagons.icicle.annotations.AutoCreation;
-import net.iceyleagons.icicle.annotations.handlers.AutoCreationHandler;
+import net.iceyleagons.icicle.annotations.handlers.annotations.AutoCreationHandler;
 import net.iceyleagons.icicle.annotations.handlers.AutoCreationHandlerListener;
-import net.iceyleagons.icicle.annotations.handlers.CustomAnnotationHandler;
+import net.iceyleagons.icicle.annotations.handlers.annotations.CustomAnnotationHandler;
 import net.iceyleagons.icicle.annotations.handlers.CustomAnnotationHandlerListener;
 import net.iceyleagons.icicle.utils.Asserts;
 import org.reflections.Reflections;
@@ -48,7 +48,6 @@ public class ClassScanner {
     }
 
     public Map<Class<?>, CustomAnnotationHandlerListener> getCustomAnnotationHandlers() {
-
         if (customAnnotationHandlers == null) {
             this.customAnnotationHandlers = new HashMap<>();
 

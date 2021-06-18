@@ -7,6 +7,7 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
 
     maven {
         url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
@@ -30,6 +31,8 @@ dependencies {
     implementation group: 'org.reflections', name: 'reflections', version: '0.9.12'
     // https://mvnrepository.com/artifact/org.json/json
     implementation group: 'org.json', name: 'json', version: '20210307'
+
+    implementation 'com.github.seeseemelk:MockBukkit:v1.16-SNAPSHOT'
 
     implementation 'cglib:cglib:3.3.0'
 

@@ -1,12 +1,19 @@
 package net.iceyleagons.icicle;
 
+import lombok.Getter;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
 
 import java.io.File;
+import java.util.Optional;
 
 public class Icicle extends JavaPlugin {
+
+    private static Icicle instance = null;
+
+    @Getter
+    private IciclePluginManager iciclePluginManager;
 
     public Icicle() {
         super();
@@ -16,7 +23,6 @@ public class Icicle extends JavaPlugin {
         super(loader, description, dataFolder, file);
     }
 
-    public static boolean enabled = false;
 
     public static String getVersion() {
         return "2.0.0-SNAPSHOT";
@@ -33,8 +39,14 @@ public class Icicle extends JavaPlugin {
                 " (Licensed under the terms of MIT License)";
     }
 
+    public static Optional<Icicle> getInstance() {
+        return Optional.ofNullable(instance);
+    }
+
     @Override
     public void onEnable() {
-        enabled = true;
+        instance = this;
+
+        this.iciclePluginManager = new IciclePluginManager();
     }
 }

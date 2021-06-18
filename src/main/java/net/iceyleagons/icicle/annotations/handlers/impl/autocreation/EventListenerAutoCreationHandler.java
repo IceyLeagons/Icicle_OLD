@@ -2,7 +2,7 @@ package net.iceyleagons.icicle.annotations.handlers.impl.autocreation;
 
 import net.iceyleagons.icicle.RegisteredIciclePlugin;
 import net.iceyleagons.icicle.annotations.bukkit.EventListener;
-import net.iceyleagons.icicle.annotations.handlers.AutoCreationHandler;
+import net.iceyleagons.icicle.annotations.handlers.annotations.AutoCreationHandler;
 import net.iceyleagons.icicle.annotations.handlers.AutoCreationHandlerListener;
 import net.iceyleagons.icicle.utils.Asserts;
 import org.bukkit.event.Listener;

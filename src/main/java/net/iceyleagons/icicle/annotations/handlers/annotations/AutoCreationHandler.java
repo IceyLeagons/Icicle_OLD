@@ -1,4 +1,4 @@
-package net.iceyleagons.icicle.annotations.handlers;
+package net.iceyleagons.icicle.annotations.handlers.annotations;
 
 import java.lang.annotation.*;
 
