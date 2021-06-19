@@ -10,7 +10,7 @@ import java.util.concurrent.Executors;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class Threads {
+public final class Threads {
 
     public static final ExecutorService executorService = Executors.newCachedThreadPool();
 

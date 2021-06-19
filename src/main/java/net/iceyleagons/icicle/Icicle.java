@@ -46,7 +46,6 @@ public class Icicle extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-
         this.iciclePluginManager = new IciclePluginManager();
     }
 }

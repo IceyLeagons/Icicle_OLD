@@ -8,6 +8,9 @@ import net.iceyleagons.icicle.utils.Asserts;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.reflections.Reflections;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 public class RegisteredIciclePlugin {
 
@@ -16,6 +19,8 @@ public class RegisteredIciclePlugin {
     private final ClassScanner classScanner;
     private final RegisteredBeanDictionary registeredBeanDictionary;
     private final BeanCreator beanCreator;
+
+    private final List<Runnable> onDisabledRunnables = new ArrayList<>();
 
     public RegisteredIciclePlugin(JavaPlugin javaPlugin, String mainPackage) {
         Asserts.notNull(javaPlugin, "JavaPlugin must not be null!");
@@ -37,6 +42,13 @@ public class RegisteredIciclePlugin {
 
     private void init() {
         this.beanCreator.scanAndCreateAutoCreationClasses();
+    }
+
+    /**
+     * Should be called under {@link JavaPlugin#onDisable()}
+     */
+    public void onDisabled() {
+        onDisabledRunnables.forEach(Runnable::run);
     }
 
 }

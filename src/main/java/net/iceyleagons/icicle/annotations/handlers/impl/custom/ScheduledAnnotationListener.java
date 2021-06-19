@@ -1,7 +1,7 @@
 package net.iceyleagons.icicle.annotations.handlers.impl.custom;
 
 import net.iceyleagons.icicle.RegisteredIciclePlugin;
-import net.iceyleagons.icicle.annotations.Scheduled;
+import net.iceyleagons.icicle.annotations.bukkit.Scheduled;
 import net.iceyleagons.icicle.annotations.handlers.CustomAnnotationHandlerListener;
 import net.iceyleagons.icicle.annotations.handlers.annotations.CustomAnnotationHandler;
 import org.bukkit.scheduler.BukkitTask;

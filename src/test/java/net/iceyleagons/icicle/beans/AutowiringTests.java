@@ -25,7 +25,7 @@ public class AutowiringTests {
         assertNotNull(autowiringConstructorTest);
 
         String value = autowiringConstructorTest.test();
-        assertEquals(value, "works");
+        assertEquals("works", value);
     }
 
     @Test
@@ -35,7 +35,7 @@ public class AutowiringTests {
         AutowiringUtils.autowireObject(autowiringConstructorTest, registeredBeanDictionary);
 
         String value = autowiringConstructorTest.test();
-        assertEquals(value, "works");
+        assertEquals("works", value);
     }
 
     static class TestAutowiring {
