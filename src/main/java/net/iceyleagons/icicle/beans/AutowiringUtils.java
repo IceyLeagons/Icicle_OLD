@@ -1,12 +1,22 @@
 package net.iceyleagons.icicle.beans;
 
 import net.iceyleagons.icicle.utils.Asserts;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
 
+/**
+ * Contains utility methods for Autowiring.
+ * NOTE due to registrations etc., these methods should not be called directly, most of them are handled automatically by Icicle.
+ * The method you may want to use are {@link #autowireObject(Object, RegisteredBeanDictionary)}
+ *
+ * @author TOTHTOMI
+ * @version 1.0.0
+ * @since 1.0.0
+ */
 public class AutowiringUtils {
 
     /**
@@ -107,7 +117,15 @@ public class AutowiringUtils {
         }
     }
 
-    private static void injectField(Field field, Object parent, Object toInject) throws IllegalAccessException{
+    @Nullable
+    public static <T> T getValue(Field field, Object parent, Class<T> wantedType) throws IllegalAccessException {
+        field.setAccessible(true);
+        Object o = field.get(parent);
+
+        return wantedType.isInstance(o) ? wantedType.cast(o) : null;
+    }
+
+    public static void injectField(Field field, Object parent, Object toInject) throws IllegalAccessException {
         field.setAccessible(true);
         field.set(parent, toInject);
     }
