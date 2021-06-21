@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 public class ClassScanner {
 
     private final Reflections reflections;
+    private final RegisteredBeanDictionary registeredBeanDictionary;
     private Map<Class<?>, AutoCreationHandlerListener> autoCreationHandlers = null;
     private Map<Class<?>, CustomAnnotationHandlerListener> customAnnotationHandlers = null;
 
@@ -35,8 +36,10 @@ public class ClassScanner {
 
                 Asserts.isAssignable(AutoCreationHandlerListener.class, c, "Class (" + c.getName() + ") must implement AutoCreationHandlerListener!");
                 try {
-                    AutoCreationHandlerListener listener = (AutoCreationHandlerListener) c.getDeclaredConstructor().newInstance();
+                    Object obj = c.getDeclaredConstructor().newInstance();
+                    AutoCreationHandlerListener listener = (AutoCreationHandlerListener) obj;
 
+                    registeredBeanDictionary.registerBean(obj);
                     autoCreationHandlers.put(c.getAnnotation(AutoCreationHandler.class).value(), listener);
                 } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                     throw new IllegalStateException("Could not create new instance of AutoCreationHandlerListener", e);
@@ -56,8 +59,10 @@ public class ClassScanner {
 
                 Asserts.isAssignable(CustomAnnotationHandlerListener.class, c, "Class (" + c.getName() + ") must implement CustomAnnotationHandlerListener!");
                 try {
-                    CustomAnnotationHandlerListener listener = (CustomAnnotationHandlerListener) c.getDeclaredConstructor().newInstance();
+                    Object obj = c.getDeclaredConstructor().newInstance();
+                    CustomAnnotationHandlerListener listener = (CustomAnnotationHandlerListener) obj;
 
+                    registeredBeanDictionary.registerBean(obj);
                     customAnnotationHandlers.put(c.getAnnotation(CustomAnnotationHandler.class).value(), listener);
                 } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                     throw new IllegalStateException("Could not create new instance of AutoCreationHandlerListener", e);
