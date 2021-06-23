@@ -10,8 +10,8 @@ import net.iceyleagons.icicle.utils.Asserts;
 public class OnDisableAnnotationListener implements CustomAnnotationHandlerListener {
 
     @Override
-    public void postRegistered(Object object, RegisteredIciclePlugin registeredIciclePlugin) {
-        registeredIciclePlugin.getClassScanner().getMethodsAnnotatedWithInsideClazz(object.getClass(), OnDisable.class).forEach(method -> {
+    public void postRegistered(Object object, Class<?> type, RegisteredIciclePlugin registeredIciclePlugin) {
+        registeredIciclePlugin.getClassScanner().getMethodsAnnotatedWithInsideClazz(type, OnDisable.class).forEach(method -> {
             Asserts.isSize(0, method.getParameterTypes(), "@OnDisable marked method must not have parameters!");
             method.setAccessible(true);
 

@@ -1,6 +1,5 @@
 package net.iceyleagons.icicle.location;
 
-import lombok.NonNull;
 import net.iceyleagons.icicle.utils.Asserts;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

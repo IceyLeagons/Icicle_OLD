@@ -11,7 +11,7 @@ import org.bukkit.event.Listener;
 public class EventListenerAutoCreationHandler implements AutoCreationHandlerListener {
 
     @Override
-    public void onCreated(Object object, RegisteredIciclePlugin registeredIciclePlugin) {
+    public void onCreated(Object object, Class<?> type, RegisteredIciclePlugin registeredIciclePlugin) {
         Asserts.isInstanceOf(Listener.class, object, "Could not register class marked with @EventListener since it does not implement org.bukkit.event.Listener!");
         final Listener listener = (Listener) object;
 

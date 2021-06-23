@@ -46,8 +46,11 @@ public class RegisteredCommandManager implements CommandExecutor {
     private final String invalidCmd;
 
     private final Object origin;
+    private final Class<?> originType; //due to a bytecode editor, this is not the same as origin.getClass()
 
-    public RegisteredCommandManager(RegisteredIciclePlugin plugin, CommandManager commandManager, Object origin) throws CommandInjectException {
+    //TODO flag parameters (ex.: -t 1h) | @Sender annotation instead of just only checking for CommandSender this way it can be a Player as well and the backend will automatically cast it
+
+    public RegisteredCommandManager(RegisteredIciclePlugin plugin, CommandManager commandManager, Object origin, Class<?> originType) throws CommandInjectException {
         this.name = commandManager.value();
         this.tooManyArgs = commandManager.tooManyArgumentsText();;
         this.tooFewArgs = commandManager.tooFewArgumentsText();
@@ -55,6 +58,7 @@ public class RegisteredCommandManager implements CommandExecutor {
 
         this.registeredIciclePlugin = plugin;
         this.origin = origin;
+        this.originType = originType;
 
         scanCommands(origin, this.commands);
         this.subcommandManagers = getSubcommandManagers();
@@ -62,7 +66,7 @@ public class RegisteredCommandManager implements CommandExecutor {
     }
 
     public void scanCommands(Object origin, Map<String, RegisteredCommand> commands) {
-        registeredIciclePlugin.getClassScanner().getMethodsAnnotatedWithInsideClazz(origin.getClass(), net.iceyleagons.icicle.annotations.commands.Command.class).forEach(c -> {
+        registeredIciclePlugin.getClassScanner().getMethodsAnnotatedWithInsideClazz(originType, net.iceyleagons.icicle.annotations.commands.Command.class).forEach(c -> {
             String cmd = c.getAnnotation(net.iceyleagons.icicle.annotations.commands.Command.class).value();
             RegisteredCommand registeredCommand = new RegisteredCommand(this, cmd, origin, c, c.getAnnotation(Alias.class), c.getAnnotation(PlayerOnly.class), c.getAnnotation(PermissionCheck.class));
 
@@ -71,7 +75,7 @@ public class RegisteredCommandManager implements CommandExecutor {
     }
 
     private Map<String, RegisteredSubcommandManager> getSubcommandManagers() {
-        return Arrays.stream(origin.getClass().getDeclaredFields())
+        return Arrays.stream(originType.getDeclaredFields())
                 .filter(f -> f.isAnnotationPresent(Subcommand.class))
                 .filter(f -> f.getType().isAnnotationPresent(SubcommandManager.class))
                 .map(f -> {
@@ -148,6 +152,10 @@ public class RegisteredCommandManager implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!command.getName().equalsIgnoreCase(name)) return true;
+        if (args.length == 0) {
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getTooFewArgs()));
+            return true;
+        }
 
         String subc = args[0];
         String[] newArgs = new String[args.length - 1];

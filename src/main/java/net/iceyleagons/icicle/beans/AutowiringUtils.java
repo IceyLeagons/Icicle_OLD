@@ -1,5 +1,6 @@
 package net.iceyleagons.icicle.beans;
 
+import net.iceyleagons.icicle.annotations.Autowired;
 import net.iceyleagons.icicle.utils.Asserts;
 import org.jetbrains.annotations.Nullable;
 
@@ -49,7 +50,8 @@ public class AutowiringUtils {
         Asserts.notNull(registeredBeanDictionary, "Supplied RegisteredBeanDictionary must not be null!");
 
         for (final Field declaredField : toAutowire.getClass().getDeclaredFields()) {
-            autowireField(declaredField, toAutowire, registeredBeanDictionary);
+            if (declaredField.isAnnotationPresent(Autowired.class))
+                autowireField(declaredField, toAutowire, registeredBeanDictionary);
         }
     }
 
@@ -73,7 +75,7 @@ public class AutowiringUtils {
             final Class<?> paramType = paramTypes[i];
 
             final Optional<Object> bean = registeredBeanDictionary.get(paramType);
-            if (bean.isEmpty()) throw new IllegalArgumentException("Constructor required a non-registered bean!");
+            if (bean.isEmpty()) throw new IllegalArgumentException("Constructor parameter required a non-registered bean! (Type " + paramType.getName() + " inside " + constructor.getDeclaringClass().getName() + ")");
 
             final Object beanObject = bean.get();
             Asserts.isInstanceOf(paramType, beanObject, "RegisteredBeanDictionary returned an invalid object! (Does not match required type)");
@@ -105,7 +107,7 @@ public class AutowiringUtils {
         final Class<?> paramType = field.getType();
 
         final Optional<Object> bean = registeredBeanDictionary.get(paramType);
-        if (bean.isEmpty()) throw new IllegalArgumentException("Field required a non-registered bean!");
+        if (bean.isEmpty()) throw new IllegalArgumentException("Field required a non-registered bean! (Type " + paramType.getName() + " inside " + field.getDeclaringClass().getName() + ")");
 
         final Object beanObject = bean.get();
         Asserts.isInstanceOf(paramType, beanObject, "RegisteredBeanDictionary returned an invalid object! (Does not match required type)");

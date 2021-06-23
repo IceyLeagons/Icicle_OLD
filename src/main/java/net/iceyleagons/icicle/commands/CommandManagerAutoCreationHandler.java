@@ -13,15 +13,17 @@ import java.util.Set;
 @AutoCreationHandler(CommandManager.class)
 public class CommandManagerAutoCreationHandler implements AutoCreationHandlerListener {
 
-    private Set<RegisteredCommandManager> managers = new HashSet<>();
+    private final Set<RegisteredCommandManager> managers = new HashSet<>();
 
     @Override
-    public void onCreated(Object object, RegisteredIciclePlugin registeredIciclePlugin) {
+    public void onCreated(Object object, Class<?> type, RegisteredIciclePlugin registeredIciclePlugin) {
         try {
-            RegisteredCommandManager registeredCommandManager = new RegisteredCommandManager(registeredIciclePlugin, object.getClass().getAnnotation(CommandManager.class), object);
+            RegisteredCommandManager registeredCommandManager = new RegisteredCommandManager(registeredIciclePlugin, type.getAnnotation(CommandManager.class), object, type);
             managers.add(registeredCommandManager);
         } catch (Exception e) {
-            throw new IllegalStateException("Cannot create CommandManager named " + object.getClass().getName());
+            System.err.println("Cannot create CommandManager named " + type.getName());
+            e.printStackTrace();
+            //throw new IllegalStateException("Cannot create CommandManager named " + type.getName(), e);
         }
     }
 }

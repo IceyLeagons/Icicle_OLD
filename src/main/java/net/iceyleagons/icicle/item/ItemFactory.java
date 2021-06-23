@@ -39,7 +39,6 @@ public class ItemFactory {
     public ItemFactory(Material material) {
         this.itemStack = new ItemStack(material);
         this.itemMeta = this.itemStack.getItemMeta();
-
     }
 
     /**
@@ -50,7 +49,6 @@ public class ItemFactory {
      */
 
     public ItemFactory(Material material, int amount) {
-
         this.itemStack = new ItemStack(material, amount);
         this.itemMeta = this.itemStack.getItemMeta();
 
@@ -63,7 +61,6 @@ public class ItemFactory {
      */
 
     public ItemFactory(ItemStack itemStack) {
-
         this.itemStack = itemStack;
         this.itemMeta = itemStack.getItemMeta();
         assert this.itemMeta != null;
@@ -79,9 +76,7 @@ public class ItemFactory {
      */
 
     public static ItemFactory newFactory(Material material) {
-
         return new ItemFactory(material);
-
     }
 
     /**
@@ -92,10 +87,8 @@ public class ItemFactory {
      */
 
     public ItemFactory setItemMeta(ItemMeta itemMeta) {
-
         this.itemMeta = itemMeta;
         return this;
-
     }
 
     /**
@@ -106,10 +99,8 @@ public class ItemFactory {
      */
 
     public ItemFactory setType(Material material) {
-
         this.itemStack.setType(material);
         return this;
-
     }
 
     /**
@@ -120,10 +111,8 @@ public class ItemFactory {
      */
 
     public ItemFactory setAmount(int amount) {
-
         this.itemStack.setAmount(amount);
         return this;
-
     }
 
     /**
@@ -135,10 +124,8 @@ public class ItemFactory {
      */
 
     public ItemFactory addEnchantment(Enchantment enchantment, int level) {
-
         this.itemStack.addEnchantment(enchantment, level);
         return this;
-
     }
 
     /**
@@ -149,10 +136,8 @@ public class ItemFactory {
      */
 
     public ItemFactory addEnchantments(Map<Enchantment, Integer> enchantments) {
-
         this.itemStack.addEnchantments(enchantments);
         return this;
-
     }
 
     /**
@@ -164,10 +149,8 @@ public class ItemFactory {
      */
 
     public ItemFactory addUnsafeEnchantment(Enchantment enchantment, int level) {
-
         this.itemStack.addUnsafeEnchantment(enchantment, level);
         return this;
-
     }
 
     /**
@@ -178,10 +161,8 @@ public class ItemFactory {
      */
 
     public ItemFactory addUnsafeEnchantments(Map<Enchantment, Integer> enchantments) {
-
         this.itemStack.addUnsafeEnchantments(enchantments);
         return this;
-
     }
 
     /**
@@ -192,10 +173,8 @@ public class ItemFactory {
      */
 
     public ItemFactory removeEnchantment(Enchantment enchantment) {
-
         this.itemStack.removeEnchantment(enchantment);
         return this;
-
     }
 
     /**
@@ -206,10 +185,8 @@ public class ItemFactory {
      */
 
     public ItemFactory setDisplayName(String displayName) {
-
         this.itemMeta.setDisplayName(color(displayName));
         return this;
-
     }
 
     /**

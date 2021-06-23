@@ -9,6 +9,7 @@ import org.bukkit.command.CommandMap;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.SimplePluginManager;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -65,7 +66,7 @@ public class CommandInjector {
             final Field bukkitCommandMap = getCommandMap();
             if (bukkitCommandMap == null) throw new CommandInjectException(command, "CommandMap is unavailable");
 
-            CommandMap commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
+            CommandMap commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer().getPluginManager());
 
             Constructor<PluginCommand> c = PluginCommand.class.getDeclaredConstructor(String.class, Plugin.class);
             c.setAccessible(true);
@@ -86,12 +87,12 @@ public class CommandInjector {
     }
 
     private Field getCommandMap()  {
-        Field f = null;
         try {
-            f = registeredIciclePlugin.getJavaPlugin().getServer().getClass().getField("commandMap");
+            Field f = SimplePluginManager.class.getDeclaredField("commandMap");
             f.setAccessible(true);
+            return f;
         } catch (Exception ignored) { }
 
-        return f;
+        return null;
     }
 }

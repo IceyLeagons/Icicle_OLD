@@ -13,8 +13,8 @@ import java.lang.reflect.Method;
 public class ScheduledAnnotationListener implements CustomAnnotationHandlerListener {
 
     @Override
-    public void postRegistered(Object object, RegisteredIciclePlugin registeredIciclePlugin) {
-        registeredIciclePlugin.getClassScanner().getMethodsAnnotatedWithInsideClazz(object.getClass(), Scheduled.class).forEach(method -> {
+    public void postRegistered(Object object, Class<?> type, RegisteredIciclePlugin registeredIciclePlugin) {
+        registeredIciclePlugin.getClassScanner().getMethodsAnnotatedWithInsideClazz(type, Scheduled.class).forEach(method -> {
             Scheduled annotation = method.getAnnotation(Scheduled.class);
 
             if (annotation.async()) {

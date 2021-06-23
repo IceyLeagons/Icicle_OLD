@@ -4,6 +4,8 @@ import net.iceyleagons.icicle.RegisteredIciclePlugin;
 
 public interface AutoCreationHandlerListener {
 
-    void onCreated(Object object, RegisteredIciclePlugin registeredIciclePlugin);
+    //type is here due to CGLIB
+
+    void onCreated(Object object, Class<?> type, RegisteredIciclePlugin registeredIciclePlugin);
 
 }

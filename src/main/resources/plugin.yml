@@ -1,0 +1,8 @@
+name: Icicle
+description: Desc
+version: 1.0.0
+main: net.iceyleagons.icicle.Icicle
+api-version: 1.13
+authors:
+  - TOTHTOMI
+  - G4be_

@@ -5,6 +5,10 @@ plugins {
 group 'net.iceyleagons'
 version '1.0-SNAPSHOT'
 
+configurations {
+    extraLibs
+}
+
 repositories {
     mavenCentral()
     maven { url 'https://jitpack.io' }
@@ -28,13 +32,14 @@ dependencies {
     // https://mvnrepository.com/artifact/org.jetbrains/annotations
     implementation group: 'org.jetbrains', name: 'annotations', version: '21.0.1'
     // https://mvnrepository.com/artifact/org.reflections/reflections
-    implementation group: 'org.reflections', name: 'reflections', version: '0.9.12'
+    extraLibs group: 'org.reflections', name: 'reflections', version: '0.9.12'
     // https://mvnrepository.com/artifact/org.json/json
-    implementation group: 'org.json', name: 'json', version: '20210307'
+    extraLibs group: 'org.json', name: 'json', version: '20210307'
 
-    implementation 'com.github.seeseemelk:MockBukkit:v1.16-SNAPSHOT'
+    testImplementation 'com.github.seeseemelk:MockBukkit:v1.16-SNAPSHOT'
+    extraLibs 'me.carleslc.Simple-YAML:Simple-Yaml:1.7.2'
 
-    implementation 'cglib:cglib:3.3.0'
+    extraLibs 'cglib:cglib:3.3.0'
 
 
     implementation 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
@@ -48,6 +53,14 @@ dependencies {
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+
+    configurations.implementation.extendsFrom(configurations.extraLibs)
+}
+
+jar {
+    from {
+        configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
 
 test {

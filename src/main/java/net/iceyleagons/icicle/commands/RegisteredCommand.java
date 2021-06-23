@@ -58,7 +58,7 @@ public class RegisteredCommand {
             return;
         }
 
-        if (permission != null && !commandSender.hasPermission(permission.value())) {
+        if (permission != null && !(commandSender.hasPermission(permission.value()) || commandSender.isOp())) {
             sendMessage(commandSender, getPermissionResponse(commandSender));
             return;
         }

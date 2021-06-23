@@ -1,13 +1,23 @@
 package net.iceyleagons.icicle.localization;
 
 
+import lombok.Getter;
+import lombok.Setter;
+import net.iceyleagons.icicle.annotations.Service;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.Map;
 
+@Setter
+@Getter
+@Service
 public class LocalizationManager {
+
+    private String globalLanguage;
+    private boolean useGlobalLanguage;
 
     public String getTranslation(String id, Player player, Map<String, String> attributes) {
         return "";
@@ -26,5 +36,4 @@ public class LocalizationManager {
     public String getTranslation(String id, CommandSender sender) {
         return getTranslation(id, sender, Collections.emptyMap());
     }
-
 }

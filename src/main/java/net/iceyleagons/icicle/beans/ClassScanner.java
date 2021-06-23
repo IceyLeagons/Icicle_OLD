@@ -55,6 +55,7 @@ public class ClassScanner {
                     Object obj = c.getDeclaredConstructor().newInstance();
                     AutoCreationHandlerListener listener = (AutoCreationHandlerListener) obj;
 
+                    //System.out.println("Registering auto creation handler " + c.getName());
                     registeredBeanDictionary.registerBean(obj);
                     autoCreationHandlers.put(c.getAnnotation(AutoCreationHandler.class).value(), listener);
                 } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {

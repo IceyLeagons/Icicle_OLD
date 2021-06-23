@@ -1,13 +1,12 @@
 package net.iceyleagons.icicle.location.block;
 
-import lombok.NonNull;
 import net.iceyleagons.icicle.utils.Asserts;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -37,7 +36,7 @@ public class Cuboid {
      * @param point1 startPoint
      * @param point2 endPoint
      */
-    public Cuboid(@NonNull final Location point1, @NonNull final Location point2) {
+    public Cuboid(@NotNull final Location point1, @NotNull final Location point2) {
         Asserts.notNull(point1, "Location1 must not be null!");
         Asserts.notNull(point2, "Location2 must not be null!");
 
@@ -57,7 +56,8 @@ public class Cuboid {
      * @return a {@link HashSet} of all the blocks in the cuboid
      */
     public Set<Block> blockList() {
-        final ArrayList<Block> blocks = new ArrayList<>(this.getTotalBlockSize());
+        final Set<Block> blocks = new HashSet<>(this.getTotalBlockSize());
+
         for (int x = this.xMin; x <= this.xMax; ++x) {
             for (int y = this.yMin; y <= this.yMax; ++y) {
                 for (int z = this.zMin; z <= this.zMax; ++z) {
@@ -66,7 +66,8 @@ public class Cuboid {
                 }
             }
         }
-        return new HashSet<>(blocks);
+
+        return blocks;
     }
 
     /**
@@ -76,6 +77,7 @@ public class Cuboid {
         double x = (this.xMax - this.xMin) / 2.0 + this.xMin;
         double y = (this.yMax - this.yMin) / 2.0 + this.yMin;
         double z = (this.zMax - this.zMin) / 2.0 + this.zMin;
+
         return new Location(this.world, x, y, z);
     }
 
@@ -152,7 +154,7 @@ public class Cuboid {
      * @param loc the location to check
      * @return true if it's inside the cuboid
      */
-    public boolean isIn(final Location loc) {
+    public boolean isIn(final @NotNull Location loc) {
         Asserts.notNull(loc, "Location must not be null!");
 
         return loc.getWorld() == this.world && loc.getBlockX() >= this.xMin && loc.getBlockX() <= this.xMax && loc.getBlockY() >= this.yMin && loc.getBlockY() <= this.yMax && loc
@@ -165,7 +167,7 @@ public class Cuboid {
      * @param player the location to check
      * @return true if it's inside the cuboid
      */
-    public boolean isIn(final Player player) {
+    public boolean isIn(final @NotNull Player player) {
         Asserts.notNull(player, "Player must not be null!");
 
         return this.isIn(player.getLocation());

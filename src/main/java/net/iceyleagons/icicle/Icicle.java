@@ -47,5 +47,6 @@ public class Icicle extends JavaPlugin {
     public void onEnable() {
         instance = this;
         this.iciclePluginManager = new IciclePluginManager();
+        IcicleBootstrapper.bootstrap(this, "net.iceyleagons.icicle");
     }
 }

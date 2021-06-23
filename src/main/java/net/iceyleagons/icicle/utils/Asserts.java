@@ -52,7 +52,7 @@ public final class Asserts {
     }
 
     public static void notEmpty(@Nullable String value, String message) {
-        if (value == null || !value.isEmpty()) {
+        if (value == null || value.isEmpty()) {
             throw new IllegalArgumentException(message);
         }
     }

@@ -25,7 +25,18 @@ public class RegisteredBeanDictionary {
      */
     public void registerBean(Object bean) {
         Asserts.notNull(bean, "Cannot register null!");
-        beans.put(bean.getClass(), bean);
+        registerBean(bean, bean.getClass());
+    }
+
+    /**
+     * Registers a new bean into the dictionary.
+     *
+     * @param bean the bean to register
+     */
+    public void registerBean(Object bean, Class<?> type) {
+        Asserts.notNull(bean, "Cannot register null!");
+        Asserts.notNull(type, "Cannot register with null type!");
+        beans.put(type, bean);
     }
 
     /**
