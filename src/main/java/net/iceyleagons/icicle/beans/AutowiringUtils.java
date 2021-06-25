@@ -43,6 +43,7 @@ public class AutowiringUtils {
     /**
      * These are just utility methods, since there are way more registering going behind the scenes do not call these methods directly from here, but
      * from {@link net.iceyleagons.icicle.RegisteredIciclePlugin}
+     *
      * @param toAutowire
      * @param registeredBeanDictionary
      */
@@ -75,7 +76,8 @@ public class AutowiringUtils {
             final Class<?> paramType = paramTypes[i];
 
             final Optional<Object> bean = registeredBeanDictionary.get(paramType);
-            if (bean.isEmpty()) throw new IllegalArgumentException("Constructor parameter required a non-registered bean! (Type " + paramType.getName() + " inside " + constructor.getDeclaringClass().getName() + ")");
+            if (!bean.isPresent())
+                throw new IllegalArgumentException("Constructor parameter required a non-registered bean! (Type " + paramType.getName() + " inside " + constructor.getDeclaringClass().getName() + ")");
 
             final Object beanObject = bean.get();
             Asserts.isInstanceOf(paramType, beanObject, "RegisteredBeanDictionary returned an invalid object! (Does not match required type)");
@@ -107,7 +109,8 @@ public class AutowiringUtils {
         final Class<?> paramType = field.getType();
 
         final Optional<Object> bean = registeredBeanDictionary.get(paramType);
-        if (bean.isEmpty()) throw new IllegalArgumentException("Field required a non-registered bean! (Type " + paramType.getName() + " inside " + field.getDeclaringClass().getName() + ")");
+        if (!bean.isPresent())
+            throw new IllegalArgumentException("Field required a non-registered bean! (Type " + paramType.getName() + " inside " + field.getDeclaringClass().getName() + ")");
 
         final Object beanObject = bean.get();
         Asserts.isInstanceOf(paramType, beanObject, "RegisteredBeanDictionary returned an invalid object! (Does not match required type)");
