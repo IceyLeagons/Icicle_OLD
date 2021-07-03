@@ -85,7 +85,7 @@ public class RegisteredCommand {
     private int getRequiredArgsLength() {
         return (int) Arrays.stream(method.getParameters())
                 .filter(p -> !p.isAnnotationPresent(Optional.class))
-                .filter(p -> !p.getType().equals(CommandSender.class)).count();
+                .filter(p -> !p.isAnnotationPresent(net.iceyleagons.icicle.annotations.commands.CommandSender.class)).count();
     }
 
     private String getPlayerOnlyResponse(CommandSender commandSender) {
