@@ -74,6 +74,7 @@ public final class Asserts {
     public static void isAssignable(Class<?> superType, @Nullable Class<?> subType, String message) {
         notNull(superType, "Super-type to check against must not be null!");
 
+
         if (subType == null || !superType.isAssignableFrom(subType)) {
             throw new IllegalArgumentException(message);
         }

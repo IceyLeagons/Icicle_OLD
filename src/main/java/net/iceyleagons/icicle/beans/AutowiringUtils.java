@@ -70,6 +70,15 @@ public class AutowiringUtils {
         Asserts.notNull(constructor, "Supplied constructor must not be null!");
 
         final Class<?>[] paramTypes = constructor.getParameterTypes();
+
+        try {
+            return constructor.newInstance(getParameters(paramTypes, registeredBeanDictionary, constructor.getDeclaringClass()));
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            throw new IllegalStateException("Cannot create autowired constructor!", e);
+        }
+    }
+
+    public static Object[] getParameters(Class<?>[] paramTypes, RegisteredBeanDictionary registeredBeanDictionary, Class<?> declaringClass) {
         Object[] params = new Object[paramTypes.length];
 
         for (int i = 0; i < paramTypes.length; i++) {
@@ -77,7 +86,7 @@ public class AutowiringUtils {
 
             final Optional<Object> bean = registeredBeanDictionary.get(paramType);
             if (!bean.isPresent())
-                throw new IllegalArgumentException("Constructor parameter required a non-registered bean! (Type " + paramType.getName() + " inside " + constructor.getDeclaringClass().getName() + ")");
+                throw new IllegalArgumentException("Constructor parameter required a non-registered bean! (Type " + paramType.getName() + " inside " + declaringClass.getName() + ")");
 
             final Object beanObject = bean.get();
             Asserts.isInstanceOf(paramType, beanObject, "RegisteredBeanDictionary returned an invalid object! (Does not match required type)");
@@ -85,11 +94,7 @@ public class AutowiringUtils {
             params[i] = paramType.cast(bean.get());
         }
 
-        try {
-            return constructor.newInstance(params);
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            throw new IllegalStateException("Cannot create autowired constructor!", e);
-        }
+        return params;
     }
 
 

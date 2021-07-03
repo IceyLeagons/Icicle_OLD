@@ -64,6 +64,8 @@ public class RegisteredCommand {
         }
 
         if (args.length < requiredParamCount) {
+            System.out.println("Too few! Current: " + args.length);
+            System.out.println("Required: " + requiredParamCount);
             sendMessage(commandSender, commandManager.getTooFewArgs());
             return;
         } else if (args.length > requiredParamCount) {
@@ -81,7 +83,9 @@ public class RegisteredCommand {
     }
 
     private int getRequiredArgsLength() {
-        return (int) Arrays.stream(method.getParameters()).filter(p -> !p.isAnnotationPresent(Optional.class)).count();
+        return (int) Arrays.stream(method.getParameters())
+                .filter(p -> !p.isAnnotationPresent(Optional.class))
+                .filter(p -> !p.getType().equals(CommandSender.class)).count();
     }
 
     private String getPlayerOnlyResponse(CommandSender commandSender) {

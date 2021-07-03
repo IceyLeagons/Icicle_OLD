@@ -55,7 +55,7 @@ public class ClassScanner {
                     Object obj = c.getDeclaredConstructor().newInstance();
                     AutoCreationHandlerListener listener = (AutoCreationHandlerListener) obj;
 
-                    //System.out.println("Registering auto creation handler " + c.getName());
+                    System.out.println("Registering auto creation handler " + c.getName());
                     registeredBeanDictionary.registerBean(obj);
                     autoCreationHandlers.put(c.getAnnotation(AutoCreationHandler.class).value(), listener);
                 } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
@@ -100,12 +100,18 @@ public class ClassScanner {
         final List<Class<? extends Annotation>> autoCreationAnnotations = reflections.getTypesAnnotatedWith(AutoCreation.class).stream()
                 .filter(Class::isAnnotation).map(c -> (Class<? extends Annotation>) c).collect(Collectors.toList());
 
+        System.out.println("Auto creation annotations: ");
+        autoCreationAnnotations.forEach(System.out::println);
+
         final List<Class<?>> classes = new ArrayList<>();
         for (final Class<? extends Annotation> autoCreationAnnotation : autoCreationAnnotations) {
             classes.addAll(reflections.getTypesAnnotatedWith(autoCreationAnnotation).stream()
                     .filter(c -> !c.isInterface() && !c.isAnnotation())
                     .collect(Collectors.toList()));
         }
+
+        System.out.println("Detected auto creation classes from array: ");
+        classes.forEach(System.out::println);
 
         return classes;
     }

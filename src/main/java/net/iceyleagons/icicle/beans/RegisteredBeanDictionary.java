@@ -36,6 +36,7 @@ public class RegisteredBeanDictionary {
     public void registerBean(Object bean, Class<?> type) {
         Asserts.notNull(bean, "Cannot register null!");
         Asserts.notNull(type, "Cannot register with null type!");
+        System.out.println("Registering bean for type " + type.getName());
         beans.put(type, bean);
     }
 

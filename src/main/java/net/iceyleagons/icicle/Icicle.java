@@ -7,10 +7,13 @@ import org.bukkit.plugin.java.JavaPluginLoader;
 
 import java.io.File;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 public class Icicle extends JavaPlugin {
 
     private static Icicle instance = null;
+    private static boolean debugMode = true;
+    private static Logger logger = Logger.getLogger("Icicle");
 
     @Getter
     private IciclePluginManager iciclePluginManager;
@@ -48,5 +51,11 @@ public class Icicle extends JavaPlugin {
         instance = this;
         this.iciclePluginManager = new IciclePluginManager();
         IcicleBootstrapper.bootstrap(this, "net.iceyleagons.icicle");
+    }
+
+    public static void debug(String msg) {
+        if (debugMode) {
+            logger.info("[DEBUG] " + msg);
+        }
     }
 }

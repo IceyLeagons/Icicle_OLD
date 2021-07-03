@@ -42,6 +42,7 @@ public class RegisteredSubcommandManager {
             commands.get(cmd).execute(commandSender, newArgs);
         } catch (Exception e) {
             commandSender.sendMessage(ChatColor.RED + "An internal exception occured!");
+            e.printStackTrace();
         }
     }
 }

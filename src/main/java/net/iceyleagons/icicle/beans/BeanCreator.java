@@ -1,6 +1,7 @@
 package net.iceyleagons.icicle.beans;
 
 import lombok.AllArgsConstructor;
+import net.iceyleagons.icicle.Icicle;
 import net.iceyleagons.icicle.RegisteredIciclePlugin;
 import net.iceyleagons.icicle.annotations.Autowired;
 import net.iceyleagons.icicle.annotations.Bean;
@@ -22,18 +23,15 @@ public class BeanCreator {
 
     private final RegisteredIciclePlugin registeredIciclePlugin;
 
-    //Constructor.getDeclaringClass() for Class<?> type parameters are used because CGLib object.getClass() is not equals to the original class
-
     public void scanAndCreateAutoCreationClasses() {
         final ClassScanner classScanner = registeredIciclePlugin.getClassScanner();
         final RegisteredBeanDictionary registeredBeanDictionary = registeredIciclePlugin.getRegisteredBeanDictionary();
 
         final Map<Class<?>, AutoCreationHandlerListener> handlers = classScanner.getAutoCreationHandlers();
-        //System.out.println(handlers.size());
-        //handlers.keySet().forEach(System.out::println);
         final Map<Class<?>, Constructor<?>> constructors = new HashMap<>(); //with this we're first creating the autocreation classes with the least parameter types, so less chance of requiring something that has not yet been registered
 
         classScanner.getAutoCreationClasses().forEach(c -> {
+            Icicle.debug("Auto creation class detected: " + c.getName());
             Asserts.isSize(1, c.getDeclaredConstructors(), "Class must have only 1 public constructor!");
 
             final Constructor<?> constructor = c.getDeclaredConstructors()[0];
@@ -49,20 +47,20 @@ public class BeanCreator {
 
             for (Class<?> parameterType : constructor.getParameterTypes()) {
                 if (!registeredBeanDictionary.contains(parameterType)) {
-                    //System.out.println("Creating " + parameterType.getName() + " because " + constructor.getDeclaringClass().getName() + " required it.");
+                    Icicle.debug("Creating bean " + parameterType.getName() + " because " + constructor.getDeclaringClass().getName() + " required it.");
                     createFromConstructor(constructorMap.get(parameterType), registeredBeanDictionary, handlers);
                 }
             }
 
-            //System.out.println("Creating: " + constructor.getDeclaringClass().getName());
+            Icicle.debug("Creating bean: " + constructor.getDeclaringClass().getName());
             createFromConstructor(constructor, registeredBeanDictionary, handlers);
         }
     }
 
     private void createFromConstructor(Constructor<?> constructor, RegisteredBeanDictionary registeredBeanDictionary, final Map<Class<?>, AutoCreationHandlerListener> handlers) {
-        final Object object = scanAndCreateBeans(createObject(constructor, registeredBeanDictionary), constructor.getDeclaringClass(), registeredBeanDictionary);
+        final Object object = createObject(constructor, registeredBeanDictionary);
 
-        //System.out.println("Creating from constructor returned: " + object );
+        Icicle.debug("Creating from bean constructor returned: " + object);
         if (object != null) {
             for (Annotation annotation : constructor.getDeclaringClass().getAnnotations()) {
                 if (handlers.containsKey(annotation.annotationType())) {
@@ -78,20 +76,36 @@ public class BeanCreator {
     private Object createObject(Constructor<?> constructor, RegisteredBeanDictionary registeredBeanDictionary) {
         Asserts.notNull(registeredBeanDictionary, "RegisteredBeanDictionary must not be null!");
 
+
         if (constructor.isAnnotationPresent(Autowired.class)) {
-            return AutowiringUtils.autowireAndCreateInstance(constructor, registeredBeanDictionary);
+            Object[] params = AutowiringUtils.getParameters(constructor.getParameterTypes(), registeredBeanDictionary, constructor.getDeclaringClass());
+            return createEnhancedClass(constructor, params, registeredBeanDictionary);
         } else {
             Asserts.isTrue(constructor.getParameterTypes().length == 0, "Constructor is not annotated with @Autowired, so should not contain parameters!");
-            try {
-                final Object object = constructor.newInstance();
-                AutowiringUtils.autowireObject(object, registeredBeanDictionary);
-                callCustomAnnotationHandlers(object, constructor.getDeclaringClass());
-
-                return object;
-            } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                throw new IllegalStateException("Could not create and autowire object from constructor.", e);
-            }
+            Object object = createEnhancedClass(constructor, new Object[0], registeredBeanDictionary);
+            AutowiringUtils.autowireObject(object, registeredBeanDictionary);
+            return object;
         }
+    }
+
+    private Object createEnhancedClass(Constructor<?> constructor, Object[] params, RegisteredBeanDictionary registeredBeanDictionary) {
+        final Enhancer enhancer = new Enhancer();
+        enhancer.setSuperclass(constructor.getDeclaringClass());
+        enhancer.setCallback((MethodInterceptor) (obj, method, args, proxy) -> {
+            if (method.isAnnotationPresent(Bean.class)) {
+                if (!registeredBeanDictionary.contains(method.getReturnType())) {
+                    Object object = proxy.invokeSuper(obj, args);
+                    registeredBeanDictionary.registerBean(object);
+                    return object;
+                }
+
+                return registeredBeanDictionary.get(method.getReturnType()).orElse(null);
+            } else {
+                return proxy.invokeSuper(obj, args);
+            }
+        });
+
+        return enhancer.create(constructor.getParameterTypes(), params);
     }
 
     private void callCustomAnnotationHandlers(Object object, Class<?> type) {
@@ -103,43 +117,5 @@ public class BeanCreator {
                 }
             }
         }
-    }
-
-    private Object scanAndCreateBeans(@Nullable Object object, Class<?> type, RegisteredBeanDictionary registeredBeanDictionary) {
-        if (object == null) return null;
-        Asserts.notNull(registeredBeanDictionary, "RegisteredBeanDictionary must not be null!");
-
-        final List<Method> methods = registeredIciclePlugin.getClassScanner().getMethodsAnnotatedWithInsideClazz(type, Bean.class);
-        methods.forEach(method -> {
-            //if (method.getParameterTypes().length != 0) {
-                //TODO warning with logger
-            //}
-            method.setAccessible(true);
-            try {
-                final Object obj = method.invoke(object);
-
-                registeredBeanDictionary.registerBean(obj);
-                callCustomAnnotationHandlers(object, type);
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                throw new IllegalStateException("Could not access or invoke method marked with @Bean", e);
-            }
-        });
-
-        return createMethodOverrides(object, registeredBeanDictionary);
-    }
-
-    private Object createMethodOverrides(Object object, RegisteredBeanDictionary registeredBeanDictionary) {
-        //TODO figure out a fix for problem: Superclass has no null constructors but no arguments were given
-        final Enhancer enhancer = new Enhancer();
-        enhancer.setSuperclass(object.getClass());
-        enhancer.setCallback((MethodInterceptor) (obj, method, args, proxy) -> {
-            if (method.isAnnotationPresent(Bean.class)) {
-                return registeredBeanDictionary.get(method.getReturnType()).orElse(null);
-            } else {
-                return proxy.invokeSuper(obj, args);
-            }
-        });
-
-        return enhancer.create();
     }
 }

@@ -2,17 +2,17 @@ package net.iceyleagons.icicle.commands;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.SneakyThrows;
+import net.iceyleagons.icicle.Icicle;
 import net.iceyleagons.icicle.RegisteredIciclePlugin;
 import net.iceyleagons.icicle.annotations.commands.Alias;
 import net.iceyleagons.icicle.annotations.commands.CommandManager;
 import net.iceyleagons.icicle.annotations.commands.Subcommand;
 import net.iceyleagons.icicle.annotations.commands.SubcommandManager;
-import net.iceyleagons.icicle.annotations.commands.checks.Optional;
 import net.iceyleagons.icicle.annotations.commands.checks.PermissionCheck;
 import net.iceyleagons.icicle.annotations.commands.checks.PlayerOnly;
 import net.iceyleagons.icicle.commands.inject.CommandInjectException;
 import net.iceyleagons.icicle.localization.LocalizationManager;
+import net.iceyleagons.icicle.utils.Asserts;
 import net.iceyleagons.icicle.utils.Checkers;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -48,7 +48,7 @@ public class RegisteredCommandManager implements CommandExecutor {
     private final Object origin;
     private final Class<?> originType; //due to a bytecode editor, this is not the same as origin.getClass()
 
-    //TODO flag parameters (ex.: -t 1h) | @Sender annotation instead of just only checking for CommandSender this way it can be a Player as well and the backend will automatically cast it
+    //TODO flag parameters (ex.: -t 1h)
 
     public RegisteredCommandManager(RegisteredIciclePlugin plugin, CommandManager commandManager, Object origin, Class<?> originType) throws CommandInjectException {
         this.name = commandManager.value();
@@ -99,54 +99,63 @@ public class RegisteredCommandManager implements CommandExecutor {
     public Object[] parse(String[] args, Parameter[] params, CommandSender sender) {
         Object[] parameters = new Object[params.length];
 
+        int argsCount = 0;
         for (int i = 0; i < params.length; i++) {
-            Parameter parameter = params[i];
-            if (args.length < i) {
-                 if (parameter.isAnnotationPresent(Optional.class))
-                    break;
-                 else
-                     return null;
+            Class<?> type = params[i].getType();
+
+            Icicle.debug("[CommandManager] Parsing type: " + type.getName());
+            Icicle.debug("[CommandManager] I: " + i + " AC: " + argsCount);
+
+            if (params[i].isAnnotationPresent(net.iceyleagons.icicle.annotations.commands.CommandSender.class)) {
+                Asserts.isAssignable(CommandSender.class, type, "Unsupported @CommandSender type: " + type.getName());
+
+                parameters[i] = type.cast(sender);
+                continue;
             }
 
-            Class<?> paramType = parameter.getType();
-            String value = args[i];
+            Object obj = parsePrimitives(type, args[argsCount++]);
+            parameters[i] = obj;
 
-            if (paramType.equals(CommandSender.class)) {
-                parameters[i] = sender;
-            } else if (paramType.equals(int.class) || paramType.equals(Integer.class)) {
-                //TODO send parseError message
-                if (Checkers.isInteger(value)) {
-                    parameters[i] = Integer.parseInt(value);
-                }
-            } else if (paramType.equals(short.class) || paramType.equals(Short.class)) {
-                //TODO send parseError message
-                if (Checkers.isShort(value)) {
-                    parameters[i] = Short.parseShort(value);
-                }
-            } else if (paramType.equals(long.class) || paramType.equals(Long.class)) {
-                //TODO send parseError message
-                if (Checkers.isLong(value)) {
-                    parameters[i] = Long.parseLong(value);
-                }
-            } else if (paramType.equals(double.class) || paramType.equals(Double.class)) {
-                //TODO send parseError message
-                if (Checkers.isDouble(value)) {
-                    parameters[i] = Double.parseDouble(value);
-                }
-            } else if (paramType.equals(float.class) || paramType.equals(Float.class)) {
-                //TODO send parseError message
-                if (Checkers.isFloat(value)) {
-                    parameters[i] = Float.parseFloat(value);
-                }
-            } else if (paramType.equals(boolean.class) || paramType.equals(Boolean.class)) {
-                //TODO send parseError message
-                parameters[i] = Boolean.parseBoolean(value);
-            } else {
-                //TODO rest paramTypes
-            }
+            if (obj != null)
+                Icicle.debug("[CommandManager] Parsed type " + obj.getClass().getName());
         }
 
         return parameters;
+    }
+
+    private Object parsePrimitives(Class<?> type, String argument) {
+        if (type.equals(int.class) || type.equals(Integer.class)) {
+            //TODO send parseError message
+            if (Checkers.isInteger(argument)) {
+                return Integer.parseInt(argument);
+            }
+        } else if (type.equals(short.class) || type.equals(Short.class)) {
+            //TODO send parseError message
+            if (Checkers.isShort(argument)) {
+                return Short.parseShort(argument);
+            }
+        } else if (type.equals(long.class) || type.equals(Long.class)) {
+            //TODO send parseError message
+            if (Checkers.isLong(argument)) {
+                return Long.parseLong(argument);
+            }
+        } else if (type.equals(double.class) || type.equals(Double.class)) {
+            //TODO send parseError message
+            if (Checkers.isDouble(argument)) {
+                return Double.parseDouble(argument);
+            }
+        } else if (type.equals(float.class) || type.equals(Float.class)) {
+            //TODO send parseError message
+            if (Checkers.isFloat(argument)) {
+                return Float.parseFloat(argument);
+            }
+        } else if (type.equals(boolean.class) || type.equals(Boolean.class)) {
+            //TODO send parseError message
+            return Boolean.parseBoolean(argument);
+        } else {
+            //TODO rest paramTypes
+        }
+        return argument;
     }
 
     @Override
@@ -166,22 +175,19 @@ public class RegisteredCommandManager implements CommandExecutor {
                 commands.get(subc).execute(sender, newArgs);
             } catch (Exception e) {
                 sender.sendMessage(ChatColor.RED + "An internal exception occured!");
+                e.printStackTrace();
             }
         } else if (subcommandManagers.containsKey(subc)) {
             try {
                 subcommandManagers.get(subc).execute(sender, newArgs);
             } catch (Exception e) {
                 sender.sendMessage(ChatColor.RED + "An internal exception occured!");
+                e.printStackTrace();
             }
         } else {
             sender.sendMessage(ChatColor.RED + getInvalidCmd());
             return true;
         }
-
-
-
-
-
         return true;
     }
 }
