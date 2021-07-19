@@ -1,0 +1,24 @@
+package net.iceyleagons.icicle.ui;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+public abstract class BasicPane implements UIRenderable {
+
+    @Setter
+    private int x = 0;
+    @Setter
+    private int y = 0;
+
+    private final int width;
+    private final int height;
+
+    @Setter
+    private boolean visible;
+
+    public BasicPane(int w, int h) {
+        this.width = w;
+        this.height = h;
+    }
+}
