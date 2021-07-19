@@ -7,31 +7,25 @@ import net.iceyleagons.icicle.utils.TriConsumer;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class ToggleButton extends Button {
+public class CycleButton extends Button {
 
-    private final TriConsumer<InventoryClickEvent, UserInterface, ToggleButton> onClick;
-
-    private final ItemStack on;
-    private final ItemStack off;
+    private final TriConsumer<InventoryClickEvent, UserInterface, CycleButton> onClick;
+    private final ItemStack[] options;
 
     private ItemStack current;
 
     @Getter
-    private boolean toggled = false;
+    private int selected = 0;
 
-    public ToggleButton(int w, int h, ItemStack on, ItemStack off, TriConsumer<InventoryClickEvent, UserInterface, ToggleButton> onClick) {
-        super(w, h, off);
-
-        this.on = on;
-        this.off = off;
-        this.current = off;
-
+    public CycleButton(int w, int h, ItemStack[] options, TriConsumer<InventoryClickEvent, UserInterface, CycleButton> onClick) {
+        super(w, h, options[0]);
+        this.options = options;
         this.onClick = onClick;
     }
 
-    public void updateState(boolean toggled) {
-        this.toggled = toggled;
-        this.current = this.toggled ? this.on : this.off;
+    public void setSelected(int selected) {
+        this.selected = selected;
+        this.current = this.options[selected];
     }
 
     @Override
@@ -45,8 +39,14 @@ public class ToggleButton extends Button {
 
     @Override
     public void onClick(InventoryClickEvent event, UserInterface userInterface) {
-        updateState(!isToggled());
+        setSelected(getNext());
         userInterface.update();
+
         this.onClick.accept(event, userInterface, this);
+    }
+
+    private int getNext() {
+        if (selected >= this.options.length) selected = 0;
+        return selected += 1;
     }
 }
