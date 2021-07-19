@@ -4,6 +4,16 @@ import org.bukkit.inventory.ItemStack;
 
 public interface UIRenderable {
 
-    public void render(ItemStack[][] items);
+    void render(ItemStack[][] items);
 
+    boolean isVisible();
+
+    int getWidth();
+    int getHeight();
+
+    int getX();
+    int getY();
+
+    void setX(int x);
+    void setY(int y);
 }

@@ -4,17 +4,14 @@ import lombok.AllArgsConstructor;
 import net.iceyleagons.icicle.Icicle;
 import net.iceyleagons.icicle.RegisteredIciclePlugin;
 import net.iceyleagons.icicle.annotations.Autowired;
-import net.iceyleagons.icicle.annotations.Bean;
 import net.iceyleagons.icicle.annotations.handlers.AutoCreationHandlerListener;
 import net.iceyleagons.icicle.annotations.handlers.CustomAnnotationHandlerListener;
+import net.iceyleagons.icicle.beans.interceptor.IcicleMethodInterceptor;
 import net.iceyleagons.icicle.utils.Asserts;
 import net.sf.cglib.proxy.Enhancer;
-import net.sf.cglib.proxy.MethodInterceptor;
-import org.jetbrains.annotations.Nullable;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -91,19 +88,8 @@ public class BeanCreator {
     private Object createEnhancedClass(Constructor<?> constructor, Object[] params, RegisteredBeanDictionary registeredBeanDictionary) {
         final Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(constructor.getDeclaringClass());
-        enhancer.setCallback((MethodInterceptor) (obj, method, args, proxy) -> {
-            if (method.isAnnotationPresent(Bean.class)) {
-                if (!registeredBeanDictionary.contains(method.getReturnType())) {
-                    Object object = proxy.invokeSuper(obj, args);
-                    registeredBeanDictionary.registerBean(object);
-                    return object;
-                }
 
-                return registeredBeanDictionary.get(method.getReturnType()).orElse(null);
-            } else {
-                return proxy.invokeSuper(obj, args);
-            }
-        });
+        enhancer.setCallback(new IcicleMethodInterceptor(registeredBeanDictionary, registeredIciclePlugin));
 
         return enhancer.create(constructor.getParameterTypes(), params);
     }

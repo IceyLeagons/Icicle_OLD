@@ -8,8 +8,8 @@ version '1.0-SNAPSHOT'
 configurations {
     extraLibs
 }
-sourceCompatibility = 8
-targetCompatibility = 8
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
